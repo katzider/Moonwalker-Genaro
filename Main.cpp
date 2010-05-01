@@ -2,7 +2,7 @@
 #include "3ds.h"
 
 // Probando esta mamada XD
-
+//lol hcker
 //Libreria que usamos para el timer
 #pragma comment( lib, "winmm.lib" )	
 
