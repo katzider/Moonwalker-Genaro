@@ -4,8 +4,8 @@ lulz main( roflcopter** argv[] )
 {
 	if( argv[0] == "snakes" )
 	{
-		// Pon algo aqui caber
+		// Gugure Kasu
 	}
 }
 
-// chale, mi casa se lleno de agua >. <
+// chale, mi casa se lleno de agua >.<
