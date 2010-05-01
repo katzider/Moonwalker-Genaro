@@ -1,6 +1,8 @@
 #include "Main.h"
 #include "3ds.h"
 
+// Probando esta mamada XD
+
 //Libreria que usamos para el timer
 #pragma comment( lib, "winmm.lib" )	
 
