@@ -3,6 +3,9 @@
 
 // Probando esta mamada XD
 //lol hcker
+// Agregando comentario de prueba
+
+
 //Libreria que usamos para el timer
 #pragma comment( lib, "winmm.lib" )	
 
