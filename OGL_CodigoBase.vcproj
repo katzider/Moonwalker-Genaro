@@ -210,6 +210,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\SombraVolumen.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Vector.cpp"
 				>
 			</File>
@@ -245,6 +249,10 @@
 			</File>
 			<File
 				RelativePath=".\Shaders.h"
+				>
+			</File>
+			<File
+				RelativePath=".\SombraVolumen.h"
 				>
 			</File>
 			<File

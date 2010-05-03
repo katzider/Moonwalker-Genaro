@@ -4,7 +4,7 @@
 #include "Main.h"
 using namespace std;
 
-//class CTga;
+class CTga;
 
 //>------ Primary Chunk, at the beginning of each file
 #define PRIMARY       0x4D4D
@@ -49,6 +49,12 @@ public:
 	float x, y;
 };
 
+//Estructura para un plano de la forma: ax + by + cz + d = 0
+struct Plane
+{
+	float a, b, c, d;
+};
+
 // This is our face structure.  This is is used for indexing into the vertex 
 // and texture coordinate arrays.  From this information we know which vertices
 // from our vertex array go to which face, along with the correct texture coordinates.
@@ -56,6 +62,9 @@ struct tFace
 {
 	int vertIndex[3];			// indicies for the verts that make up this triangle
 	int coordIndex[3];			// indicies for the tex coords to texture this face
+	Plane planeEquation;		// Ecuación del plano que contiene el poligono
+	int neighbourIndices[3];	// Indice de cada poligono adyacente a los lados del poligono revisado
+	bool visible;				// Poligonos visibles a la fuente de luz
 };
 
 // This holds the information for a material.  It may be a texture map of a color.

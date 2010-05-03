@@ -21,6 +21,7 @@
 #include "Font.h"
 #include "fmod.h"
 #include "fmod_errors.h"
+#include "SombraVolumen.h" // Agregado segun las modificaciones del programa 2
 
 extern HWND hWnd;
 
