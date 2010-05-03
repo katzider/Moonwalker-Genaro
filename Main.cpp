@@ -28,6 +28,10 @@ FMOD_SOUND       *sound[2] = { 0, 0 };
 FMOD_CHANNEL     *channel[2] = { 0, 0 };
 
 parametros player1;  //Variable con la que tenemos acceso a la estructura de parámetros
+
+parametros enem1;	 //Variable con la que tenemos acceso a la estructura de parámetros de ene1
+parametros MJ6;		 //Variable con la que tenemos acceso a la estructura de parámetros de MJ6
+
 CMateriales Material;
 
 //Nombre y ubicación de los modelos
@@ -107,6 +111,9 @@ jerarquiaModelo player1modelo;	//Acceso a la estructura con las variables de cad
 const int maxKF1=3;				//Num. total de KeyFrames para la secuencia 1 (caminar)
 FRAME KeyFrame1[maxKF1];		//Contenedor para almacenar cada keyframe de la secuencia 1
 
+jerarquiaModelo enem1modelo;
+jerarquiaModelo MJ6modelo;
+
 bool play=false;//Bandera para iniciar la animación
 int playIndex=0;//Auxiliar para leer la información del contenedor de keyframes
 int tipoAnim=1; //Indicador del tipo de animación
@@ -114,6 +121,8 @@ int tipoAnim=1; //Indicador del tipo de animación
 CMultitexturas Multitext;
 
 GLuint modelo1;
+GLuint ene1;
+GLuint MJ6;
 
 //Constantes de iluminación y materiales
 GLfloat LightPos[] = { 0.0f, 20.0f, 25.0f, 1.0f};		// Posición de la luz
@@ -297,8 +306,51 @@ int CargaModelos()
 		return 0;
 	if(!g_Load3ds.Load3DSFile(FILE_NAME9c, &g_3DModel9c, textureModel9c))
 		return 0;
+	//Ene1
+	if(!g_Load3ds.Load3DSFile(FILE_NAME1d, &g_3DModel1d, textureModel1d))
+		return 0;
+	if(!g_Load3ds.Load3DSFile(FILE_NAME2d, &g_3DModel2d, textureModel1d))
+		return 0;
+	if(!g_Load3ds.Load3DSFile(FILE_NAME3d, &g_3DModel3d, textureModel1d))
+		return 0;
+	if(!g_Load3ds.Load3DSFile(FILE_NAME4d, &g_3DModel4d, textureModel1d))
+		return 0;
+	if(!g_Load3ds.Load3DSFile(FILE_NAME5d, &g_3DModel5d, textureModel1d))
+		return 0;
+	if(!g_Load3ds.Load3DSFile(FILE_NAME6d, &g_3DModel6d, textureModel1d))
+		return 0;
+	if(!g_Load3ds.Load3DSFile(FILE_NAME7d, &g_3DModel7d, textureModel1d))
+		return 0;
+	if(!g_Load3ds.Load3DSFile(FILE_NAME8d, &g_3DModel8d, textureModel1d))
+		return 0;
+	if(!g_Load3ds.Load3DSFile(FILE_NAME9d, &g_3DModel9d, textureModel1d))
+		return 0;
+	if(!g_Load3ds.Load3DSFile(FILE_NAME10d, &g_3DModel10d, textureModel1d))
+		return 0;
 
 	if(!g_Load3ds.Load3DSFile(FILE_NAME1e, &g_3DModel1e, textureModel1e))
+		return 0;
+
+	//MJ6
+	if(!g_Load3ds.Load3DSFile(FILE_NAME1f, &g_3DModel1f, textureModel1f))
+		return 0;
+	if(!g_Load3ds.Load3DSFile(FILE_NAME2f, &g_3DModel2f, textureModel1f))
+		return 0;
+	if(!g_Load3ds.Load3DSFile(FILE_NAME3f, &g_3DModel3f, textureModel1f))
+		return 0;
+	if(!g_Load3ds.Load3DSFile(FILE_NAME4f, &g_3DModel4f, textureModel1f))
+		return 0;
+	if(!g_Load3ds.Load3DSFile(FILE_NAME5f, &g_3DModel5f, textureModel1f))
+		return 0;
+	if(!g_Load3ds.Load3DSFile(FILE_NAME6f, &g_3DModel6f, textureModel1f))
+		return 0;
+	if(!g_Load3ds.Load3DSFile(FILE_NAME7f, &g_3DModel7f, textureModel1f))
+		return 0;
+	if(!g_Load3ds.Load3DSFile(FILE_NAME8f, &g_3DModel8f, textureModel1f))
+		return 0;
+	if(!g_Load3ds.Load3DSFile(FILE_NAME9f, &g_3DModel9f, textureModel1f))
+		return 0;
+	if(!g_Load3ds.Load3DSFile(FILE_NAME10f, &g_3DModel10f, textureModel1f))
 		return 0;
 		
 	return TRUE;
@@ -316,6 +368,31 @@ void DescargaModelos()
 	g_Load3ds.UnLoad3DSFile(&g_3DModel8c, textureModel8c);
 	g_Load3ds.UnLoad3DSFile(&g_3DModel9c, textureModel9c);
 	
+	//Ene1
+	g_Load3ds.UnLoad3DSFile(&g_3DModel1d, textureModel1d);
+	g_Load3ds.UnLoad3DSFile(&g_3DModel2d, textureModel1d);
+	g_Load3ds.UnLoad3DSFile(&g_3DModel3d, textureModel1d);
+	g_Load3ds.UnLoad3DSFile(&g_3DModel4d, textureModel1d);
+	g_Load3ds.UnLoad3DSFile(&g_3DModel5d, textureModel1d);
+	g_Load3ds.UnLoad3DSFile(&g_3DModel6d, textureModel1d);
+	g_Load3ds.UnLoad3DSFile(&g_3DModel7d, textureModel1d);
+	g_Load3ds.UnLoad3DSFile(&g_3DModel8d, textureModel1d);
+	g_Load3ds.UnLoad3DSFile(&g_3DModel9d, textureModel1d);
+	g_Load3ds.UnLoad3DSFile(&g_3DModel10d, textureModel1d);
+
+	//MJ6
+	g_Load3ds.UnLoad3DSFile(&g_3DModel1f, textureModel1f);
+	g_Load3ds.UnLoad3DSFile(&g_3DModel2f, textureModel1f);
+	g_Load3ds.UnLoad3DSFile(&g_3DModel3f, textureModel1f);
+	g_Load3ds.UnLoad3DSFile(&g_3DModel4f, textureModel1f);
+	g_Load3ds.UnLoad3DSFile(&g_3DModel5f, textureModel1f);
+	g_Load3ds.UnLoad3DSFile(&g_3DModel6f, textureModel1f);
+	g_Load3ds.UnLoad3DSFile(&g_3DModel7f, textureModel1f);
+	g_Load3ds.UnLoad3DSFile(&g_3DModel8f, textureModel1f);
+	g_Load3ds.UnLoad3DSFile(&g_3DModel9f, textureModel1f);
+	g_Load3ds.UnLoad3DSFile(&g_3DModel10f, textureModel1f);
+
+	//Escenario
 	g_Load3ds.UnLoad3DSFile(&g_3DModel1e, textureModel1e);
 }
 
@@ -354,6 +431,10 @@ void IniSombraVolumen()
 void CreaListas()
 {
 	modelo1=glGenLists(9);
+	//Ene1
+	ene1=glGenLists(10);
+	//MJ6
+	MJ6=glGenLists(10);
 
 	glNewList(modelo1+0,GL_COMPILE);
 		g_Load3ds.Render3DSFile(&g_3DModel1c, textureModel1c, 1);
@@ -390,11 +471,95 @@ void CreaListas()
 	glNewList(modelo1+8,GL_COMPILE);
 		g_Load3ds.Render3DSFile(&g_3DModel9c, textureModel9c, 1);
 	glEndList();
+
+	//Ene1
+	glNewList(ene1+0,GL_COMPILE);
+		g_Load3ds.Render3DSFile(&g_3DModel1d, textureModel1d, 1);
+	glEndList();
+
+	glNewList(ene1+1,GL_COMPILE);
+		g_Load3ds.Render3DSFile(&g_3DModel2d, textureModel1d, 1);
+	glEndList();
+
+	glNewList(ene1+2,GL_COMPILE);
+		g_Load3ds.Render3DSFile(&g_3DModel3d, textureModel1d, 1);
+	glEndList();
+
+	glNewList(ene1+3,GL_COMPILE);
+		g_Load3ds.Render3DSFile(&g_3DModel4d, textureModel1d, 1);
+	glEndList();
+
+	glNewList(ene1+4,GL_COMPILE);
+		g_Load3ds.Render3DSFile(&g_3DModel5d, textureModel1d, 1);
+	glEndList();
+
+	glNewList(ene1+5,GL_COMPILE);
+		g_Load3ds.Render3DSFile(&g_3DModel6d, textureModel1d, 1);
+	glEndList();
+
+	glNewList(ene1+6,GL_COMPILE);
+		g_Load3ds.Render3DSFile(&g_3DModel7d, textureModel1d, 1);
+	glEndList();
+
+	glNewList(ene1+7,GL_COMPILE);
+		g_Load3ds.Render3DSFile(&g_3DModel8d, textureModel1d, 1);
+	glEndList();
+
+	glNewList(ene1+8,GL_COMPILE);
+		g_Load3ds.Render3DSFile(&g_3DModel9d, textureModel1d, 1);
+	glEndList();
+
+	glNewList(ene1+9,GL_COMPILE);
+		g_Load3ds.Render3DSFile(&g_3DModel10d, textureModel1d, 1);
+	glEndList();
+
+	//Ene1
+	glNewList(MJ6+0,GL_COMPILE);
+		g_Load3ds.Render3DSFile(&g_3DModel1f, textureModel1f, 1);
+	glEndList();
+
+	glNewList(MJ6+1,GL_COMPILE);
+		g_Load3ds.Render3DSFile(&g_3DModel2f, textureModel1f, 1);
+	glEndList();
+
+	glNewList(MJ6+2,GL_COMPILE);
+		g_Load3ds.Render3DSFile(&g_3DModel3f, textureModel1f, 1);
+	glEndList();
+
+	glNewList(MJ6+3,GL_COMPILE);
+		g_Load3ds.Render3DSFile(&g_3DModel4f, textureModel1f, 1);
+	glEndList();
+
+	glNewList(MJ6+4,GL_COMPILE);
+		g_Load3ds.Render3DSFile(&g_3DModel5f, textureModel1f, 1);
+	glEndList();
+
+	glNewList(MJ6+5,GL_COMPILE);
+		g_Load3ds.Render3DSFile(&g_3DModel6f, textureModel1f, 1);
+	glEndList();
+
+	glNewList(MJ6+6,GL_COMPILE);
+		g_Load3ds.Render3DSFile(&g_3DModel7f, textureModel1f, 1);
+	glEndList();
+
+	glNewList(MJ6+7,GL_COMPILE);
+		g_Load3ds.Render3DSFile(&g_3DModel8f, textureModel1f, 1);
+	glEndList();
+
+	glNewList(MJ6+8,GL_COMPILE);
+		g_Load3ds.Render3DSFile(&g_3DModel9f, textureModel1f, 1);
+	glEndList();
+
+	glNewList(MJ6+9,GL_COMPILE);
+		g_Load3ds.Render3DSFile(&g_3DModel10f, textureModel1f, 1);
+	glEndList();
 }
 
 void DestruyeListas()
 {
 	glDeleteLists(modelo1,9);
+	glDeleteLists(ene1,10);
+	glDeleteLists(MJ6,10);
 }
 
 void InicializaParametrosdeControl()
@@ -496,6 +661,45 @@ void InicializaAnim()
 	player1modelo.Ytor=0.0f;
 	player1modelo.Ztor=0.0f;
 	
+	enem1modelo.Angt1=0.0f;
+	enem1modelo.Angt2=0.0f;
+	enem1modelo.Angc1=0.0f;
+	enem1modelo.Angc2=0.0f;
+	enem1modelo.Angbi1=0.0f;
+	enem1modelo.Angbi2=0.0f;
+	enem1modelo.Angbib=0.0f;
+	enem1modelo.Angbd1=0.0f;
+	enem1modelo.Angbd2=0.0f;
+	enem1modelo.Angbdb=0.0f;
+	enem1modelo.Angpizq=0.0f;
+	enem1modelo.Angpizqb=0.0f;
+	enem1modelo.Angpder=0.0f;
+	enem1modelo.Angpderb=0.0f;
+	enem1modelo.Angpi=0.0f;
+	enem1modelo.Angpd=0.0f;
+	enem1modelo.Xtor=0.0f;
+	enem1modelo.Ytor=0.0f;
+	enem1modelo.Ztor=0.0f;
+
+	MJ6modelo.Angt1=0.0f;
+	MJ6modelo.Angt2=0.0f;
+	MJ6modelo.Angc1=0.0f;
+	MJ6modelo.Angc2=0.0f;
+	MJ6modelo.Angbi1=0.0f;
+	MJ6modelo.Angbi2=0.0f;
+	MJ6modelo.Angbib=0.0f;
+	MJ6modelo.Angbd1=0.0f;
+	MJ6modelo.Angbd2=0.0f;
+	MJ6modelo.Angbdb=0.0f;
+	MJ6modelo.Angpizq=0.0f;
+	MJ6modelo.Angpizqb=0.0f;
+	MJ6modelo.Angpder=0.0f;
+	MJ6modelo.Angpderb=0.0f;
+	MJ6modelo.Angpi=0.0f;
+	MJ6modelo.Angpd=0.0f;
+	MJ6modelo.Xtor=0.0f;
+	MJ6modelo.Ytor=0.0f;
+	MJ6modelo.Ztor=0.0f;
 }
 
 void DatosAnimacion()
@@ -862,6 +1066,73 @@ void DibujaPersonaje()
 	glPopMatrix();
 }
 
+void DibujaEnemigo1()
+{
+	glTranslatef(ene1modelo.Xtor, ene1modelo.Ytor, ene1modelo.Ztor);
+	glRotatef(ene1modelo.Angt2, 0.0f, 1.0f, 0.0f);
+	glRotatef(ene1modelo.Angt1, 1.0f, 0.0f, 0.0f);
+			
+	//Torso
+	glCallList(enem1+0);
+	
+	//cabeza
+	glCallList(enem1+1);
+
+	//Pierna derecha
+	glPushMatrix();
+		glTranslatef(-1.2f, -1.3f ,0.0f);
+		glRotatef(player1modelo.Angpder, 1.0f, 0.0f, 0.0f);
+		glCallList(modelo1+1);
+		
+		//Pierna derecha_b
+		glPushMatrix();
+			glTranslatef(0.0f, -1.25f , 0.0f);
+			glRotatef(player1modelo.Angpderb, 1.0f, 0.0f, 0.0f);
+			glCallList(modelo1+2);
+		glPopMatrix();
+
+	glPopMatrix();
+
+	//Pierna izquierda
+	glPushMatrix();
+		glTranslatef(1.2f, -1.3f ,0.0f);
+		glRotatef(player1modelo.Angpizq, 1.0f, 0.0f, 0.0f);
+		glCallList(modelo1+3);
+
+		//Pierna izquierda_b
+		glPushMatrix();
+			glTranslatef(0.0f, -1.25f , 0.0f);
+			glRotatef(player1modelo.Angpizqb, 1.0f, 0.0f, 0.0f);
+			glCallList(modelo1+4);
+		glPopMatrix();
+
+	glPopMatrix();
+
+	//Brazo derecho
+	glPushMatrix();
+		glTranslatef(0.0f, 0.0f, 0.0f);
+		glRotatef(ene1modelo.Angbd2, 0.0f, 1.0f, 0.0f);
+		glRotatef(ene1modelo.Angbd1, 1.0f, 0.0f, 0.0f);
+		glCallList(modelo1+5);
+	glPopMatrix();
+
+	//Brazo izquierdo
+	glPushMatrix();
+		glTranslatef(0.0f, 0.0f, 0.0f);
+		glRotatef(ene1modelo.Angbi2, 0.0f, 1.0f, 0.0f);
+		glRotatef(ene1modelo.Angbi1, 1.0f, 0.0f, 0.0f);
+		glCallList(ene1modelo+6);
+
+		//Brazo izquierdo_b
+		glPushMatrix();
+			glTranslatef(0.35f, -1.5f, 0.0f);
+			glRotatef(player1modelo.Angbib, 1.0f, 0.0f, 0.0f);
+			glCallList(modelo1+8);
+		glPopMatrix();
+
+	glPopMatrix();
+}
+
 void DibujaSombraPersonaje()
 {
 	glPushMatrix();
@@ -1136,6 +1407,14 @@ void DibujaEscena()
 		glScalef(player1.escalaX,player1.escalaY,player1.escalaZ);
 		DibujaPersonaje();
 	glPopMatrix();
+	//Ene1
+	glPushMatrix();
+		glTranslatef(enem1.PosicionObj.x, player1.PosicionObj.y+2.4f, player1.PosicionObj.z);
+		glRotatef(player1.AngObj, 0.0f, 1.0f, 0.0f);
+		glScalef(player1.escalaX,player1.escalaY,player1.escalaZ);
+		DibujaPersonaje();
+	glPopMatrix();
+
 	glDisable(GL_NORMALIZE);
 }
 
