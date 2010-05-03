@@ -55,7 +55,8 @@ CMateriales Material;
 #define FILE_NAME8aru  "Modelos/MJ_brazoder_b.3ds"
 #define FILE_NAME9aru  "Modelos/MJ_brazoizq_b.3ds"
 
-#define FILE_NAME1e  "Modelos/escenario.3ds"
+// Para el escenario de mayra
+#define FILE_NAME2e  "Modelos/escenario1.3ds"
 
 // Contenedores de texturas de los modelos de Bob
 CTga textureModel1c[20];
@@ -72,7 +73,7 @@ CTga textureModel9c[20];
 CTga textureModel1aru[20]; //MJ.tga
 
 // Contenedores de texturas del escenario
-CTga textureModel1e[20];
+CTga textureModel2e[20];
 
 CLoad3DS g_Load3ds;
 
@@ -99,7 +100,7 @@ t3DModel g_3DModel8aru;
 t3DModel g_3DModel9aru;
 
 // Acceso a la estructura que almacena los datos del escenario
-t3DModel g_3DModel1e;
+t3DModel g_3DModel2e;
 
 //Contenedor de texturas adicionales
 CTga textura[30];
@@ -120,7 +121,7 @@ CMultitexturas Multitext;
 GLuint modelo1;
 
 // Declara enteros para los modelos de Aru
-GLUint modelo1aru;
+GLuint modelo1aru;
 
 //Constantes de iluminación y materiales
 GLfloat LightPos[] = { 0.0f, 20.0f, 25.0f, 1.0f};		// Posición de la luz
@@ -316,7 +317,8 @@ int CargaModelos()
 	if(!g_Load3ds.Load3DSFile(FILE_NAME9c, &g_3DModel9c, textureModel9c))
 		return 0;
 
-	if(!g_Load3ds.Load3DSFile(FILE_NAME1e, &g_3DModel1e, textureModel1e))
+	// Mayra lol
+	if(!g_Load3ds.Load3DSFile(FILE_NAME2e, &g_3DModel2e, textureModel2e))
 		return 0;
 
 	// Carga modelos de Aru
@@ -338,7 +340,7 @@ int CargaModelos()
 		return 0;
 	if(!g_Load3ds.Load3DSFile(FILE_NAME9aru, &g_3DModel9aru, textureModel1aru))
 		return 0;
-		
+
 	return TRUE;
 }
 
@@ -354,7 +356,8 @@ void DescargaModelos()
 	g_Load3ds.UnLoad3DSFile(&g_3DModel8c, textureModel8c);
 	g_Load3ds.UnLoad3DSFile(&g_3DModel9c, textureModel9c);
 	
-	g_Load3ds.UnLoad3DSFile(&g_3DModel1e, textureModel1e);
+	// Mayra lol
+	g_Load3ds.UnLoad3DSFile(&g_3DModel2e, textureModel2e);
 
 	// Descarga los modelos de Aru
 	g_Load3ds.UnLoad3DSFile(&g_3DModel1aru, textureModel1aru);
@@ -518,6 +521,36 @@ void InicializaParametrosdeControl()
 	player1.escalaZ=0.4f;
 
 	player1.CamaraObjAltE=0.0f;
+
+	// Inicializa parametros de control para Aru
+	//Esta función establece los parámetros como velocidad del objeto y distancia de la cámara así como la posición y dirección iniciales
+	player1aru.visible=true;
+	player1aru.VelocidadObj=0.2f;
+	player1aru.DistanciaCam=10.0f;
+
+	player1aru.CamaraPosAlt=5.0f;	//Posición en y de la cámara (altura a la que se situa la cámara)
+	player1aru.CamaraObjAlt=4.0f;	//Posición en y del objetivo de la cámara (altura a la que ve la cámara)
+	player1aru.AngDir=90.0f;		//Este ángulo inicial hace que la dirección inicial sea paralela al eje Z y con sentido negativo
+	player1aru.AngObj=0.0f;		//Este valor se elige dependiendo de la orientación con la que aparece el modelo en la escena al dibujarlo
+								//sin aplicarle ninguna transformación (hacia adonde está volteando). Se elige un ángulo tal que al aplicarle
+								//una rotación inicial con respecto al eje Y esté viendo hacia la misma dirección que la definida por AngDir
+	
+	player1aru.PosicionObj=CVector(0.0f, 0.0f, 0.0f); //Esta es la posición inicial del objeto en la escena
+	player1aru.Direccion.x=(float)cos(player1aru.AngDir*PI/180.0f); //Dirección inicial definida por el ángulo inicial AngDir (x=cos(AngDir), y=0.0, z=sen(AngDir))
+	player1aru.Direccion.y=0.0f;
+	player1aru.Direccion.z=(float)sin(player1aru.AngDir*PI/180.0f);   
+	player1aru.PosicionCam=CVector(0.0f, player1aru.CamaraPosAlt, 10.0f); //Posición inicial de la cámara a [DistanciaCam] unidades detrás del objeto
+	player1aru.ObjetivoCam=player1aru.PosicionObj;		//La cámara ve siempre al objeto
+	player1aru.ObjetivoCam.y=player1aru.CamaraObjAlt;		//Para que no vea a los "pies" del objeto (personaje)
+
+	player1aru.Dir=0;
+	player1aru.DirAnt=0;
+
+	player1aru.escalaX=0.4f;
+	player1aru.escalaY=0.4f;
+	player1aru.escalaZ=0.4f;
+
+	player1aru.CamaraObjAltE=0.0f;
 
 }
 
@@ -1043,6 +1076,80 @@ void DibujaVolumendeSombra()
 	glPopMatrix();
 }
 
+
+// Dibuja Personajes de Aru
+void DibujaPersonajeAru()
+{
+	glTranslatef(player1modeloaru.Xtor, player1modeloaru.Ytor, player1modeloaru.Ztor);
+	glRotatef(player1modeloaru.Angt2, 0.0f, 1.0f, 0.0f);
+	glRotatef(player1modeloaru.Angt1, 1.0f, 0.0f, 0.0f);
+			
+	//Torso
+	glCallList(modelo1aru+0);
+	
+	//Pierna derecha
+	glPushMatrix();
+		glTranslatef(0.0f, 0.0f, 0.0f);
+		glRotatef(player1modeloaru.Angpder, 1.0f, 0.0f, 0.0f);
+		glCallList(modelo1aru+1);
+		
+		//Pierna derecha_b
+		glPushMatrix();
+			glTranslatef(-4.5f, 0.7f , 0.0f);
+			glRotatef(player1modeloaru.Angpderb, 1.0f, 0.0f, 0.0f);
+			glCallList(modelo1aru+2);
+		glPopMatrix();
+
+	glPopMatrix();
+
+	//Pierna izquierda
+	glPushMatrix();
+		glTranslatef(0.0f, 0.0f ,0.0f);
+		glRotatef(player1modeloaru.Angpizq, 1.0f, 0.0f, 0.0f);
+		glCallList(modelo1aru+3);
+
+		//Pierna izquierda_b
+		glPushMatrix();
+			glTranslatef(-6.5f, 0.8f , 0.0f);
+			glRotatef(player1modeloaru.Angpizqb, 1.0f, 0.0f, 0.0f);
+			glCallList(modelo1aru+4);
+		glPopMatrix();
+
+	glPopMatrix();
+
+	//Brazo derecho_a
+	glPushMatrix();
+		glTranslatef(5.0f, 0.0f, 0.0f);
+		glRotatef(player1modeloaru.Angbd2, 0.0f, 1.0f, 0.0f);
+		glRotatef(player1modeloaru.Angbd1, 1.0f, 0.0f, 0.0f);
+		glCallList(modelo1aru+5);
+
+		//Brazo derecho_b
+		glPushMatrix();
+			glTranslatef(-4.6f, -0.0f, 0.0f);
+			glRotatef(player1modeloaru.Angbdb, 1.0f, 0.0f, 0.0f);
+			glCallList(modelo1aru+7);
+		glPopMatrix();
+
+	glPopMatrix();
+
+	//Brazo izquierdo
+	glPushMatrix();
+		glTranslatef(2.8f, 1.1f, 0.0f);
+		glRotatef(player1modeloaru.Angbi2, 0.0f, 1.0f, 0.0f);
+		glRotatef(player1modeloaru.Angbi1, 1.0f, 0.0f, 0.0f);
+		glCallList(modelo1aru+6);
+
+		//Brazo izquierdo_b
+		glPushMatrix();
+			glTranslatef(0.35f, -1.5f, 0.0f);
+			glRotatef(player1modeloaru.Angbib, 1.0f, 0.0f, 0.0f);
+			glCallList(modelo1aru+8);
+		glPopMatrix();
+
+	glPopMatrix();
+}
+
 void DibujaEjes()
 {
 	glColor3f(1.0f,0.0f,0.0f);
@@ -1218,7 +1325,8 @@ void ActualizaLuz()
 
 void DibujaEscena()
 {
-	g_Load3ds.Render3DSFile(&g_3DModel1e, textureModel1e, 1);
+	// Mayralol
+	g_Load3ds.Render3DSFile(&g_3DModel2e, textureModel2e, 1);
 
 	glEnable(GL_NORMALIZE);
 	glPushMatrix();
@@ -1227,6 +1335,15 @@ void DibujaEscena()
 		glScalef(player1.escalaX,player1.escalaY,player1.escalaZ);
 		DibujaPersonaje();
 	glPopMatrix();
+
+	glPushMatrix();
+		glTranslatef(player1aru.PosicionObj.x-40.0f, player1aru.PosicionObj.y+2.4f, player1aru.PosicionObj.z+40.0f);
+		glRotatef(player1aru.AngObj, 0.0f, 1.0f, 0.0f);
+		glScalef(player1aru.escalaX,player1aru.escalaY,player1aru.escalaZ);
+		DibujaPersonajeAru();
+	glPopMatrix();
+
+
 	glDisable(GL_NORMALIZE);
 }
 
@@ -1253,7 +1370,13 @@ int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la
 	// Se dibuja el modelo con la iluminación desactivada
 	// Se renderizan todas las partes oscuras de la escena.
 	glDisable(GL_LIGHT0);
-	DibujaEscena();
+
+	// Mayralol
+	glPushMatrix();
+		glTranslatef(40.0f, 10.0f,-35.0f);
+		glScalef(0.7f,0.7f,0.7f);
+		DibujaEscena();
+	glPopMatrix();
 	
 	// Se desactiva la máscara de color para renderizar la escena en negro
 	glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);
@@ -1268,7 +1391,7 @@ int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la
 	glStencilFunc(GL_ALWAYS, 0, 0);
 
 	//En este punto se aplica el depth pass (z-pass) o depth fail (z-fail)
-	DibujaSombraPersonaje();
+	//DibujaSombraPersonaje();
 			
 	// Se habilitan de nuevo los buffers de profundidad y color.
 	glDepthFunc(GL_LEQUAL);
@@ -1284,7 +1407,13 @@ int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la
 	// partes de la escena que no estan en el volumen de sombra.
 	glEnable(GL_LIGHT0);
 	glStencilFunc(GL_EQUAL, 0, ~0);
-	DibujaEscena();
+
+	// Mayralol
+	glPushMatrix();
+		glTranslatef(40.0f, 10.0f,-35.0f);
+		glScalef(0.7f,0.7f,0.7f);
+		DibujaEscena();
+	glPopMatrix();
 
 	// Se desactiva la prueba de profundidad y del buffer stencil ya que no se utilizarán mas.
 	glDisable(GL_STENCIL_TEST);
@@ -1296,7 +1425,7 @@ int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la
 	if(displayVolume == true)
 	{
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);     //Para que muestre el volumen en alambrado
-		DibujaVolumendeSombra();
+		//DibujaVolumendeSombra();
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);     //Volvemos al modo sólido de nuevo
 	}
 
