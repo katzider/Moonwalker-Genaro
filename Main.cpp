@@ -101,7 +101,29 @@ t3DModel g_3DModel6c;
 t3DModel g_3DModel7c;
 t3DModel g_3DModel8c;
 t3DModel g_3DModel9c;
-
+//Acceso a la estructura que almacena a Ene1
+t3DModel g_3DModel1d;
+t3DModel g_3DModel2d;
+t3DModel g_3DModel3d;
+t3DModel g_3DModel4d;
+t3DModel g_3DModel5d;
+t3DModel g_3DModel6d;
+t3DModel g_3DModel7d;
+t3DModel g_3DModel8d;
+t3DModel g_3DModel9d;
+t3DModel g_3DModel10d;
+//Acceso a la estructura que almacena a MJ6
+t3DModel g_3DModel1f;
+t3DModel g_3DModel2f;
+t3DModel g_3DModel3f;
+t3DModel g_3DModel4f;
+t3DModel g_3DModel5f;
+t3DModel g_3DModel6f;
+t3DModel g_3DModel7f;
+t3DModel g_3DModel8f;
+t3DModel g_3DModel9f;
+t3DModel g_3DModel10f;
+//Escenario
 t3DModel g_3DModel1e;
 
 //Contenedor de texturas adicionales
@@ -122,7 +144,7 @@ CMultitexturas Multitext;
 
 GLuint modelo1;
 GLuint ene1;
-GLuint MJ6;
+GLuint noMJ6;
 
 //Constantes de iluminación y materiales
 GLfloat LightPos[] = { 0.0f, 20.0f, 25.0f, 1.0f};		// Posición de la luz
@@ -1073,10 +1095,10 @@ void DibujaEnemigo1()
 	glRotatef(ene1modelo.Angt1, 1.0f, 0.0f, 0.0f);
 			
 	//Torso
-	glCallList(enem1+0);
+	glCallList(ene1+0);
 	
 	//cabeza
-	glCallList(enem1+1);
+	glCallList(ene1+1);
 
 	//Pierna derecha
 	glPushMatrix();
