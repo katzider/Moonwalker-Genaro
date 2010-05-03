@@ -1597,14 +1597,14 @@ void DibujaPersonajeAru()
 
 	//Brazo izquierdo
 	glPushMatrix();
-		glTranslatef(2.8f, 1.1f, 0.0f);
+		glTranslatef(-0.5f, 0.0f, 0.0f);
 		glRotatef(player1modeloaru.Angbi2, 0.0f, 1.0f, 0.0f);
 		glRotatef(player1modeloaru.Angbi1, 1.0f, 0.0f, 0.0f);
 		glCallList(modelo1aru+6);
 
 		//Brazo izquierdo_b
 		glPushMatrix();
-			glTranslatef(0.35f, -1.5f, 0.0f);
+			glTranslatef(-1.0f, 0.0f, 0.0f);
 			glRotatef(player1modeloaru.Angbib, 1.0f, 0.0f, 0.0f);
 			glCallList(modelo1aru+8);
 		glPopMatrix();
@@ -1800,7 +1800,7 @@ void DibujaEscena()
 
 	// Aru
 	glPushMatrix();
-		glTranslatef(player1aru.PosicionObj.x-40.0f, player1aru.PosicionObj.y+2.4f, player1aru.PosicionObj.z+40.0f);
+		glTranslatef(player1aru.PosicionObj.x-10.0f, player1aru.PosicionObj.y+2.4f, player1aru.PosicionObj.z+0.0f);
 		glRotatef(player1aru.AngObj, 0.0f, 1.0f, 0.0f);
 		glScalef(player1aru.escalaX,player1aru.escalaY,player1aru.escalaZ);
 		DibujaPersonajeAru();
