@@ -616,6 +616,62 @@ void InicializaParametrosdeControl()
 
 	player1.CamaraObjAltE=0.0f;
 
+	enem1.visible=true;
+	enem1.VelocidadObj=0.2f;
+	enem1.DistanciaCam=10.0f;
+
+	enem1.CamaraPosAlt=5.0f;	//Posición en y de la cámara (altura a la que se situa la cámara)
+	enem1.CamaraObjAlt=4.0f;	//Posición en y del objetivo de la cámara (altura a la que ve la cámara)
+	enem1.AngDir=90.0f;		//Este ángulo inicial hace que la dirección inicial sea paralela al eje Z y con sentido negativo
+	enem1.AngObj=0.0f;		//Este valor se elige dependiendo de la orientación con la que aparece el modelo en la escena al dibujarlo
+								//sin aplicarle ninguna transformación (hacia adonde está volteando). Se elige un ángulo tal que al aplicarle
+								//una rotación inicial con respecto al eje Y esté viendo hacia la misma dirección que la definida por AngDir
+	
+	enem1.PosicionObj=CVector(5.0f, 0.0f, 0.0f); //Esta es la posición inicial del objeto en la escena
+	enem1.Direccion.x=(float)cos(player1.AngDir*PI/180.0f); //Dirección inicial definida por el ángulo inicial AngDir (x=cos(AngDir), y=0.0, z=sen(AngDir))
+	enem1.Direccion.y=0.0f;
+	enem1.Direccion.z=(float)sin(player1.AngDir*PI/180.0f);   
+	enem1.PosicionCam=CVector(0.0f, player1.CamaraPosAlt, 10.0f); //Posición inicial de la cámara a [DistanciaCam] unidades detrás del objeto
+	enem1.ObjetivoCam=player1.PosicionObj;		//La cámara ve siempre al objeto
+	enem1.ObjetivoCam.y=player1.CamaraObjAlt;		//Para que no vea a los "pies" del objeto (personaje)
+
+	enem1.Dir=0;
+	enem1.DirAnt=0;
+
+	enem1.escalaX=0.4f;
+	enem1.escalaY=0.4f;
+	enem1.escalaZ=0.4f;
+
+	enem1.CamaraObjAltE=0.0f;
+
+
+	MJ6.visible=true;
+	MJ6.VelocidadObj=0.2f;
+	MJ6.DistanciaCam=10.0f;
+
+	MJ6.CamaraPosAlt=5.0f;	//Posición en y de la cámara (altura a la que se situa la cámara)
+	MJ6.CamaraObjAlt=4.0f;	//Posición en y del objetivo de la cámara (altura a la que ve la cámara)
+	MJ6.AngDir=90.0f;		//Este ángulo inicial hace que la dirección inicial sea paralela al eje Z y con sentido negativo
+	MJ6.AngObj=0.0f;		//Este valor se elige dependiendo de la orientación con la que aparece el modelo en la escena al dibujarlo
+								//sin aplicarle ninguna transformación (hacia adonde está volteando). Se elige un ángulo tal que al aplicarle
+								//una rotación inicial con respecto al eje Y esté viendo hacia la misma dirección que la definida por AngDir
+	
+	MJ6.PosicionObj=CVector(-5.0f, 0.0f, 0.0f); //Esta es la posición inicial del objeto en la escena
+	MJ6.Direccion.x=(float)cos(player1.AngDir*PI/180.0f); //Dirección inicial definida por el ángulo inicial AngDir (x=cos(AngDir), y=0.0, z=sen(AngDir))
+	MJ6.Direccion.y=0.0f;
+	MJ6.Direccion.z=(float)sin(player1.AngDir*PI/180.0f);   
+	MJ6.PosicionCam=CVector(0.0f, player1.CamaraPosAlt, 10.0f); //Posición inicial de la cámara a [DistanciaCam] unidades detrás del objeto
+	MJ6.ObjetivoCam=player1.PosicionObj;		//La cámara ve siempre al objeto
+	MJ6.ObjetivoCam.y=player1.CamaraObjAlt;		//Para que no vea a los "pies" del objeto (personaje)
+
+	MJ6.Dir=0;
+	MJ6.DirAnt=0;
+
+	MJ6.escalaX=0.4f;
+	MJ6.escalaY=0.4f;
+	MJ6.escalaZ=0.4f;
+
+	MJ6.CamaraObjAltE=0.0f;
 }
 
 void InicializaAnim()
