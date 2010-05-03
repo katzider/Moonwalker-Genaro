@@ -46,7 +46,7 @@ CMateriales Material;
 #define FILE_NAME9c  "Modelos/bob_brazoizq_b.3ds"
 
 //nombre y ubicación de modelo Enemigo1
-#define FILE_NAME1d	 "Modelos/Ene1torzo.3ds"
+#define FILE_NAME1d	 "Modelos/Ene1torso.3ds"
 #define FILE_NAME2d	 "Modelos/Ene1Cabeza.3ds"
 #define FILE_NAME3d	 "Modelos/Ene1BraDer.3ds"
 #define FILE_NAME4d	 "Modelos/Ene1BraIzq.3ds"
@@ -66,10 +66,10 @@ CMateriales Material;
 #define FILE_NAME4f	 "Modelos/MJ6BraDerB.3ds"
 #define FILE_NAME5f	 "Modelos/MJ6BraIzqA.3ds"
 #define FILE_NAME6f	 "Modelos/MJ6BraIzqB.3ds"
-#define FILE_NAME7f	 "Modelos/PierDerA.3ds"
-#define FILE_NAME8f	 "Modelos/PierDerB.3ds"
-#define FILE_NAME9f	 "Modelos/PierIzqA.3ds"
-#define FILE_NAME10f "Modelos/PierIzqB.3ds"
+#define FILE_NAME7f	 "Modelos/MJ6PierDerA.3ds"
+#define FILE_NAME8f	 "Modelos/MJ6PierDerB.3ds"
+#define FILE_NAME9f	 "Modelos/MJ6PierIzqA.3ds"
+#define FILE_NAME10f "Modelos/MJ6PierIzqB.3ds"
 
 //Contenedores de texturas de los modelos
 CTga textureModel1c[20];
@@ -1100,7 +1100,7 @@ void DibujaEnemigo1()
 	
 	//Cabeza
 	glPushMatrix();
-		glRotatef(enem1modelo.Angc, 0.0f, 1.0f, 0.0f);
+		glRotatef(enem1modelo.Angc1, 0.0f, 1.0f, 0.0f);
 		glCallList(ene1+1);
 	glPopMatrix();
 
@@ -1171,7 +1171,7 @@ void DibujaMJ6()
 	
 	//Cabeza
 	glPushMatrix();
-		glRotatef(MJ6modelo.Angc, 0.0f, 1.0f, 0.0f);
+		glRotatef(MJ6modelo.Angc1, 0.0f, 1.0f, 0.0f);
 		glCallList(noMJ6+1);
 	glPopMatrix();
 
