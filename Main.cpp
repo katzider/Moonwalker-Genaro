@@ -2,7 +2,7 @@
 #include "3ds.h"
 
 // Probando esta mamada XD
-//lol hcker
+// lol hcker
 // Agregando comentario de prueba
 
 
