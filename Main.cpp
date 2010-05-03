@@ -27,6 +27,10 @@ FMOD_SOUND       *sound[2] = { 0, 0 };
 FMOD_CHANNEL     *channel[2] = { 0, 0 };
 
 parametros player1;  //Variable con la que tenemos acceso a la estructura de parámetros
+
+// Variable de acceso a la estructura de parametros
+parametros player1aru;
+
 CMateriales Material;
 
 //Nombre y ubicación de los modelos
@@ -40,9 +44,20 @@ CMateriales Material;
 #define FILE_NAME8c  "Modelos/bob_brazoder_b.3ds"
 #define FILE_NAME9c  "Modelos/bob_brazoizq_b.3ds"
 
+//Nombre y ubicacion de los modelos de Aru (MJ y Miku)
+#define FILE_NAME1aru  "Modelos/MJ_torso.3ds"
+#define FILE_NAME2aru  "Modelos/MJ_piernader_a.3ds"
+#define FILE_NAME3aru  "Modelos/MJ_piernader_b.3ds"
+#define FILE_NAME4aru  "Modelos/MJ_piernaizq_a.3ds"
+#define FILE_NAME5aru  "Modelos/MJ_piernaizq_b.3ds"
+#define FILE_NAME6aru  "Modelos/MJ_brazoder_a.3ds"
+#define FILE_NAME7aru  "Modelos/MJ_brazoizq_a.3ds"
+#define FILE_NAME8aru  "Modelos/MJ_brazoder_b.3ds"
+#define FILE_NAME9aru  "Modelos/MJ_brazoizq_b.3ds"
+
 #define FILE_NAME1e  "Modelos/escenario.3ds"
 
-//Contenedores de texturas de los modelos
+// Contenedores de texturas de los modelos de Bob
 CTga textureModel1c[20];
 CTga textureModel2c[20];
 CTga textureModel3c[20];
@@ -53,6 +68,10 @@ CTga textureModel7c[20];
 CTga textureModel8c[20];
 CTga textureModel9c[20];
 
+// Contenedores de texturas de los modelos de Aru(MJ y Miku)
+CTga textureModel1aru[20]; //MJ.tga
+
+// Contenedores de texturas del escenario
 CTga textureModel1e[20];
 
 CLoad3DS g_Load3ds;
@@ -68,6 +87,18 @@ t3DModel g_3DModel7c;
 t3DModel g_3DModel8c;
 t3DModel g_3DModel9c;
 
+//Acceso a la estructura que almacena los datos de los modelos
+t3DModel g_3DModel1aru;
+t3DModel g_3DModel2aru;
+t3DModel g_3DModel3aru;
+t3DModel g_3DModel4aru;
+t3DModel g_3DModel5aru;
+t3DModel g_3DModel6aru;
+t3DModel g_3DModel7aru;
+t3DModel g_3DModel8aru;
+t3DModel g_3DModel9aru;
+
+// Acceso a la estructura que almacena los datos del escenario
 t3DModel g_3DModel1e;
 
 //Contenedor de texturas adicionales
@@ -77,13 +108,19 @@ jerarquiaModelo player1modelo;	//Acceso a la estructura con las variables de cad
 const int maxKF1=3;				//Num. total de KeyFrames para la secuencia 1 (caminar)
 FRAME KeyFrame1[maxKF1];		//Contenedor para almacenar cada keyframe de la secuencia 1
 
+jerarquiaModelo player1modeloaru;
+
 bool play=false;//Bandera para iniciar la animación
 int playIndex=0;//Auxiliar para leer la información del contenedor de keyframes
 int tipoAnim=1; //Indicador del tipo de animación
 
 CMultitexturas Multitext;
 
+// Modelo de Bob
 GLuint modelo1;
+
+// Declara enteros para los modelos de Aru
+GLUint modelo1aru;
 
 //Constantes de iluminación y materiales
 GLfloat LightPos[] = { 0.0f, 20.0f, 25.0f, 1.0f};		// Posición de la luz
@@ -115,6 +152,17 @@ CVector objectSpaceLightPosition6;
 CVector objectSpaceLightPosition7;
 CVector objectSpaceLightPosition8;
 CVector objectSpaceLightPosition9;
+
+//Posición de la luz para el espacio de objeto de los modelos de Aru
+CVector objectSpaceLightPosition1aru;
+CVector objectSpaceLightPosition2aru;
+CVector objectSpaceLightPosition3aru;
+CVector objectSpaceLightPosition4aru;
+CVector objectSpaceLightPosition5aru;
+CVector objectSpaceLightPosition6aru;
+CVector objectSpaceLightPosition7aru;
+CVector objectSpaceLightPosition8aru;
+CVector objectSpaceLightPosition9aru;
 
 //Variables para el cálculo de transformaciones inversas para las sombras
 typedef float GLvector4f[4];
@@ -270,6 +318,26 @@ int CargaModelos()
 
 	if(!g_Load3ds.Load3DSFile(FILE_NAME1e, &g_3DModel1e, textureModel1e))
 		return 0;
+
+	// Carga modelos de Aru
+	if(!g_Load3ds.Load3DSFile(FILE_NAME1aru, &g_3DModel1aru, textureModel1aru))
+		return 0;
+	if(!g_Load3ds.Load3DSFile(FILE_NAME2aru, &g_3DModel2aru, textureModel1aru))
+		return 0;
+	if(!g_Load3ds.Load3DSFile(FILE_NAME3aru, &g_3DModel3aru, textureModel1aru))
+		return 0;
+	if(!g_Load3ds.Load3DSFile(FILE_NAME4aru, &g_3DModel4aru, textureModel1aru))
+		return 0;
+	if(!g_Load3ds.Load3DSFile(FILE_NAME5aru, &g_3DModel5aru, textureModel1aru))
+		return 0;
+	if(!g_Load3ds.Load3DSFile(FILE_NAME6aru, &g_3DModel6aru, textureModel1aru))
+		return 0;
+	if(!g_Load3ds.Load3DSFile(FILE_NAME7aru, &g_3DModel7aru, textureModel1aru))
+		return 0;
+	if(!g_Load3ds.Load3DSFile(FILE_NAME8aru, &g_3DModel8aru, textureModel1aru))
+		return 0;
+	if(!g_Load3ds.Load3DSFile(FILE_NAME9aru, &g_3DModel9aru, textureModel1aru))
+		return 0;
 		
 	return TRUE;
 }
@@ -287,6 +355,17 @@ void DescargaModelos()
 	g_Load3ds.UnLoad3DSFile(&g_3DModel9c, textureModel9c);
 	
 	g_Load3ds.UnLoad3DSFile(&g_3DModel1e, textureModel1e);
+
+	// Descarga los modelos de Aru
+	g_Load3ds.UnLoad3DSFile(&g_3DModel1aru, textureModel1aru);
+	g_Load3ds.UnLoad3DSFile(&g_3DModel2aru, textureModel1aru);
+	g_Load3ds.UnLoad3DSFile(&g_3DModel3aru, textureModel1aru);
+	g_Load3ds.UnLoad3DSFile(&g_3DModel4aru, textureModel1aru);
+	g_Load3ds.UnLoad3DSFile(&g_3DModel5aru, textureModel1aru);
+	g_Load3ds.UnLoad3DSFile(&g_3DModel6aru, textureModel1aru);
+	g_Load3ds.UnLoad3DSFile(&g_3DModel7aru, textureModel1aru);
+	g_Load3ds.UnLoad3DSFile(&g_3DModel8aru, textureModel1aru);
+	g_Load3ds.UnLoad3DSFile(&g_3DModel9aru, textureModel1aru);
 }
 
 void IniSombraVolumen()
@@ -360,11 +439,53 @@ void CreaListas()
 	glNewList(modelo1+8,GL_COMPILE);
 		g_Load3ds.Render3DSFile(&g_3DModel9c, textureModel9c, 1);
 	glEndList();
+
+	// Crea listas para Aru
+	modelo1aru = glGenLists(9);
+
+	glNewList(modelo1aru+0,GL_COMPILE);
+		g_Load3ds.Render3DSFile(&g_3DModel1aru, textureModel1aru, 1);
+	glEndList();
+
+	glNewList(modelo1aru+1,GL_COMPILE);
+		g_Load3ds.Render3DSFile(&g_3DModel2aru, textureModel1aru, 1);
+	glEndList();
+
+	glNewList(modelo1aru+2,GL_COMPILE);
+		g_Load3ds.Render3DSFile(&g_3DModel3aru, textureModel1aru, 1);
+	glEndList();
+
+	glNewList(modelo1aru+3,GL_COMPILE);
+		g_Load3ds.Render3DSFile(&g_3DModel4aru, textureModel1aru, 1);
+	glEndList();
+
+	glNewList(modelo1aru+4,GL_COMPILE);
+		g_Load3ds.Render3DSFile(&g_3DModel5aru, textureModel1aru, 1);
+	glEndList();
+
+	glNewList(modelo1aru+5,GL_COMPILE);
+		g_Load3ds.Render3DSFile(&g_3DModel6aru, textureModel1aru, 1);
+	glEndList();
+
+	glNewList(modelo1aru+6,GL_COMPILE);
+		g_Load3ds.Render3DSFile(&g_3DModel7aru, textureModel1aru, 1);
+	glEndList();
+
+	glNewList(modelo1aru+7,GL_COMPILE);
+		g_Load3ds.Render3DSFile(&g_3DModel8aru, textureModel1aru, 1);
+	glEndList();
+
+	glNewList(modelo1aru+8,GL_COMPILE);
+		g_Load3ds.Render3DSFile(&g_3DModel9aru, textureModel1aru, 1);
+	glEndList();
 }
 
 void DestruyeListas()
 {
 	glDeleteLists(modelo1,9);
+
+	// Borra listas de Aru
+	glDeleteLists(modelo1aru,9);
 }
 
 void InicializaParametrosdeControl()
