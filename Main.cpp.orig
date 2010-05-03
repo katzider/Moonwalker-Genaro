@@ -741,6 +741,7 @@ void InicializaParametrosdeControl()
 
 	player1.CamaraObjAltE=0.0f;
 
+<<<<<<< HEAD
 	// Inicializa parametros de control para Aru
 	//Esta función establece los parámetros como velocidad del objeto y distancia de la cámara así como la posición y dirección iniciales
 	player1aru.visible=true;
@@ -768,10 +769,10 @@ void InicializaParametrosdeControl()
 	player1aru.escalaX=0.4f;
 	player1aru.escalaY=0.4f;
 	player1aru.escalaZ=0.4f;
-	
+
 	player1aru.CamaraObjAltE=0.0f;
-	
-	// Enem1
+
+=======
 	enem1.visible=true;
 	enem1.VelocidadObj=0.2f;
 	enem1.DistanciaCam=10.0f;
@@ -799,11 +800,9 @@ void InicializaParametrosdeControl()
 	enem1.escalaZ=0.4f;
 
 	enem1.CamaraObjAltE=0.0f;
-	
-	//MJ6
+
 
 	MJ6.visible=true;
-
 	MJ6.VelocidadObj=0.2f;
 	MJ6.DistanciaCam=10.0f;
 
@@ -830,6 +829,7 @@ void InicializaParametrosdeControl()
 	MJ6.escalaZ=0.4f;
 
 	MJ6.CamaraObjAltE=0.0f;
+>>>>>>> 99eddf0b56eefaeeb4554f4810597912b3cb9866
 }
 
 void InicializaAnim()
@@ -1597,14 +1597,14 @@ void DibujaPersonajeAru()
 
 	//Brazo izquierdo
 	glPushMatrix();
-		glTranslatef(-0.5f, 0.0f, 0.0f);
+		glTranslatef(2.8f, 1.1f, 0.0f);
 		glRotatef(player1modeloaru.Angbi2, 0.0f, 1.0f, 0.0f);
 		glRotatef(player1modeloaru.Angbi1, 1.0f, 0.0f, 0.0f);
 		glCallList(modelo1aru+6);
 
 		//Brazo izquierdo_b
 		glPushMatrix();
-			glTranslatef(-1.0f, 0.0f, 0.0f);
+			glTranslatef(0.35f, -1.5f, 0.0f);
 			glRotatef(player1modeloaru.Angbib, 1.0f, 0.0f, 0.0f);
 			glCallList(modelo1aru+8);
 		glPopMatrix();
@@ -1800,7 +1800,7 @@ void DibujaEscena()
 
 	// Aru
 	glPushMatrix();
-		glTranslatef(player1aru.PosicionObj.x-10.0f, player1aru.PosicionObj.y+2.4f, player1aru.PosicionObj.z+0.0f);
+		glTranslatef(player1aru.PosicionObj.x-40.0f, player1aru.PosicionObj.y+2.4f, player1aru.PosicionObj.z+40.0f);
 		glRotatef(player1aru.AngObj, 0.0f, 1.0f, 0.0f);
 		glScalef(player1aru.escalaX,player1aru.escalaY,player1aru.escalaZ);
 		DibujaPersonajeAru();
