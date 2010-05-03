@@ -52,9 +52,9 @@ CMateriales Material;
 #define FILE_NAME9c  "Modelos/bob_brazoizq_b.3ds"
 
 // Modelos Savage
-#define FILE_NAME1g  "Modelos/enemigo8_cuerpo.3DS"
-#define FILE_NAME2g  "Modelos/enemigo8_heliceabajo.3DS"
-#define FILE_NAME3g  "Modelos/enemigo8_heliceatras.3DS"
+#define FILE_NAME1g  "Modelos/enemigo8_cuerpo.3ds"
+#define FILE_NAME2g  "Modelos/enemigo8_heliceabajo.3ds"
+#define FILE_NAME3g  "Modelos/enemigo8_heliceatras.3ds"
 
 //Nombre y ubicacion de los modelos de Aru (MJ y Miku)
 #define FILE_NAME1aru  "Modelos/MJ_torso.3ds"
@@ -426,7 +426,6 @@ int CargaModelos()
 		return 0;
 
 	//agregar en CargaModelos() savage meh te la volaste XD
-
 	if(!g_Load3ds.Load3DSFile(FILE_NAME1g, &g_3DModel1g, textureModel1g))
 		return 0;
 	if(!g_Load3ds.Load3DSFile(FILE_NAME2g, &g_3DModel2g, textureModel2g))
@@ -578,7 +577,7 @@ void CreaListas()
 	noMJ6=glGenLists(10);
 
 	// en crea listas savage
-	
+	enemigo8L=glGenLists(3);
 	glNewList(enemigo8L+0,GL_COMPILE);
 		g_Load3ds.Render3DSFile(&g_3DModel1g, textureModel1g, 1);
 	glEndList();
@@ -804,7 +803,7 @@ void InicializaParametrosdeControl()
 								//sin aplicarle ninguna transformación (hacia adonde está volteando). Se elige un ángulo tal que al aplicarle
 								//una rotación inicial con respecto al eje Y esté viendo hacia la misma dirección que la definida por AngDir
 	
-	enemigo8.PosicionObj=CVector(-15.0f, 0.0f, 0.0f); //Esta es la posición inicial del objeto en la escena
+	enemigo8.PosicionObj=CVector(-45.0f, 0.0f, 0.0f); //Esta es la posición inicial del objeto en la escena
 	enemigo8.Direccion.x=(float)cos(enemigo8.AngDir); //Dirección inicial definida por el ángulo inicial AngDir (x=cos(AngDir), y=0.0, z=sen(AngDir))
 	enemigo8.Direccion.y=0.0f;
 	enemigo8.Direccion.z=(float)sin(enemigo8.AngDir);   
@@ -814,9 +813,9 @@ void InicializaParametrosdeControl()
 
 	enemigo8.Dir=0;
 	enemigo8.DirAnt=0;
-	enemigo8.escalaX=0.2f;
-	enemigo8.escalaY=0.2f;
-	enemigo8.escalaZ=0.2f;
+	enemigo8.escalaX=0.1f;
+	enemigo8.escalaY=0.1f;
+	enemigo8.escalaZ=0.1f;
 
 	// Inicializa parametros de control para Aru
 	//Esta función establece los parámetros como velocidad del objeto y distancia de la cámara así como la posición y dirección iniciales
@@ -1313,14 +1312,15 @@ void dibujaEnemigo8()
 {
 	static float anglef=0.0f;
 	anglef+=4.0f;
+
 	glCallList(enemigo8L);
-	glPushMatrix();
-		
+
+	glPushMatrix();	
 		glRotatef(anglef, 0.0f, 1.0f, 0.0f);
 		glCallList(enemigo8L+1);
 	glPopMatrix();
+
 	glPushMatrix();
-	
 		glRotatef(anglef, 1.0f, 0.0f, 0.0f);
 		glCallList(enemigo8L+2);
 	glPopMatrix();
@@ -1885,6 +1885,7 @@ void DibujaEscena()
 	// Mayralol
 	g_Load3ds.Render3DSFile(&g_3DModel2e, textureModel2e, 1);
 
+	// Bob
 	glEnable(GL_NORMALIZE);
 	glPushMatrix();
 		glTranslatef(player1.PosicionObj.x, player1.PosicionObj.y+2.4f, player1.PosicionObj.z);
