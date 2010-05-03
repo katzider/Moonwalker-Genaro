@@ -35,6 +35,9 @@ parametros player1aru;
 parametros enem1;	 //Variable con la que tenemos acceso a la estructura de parámetros de ene1
 parametros MJ6;		 //Variable con la que tenemos acceso a la estructura de parámetros de MJ6
 
+// parametros savage
+parametros enemigo8;
+
 CMateriales Material;
 
 //Nombre y ubicación de los modelos
@@ -47,6 +50,11 @@ CMateriales Material;
 #define FILE_NAME7c  "Modelos/bob_brazoizq_a.3ds"
 #define FILE_NAME8c  "Modelos/bob_brazoder_b.3ds"
 #define FILE_NAME9c  "Modelos/bob_brazoizq_b.3ds"
+
+// Modelos Savage
+#define FILE_NAME1g  "Modelos/enemigo8_cuerpo.3DS"
+#define FILE_NAME2g  "Modelos/enemigo8_heliceabajo.3DS"
+#define FILE_NAME3g  "Modelos/enemigo8_heliceatras.3DS"
 
 //Nombre y ubicacion de los modelos de Aru (MJ y Miku)
 #define FILE_NAME1aru  "Modelos/MJ_torso.3ds"
@@ -87,6 +95,7 @@ CMateriales Material;
 #define FILE_NAME9f	 "Modelos/MJ6PierIzqA.3ds"
 #define FILE_NAME10f "Modelos/MJ6PierIzqB.3ds"
 
+// Bob
 CTga textureModel1c[20];
 CTga textureModel2c[20];
 CTga textureModel3c[20];
@@ -101,6 +110,10 @@ CTga textureModel1d[20];
 //Contenedor de texturas de MJ6 (MJ Robot)
 CTga textureModel1f[20];
 
+// Contenedor de texturas para Robot8
+CTga textureModel1g[20];
+CTga textureModel2g[20];
+CTga textureModel3g[20];
 
 // Contenedores de texturas de los modelos de Aru(MJ y Miku)
 CTga textureModel1aru[20]; //MJ.tga
@@ -157,7 +170,12 @@ t3DModel g_3DModel7f;
 t3DModel g_3DModel8f;
 t3DModel g_3DModel9f;
 t3DModel g_3DModel10f;
-//Escenario
+
+// los modelos savage
+
+t3DModel g_3DModel1g;
+t3DModel g_3DModel2g;
+t3DModel g_3DModel3g;
 
 //Contenedor de texturas adicionales
 CTga textura[30];
@@ -181,6 +199,9 @@ CMultitexturas Multitext;
 GLuint modelo1;
 GLuint ene1;
 GLuint noMJ6;
+
+// las listas savage
+GLuint enemigo8L;
 
 // Declara enteros para los modelos de Aru
 GLuint modelo1aru;
@@ -404,6 +425,15 @@ int CargaModelos()
 	if(!g_Load3ds.Load3DSFile(FILE_NAME2e, &g_3DModel2e, textureModel2e))
 		return 0;
 
+	//agregar en CargaModelos() savage meh te la volaste XD
+
+	if(!g_Load3ds.Load3DSFile(FILE_NAME1g, &g_3DModel1g, textureModel1g))
+		return 0;
+	if(!g_Load3ds.Load3DSFile(FILE_NAME2g, &g_3DModel2g, textureModel2g))
+		return 0;
+	if(!g_Load3ds.Load3DSFile(FILE_NAME3g, &g_3DModel3g, textureModel3g))
+		return 0;
+
 	// Carga modelos de Aru
 	if(!g_Load3ds.Load3DSFile(FILE_NAME1aru, &g_3DModel1aru, textureModel1aru))
 		return 0;
@@ -445,7 +475,7 @@ int CargaModelos()
 		return 0;
 	if(!g_Load3ds.Load3DSFile(FILE_NAME10f, &g_3DModel10f, textureModel1f))
 		return 0;
-		
+
 	return TRUE;
 }
 
@@ -461,6 +491,12 @@ void DescargaModelos()
 	g_Load3ds.UnLoad3DSFile(&g_3DModel8c, textureModel8c);
 	g_Load3ds.UnLoad3DSFile(&g_3DModel9c, textureModel9c);
 	
+	// descargamodelos savage
+			
+	g_Load3ds.UnLoad3DSFile(&g_3DModel1g, textureModel1g);
+	g_Load3ds.UnLoad3DSFile(&g_3DModel2g, textureModel2g);
+	g_Load3ds.UnLoad3DSFile(&g_3DModel3g, textureModel3g);
+
 	// Mayra lol
 	g_Load3ds.UnLoad3DSFile(&g_3DModel2e, textureModel2e);
 
@@ -541,6 +577,21 @@ void CreaListas()
 	//MJ6
 	noMJ6=glGenLists(10);
 
+	// en crea listas savage
+	
+	glNewList(enemigo8L+0,GL_COMPILE);
+		g_Load3ds.Render3DSFile(&g_3DModel1g, textureModel1g, 1);
+	glEndList();
+
+	glNewList(enemigo8L+1,GL_COMPILE);
+		g_Load3ds.Render3DSFile(&g_3DModel2g, textureModel2g, 1);
+	glEndList();
+
+	glNewList(enemigo8L+2,GL_COMPILE);
+		g_Load3ds.Render3DSFile(&g_3DModel3g, textureModel3g, 1);
+	glEndList();
+
+	// Bob
 	glNewList(modelo1+0,GL_COMPILE);
 		g_Load3ds.Render3DSFile(&g_3DModel1c, textureModel1c, 1);
 	glEndList();
@@ -740,6 +791,32 @@ void InicializaParametrosdeControl()
 	player1.escalaZ=0.4f;
 
 	player1.CamaraObjAltE=0.0f;
+
+	// en inicializa parametro de control savage
+	enemigo8.visible=true;
+	enemigo8.VelocidadObj=0.4f;
+	enemigo8.DistanciaCam=10.0f;
+
+	enemigo8.CamaraPosAlt=0.0f;	//Posición en y de la cámara (altura a la que se situa la cámara)
+	enemigo8.CamaraObjAlt=4.0f;	//Posición en y del objetivo de la cámara (altura a la que ve la cámara)
+	enemigo8.AngDir=-PI;		//Este ángulo inicial hace que la dirección inicial sea paralela al eje Z y con sentido negativo
+	enemigo8.AngObj=PI;		//Este valor se elige dependiendo de la orientación con la que aparece el modelo en la escena al dibujarlo
+								//sin aplicarle ninguna transformación (hacia adonde está volteando). Se elige un ángulo tal que al aplicarle
+								//una rotación inicial con respecto al eje Y esté viendo hacia la misma dirección que la definida por AngDir
+	
+	enemigo8.PosicionObj=CVector(-15.0f, 0.0f, 0.0f); //Esta es la posición inicial del objeto en la escena
+	enemigo8.Direccion.x=(float)cos(enemigo8.AngDir); //Dirección inicial definida por el ángulo inicial AngDir (x=cos(AngDir), y=0.0, z=sen(AngDir))
+	enemigo8.Direccion.y=0.0f;
+	enemigo8.Direccion.z=(float)sin(enemigo8.AngDir);   
+	enemigo8.PosicionCam=CVector(0.0f, enemigo8.CamaraPosAlt, 10.0f); //Posición inicial de la cámara a [DistanciaCam] unidades detrás del objeto
+	enemigo8.ObjetivoCam=enemigo8.PosicionObj;		//La cámara ve siempre al objeto
+	enemigo8.ObjetivoCam.y=enemigo8.CamaraObjAlt;		//Para que no vea a los "pies" del objeto (personaje)
+
+	enemigo8.Dir=0;
+	enemigo8.DirAnt=0;
+	enemigo8.escalaX=0.2f;
+	enemigo8.escalaY=0.2f;
+	enemigo8.escalaZ=0.2f;
 
 	// Inicializa parametros de control para Aru
 	//Esta función establece los parámetros como velocidad del objeto y distancia de la cámara así como la posición y dirección iniciales
@@ -1229,6 +1306,24 @@ void animacion(FRAME *KeyFrame, int maxKF , int frames)
 			
 		}
 	}
+}
+
+//savage
+void dibujaEnemigo8()
+{
+	static float anglef=0.0f;
+	anglef+=4.0f;
+	glCallList(enemigo8L);
+	glPushMatrix();
+		
+		glRotatef(anglef, 0.0f, 1.0f, 0.0f);
+		glCallList(enemigo8L+1);
+	glPopMatrix();
+	glPushMatrix();
+	
+		glRotatef(anglef, 1.0f, 0.0f, 0.0f);
+		glCallList(enemigo8L+2);
+	glPopMatrix();
 }
 
 void DibujaPersonaje()
@@ -1796,6 +1891,14 @@ void DibujaEscena()
 		glRotatef(player1.AngObj, 0.0f, 1.0f, 0.0f);
 		glScalef(player1.escalaX,player1.escalaY,player1.escalaZ);
 		DibujaPersonaje();
+	glPopMatrix();
+
+	// savage
+	glPushMatrix();
+			glTranslatef(enemigo8.PosicionObj.x, enemigo8.PosicionObj.y+2.4f, enemigo8.PosicionObj.z);
+			glRotatef(enemigo8.AngObj, 0.0f, 1.0f, 0.0f);
+			glScalef(enemigo8.escalaX,enemigo8.escalaY,enemigo8.escalaZ);
+			dibujaEnemigo8();
 	glPopMatrix();
 
 	// Aru
