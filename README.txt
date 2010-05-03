@@ -1,1 +1,1 @@
-Codigo base, escriban aqui o en los comentarios sus cambios o lo que se les ocurra, lol.
+Pueden trabajar en este folder sin temor a que se agreguen archivos no deseados. Para eso esta .gitignore. Todos los archivos que esten listados en .gitignore son ignorados por git al momento de hacer push/pull.
