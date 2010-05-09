@@ -1,11 +1,6 @@
 #include "Main.h"
 #include "3ds.h"
 
-// Probando esta mamada XD
-// lol hcker
-// Agregando comentario de prueba
-//Y viendo si este funciona... FAHL
-
 
 //Libreria que usamos para el timer
 #pragma comment( lib, "winmm.lib" )	
@@ -34,7 +29,9 @@ parametros player1aru;
 
 parametros enem1;	 //Variable con la que tenemos acceso a la estructura de parámetros de ene1
 parametros MJ6;		 //Variable con la que tenemos acceso a la estructura de parámetros de MJ6
-
+parametros enem3a;	 //Variable con la que tenemos acceso a la estructura de parámetros de ene1
+parametros enem3b;		 //Variable con la que tenemos acceso a la estructura de parámetros de MJ6
+parametros chang;	 //Variable con la que tenemos acceso a la estructura de parámetros de ene1
 // parametros savage
 parametros enemigo8;
 
@@ -95,6 +92,31 @@ CMateriales Material;
 #define FILE_NAME9f	 "Modelos/MJ6PierIzqA.3ds"
 #define FILE_NAME10f "Modelos/MJ6PierIzqB.3ds"
 
+
+//nombre y ubicación de modelo Ene3a
+#define FILE_NAME1h	 "Modelos/torsoe3a.3ds"
+#define FILE_NAME2h	 "Modelos/bder3a.3ds"
+#define FILE_NAME3h	 "Modelos/bizq3a.3ds"
+#define FILE_NAME4h	 "Modelos/pder3a.3ds"
+#define FILE_NAME5h	 "Modelos/pizq3a.3ds"
+
+
+//nombre y ubicación de modelo ene3b
+#define FILE_NAME1i	 "Modelos/torsoe3b.3ds"
+#define FILE_NAME2i	 "Modelos/bder3b.3ds"
+#define FILE_NAME3i	 "Modelos/bizq3b.3ds"
+#define FILE_NAME4i	 "Modelos/pder3b.3ds"
+#define FILE_NAME5i	 "Modelos/pizq3b.3ds"
+
+
+//nombre y ubicación de modelo chango
+#define FILE_NAME1j	 "Modelos/torsoch.3ds"
+#define FILE_NAME2j	 "Modelos/bderch.3ds"
+#define FILE_NAME3j	 "Modelos/bizqch.3ds"
+#define FILE_NAME4j	 "Modelos/pderch.3ds"
+#define FILE_NAME5j	 "Modelos/pizqch.3ds"
+
+
 // Bob
 CTga textureModel1c[20];
 CTga textureModel2c[20];
@@ -120,6 +142,18 @@ CTga textureModel1aru[20]; //MJ.tga
 
 // Contenedores de texturas del escenario
 CTga textureModel2e[20];
+//Contenedor de texturas de enemigo3a
+CTga textureModel1h[20];
+CTga textureModel2h[20];
+CTga textureModel3h[20];
+//Contenedor de texturas de enemigo3b
+CTga textureModel1i[20];
+CTga textureModel2i[20];
+CTga textureModel3i[20];
+//Contenedor de texturas de chango
+CTga textureModel1j[20];
+CTga textureModel2j[20];
+CTga textureModel3j[20];
 
 CLoad3DS g_Load3ds;
 
@@ -159,6 +193,8 @@ t3DModel g_3DModel7d;
 t3DModel g_3DModel8d;
 t3DModel g_3DModel9d;
 t3DModel g_3DModel10d;
+
+
 //Acceso a la estructura que almacena a MJ6
 t3DModel g_3DModel1f;
 t3DModel g_3DModel2f;
@@ -177,6 +213,30 @@ t3DModel g_3DModel1g;
 t3DModel g_3DModel2g;
 t3DModel g_3DModel3g;
 
+
+//Acceso a la estructura que almacena a Ene3a
+t3DModel g_3DModel1h;
+t3DModel g_3DModel2h;
+t3DModel g_3DModel3h;
+t3DModel g_3DModel4h;
+t3DModel g_3DModel5h;
+
+
+//Acceso a la estructura que almacena a Ene3b
+t3DModel g_3DModel1i;
+t3DModel g_3DModel2i;
+t3DModel g_3DModel3i;
+t3DModel g_3DModel4i;
+t3DModel g_3DModel5i;
+
+
+//Acceso a la estructura que almacena a chango
+t3DModel g_3DModel1j;
+t3DModel g_3DModel2j;
+t3DModel g_3DModel3j;
+t3DModel g_3DModel4j;
+t3DModel g_3DModel5j;
+
 //Contenedor de texturas adicionales
 CTga textura[30];
 
@@ -185,7 +245,9 @@ const int maxKF1=3;				//Num. total de KeyFrames para la secuencia 1 (caminar)
 FRAME KeyFrame1[maxKF1];		//Contenedor para almacenar cada keyframe de la secuencia 1
 
 jerarquiaModelo player1modeloaru;
-
+jerarquiaModelo enem3amodelo;
+jerarquiaModelo enem3bmodelo;
+jerarquiaModelo changmodelo;
 jerarquiaModelo enem1modelo;
 jerarquiaModelo MJ6modelo;
 
@@ -199,6 +261,9 @@ CMultitexturas Multitext;
 GLuint modelo1;
 GLuint ene1;
 GLuint noMJ6;
+GLuint ene3a;
+GLuint ene3b;
+GLuint cha;
 
 // las listas savage
 GLuint enemigo8L;
@@ -475,6 +540,42 @@ int CargaModelos()
 	if(!g_Load3ds.Load3DSFile(FILE_NAME10f, &g_3DModel10f, textureModel1f))
 		return 0;
 
+	//Ene3a
+	if(!g_Load3ds.Load3DSFile(FILE_NAME1h, &g_3DModel1h, textureModel1h))
+		return 0;
+	if(!g_Load3ds.Load3DSFile(FILE_NAME2h, &g_3DModel2h, textureModel2h))
+		return 0;
+	if(!g_Load3ds.Load3DSFile(FILE_NAME3h, &g_3DModel3h, textureModel3h))
+		return 0;
+	if(!g_Load3ds.Load3DSFile(FILE_NAME4h, &g_3DModel4h, textureModel3h))
+		return 0;
+	if(!g_Load3ds.Load3DSFile(FILE_NAME5h, &g_3DModel5h, textureModel3h))
+		return 0;
+
+	//Ene3b
+	if(!g_Load3ds.Load3DSFile(FILE_NAME1i, &g_3DModel1i, textureModel1i))
+		return 0;
+	if(!g_Load3ds.Load3DSFile(FILE_NAME2i, &g_3DModel2i, textureModel2i))
+		return 0;
+	if(!g_Load3ds.Load3DSFile(FILE_NAME3i, &g_3DModel3i, textureModel3i))
+		return 0;
+	if(!g_Load3ds.Load3DSFile(FILE_NAME4i, &g_3DModel4i, textureModel3i))
+		return 0;
+	if(!g_Load3ds.Load3DSFile(FILE_NAME5i, &g_3DModel5i, textureModel3i))
+		return 0;
+
+	//chango
+	if(!g_Load3ds.Load3DSFile(FILE_NAME1j, &g_3DModel1j, textureModel1j))
+		return 0;
+	if(!g_Load3ds.Load3DSFile(FILE_NAME2j, &g_3DModel2j, textureModel2j))
+		return 0;
+	if(!g_Load3ds.Load3DSFile(FILE_NAME3j, &g_3DModel3j, textureModel3j))
+		return 0;
+	if(!g_Load3ds.Load3DSFile(FILE_NAME4j, &g_3DModel4j, textureModel3j))
+		return 0;
+	if(!g_Load3ds.Load3DSFile(FILE_NAME5j, &g_3DModel5j, textureModel3j))
+		return 0;
+
 	return TRUE;
 }
 
@@ -533,6 +634,27 @@ void DescargaModelos()
 	g_Load3ds.UnLoad3DSFile(&g_3DModel9f, textureModel1f);
 	g_Load3ds.UnLoad3DSFile(&g_3DModel10f, textureModel1f);
 
+	//Ene3a
+	g_Load3ds.UnLoad3DSFile(&g_3DModel1h, textureModel1h);
+	g_Load3ds.UnLoad3DSFile(&g_3DModel2h, textureModel2h);
+	g_Load3ds.UnLoad3DSFile(&g_3DModel3h, textureModel3h);
+	g_Load3ds.UnLoad3DSFile(&g_3DModel4h, textureModel3h);
+	g_Load3ds.UnLoad3DSFile(&g_3DModel5h, textureModel3h);
+
+	//Ene3b
+	g_Load3ds.UnLoad3DSFile(&g_3DModel1i, textureModel1i);
+	g_Load3ds.UnLoad3DSFile(&g_3DModel2i, textureModel2i);
+	g_Load3ds.UnLoad3DSFile(&g_3DModel3i, textureModel3i);
+	g_Load3ds.UnLoad3DSFile(&g_3DModel4i, textureModel3i);
+	g_Load3ds.UnLoad3DSFile(&g_3DModel5i, textureModel3i);
+
+	//chango
+	g_Load3ds.UnLoad3DSFile(&g_3DModel1j, textureModel1j);
+	g_Load3ds.UnLoad3DSFile(&g_3DModel2j, textureModel2j);
+	g_Load3ds.UnLoad3DSFile(&g_3DModel3j, textureModel3j);
+	g_Load3ds.UnLoad3DSFile(&g_3DModel4j, textureModel3j);
+	g_Load3ds.UnLoad3DSFile(&g_3DModel5j, textureModel3j);
+
 	//Escenario
 }
 
@@ -575,7 +697,12 @@ void CreaListas()
 	ene1=glGenLists(10);
 	//MJ6
 	noMJ6=glGenLists(10);
-
+	//Ene3a
+	ene3a=glGenLists(5);
+	//Ene3a
+	ene3b=glGenLists(5);
+	//chango
+	cha=glGenLists(5);
 	// en crea listas savage
 	enemigo8L=glGenLists(3);
 	glNewList(enemigo8L+0,GL_COMPILE);
@@ -746,6 +873,69 @@ void CreaListas()
 	glNewList(noMJ6+9,GL_COMPILE);
 		g_Load3ds.Render3DSFile(&g_3DModel10f, textureModel1f, 1);
 	glEndList();
+
+	//Ene3a
+	glNewList(ene3a+0,GL_COMPILE);
+		g_Load3ds.Render3DSFile(&g_3DModel1h, textureModel1h, 1);
+	glEndList();
+
+	glNewList(ene3a+1,GL_COMPILE);
+		g_Load3ds.Render3DSFile(&g_3DModel2h, textureModel2h, 1);
+	glEndList();
+
+	glNewList(ene3a+2,GL_COMPILE);
+		g_Load3ds.Render3DSFile(&g_3DModel3h, textureModel3h, 1);
+	glEndList();
+
+	glNewList(ene3a+3,GL_COMPILE);
+		g_Load3ds.Render3DSFile(&g_3DModel4h, textureModel3h, 1);
+	glEndList();
+
+	glNewList(ene3a+4,GL_COMPILE);
+		g_Load3ds.Render3DSFile(&g_3DModel5h, textureModel3h, 1);
+	glEndList();
+
+	//Ene3b
+	glNewList(ene3b+0,GL_COMPILE);
+		g_Load3ds.Render3DSFile(&g_3DModel1i, textureModel1i, 1);
+	glEndList();
+
+	glNewList(ene3b+1,GL_COMPILE);
+		g_Load3ds.Render3DSFile(&g_3DModel2i, textureModel2i, 1);
+	glEndList();
+
+	glNewList(ene3b+2,GL_COMPILE);
+		g_Load3ds.Render3DSFile(&g_3DModel3i, textureModel3i, 1);
+	glEndList();
+
+	glNewList(ene3b+3,GL_COMPILE);
+		g_Load3ds.Render3DSFile(&g_3DModel4i, textureModel3i, 1);
+	glEndList();
+
+	glNewList(ene3b+4,GL_COMPILE);
+		g_Load3ds.Render3DSFile(&g_3DModel5i, textureModel3i, 1);
+	glEndList();
+
+	//chango
+	glNewList(cha+0,GL_COMPILE);
+		g_Load3ds.Render3DSFile(&g_3DModel1j, textureModel1j, 1);
+	glEndList();
+
+	glNewList(cha+1,GL_COMPILE);
+		g_Load3ds.Render3DSFile(&g_3DModel2j, textureModel2j, 1);
+	glEndList();
+
+	glNewList(cha+2,GL_COMPILE);
+		g_Load3ds.Render3DSFile(&g_3DModel3j, textureModel3j, 1);
+	glEndList();
+
+	glNewList(cha+3,GL_COMPILE);
+		g_Load3ds.Render3DSFile(&g_3DModel4j, textureModel3j, 1);
+	glEndList();
+
+	glNewList(cha+4,GL_COMPILE);
+		g_Load3ds.Render3DSFile(&g_3DModel5j, textureModel3j, 1);
+	glEndList();
 }
 
 void DestruyeListas()
@@ -757,6 +947,10 @@ void DestruyeListas()
 	// Borra listas fahl
 	glDeleteLists(ene1,10);
 	glDeleteLists(noMJ6,10);
+
+	glDeleteLists(ene3a,5);
+	glDeleteLists(ene3b,5);
+	glDeleteLists(cha,5);
 
 }
 
@@ -906,6 +1100,94 @@ void InicializaParametrosdeControl()
 	MJ6.escalaZ=0.4f;
 
 	MJ6.CamaraObjAltE=0.0f;
+
+	// enem3a
+	enem3a.visible=true;
+	enem3a.VelocidadObj=0.2f;
+	enem3a.DistanciaCam=10.0f;
+
+	enem3a.CamaraPosAlt=5.0f;	//Posición en y de la cámara (altura a la que se situa la cámara)
+	enem3a.CamaraObjAlt=4.0f;	//Posición en y del objetivo de la cámara (altura a la que ve la cámara)
+	enem3a.AngDir=90.0f;		//Este ángulo inicial hace que la dirección inicial sea paralela al eje Z y con sentido negativo
+	enem3a.AngObj=0.0f;		//Este valor se elige dependiendo de la orientación con la que aparece el modelo en la escena al dibujarlo
+								//sin aplicarle ninguna transformación (hacia adonde está volteando). Se elige un ángulo tal que al aplicarle
+								//una rotación inicial con respecto al eje Y esté viendo hacia la misma dirección que la definida por AngDir
+	
+	enem3a.PosicionObj=CVector(-15.0f, 0.0f, 0.0f); //Esta es la posición inicial del objeto en la escena
+	enem3a.Direccion.x=(float)cos(player1.AngDir*PI/180.0f); //Dirección inicial definida por el ángulo inicial AngDir (x=cos(AngDir), y=0.0, z=sen(AngDir))
+	enem3a.Direccion.y=0.0f;
+	enem3a.Direccion.z=(float)sin(player1.AngDir*PI/180.0f);   
+	enem3a.PosicionCam=CVector(0.0f, player1.CamaraPosAlt, 10.0f); //Posición inicial de la cámara a [DistanciaCam] unidades detrás del objeto
+	enem3a.ObjetivoCam=player1.PosicionObj;		//La cámara ve siempre al objeto
+	enem3a.ObjetivoCam.y=player1.CamaraObjAlt;		//Para que no vea a los "pies" del objeto (personaje)
+
+	enem3a.Dir=0;
+	enem3a.DirAnt=0;
+
+	enem3a.escalaX=0.4f;
+	enem3a.escalaY=0.4f;
+	enem3a.escalaZ=0.4f;
+
+	enem3a.CamaraObjAltE=0.0f;
+
+	// enem3b
+	enem3b.visible=true;
+	enem3b.VelocidadObj=0.2f;
+	enem3b.DistanciaCam=10.0f;
+
+	enem3b.CamaraPosAlt=5.0f;	//Posición en y de la cámara (altura a la que se situa la cámara)
+	enem3b.CamaraObjAlt=4.0f;	//Posición en y del objetivo de la cámara (altura a la que ve la cámara)
+	enem3b.AngDir=90.0f;		//Este ángulo inicial hace que la dirección inicial sea paralela al eje Z y con sentido negativo
+	enem3b.AngObj=0.0f;		//Este valor se elige dependiendo de la orientación con la que aparece el modelo en la escena al dibujarlo
+								//sin aplicarle ninguna transformación (hacia adonde está volteando). Se elige un ángulo tal que al aplicarle
+								//una rotación inicial con respecto al eje Y esté viendo hacia la misma dirección que la definida por AngDir
+	
+	enem3b.PosicionObj=CVector(-19.0f, 0.0f, 0.0f); //Esta es la posición inicial del objeto en la escena
+	enem3b.Direccion.x=(float)cos(player1.AngDir*PI/180.0f); //Dirección inicial definida por el ángulo inicial AngDir (x=cos(AngDir), y=0.0, z=sen(AngDir))
+	enem3b.Direccion.y=0.0f;
+	enem3b.Direccion.z=(float)sin(player1.AngDir*PI/180.0f);   
+	enem3b.PosicionCam=CVector(0.0f, player1.CamaraPosAlt, 10.0f); //Posición inicial de la cámara a [DistanciaCam] unidades detrás del objeto
+	enem3b.ObjetivoCam=player1.PosicionObj;		//La cámara ve siempre al objeto
+	enem3b.ObjetivoCam.y=player1.CamaraObjAlt;		//Para que no vea a los "pies" del objeto (personaje)
+
+	enem3b.Dir=0;
+	enem3b.DirAnt=0;
+
+	enem3b.escalaX=0.4f;
+	enem3b.escalaY=0.4f;
+	enem3b.escalaZ=0.4f;
+
+	enem3b.CamaraObjAltE=0.0f;
+
+
+	// chang
+	chang.visible=true;
+	chang.VelocidadObj=0.2f;
+	chang.DistanciaCam=10.0f;
+
+	chang.CamaraPosAlt=5.0f;	//Posición en y de la cámara (altura a la que se situa la cámara)
+	chang.CamaraObjAlt=4.0f;	//Posición en y del objetivo de la cámara (altura a la que ve la cámara)
+	chang.AngDir=90.0f;		//Este ángulo inicial hace que la dirección inicial sea paralela al eje Z y con sentido negativo
+	chang.AngObj=0.0f;		//Este valor se elige dependiendo de la orientación con la que aparece el modelo en la escena al dibujarlo
+								//sin aplicarle ninguna transformación (hacia adonde está volteando). Se elige un ángulo tal que al aplicarle
+								//una rotación inicial con respecto al eje Y esté viendo hacia la misma dirección que la definida por AngDir
+	
+	chang.PosicionObj=CVector(-30.0f, 0.0f, 0.0f); //Esta es la posición inicial del objeto en la escena
+	chang.Direccion.x=(float)cos(player1.AngDir*PI/180.0f); //Dirección inicial definida por el ángulo inicial AngDir (x=cos(AngDir), y=0.0, z=sen(AngDir))
+	chang.Direccion.y=0.0f;
+	chang.Direccion.z=(float)sin(player1.AngDir*PI/180.0f);   
+	chang.PosicionCam=CVector(0.0f, player1.CamaraPosAlt, 10.0f); //Posición inicial de la cámara a [DistanciaCam] unidades detrás del objeto
+	chang.ObjetivoCam=player1.PosicionObj;		//La cámara ve siempre al objeto
+	chang.ObjetivoCam.y=player1.CamaraObjAlt;		//Para que no vea a los "pies" del objeto (personaje)
+
+	chang.Dir=0;
+	chang.DirAnt=0;
+
+	chang.escalaX=0.4f;
+	chang.escalaY=0.4f;
+	chang.escalaZ=0.4f;
+
+	chang.CamaraObjAltE=0.0f;
 }
 
 void InicializaAnim()
@@ -1013,6 +1295,66 @@ void InicializaAnim()
 	MJ6modelo.Xtor=0.0f;
 	MJ6modelo.Ytor=0.0f;
 	MJ6modelo.Ztor=0.0f;
+
+	enem3amodelo.Angt1=0.0f;
+	enem3amodelo.Angt2=0.0f;
+	enem3amodelo.Angc1=0.0f;
+	enem3amodelo.Angc2=0.0f;
+	enem3amodelo.Angbi1=0.0f;
+	enem3amodelo.Angbi2=0.0f;
+	enem3amodelo.Angbib=0.0f;
+	enem3amodelo.Angbd1=0.0f;
+	enem3amodelo.Angbd2=0.0f;
+	enem3amodelo.Angbdb=0.0f;
+	enem3amodelo.Angpizq=0.0f;
+	enem3amodelo.Angpizqb=0.0f;
+	enem3amodelo.Angpder=0.0f;
+	enem3amodelo.Angpderb=0.0f;
+	enem3amodelo.Angpi=0.0f;
+	enem3amodelo.Angpd=0.0f;
+	enem3amodelo.Xtor=0.0f;
+	enem3amodelo.Ytor=0.0f;
+	enem3amodelo.Ztor=0.0f;
+
+	enem3bmodelo.Angt1=0.0f;
+	enem3bmodelo.Angt2=0.0f;
+	enem3bmodelo.Angc1=0.0f;
+	enem3bmodelo.Angc2=0.0f;
+	enem3bmodelo.Angbi1=0.0f;
+	enem3bmodelo.Angbi2=0.0f;
+	enem3bmodelo.Angbib=0.0f;
+	enem3bmodelo.Angbd1=0.0f;
+	enem3bmodelo.Angbd2=0.0f;
+	enem3bmodelo.Angbdb=0.0f;
+	enem3bmodelo.Angpizq=0.0f;
+	enem3bmodelo.Angpizqb=0.0f;
+	enem3bmodelo.Angpder=0.0f;
+	enem3bmodelo.Angpderb=0.0f;
+	enem3bmodelo.Angpi=0.0f;
+	enem3bmodelo.Angpd=0.0f;
+	enem3bmodelo.Xtor=0.0f;
+	enem3bmodelo.Ytor=0.0f;
+	enem3bmodelo.Ztor=0.0f;
+
+	changmodelo.Angt1=0.0f;
+	changmodelo.Angt2=0.0f;
+	changmodelo.Angc1=0.0f;
+	changmodelo.Angc2=0.0f;
+	changmodelo.Angbi1=0.0f;
+	changmodelo.Angbi2=0.0f;
+	changmodelo.Angbib=0.0f;
+	changmodelo.Angbd1=0.0f;
+	changmodelo.Angbd2=0.0f;
+	changmodelo.Angbdb=0.0f;
+	changmodelo.Angpizq=0.0f;
+	changmodelo.Angpizqb=0.0f;
+	changmodelo.Angpder=0.0f;
+	changmodelo.Angpderb=0.0f;
+	changmodelo.Angpi=0.0f;
+	changmodelo.Angpd=0.0f;
+	changmodelo.Xtor=0.0f;
+	changmodelo.Ytor=0.0f;
+	changmodelo.Ztor=0.0f;
 }
 
 void DatosAnimacion()
@@ -1543,6 +1885,130 @@ void DibujaMJ6()
 	glPopMatrix();
 }
 
+void DibujaEnemigo3a()
+{
+	glTranslatef(enem3amodelo.Xtor, enem3amodelo.Ytor, enem3amodelo.Ztor);
+	glRotatef(enem3amodelo.Angt2, 0.0f, 1.0f, 0.0f);
+	glRotatef(enem3amodelo.Angt1, 1.0f, 0.0f, 0.0f);
+			
+	//Torso
+	glCallList(ene3a+0);
+	
+	//Brazo derecho
+	glPushMatrix();
+		//glTranslatef(-2.8f, 1.1f, 0.0f);
+		glRotatef(enem3amodelo.Angbd2, 0.0f, 1.0f, 0.0f);
+		glRotatef(enem3amodelo.Angbd1, 1.0f, 0.0f, 0.0f);
+		glCallList(ene3a+1);
+	glPopMatrix();
+
+	//Brazo izquierdo
+	glPushMatrix();
+		//glTranslatef(-2.8f, 1.1f, 0.0f);
+		glRotatef(enem3amodelo.Angbd2, 0.0f, 1.0f, 0.0f);
+		glRotatef(enem3amodelo.Angbd1, 1.0f, 0.0f, 0.0f);
+		glCallList(ene3a+2);
+	glPopMatrix();
+	
+	//Pierna derecha
+	glPushMatrix();
+		//glTranslatef(-1.2f, -1.3f ,0.0f);
+		glRotatef(enem3amodelo.Angpder, 1.0f, 0.0f, 0.0f);
+		glCallList(ene3a+3);
+	glPopMatrix();
+
+	//Pierna izquierda
+	glPushMatrix();
+		//glTranslatef(1.2f, -1.3f ,0.0f);
+		glRotatef(enem3amodelo.Angpizq, 1.0f, 0.0f, 0.0f);
+		glCallList(ene3a+4);
+	glPopMatrix();
+
+}
+
+void DibujaEnemigo3b()
+{
+	glTranslatef(enem3bmodelo.Xtor, enem3bmodelo.Ytor, enem3bmodelo.Ztor);
+	glRotatef(enem3bmodelo.Angt2, 0.0f, 1.0f, 0.0f);
+	glRotatef(enem3bmodelo.Angt1, 1.0f, 0.0f, 0.0f);
+			
+	//Torso
+	glCallList(ene3b+0);
+	
+	//Brazo derecho
+	glPushMatrix();
+		//glTranslatef(-2.8f, 1.1f, 0.0f);
+		glRotatef(enem3bmodelo.Angbd2, 0.0f, 1.0f, 0.0f);
+		glRotatef(enem3bmodelo.Angbd1, 1.0f, 0.0f, 0.0f);
+		glCallList(ene3b+1);
+	glPopMatrix();
+
+	//Brazo izquierdo
+	glPushMatrix();
+		//glTranslatef(-2.8f, 1.1f, 0.0f);
+		glRotatef(enem3bmodelo.Angbd2, 0.0f, 1.0f, 0.0f);
+		glRotatef(enem3bmodelo.Angbd1, 1.0f, 0.0f, 0.0f);
+		glCallList(ene3b+2);
+	glPopMatrix();
+	
+	//Pierna derecha
+	glPushMatrix();
+		//glTranslatef(-1.2f, -1.3f ,0.0f);
+		glRotatef(enem3bmodelo.Angpder, 1.0f, 0.0f, 0.0f);
+		glCallList(ene3b+3);
+	glPopMatrix();
+
+	//Pierna izquierda
+	glPushMatrix();
+		//glTranslatef(1.2f, -1.3f ,0.0f);
+		glRotatef(enem3bmodelo.Angpizq, 1.0f, 0.0f, 0.0f);
+		glCallList(ene3b+4);
+	glPopMatrix();
+}
+
+
+void DibujaChango()
+{
+	glTranslatef(changmodelo.Xtor, changmodelo.Ytor, changmodelo.Ztor);
+	glRotatef(changmodelo.Angt2, 0.0f, 1.0f, 0.0f);
+	glRotatef(changmodelo.Angt1, 1.0f, 0.0f, 0.0f);
+			
+	//Torso
+	glCallList(cha+0);
+	
+	//Brazo derecho
+	glPushMatrix();
+		//glTranslatef(-2.8f, 1.1f, 0.0f);
+		glRotatef(changmodelo.Angbd2, 0.0f, 1.0f, 0.0f);
+		glRotatef(changmodelo.Angbd1, 1.0f, 0.0f, 0.0f);
+		glCallList(cha+1);
+	glPopMatrix();
+
+	//Brazo izquierdo
+	glPushMatrix();
+		//glTranslatef(-2.8f, 1.1f, 0.0f);
+		glRotatef(changmodelo.Angbd2, 0.0f, 1.0f, 0.0f);
+		glRotatef(changmodelo.Angbd1, 1.0f, 0.0f, 0.0f);
+		glCallList(cha+2);
+	glPopMatrix();
+	
+	//Pierna derecha
+	glPushMatrix();
+		//glTranslatef(-1.2f, -1.3f ,0.0f);
+		glRotatef(changmodelo.Angpder, 1.0f, 0.0f, 0.0f);
+		glCallList(cha+3);
+	glPopMatrix();
+
+	//Pierna izquierda
+	glPushMatrix();
+		//glTranslatef(1.2f, -1.3f ,0.0f);
+		glRotatef(changmodelo.Angpizq, 1.0f, 0.0f, 0.0f);
+		glCallList(cha+4);
+	glPopMatrix();
+}
+
+
+
 void DibujaSombraPersonaje()
 {
 	glPushMatrix();
@@ -1910,12 +2376,37 @@ void DibujaEscena()
 		DibujaPersonajeAru();
 	glPopMatrix();
 
+
 	//Ene1
 	glPushMatrix();
 		glTranslatef(enem1.PosicionObj.x, enem1.PosicionObj.y+2.4f, enem1.PosicionObj.z);
 		glRotatef(enem1.AngObj, 0.0f, 1.0f, 0.0f);
 		glScalef(enem1.escalaX,enem1.escalaY,enem1.escalaZ);
 		DibujaEnemigo1();
+	glPopMatrix();
+
+	//Ene3a
+	glPushMatrix();
+		glTranslatef(enem3a.PosicionObj.x, enem3a.PosicionObj.y+2.4f, enem3a.PosicionObj.z);
+		glRotatef(enem3a.AngObj, 0.0f, 1.0f, 0.0f);
+		glScalef(enem3a.escalaX,enem3a.escalaY,enem3a.escalaZ);
+		DibujaEnemigo3a();
+	glPopMatrix();
+
+	//Ene3b
+	glPushMatrix();
+		glTranslatef(enem3b.PosicionObj.x, enem3b.PosicionObj.y+2.4f, enem3b.PosicionObj.z);
+		glRotatef(enem3b.AngObj, 0.0f, 1.0f, 0.0f);
+		glScalef(enem3b.escalaX,enem3b.escalaY,enem3b.escalaZ);
+		DibujaEnemigo3b();
+	glPopMatrix();
+
+	//Ene3chango
+	glPushMatrix();
+		glTranslatef(chang.PosicionObj.x, chang.PosicionObj.y+2.4f, chang.PosicionObj.z);
+		glRotatef(chang.AngObj, 0.0f, 1.0f, 0.0f);
+		glScalef(chang.escalaX,chang.escalaY,chang.escalaZ);
+		DibujaChango();
 	glPopMatrix();
 
 	//MJ6
@@ -1925,6 +2416,8 @@ void DibujaEscena()
 		glScalef(MJ6.escalaX,MJ6.escalaY,MJ6.escalaZ);
 		DibujaMJ6();
 	glPopMatrix();
+
+
 
 	glDisable(GL_NORMALIZE);
 }
