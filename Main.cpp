@@ -146,14 +146,20 @@ CTga textureModel2e[20];
 CTga textureModel1h[20];
 CTga textureModel2h[20];
 CTga textureModel3h[20];
+CTga textureModel4h[20];
+CTga textureModel5h[20];
 //Contenedor de texturas de enemigo3b
 CTga textureModel1i[20];
 CTga textureModel2i[20];
 CTga textureModel3i[20];
+CTga textureModel4i[20];
+CTga textureModel5i[20];
 //Contenedor de texturas de chango
 CTga textureModel1j[20];
 CTga textureModel2j[20];
 CTga textureModel3j[20];
+CTga textureModel4j[20];
+CTga textureModel5j[20];
 
 CLoad3DS g_Load3ds;
 
@@ -547,9 +553,9 @@ int CargaModelos()
 		return 0;
 	if(!g_Load3ds.Load3DSFile(FILE_NAME3h, &g_3DModel3h, textureModel3h))
 		return 0;
-	if(!g_Load3ds.Load3DSFile(FILE_NAME4h, &g_3DModel4h, textureModel3h))
+	if(!g_Load3ds.Load3DSFile(FILE_NAME4h, &g_3DModel4h, textureModel4h))
 		return 0;
-	if(!g_Load3ds.Load3DSFile(FILE_NAME5h, &g_3DModel5h, textureModel3h))
+	if(!g_Load3ds.Load3DSFile(FILE_NAME5h, &g_3DModel5h, textureModel5h))
 		return 0;
 
 	//Ene3b
@@ -559,9 +565,9 @@ int CargaModelos()
 		return 0;
 	if(!g_Load3ds.Load3DSFile(FILE_NAME3i, &g_3DModel3i, textureModel3i))
 		return 0;
-	if(!g_Load3ds.Load3DSFile(FILE_NAME4i, &g_3DModel4i, textureModel3i))
+	if(!g_Load3ds.Load3DSFile(FILE_NAME4i, &g_3DModel4i, textureModel4i))
 		return 0;
-	if(!g_Load3ds.Load3DSFile(FILE_NAME5i, &g_3DModel5i, textureModel3i))
+	if(!g_Load3ds.Load3DSFile(FILE_NAME5i, &g_3DModel5i, textureModel5i))
 		return 0;
 
 	//chango
@@ -571,9 +577,9 @@ int CargaModelos()
 		return 0;
 	if(!g_Load3ds.Load3DSFile(FILE_NAME3j, &g_3DModel3j, textureModel3j))
 		return 0;
-	if(!g_Load3ds.Load3DSFile(FILE_NAME4j, &g_3DModel4j, textureModel3j))
+	if(!g_Load3ds.Load3DSFile(FILE_NAME4j, &g_3DModel4j, textureModel4j))
 		return 0;
-	if(!g_Load3ds.Load3DSFile(FILE_NAME5j, &g_3DModel5j, textureModel3j))
+	if(!g_Load3ds.Load3DSFile(FILE_NAME5j, &g_3DModel5j, textureModel5j))
 		return 0;
 
 	return TRUE;
@@ -638,22 +644,22 @@ void DescargaModelos()
 	g_Load3ds.UnLoad3DSFile(&g_3DModel1h, textureModel1h);
 	g_Load3ds.UnLoad3DSFile(&g_3DModel2h, textureModel2h);
 	g_Load3ds.UnLoad3DSFile(&g_3DModel3h, textureModel3h);
-	g_Load3ds.UnLoad3DSFile(&g_3DModel4h, textureModel3h);
-	g_Load3ds.UnLoad3DSFile(&g_3DModel5h, textureModel3h);
+	g_Load3ds.UnLoad3DSFile(&g_3DModel4h, textureModel4h);
+	g_Load3ds.UnLoad3DSFile(&g_3DModel5h, textureModel5h);
 
 	//Ene3b
 	g_Load3ds.UnLoad3DSFile(&g_3DModel1i, textureModel1i);
 	g_Load3ds.UnLoad3DSFile(&g_3DModel2i, textureModel2i);
 	g_Load3ds.UnLoad3DSFile(&g_3DModel3i, textureModel3i);
-	g_Load3ds.UnLoad3DSFile(&g_3DModel4i, textureModel3i);
-	g_Load3ds.UnLoad3DSFile(&g_3DModel5i, textureModel3i);
+	g_Load3ds.UnLoad3DSFile(&g_3DModel4i, textureModel4i);
+	g_Load3ds.UnLoad3DSFile(&g_3DModel5i, textureModel5i);
 
 	//chango
 	g_Load3ds.UnLoad3DSFile(&g_3DModel1j, textureModel1j);
 	g_Load3ds.UnLoad3DSFile(&g_3DModel2j, textureModel2j);
 	g_Load3ds.UnLoad3DSFile(&g_3DModel3j, textureModel3j);
-	g_Load3ds.UnLoad3DSFile(&g_3DModel4j, textureModel3j);
-	g_Load3ds.UnLoad3DSFile(&g_3DModel5j, textureModel3j);
+	g_Load3ds.UnLoad3DSFile(&g_3DModel4j, textureModel4j);
+	g_Load3ds.UnLoad3DSFile(&g_3DModel5j, textureModel5j);
 
 	//Escenario
 }
@@ -888,11 +894,11 @@ void CreaListas()
 	glEndList();
 
 	glNewList(ene3a+3,GL_COMPILE);
-		g_Load3ds.Render3DSFile(&g_3DModel4h, textureModel3h, 1);
+		g_Load3ds.Render3DSFile(&g_3DModel4h, textureModel4h, 1);
 	glEndList();
 
 	glNewList(ene3a+4,GL_COMPILE);
-		g_Load3ds.Render3DSFile(&g_3DModel5h, textureModel3h, 1);
+		g_Load3ds.Render3DSFile(&g_3DModel5h, textureModel5h, 1);
 	glEndList();
 
 	//Ene3b
@@ -909,11 +915,11 @@ void CreaListas()
 	glEndList();
 
 	glNewList(ene3b+3,GL_COMPILE);
-		g_Load3ds.Render3DSFile(&g_3DModel4i, textureModel3i, 1);
+		g_Load3ds.Render3DSFile(&g_3DModel4i, textureModel4i, 1);
 	glEndList();
 
 	glNewList(ene3b+4,GL_COMPILE);
-		g_Load3ds.Render3DSFile(&g_3DModel5i, textureModel3i, 1);
+		g_Load3ds.Render3DSFile(&g_3DModel5i, textureModel5i, 1);
 	glEndList();
 
 	//chango
@@ -930,11 +936,11 @@ void CreaListas()
 	glEndList();
 
 	glNewList(cha+3,GL_COMPILE);
-		g_Load3ds.Render3DSFile(&g_3DModel4j, textureModel3j, 1);
+		g_Load3ds.Render3DSFile(&g_3DModel4j, textureModel4j, 1);
 	glEndList();
 
 	glNewList(cha+4,GL_COMPILE);
-		g_Load3ds.Render3DSFile(&g_3DModel5j, textureModel3j, 1);
+		g_Load3ds.Render3DSFile(&g_3DModel5j, textureModel5j, 1);
 	glEndList();
 }
 
