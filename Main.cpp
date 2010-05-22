@@ -1178,7 +1178,7 @@ void InicializaParametrosdeControl()
 								//sin aplicarle ninguna transformación (hacia adonde está volteando). Se elige un ángulo tal que al aplicarle
 								//una rotación inicial con respecto al eje Y esté viendo hacia la misma dirección que la definida por AngDir
 	
-	chang.PosicionObj=CVector(-30.0f, 0.0f, 0.0f); //Esta es la posición inicial del objeto en la escena
+	chang.PosicionObj=CVector(-30.0f, 0.0f, 5.0f); //Esta es la posición inicial del objeto en la escena
 	chang.Direccion.x=(float)cos(player1.AngDir*PI/180.0f); //Dirección inicial definida por el ángulo inicial AngDir (x=cos(AngDir), y=0.0, z=sen(AngDir))
 	chang.Direccion.y=0.0f;
 	chang.Direccion.z=(float)sin(player1.AngDir*PI/180.0f);   
@@ -1189,9 +1189,9 @@ void InicializaParametrosdeControl()
 	chang.Dir=0;
 	chang.DirAnt=0;
 
-	chang.escalaX=0.4f;
-	chang.escalaY=0.4f;
-	chang.escalaZ=0.4f;
+	chang.escalaX=0.15f;
+	chang.escalaY=0.15f;
+	chang.escalaZ=0.15f;
 
 	chang.CamaraObjAltE=0.0f;
 }
