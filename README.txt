@@ -1,4 +1,4 @@
-MoonWaler - El remake del juego de Arcadia para Computadora
+MoonWalker - El remake del juego de Arcadia para Computadora
 
 Pueden trabajar en este folder sin temor a que se agreguen archivos no deseados. Para eso esta .gitignore. Todos los archivos que esten listados en .gitignore son ignorados por git al momento de hacer push/pull.
 
