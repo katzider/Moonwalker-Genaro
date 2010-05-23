@@ -918,24 +918,24 @@ void InicializaParametrosdeControl()
 
 	// Inicializa parametros de control para Aru
 	//Esta función establece los parámetros como velocidad del objeto y distancia de la cámara así como la posición y dirección iniciales
-	player1.visible=true;
-	player1.VelocidadObj=0.2f;
-	player1.DistanciaCam=10.0f;
+	player1.visible = true;
+	player1.VelocidadObj = 0.2f;
+	player1.DistanciaCam = 10.0f;
 
-	player1.CamaraPosAlt=5.0f;	//Posición en y de la cámara (altura a la que se situa la cámara)
-	player1.CamaraObjAlt=4.0f;	//Posición en y del objetivo de la cámara (altura a la que ve la cámara)
-	player1.AngDir=90.0f;		//Este ángulo inicial hace que la dirección inicial sea paralela al eje Z y con sentido negativo
-	player1.AngObj=0.0f;		//Este valor se elige dependiendo de la orientación con la que aparece el modelo en la escena al dibujarlo
+	player1.CamaraPosAlt = 5.0f;	//Posición en y de la cámara (altura a la que se situa la cámara)
+	player1.CamaraObjAlt = 6.4f;	//Posición en y del objetivo de la cámara (altura a la que ve la cámara)
+	player1.AngDir = 90.0f;		//Este ángulo inicial hace que la dirección inicial sea paralela al eje Z y con sentido negativo
+	player1.AngObj = 0.0f;		//Este valor se elige dependiendo de la orientación con la que aparece el modelo en la escena al dibujarlo
 								//sin aplicarle ninguna transformación (hacia adonde está volteando). Se elige un ángulo tal que al aplicarle
 								//una rotación inicial con respecto al eje Y esté viendo hacia la misma dirección que la definida por AngDir
 	
-	player1.PosicionObj=CVector(0.0f, 0.0f, 0.0f); //Esta es la posición inicial del objeto en la escena
-	player1.Direccion.x=(float)cos(player1.AngDir*PI/180.0f); //Dirección inicial definida por el ángulo inicial AngDir (x=cos(AngDir), y=0.0, z=sen(AngDir))
-	player1.Direccion.y=0.0f;
-	player1.Direccion.z=(float)sin(player1.AngDir*PI/180.0f);   
-	player1.PosicionCam=CVector(0.0f, player1.CamaraPosAlt, 10.0f); //Posición inicial de la cámara a [DistanciaCam] unidades detrás del objeto
-	player1.ObjetivoCam=player1.PosicionObj;		//La cámara ve siempre al objeto
-	player1.ObjetivoCam.y=player1.CamaraObjAlt;		//Para que no vea a los "pies" del objeto (personaje)
+	player1.PosicionObj = CVector( 0.0f, 0.0f, 0.0f); //Esta es la posición inicial del objeto en la escena
+	player1.Direccion.x = cosf( player1.AngDir * PI / 180.0f); //Dirección inicial definida por el ángulo inicial AngDir (x=cos(AngDir), y=0.0, z=sen(AngDir))
+	player1.Direccion.y = 0.0f;
+	player1.Direccion.z = sinf( player1.AngDir * PI / 180.0f);   
+	player1.PosicionCam = CVector( 0.0f, player1.CamaraPosAlt, player1.DistanciaCam ); //Posición inicial de la cámara a [DistanciaCam] unidades detrás del objeto
+	player1.ObjetivoCam = player1.PosicionObj;		//La cámara ve siempre al objeto
+	player1.ObjetivoCam.y = player1.CamaraObjAlt;		//Para que no vea a los "pies" del objeto (personaje)
 
 	player1.Dir=0;
 	player1.DirAnt=0;
@@ -1469,24 +1469,24 @@ void LiberaSonido(FMOD_SYSTEM *system, FMOD_RESULT result)
 
 void ControlPersonaje(int funcion)
 {
-	if(funcion == 1) //Giro a la derecha
+	if( funcion == 1 ) //Giro a la derecha
 	{
 		player1.AngDir+=1.0f;
 		if(player1.AngDir > 360.0f)
-			player1.AngDir-=360.0f;
+			player1.AngDir -= 360.0f;
 
 		player1.AngObj-=1.0f;
 		if(player1.AngObj < 0.0f)
-			player1.AngObj+=360.0f;
+			player1.AngObj += 360.0f;
 
-		player1.Direccion.x=(float)cos(player1.AngDir*PI/180.0f);
-		player1.Direccion.y=0.0f;
-		player1.Direccion.z=(float)sin(player1.AngDir*PI/180.0f);
+		player1.Direccion.x = cosf( player1.AngDir * PI/180.0f);
+		player1.Direccion.y = 0.0f;
+		player1.Direccion.z = sinf( player1.AngDir * PI/180.0f);
 
-		player1.PosicionCam=player1.PosicionObj-player1.Direccion*player1.DistanciaCam;
-		player1.PosicionCam.y=player1.CamaraPosAlt;
-		player1.ObjetivoCam=player1.PosicionObj;
-		player1.ObjetivoCam.y=player1.CamaraObjAlt;
+		player1.PosicionCam = player1.PosicionObj - player1.Direccion * player1.DistanciaCam;
+		player1.PosicionCam.y = player1.CamaraPosAlt;
+		player1.ObjetivoCam = player1.PosicionObj;
+		player1.ObjetivoCam.y = player1.CamaraObjAlt;
 	}
 	else if(funcion == 2) //Giro a la izquierda
 	{
@@ -1498,49 +1498,49 @@ void ControlPersonaje(int funcion)
 		if(player1.AngObj > 360.0f)
 			player1.AngObj-=360.0f;
 
-		player1.Direccion.x=(float)cos(player1.AngDir*PI/180.0f);
-		player1.Direccion.y=0.0f;
-		player1.Direccion.z=(float)sin(player1.AngDir*PI/180.0f);
+		player1.Direccion.x = cosf(player1.AngDir*PI/180.0f);
+		player1.Direccion.y = 0.0f;
+		player1.Direccion.z = sinf(player1.AngDir*PI/180.0f);
 
-		player1.PosicionCam=player1.PosicionObj-player1.Direccion*player1.DistanciaCam;
-		player1.PosicionCam.y=player1.CamaraPosAlt;
-		player1.ObjetivoCam=player1.PosicionObj;
-		player1.ObjetivoCam.y=player1.CamaraObjAlt;
+		player1.PosicionCam = player1.PosicionObj - player1.Direccion * player1.DistanciaCam;
+		player1.PosicionCam.y = player1.CamaraPosAlt;
+		player1.ObjetivoCam = player1.PosicionObj;
+		player1.ObjetivoCam.y = player1.CamaraObjAlt;
 	}
 	else if(funcion == 3) //Avanza hacia adelante
 	{
-		player1.PosicionObj=player1.PosicionObj+player1.Direccion*player1.VelocidadObj;
-		player1.PosicionCam=player1.PosicionObj-player1.Direccion*player1.DistanciaCam;
-		player1.PosicionCam.y=player1.CamaraPosAlt;
-		player1.ObjetivoCam=player1.PosicionObj;
-		player1.ObjetivoCam.y=player1.CamaraObjAlt;
+		player1.PosicionObj = player1.PosicionObj + player1.Direccion * player1.VelocidadObj;
+		player1.PosicionCam = player1.PosicionObj - player1.Direccion * player1.DistanciaCam;
+		player1.PosicionCam.y = player1.CamaraPosAlt;
+		player1.ObjetivoCam = player1.PosicionObj;
+		player1.ObjetivoCam.y = player1.CamaraObjAlt;
 
-		player1.PosAntObj=player1.PosicionObj;
+		player1.PosAntObj = player1.PosicionObj;
 
 	}
 	else if(funcion == 4) //Avanza hacia atrás
 	{
-		player1.PosicionObj=player1.PosicionObj-player1.Direccion*player1.VelocidadObj;
-		player1.PosicionCam=player1.PosicionObj-player1.Direccion*player1.DistanciaCam;
-		player1.PosicionCam.y=player1.CamaraPosAlt;
-		player1.ObjetivoCam=player1.PosicionObj;
-		player1.ObjetivoCam.y=player1.CamaraObjAlt;
+		player1.PosicionObj = player1.PosicionObj - player1.Direccion * player1.VelocidadObj;
+		player1.PosicionCam = player1.PosicionObj - player1.Direccion * player1.DistanciaCam;
+		player1.PosicionCam.y = player1.CamaraPosAlt;
+		player1.ObjetivoCam = player1.PosicionObj;
+		player1.ObjetivoCam.y = player1.CamaraObjAlt;
 
-		player1.PosAntObj=player1.PosicionObj;
+		player1.PosAntObj = player1.PosicionObj;
 
 	}
 	else if(funcion == 5) //Sube objetivo de la cámara
 	{
-		player1.ObjetivoCam.y+=1.0f;
-		player1.CamaraObjAlt+=1.0f;
-		player1.CamaraObjAltE+=1.0f;
+		player1.ObjetivoCam.y += 1.0f;
+		player1.CamaraObjAlt += 1.0f;
+		player1.CamaraObjAltE += 1.0f;
 		
 	}
 	else if(funcion == 6) //Baja objetivo de la cámara
 	{
-		player1.ObjetivoCam.y-=1.0f;
-		player1.CamaraObjAlt-=1.0f;
-		player1.CamaraObjAltE-=1.0f;
+		player1.ObjetivoCam.y -= 1.0f;
+		player1.CamaraObjAlt -= 1.0f;
+		player1.CamaraObjAltE -= 1.0f;
 		
 	}
 }
@@ -2171,6 +2171,24 @@ void ActualizaLuz()
 	
 }
 
+void DibujaMJ()
+{
+	// Aru
+	glPushMatrix();
+		glTranslatef( player1.PosicionObj.x, player1.PosicionObj.y + 2.4f, player1.PosicionObj.z + 0.0f);
+		glRotatef(player1.AngObj, 0.0f, 1.0f, 0.0f);
+		glScalef(player1.escalaX,player1.escalaY,player1.escalaZ);
+		DibujaPersonajeAru();
+	glPopMatrix();
+
+	//MJ6
+	glPushMatrix();
+		glTranslatef(MJ6.PosicionObj.x, MJ6.PosicionObj.y+2.4f, MJ6.PosicionObj.z);
+		glRotatef(MJ6.AngObj, 0.0f, 1.0f, 0.0f);
+		glScalef(MJ6.escalaX,MJ6.escalaY,MJ6.escalaZ);
+		DibujaMJ6();
+	glPopMatrix();
+}
 void DibujaEscena()
 {
 	// Mayralol
@@ -2182,14 +2200,6 @@ void DibujaEscena()
 			glRotatef(enemigo8.AngObj, 0.0f, 1.0f, 0.0f);
 			glScalef(enemigo8.escalaX,enemigo8.escalaY,enemigo8.escalaZ);
 			dibujaEnemigo8();
-	glPopMatrix();
-
-	// Aru
-	glPushMatrix();
-		glTranslatef(player1.PosicionObj.x-10.0f, player1.PosicionObj.y+2.4f, player1.PosicionObj.z+0.0f);
-		glRotatef(player1.AngObj, 0.0f, 1.0f, 0.0f);
-		glScalef(player1.escalaX,player1.escalaY,player1.escalaZ);
-		DibujaPersonajeAru();
 	glPopMatrix();
 
 	//Ene1
@@ -2232,16 +2242,6 @@ void DibujaEscena()
 		DibujaChango();
 	glPopMatrix();
 
-	//MJ6
-	glPushMatrix();
-		glTranslatef(MJ6.PosicionObj.x, MJ6.PosicionObj.y+2.4f, MJ6.PosicionObj.z);
-		glRotatef(MJ6.AngObj, 0.0f, 1.0f, 0.0f);
-		glScalef(MJ6.escalaX,MJ6.escalaY,MJ6.escalaZ);
-		DibujaMJ6();
-	glPopMatrix();
-
-
-
 	glDisable(GL_NORMALIZE);
 }
 
@@ -2251,6 +2251,7 @@ int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la
 	glLoadIdentity();
 	
 	gluLookAt(10.0f, 45.0f, 45.0f, 10.0f, 25.0f, 0.0f, 0, 1, 0);
+	
 	/*
 	gluLookAt(player1.PosicionCam.x, player1.PosicionCam.y, player1.PosicionCam.z, 
 			  player1.ObjetivoCam.x, player1.ObjetivoCam.y, player1.ObjetivoCam.z, 
@@ -2276,6 +2277,11 @@ int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la
 		DibujaEscena();
 	glPopMatrix();
 	
+	// Dibujo de MJs
+	glPushMatrix();
+		DibujaMJ();
+	glPopMatrix();
+
 	// Se desactiva la máscara de color para renderizar la escena en negro
 	glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);
 	//Se desactiva la escritura en el buffer de profundidad
@@ -2311,6 +2317,11 @@ int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la
 		glTranslatef(40.0f, 10.0f,-35.0f);
 		glScalef(0.7f,0.7f,0.7f);
 		DibujaEscena();
+	glPopMatrix();
+
+	// Dibujo de MJs
+	glPushMatrix();
+		DibujaMJ();
 	glPopMatrix();
 
 	// Se desactiva la prueba de profundidad y del buffer stencil ya que no se utilizarán mas.
@@ -2869,13 +2880,13 @@ int ManejaTeclado()
 	{
 		if(player1.PosicionObj.y > 0.0f)
 		{
-			player1.PosicionObj.y-=0.4f;
-			player1.CamaraPosAlt-=0.4f;
-			player1.CamaraObjAlt-=0.4f;
+			player1.PosicionObj.y -= 0.4f;
+			player1.CamaraPosAlt -= 0.4f;
+			player1.CamaraObjAlt -= 0.4f;
 
-			player1.PosicionCam.y=player1.CamaraPosAlt;
-			player1.ObjetivoCam=player1.PosicionObj;
-			player1.ObjetivoCam.y=player1.CamaraObjAlt;
+			player1.PosicionCam.y = player1.CamaraPosAlt;
+			player1.ObjetivoCam = player1.PosicionObj;
+			player1.ObjetivoCam.y = player1.CamaraObjAlt;
 		}
 	}
 
