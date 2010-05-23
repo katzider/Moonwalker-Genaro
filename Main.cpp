@@ -1044,7 +1044,7 @@ void InicializaParametrosdeControl()
 								//sin aplicarle ninguna transformación (hacia adonde está volteando). Se elige un ángulo tal que al aplicarle
 								//una rotación inicial con respecto al eje Y esté viendo hacia la misma dirección que la definida por AngDir
 	
-	MJ6.PosicionObj=CVector(-5.0f, 0.0f, 0.0f); //Esta es la posición inicial del objeto en la escena
+	MJ6.PosicionObj=CVector(-5.0f, 5.0f, 0.0f); //Esta es la posición inicial del objeto en la escena
 	MJ6.Direccion.x=(float)cos(player1.AngDir*PI/180.0f); //Dirección inicial definida por el ángulo inicial AngDir (x=cos(AngDir), y=0.0, z=sen(AngDir))
 	MJ6.Direccion.y=0.0f;
 	MJ6.Direccion.z=(float)sin(player1.AngDir*PI/180.0f);   
@@ -1073,7 +1073,7 @@ void InicializaParametrosdeControl()
 								//sin aplicarle ninguna transformación (hacia adonde está volteando). Se elige un ángulo tal que al aplicarle
 								//una rotación inicial con respecto al eje Y esté viendo hacia la misma dirección que la definida por AngDir
 	
-	enem3a.PosicionObj=CVector(-15.0f, 0.0f, 0.0f); //Esta es la posición inicial del objeto en la escena
+	enem3a.PosicionObj=CVector(-15.0f, 0.0f, 10.0f); //Esta es la posición inicial del objeto en la escena
 	enem3a.Direccion.x=(float)cos(player1.AngDir*PI/180.0f); //Dirección inicial definida por el ángulo inicial AngDir (x=cos(AngDir), y=0.0, z=sen(AngDir))
 	enem3a.Direccion.y=0.0f;
 	enem3a.Direccion.z=(float)sin(player1.AngDir*PI/180.0f);   
@@ -1098,11 +1098,11 @@ void InicializaParametrosdeControl()
 	enem3b.CamaraPosAlt=5.0f;	//Posición en y de la cámara (altura a la que se situa la cámara)
 	enem3b.CamaraObjAlt=4.0f;	//Posición en y del objetivo de la cámara (altura a la que ve la cámara)
 	enem3b.AngDir=90.0f;		//Este ángulo inicial hace que la dirección inicial sea paralela al eje Z y con sentido negativo
-	enem3b.AngObj=0.0f;		//Este valor se elige dependiendo de la orientación con la que aparece el modelo en la escena al dibujarlo
+	enem3b.AngObj=270.0f;		//Este valor se elige dependiendo de la orientación con la que aparece el modelo en la escena al dibujarlo
 								//sin aplicarle ninguna transformación (hacia adonde está volteando). Se elige un ángulo tal que al aplicarle
 								//una rotación inicial con respecto al eje Y esté viendo hacia la misma dirección que la definida por AngDir
 	
-	enem3b.PosicionObj=CVector(-19.0f, 0.0f, 0.0f); //Esta es la posición inicial del objeto en la escena
+	enem3b.PosicionObj=CVector(-19.0f, 0.0f, 10.0f); //Esta es la posición inicial del objeto en la escena
 	enem3b.Direccion.x=(float)cos(player1.AngDir*PI/180.0f); //Dirección inicial definida por el ángulo inicial AngDir (x=cos(AngDir), y=0.0, z=sen(AngDir))
 	enem3b.Direccion.y=0.0f;
 	enem3b.Direccion.z=(float)sin(player1.AngDir*PI/180.0f);   
@@ -2221,7 +2221,7 @@ void DibujaEscena()
 	//Ene3a
 	glPushMatrix();
 		glTranslatef(enem3a.PosicionObj.x, enem3a.PosicionObj.y+2.4f, enem3a.PosicionObj.z);
-		glRotatef(enem3a.AngObj, 0.0f, 1.0f, 0.0f);
+		glRotatef(enem3a.AngObj,0.0f, 1.0f, 0.0f);
 		glScalef(enem3a.escalaX,enem3a.escalaY,enem3a.escalaZ);
 		DibujaEnemigo3a();
 	glPopMatrix();
