@@ -241,7 +241,6 @@ jerarquiaModelo player1modelo;	//Acceso a la estructura con las variables de cad
 const int maxKF1=3;				//Num. total de KeyFrames para la secuencia 1 (caminar)
 FRAME KeyFrame1[maxKF1];		//Contenedor para almacenar cada keyframe de la secuencia 1
 
-jerarquiaModelo player1modeloaru;
 jerarquiaModelo enem3amodelo;
 jerarquiaModelo enem3bmodelo;
 jerarquiaModelo changmodelo;
@@ -635,9 +634,9 @@ void DescargaModelos()
 	g_Load3ds.UnLoad3DSFile(&g_3DModel5j, textureModel5j);
 
 	//ene2
-	g_Load3ds.UnLoad3DSFile(&g_3DModel1j, textureModel1j);
-	g_Load3ds.UnLoad3DSFile(&g_3DModel2j, textureModel2j);
-	g_Load3ds.UnLoad3DSFile(&g_3DModel3j, textureModel3j);
+	//g_Load3ds.UnLoad3DSFile(&g_3DModel1j, textureModel1j);
+	//g_Load3ds.UnLoad3DSFile(&g_3DModel2j, textureModel2j);
+	//g_Load3ds.UnLoad3DSFile(&g_3DModel3j, textureModel3j);
 }
 
 void IniSombraVolumen()
@@ -674,7 +673,6 @@ void IniSombraVolumen()
 
 void CreaListas()
 {
-	modelo1=glGenLists(9);
 	//Ene1
 	ene1=glGenLists(10);
 	//Ene2
@@ -901,7 +899,6 @@ void CreaListas()
 
 void DestruyeListas()
 {
-	glDeleteLists(modelo1,9);
 
 	// Borra listas de Aru
 	glDeleteLists(modelo1aru,9);
