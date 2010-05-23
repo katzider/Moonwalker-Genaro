@@ -1,6 +1,8 @@
 #include "Main.h"
 #include "3ds.h"
 
+/* Quitados los comentarios de prueba, deberiamos hacer un listado en el README.txt de las cosas que cambian y donde hallarlas, 
+aunque tambien sale en el historial de git, a veces me da flojera ver xp */
 
 //Libreria que usamos para el timer
 #pragma comment( lib, "winmm.lib" )	
@@ -22,10 +24,8 @@ GLUquadricObj	*e;
 FMOD_SOUND       *sound[2] = { 0, 0 };
 FMOD_CHANNEL     *channel[2] = { 0, 0 };
 
-parametros player1;  //Variable con la que tenemos acceso a la estructura de parámetros
-
 // Variable de acceso a la estructura de parametros
-parametros player1aru;
+parametros player1;
 
 parametros enem1;	 //Variable con la que tenemos acceso a la estructura de parámetros de ene1
 parametros MJ6;		 //Variable con la que tenemos acceso a la estructura de parámetros de MJ6
@@ -38,15 +38,6 @@ parametros enemigo8;
 CMateriales Material;
 
 //Nombre y ubicación de los modelos
-#define FILE_NAME1c  "Modelos/bob_torso.3ds"
-#define FILE_NAME2c  "Modelos/bob_piernader_a.3ds"
-#define FILE_NAME3c  "Modelos/bob_piernader_b.3ds"
-#define FILE_NAME4c  "Modelos/bob_piernaizq_a.3ds"
-#define FILE_NAME5c  "Modelos/bob_piernaizq_b.3ds"
-#define FILE_NAME6c  "Modelos/bob_brazoder_a.3ds"
-#define FILE_NAME7c  "Modelos/bob_brazoizq_a.3ds"
-#define FILE_NAME8c  "Modelos/bob_brazoder_b.3ds"
-#define FILE_NAME9c  "Modelos/bob_brazoizq_b.3ds"
 
 // Modelos Savage
 #define FILE_NAME1g  "Modelos/enemigo8_cuerpo.3ds"
@@ -75,7 +66,6 @@ CMateriales Material;
 #define FILE_NAME8d	 "Modelos/Ene1PierIzqA.3ds"
 #define FILE_NAME9d	 "Modelos/Ene1PierIzqB.3ds"
 #define FILE_NAME10d "Modelos/Ene1PieIzq.3ds"
-
 
 // Para el escenario de mayra
 #define FILE_NAME2e  "Modelos/escenario1.3ds"
@@ -117,16 +107,6 @@ CMateriales Material;
 #define FILE_NAME5j	 "Modelos/pizqch.3ds"
 
 
-// Bob
-CTga textureModel1c[20];
-CTga textureModel2c[20];
-CTga textureModel3c[20];
-CTga textureModel4c[20];
-CTga textureModel5c[20];
-CTga textureModel6c[20];
-CTga textureModel7c[20];
-CTga textureModel8c[20];
-CTga textureModel9c[20];
 //Contenedor de texturas de enemigo1
 CTga textureModel1d[20];
 //Contenedor de texturas de MJ6 (MJ Robot)
@@ -451,25 +431,6 @@ void DescargaTexturas()
 
 int CargaModelos()
 {
-	
-	if(!g_Load3ds.Load3DSFile(FILE_NAME1c, &g_3DModel1c, textureModel1c))
-		return 0;
-	if(!g_Load3ds.Load3DSFile(FILE_NAME2c, &g_3DModel2c, textureModel2c))
-		return 0;
-	if(!g_Load3ds.Load3DSFile(FILE_NAME3c, &g_3DModel3c, textureModel3c))
-		return 0;
-	if(!g_Load3ds.Load3DSFile(FILE_NAME4c, &g_3DModel4c, textureModel4c))
-		return 0;
-	if(!g_Load3ds.Load3DSFile(FILE_NAME5c, &g_3DModel5c, textureModel5c))
-		return 0;
-	if(!g_Load3ds.Load3DSFile(FILE_NAME6c, &g_3DModel6c, textureModel6c))
-		return 0;
-	if(!g_Load3ds.Load3DSFile(FILE_NAME7c, &g_3DModel7c, textureModel7c))
-		return 0;
-	if(!g_Load3ds.Load3DSFile(FILE_NAME8c, &g_3DModel8c, textureModel8c))
-		return 0;
-	if(!g_Load3ds.Load3DSFile(FILE_NAME9c, &g_3DModel9c, textureModel9c))
-		return 0;
 	//Ene1
 	if(!g_Load3ds.Load3DSFile(FILE_NAME1d, &g_3DModel1d, textureModel1d))
 		return 0;
@@ -587,15 +548,6 @@ int CargaModelos()
 
 void DescargaModelos()
 {
-	g_Load3ds.UnLoad3DSFile(&g_3DModel1c, textureModel1c);
-	g_Load3ds.UnLoad3DSFile(&g_3DModel2c, textureModel2c);
-	g_Load3ds.UnLoad3DSFile(&g_3DModel3c, textureModel3c);
-	g_Load3ds.UnLoad3DSFile(&g_3DModel4c, textureModel4c);
-	g_Load3ds.UnLoad3DSFile(&g_3DModel5c, textureModel5c);
-	g_Load3ds.UnLoad3DSFile(&g_3DModel6c, textureModel6c);
-	g_Load3ds.UnLoad3DSFile(&g_3DModel7c, textureModel7c);
-	g_Load3ds.UnLoad3DSFile(&g_3DModel8c, textureModel8c);
-	g_Load3ds.UnLoad3DSFile(&g_3DModel9c, textureModel9c);
 	
 	// descargamodelos savage
 			
@@ -721,43 +673,6 @@ void CreaListas()
 
 	glNewList(enemigo8L+2,GL_COMPILE);
 		g_Load3ds.Render3DSFile(&g_3DModel3g, textureModel3g, 1);
-	glEndList();
-
-	// Bob
-	glNewList(modelo1+0,GL_COMPILE);
-		g_Load3ds.Render3DSFile(&g_3DModel1c, textureModel1c, 1);
-	glEndList();
-
-	glNewList(modelo1+1,GL_COMPILE);
-		g_Load3ds.Render3DSFile(&g_3DModel2c, textureModel2c, 1);
-	glEndList();
-
-	glNewList(modelo1+2,GL_COMPILE);
-		g_Load3ds.Render3DSFile(&g_3DModel3c, textureModel3c, 1);
-	glEndList();
-
-	glNewList(modelo1+3,GL_COMPILE);
-		g_Load3ds.Render3DSFile(&g_3DModel4c, textureModel4c, 1);
-	glEndList();
-
-	glNewList(modelo1+4,GL_COMPILE);
-		g_Load3ds.Render3DSFile(&g_3DModel5c, textureModel5c, 1);
-	glEndList();
-
-	glNewList(modelo1+5,GL_COMPILE);
-		g_Load3ds.Render3DSFile(&g_3DModel6c, textureModel6c, 1);
-	glEndList();
-
-	glNewList(modelo1+6,GL_COMPILE);
-		g_Load3ds.Render3DSFile(&g_3DModel7c, textureModel7c, 1);
-	glEndList();
-
-	glNewList(modelo1+7,GL_COMPILE);
-		g_Load3ds.Render3DSFile(&g_3DModel8c, textureModel8c, 1);
-	glEndList();
-
-	glNewList(modelo1+8,GL_COMPILE);
-		g_Load3ds.Render3DSFile(&g_3DModel9c, textureModel9c, 1);
 	glEndList();
 
 	// Crea listas para Aru
@@ -962,6 +877,8 @@ void DestruyeListas()
 
 void InicializaParametrosdeControl()
 {
+
+	// Inicializa parametros de control para Aru
 	//Esta función establece los parámetros como velocidad del objeto y distancia de la cámara así como la posición y dirección iniciales
 	player1.visible=true;
 	player1.VelocidadObj=0.2f;
@@ -988,7 +905,7 @@ void InicializaParametrosdeControl()
 	player1.escalaX=0.4f;
 	player1.escalaY=0.4f;
 	player1.escalaZ=0.4f;
-
+	
 	player1.CamaraObjAltE=0.0f;
 
 	// en inicializa parametro de control savage
@@ -1016,36 +933,6 @@ void InicializaParametrosdeControl()
 	enemigo8.escalaX=0.1f;
 	enemigo8.escalaY=0.1f;
 	enemigo8.escalaZ=0.1f;
-
-	// Inicializa parametros de control para Aru
-	//Esta función establece los parámetros como velocidad del objeto y distancia de la cámara así como la posición y dirección iniciales
-	player1aru.visible=true;
-	player1aru.VelocidadObj=0.2f;
-	player1aru.DistanciaCam=10.0f;
-
-	player1aru.CamaraPosAlt=5.0f;	//Posición en y de la cámara (altura a la que se situa la cámara)
-	player1aru.CamaraObjAlt=4.0f;	//Posición en y del objetivo de la cámara (altura a la que ve la cámara)
-	player1aru.AngDir=90.0f;		//Este ángulo inicial hace que la dirección inicial sea paralela al eje Z y con sentido negativo
-	player1aru.AngObj=0.0f;		//Este valor se elige dependiendo de la orientación con la que aparece el modelo en la escena al dibujarlo
-								//sin aplicarle ninguna transformación (hacia adonde está volteando). Se elige un ángulo tal que al aplicarle
-								//una rotación inicial con respecto al eje Y esté viendo hacia la misma dirección que la definida por AngDir
-	
-	player1aru.PosicionObj=CVector(0.0f, 0.0f, 0.0f); //Esta es la posición inicial del objeto en la escena
-	player1aru.Direccion.x=(float)cos(player1aru.AngDir*PI/180.0f); //Dirección inicial definida por el ángulo inicial AngDir (x=cos(AngDir), y=0.0, z=sen(AngDir))
-	player1aru.Direccion.y=0.0f;
-	player1aru.Direccion.z=(float)sin(player1aru.AngDir*PI/180.0f);   
-	player1aru.PosicionCam=CVector(0.0f, player1aru.CamaraPosAlt, 10.0f); //Posición inicial de la cámara a [DistanciaCam] unidades detrás del objeto
-	player1aru.ObjetivoCam=player1aru.PosicionObj;		//La cámara ve siempre al objeto
-	player1aru.ObjetivoCam.y=player1aru.CamaraObjAlt;		//Para que no vea a los "pies" del objeto (personaje)
-
-	player1aru.Dir=0;
-	player1aru.DirAnt=0;
-
-	player1aru.escalaX=0.4f;
-	player1aru.escalaY=0.4f;
-	player1aru.escalaZ=0.4f;
-	
-	player1aru.CamaraObjAltE=0.0f;
 	
 	// Enem1
 	enem1.visible=true;
@@ -1370,10 +1257,10 @@ void DatosAnimacion()
 	KeyFrame1[0].Angt2=0.0f;
 	KeyFrame1[0].Angc1=-25.0f;
 	KeyFrame1[0].Angc2=0.0f;
-	KeyFrame1[0].Angbi1=-100.0f;
+	KeyFrame1[0].Angbi1=-10.0f;
 	KeyFrame1[0].Angbi2=0.0f;
 	KeyFrame1[0].Angbib=-30.0f;
-	KeyFrame1[0].Angbd1=120.0f;
+	KeyFrame1[0].Angbd1=20.0f;
 	KeyFrame1[0].Angbd2=0.0f;
 	KeyFrame1[0].Angbdb=-80.0f;
 	KeyFrame1[0].Angpizq=40.0f;
@@ -1390,10 +1277,10 @@ void DatosAnimacion()
 	KeyFrame1[1].Angt2=0.0f;
 	KeyFrame1[1].Angc1=-25.0f;
 	KeyFrame1[1].Angc2=0.0f;
-	KeyFrame1[1].Angbi1=120.0f;
+	KeyFrame1[1].Angbi1=20.0f;
 	KeyFrame1[1].Angbi2=0.0f;
 	KeyFrame1[1].Angbib=-80.0f;
-	KeyFrame1[1].Angbd1=-100.0f;
+	KeyFrame1[1].Angbd1=-10.0f;
 	KeyFrame1[1].Angbd2=0.0f;
 	KeyFrame1[1].Angbdb=-30.0f;
 	KeyFrame1[1].Angpizq=-60.0f;
@@ -1410,10 +1297,10 @@ void DatosAnimacion()
 	KeyFrame1[2].Angt2=0.0f;
 	KeyFrame1[2].Angc1=-25.0f;
 	KeyFrame1[2].Angc2=0.0f;
-	KeyFrame1[2].Angbi1=-100.0f;
+	KeyFrame1[2].Angbi1=-10.0f;
 	KeyFrame1[2].Angbi2=0.0f;
 	KeyFrame1[2].Angbib=-30.0f;
-	KeyFrame1[2].Angbd1=120.0f;
+	KeyFrame1[2].Angbd1=20.0f;
 	KeyFrame1[2].Angbd2=0.0f;
 	KeyFrame1[2].Angbdb=-80.0f;
 	KeyFrame1[2].Angpizq=40.0f;
@@ -1671,78 +1558,6 @@ void dibujaEnemigo8()
 	glPushMatrix();
 		glRotatef(anglef, 1.0f, 0.0f, 0.0f);
 		glCallList(enemigo8L+2);
-	glPopMatrix();
-}
-
-void DibujaPersonaje()
-{
-	glTranslatef(player1modelo.Xtor, player1modelo.Ytor, player1modelo.Ztor);
-	glRotatef(player1modelo.Angt2, 0.0f, 1.0f, 0.0f);
-	glRotatef(player1modelo.Angt1, 1.0f, 0.0f, 0.0f);
-			
-	//Torso
-	glCallList(modelo1+0);
-	
-	//Pierna derecha
-	glPushMatrix();
-		glTranslatef(-1.2f, -1.3f ,0.0f);
-		glRotatef(player1modelo.Angpder, 1.0f, 0.0f, 0.0f);
-		glCallList(modelo1+1);
-		
-		//Pierna derecha_b
-		glPushMatrix();
-			glTranslatef(0.0f, -1.25f , 0.0f);
-			glRotatef(player1modelo.Angpderb, 1.0f, 0.0f, 0.0f);
-			glCallList(modelo1+2);
-		glPopMatrix();
-
-	glPopMatrix();
-
-	//Pierna izquierda
-	glPushMatrix();
-		glTranslatef(1.2f, -1.3f ,0.0f);
-		glRotatef(player1modelo.Angpizq, 1.0f, 0.0f, 0.0f);
-		glCallList(modelo1+3);
-
-		//Pierna izquierda_b
-		glPushMatrix();
-			glTranslatef(0.0f, -1.25f , 0.0f);
-			glRotatef(player1modelo.Angpizqb, 1.0f, 0.0f, 0.0f);
-			glCallList(modelo1+4);
-		glPopMatrix();
-
-	glPopMatrix();
-
-	//Brazo derecho_a
-	glPushMatrix();
-		glTranslatef(-2.8f, 1.1f, 0.0f);
-		glRotatef(player1modelo.Angbd2, 0.0f, 1.0f, 0.0f);
-		glRotatef(player1modelo.Angbd1, 1.0f, 0.0f, 0.0f);
-		glCallList(modelo1+5);
-
-		//Brazo derecho_b
-		glPushMatrix();
-			glTranslatef(-0.35f, -1.5f, 0.0f);
-			glRotatef(player1modelo.Angbdb, 1.0f, 0.0f, 0.0f);
-			glCallList(modelo1+7);
-		glPopMatrix();
-
-	glPopMatrix();
-
-	//Brazo izquierdo
-	glPushMatrix();
-		glTranslatef(2.8f, 1.1f, 0.0f);
-		glRotatef(player1modelo.Angbi2, 0.0f, 1.0f, 0.0f);
-		glRotatef(player1modelo.Angbi1, 1.0f, 0.0f, 0.0f);
-		glCallList(modelo1+6);
-
-		//Brazo izquierdo_b
-		glPushMatrix();
-			glTranslatef(0.35f, -1.5f, 0.0f);
-			glRotatef(player1modelo.Angbib, 1.0f, 0.0f, 0.0f);
-			glCallList(modelo1+8);
-		glPopMatrix();
-
 	glPopMatrix();
 }
 
@@ -2015,103 +1830,12 @@ void DibujaChango()
 
 
 
-void DibujaSombraPersonaje()
-{
-	glPushMatrix();
-
-		glTranslatef(player1.PosicionObj.x, player1.PosicionObj.y+2.4f, player1.PosicionObj.z);
-		glRotatef(player1.AngObj, 0.0f, 1.0f, 0.0f);
-		glScalef(player1.escalaX,player1.escalaY,player1.escalaZ);
-		glTranslatef(player1modelo.Xtor, player1modelo.Ytor, player1modelo.Ztor);
-		glRotatef(player1modelo.Angt2, 0.0f, 1.0f, 0.0f);
-		glRotatef(player1modelo.Angt1, 1.0f, 0.0f, 0.0f);
-				
-		//Torso
-		objSh.calculaSombraDepthPass(&g_3DModel1c, objectSpaceLightPosition1);
-		
-		//Pierna derecha
-		glPushMatrix();
-			glTranslatef(-1.2f, -1.3f ,0.0f);
-			glRotatef(player1modelo.Angpder, 1.0f, 0.0f, 0.0f);
-			objSh.calculaSombraDepthPass(&g_3DModel2c, objectSpaceLightPosition2);
-			
-			//Pierna derecha_b
-			
-
-		glPopMatrix();
-
-		//Pierna izquierda
-		
-
-			//Pierna izquierda_b
-			
-
-		//Brazo derecho_a
-		
-
-			//Brazo derecho_b
-			
-
-		//Brazo izquierdo
-		
-
-			//Brazo izquierdo_b
-		
-
-	glPopMatrix();
-		
-}
-
-void DibujaVolumendeSombra()
-{
-	glPushMatrix();
-
-		glTranslatef(player1.PosicionObj.x, player1.PosicionObj.y+2.4f, player1.PosicionObj.z);
-		glRotatef(player1.AngObj, 0.0f, 1.0f, 0.0f);
-		glScalef(player1.escalaX,player1.escalaY,player1.escalaZ);
-		glTranslatef(player1modelo.Xtor, player1modelo.Ytor, player1modelo.Ztor);
-		glRotatef(player1modelo.Angt2, 0.0f, 1.0f, 0.0f);
-		glRotatef(player1modelo.Angt1, 1.0f, 0.0f, 0.0f);
-				
-		//Torso
-		objSh.DrawShadowVolume(&g_3DModel1c, objectSpaceLightPosition1);
-		
-		//Pierna derecha
-		glPushMatrix();
-			glTranslatef(-1.2f, -1.3f ,0.0f);
-			glRotatef(player1modelo.Angpder, 1.0f, 0.0f, 0.0f);
-			objSh.DrawShadowVolume(&g_3DModel2c, objectSpaceLightPosition2);
-			
-			//Pierna derecha_b
-			
-
-		glPopMatrix();
-
-		//Pierna izquierda
-		
-
-		//Brazo derecho_a
-		
-
-			//Brazo derecho_b
-			
-
-		//Brazo izquierdo
-		
-
-			//Brazo izquierdo_b
-			
-
-	glPopMatrix();
-}
-
-
 // Dibuja Personajes de Aru
 void DibujaPersonajeAru()
 {
-	glTranslatef(player1modeloaru.Xtor, player1modeloaru.Ytor, player1modeloaru.Ztor);
-	glRotatef(player1modeloaru.Angt2, 0.0f, 1.0f, 0.0f);
-	glRotatef(player1modeloaru.Angt1, 1.0f, 0.0f, 0.0f);
+	glTranslatef(player1modelo.Xtor, player1modelo.Ytor, player1modelo.Ztor);
+	glRotatef(player1modelo.Angt2, 0.0f, 1.0f, 0.0f);
+	glRotatef(player1modelo.Angt1, 1.0f, 0.0f, 0.0f);
 			
 	//Torso
 	glCallList(modelo1aru+0);
@@ -2119,13 +1843,13 @@ void DibujaPersonajeAru()
 	//Pierna derecha
 	glPushMatrix();
 		glTranslatef(0.0f, 0.0f, 0.0f);
-		glRotatef(player1modeloaru.Angpder, 1.0f, 0.0f, 0.0f);
+		glRotatef(player1modelo.Angpder, 1.0f, 0.0f, 0.0f);
 		glCallList(modelo1aru+1);
 		
 		//Pierna derecha_b
 		glPushMatrix();
 			glTranslatef(-4.5f, 0.7f , 0.0f);
-			glRotatef(player1modeloaru.Angpderb, 1.0f, 0.0f, 0.0f);
+			glRotatef(player1modelo.Angpderb, 1.0f, 0.0f, 0.0f);
 			glCallList(modelo1aru+2);
 		glPopMatrix();
 
@@ -2134,13 +1858,13 @@ void DibujaPersonajeAru()
 	//Pierna izquierda
 	glPushMatrix();
 		glTranslatef(0.0f, 0.0f ,0.0f);
-		glRotatef(player1modeloaru.Angpizq, 1.0f, 0.0f, 0.0f);
+		glRotatef(player1modelo.Angpizq, 1.0f, 0.0f, 0.0f);
 		glCallList(modelo1aru+3);
 
 		//Pierna izquierda_b
 		glPushMatrix();
 			glTranslatef(-6.5f, 0.8f , 0.0f);
-			glRotatef(player1modeloaru.Angpizqb, 1.0f, 0.0f, 0.0f);
+			glRotatef(player1modelo.Angpizqb, 1.0f, 0.0f, 0.0f);
 			glCallList(modelo1aru+4);
 		glPopMatrix();
 
@@ -2149,14 +1873,14 @@ void DibujaPersonajeAru()
 	//Brazo derecho_a
 	glPushMatrix();
 		glTranslatef(5.0f, 0.0f, 0.0f);
-		glRotatef(player1modeloaru.Angbd2, 0.0f, 1.0f, 0.0f);
-		glRotatef(player1modeloaru.Angbd1, 1.0f, 0.0f, 0.0f);
+		glRotatef(player1modelo.Angbd2, 0.0f, 1.0f, 0.0f);
+		glRotatef(player1modelo.Angbd1, 1.0f, 0.0f, 0.0f);
 		glCallList(modelo1aru+5);
 
 		//Brazo derecho_b
 		glPushMatrix();
 			glTranslatef(-4.6f, -0.0f, 0.0f);
-			glRotatef(player1modeloaru.Angbdb, 1.0f, 0.0f, 0.0f);
+			glRotatef(player1modelo.Angbdb, 1.0f, 0.0f, 0.0f);
 			glCallList(modelo1aru+7);
 		glPopMatrix();
 
@@ -2164,15 +1888,15 @@ void DibujaPersonajeAru()
 
 	//Brazo izquierdo
 	glPushMatrix();
-		glTranslatef(-0.5f, 0.0f, 0.0f);
-		glRotatef(player1modeloaru.Angbi2, 0.0f, 1.0f, 0.0f);
-		glRotatef(player1modeloaru.Angbi1, 1.0f, 0.0f, 0.0f);
+		glTranslatef(-0.5f, 1.5f, 0.0f);
+		glRotatef(player1modelo.Angbi2, 0.0f, 1.0f, 0.0f);
+		glRotatef(player1modelo.Angbi1, 1.0f, 0.0f, 0.0f);
 		glCallList(modelo1aru+6);
 
 		//Brazo izquierdo_b
 		glPushMatrix();
 			glTranslatef(-1.0f, 0.0f, 0.0f);
-			glRotatef(player1modeloaru.Angbib, 1.0f, 0.0f, 0.0f);
+			glRotatef(player1modelo.Angbib, 1.0f, 0.0f, 0.0f);
 			glCallList(modelo1aru+8);
 		glPopMatrix();
 
@@ -2357,15 +2081,6 @@ void DibujaEscena()
 	// Mayralol
 	g_Load3ds.Render3DSFile(&g_3DModel2e, textureModel2e, 1);
 
-	// Bob
-	glEnable(GL_NORMALIZE);
-	glPushMatrix();
-		glTranslatef(player1.PosicionObj.x, player1.PosicionObj.y+2.4f, player1.PosicionObj.z);
-		glRotatef(player1.AngObj, 0.0f, 1.0f, 0.0f);
-		glScalef(player1.escalaX,player1.escalaY,player1.escalaZ);
-		DibujaPersonaje();
-	glPopMatrix();
-
 	// savage
 	glPushMatrix();
 			glTranslatef(enemigo8.PosicionObj.x, enemigo8.PosicionObj.y+2.4f, enemigo8.PosicionObj.z);
@@ -2376,9 +2091,9 @@ void DibujaEscena()
 
 	// Aru
 	glPushMatrix();
-		glTranslatef(player1aru.PosicionObj.x-10.0f, player1aru.PosicionObj.y+2.4f, player1aru.PosicionObj.z+0.0f);
-		glRotatef(player1aru.AngObj, 0.0f, 1.0f, 0.0f);
-		glScalef(player1aru.escalaX,player1aru.escalaY,player1aru.escalaZ);
+		glTranslatef(player1.PosicionObj.x-10.0f, player1.PosicionObj.y+2.4f, player1.PosicionObj.z+0.0f);
+		glRotatef(player1.AngObj, 0.0f, 1.0f, 0.0f);
+		glScalef(player1.escalaX,player1.escalaY,player1.escalaZ);
 		DibujaPersonajeAru();
 	glPopMatrix();
 
