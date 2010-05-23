@@ -920,20 +920,20 @@ void InicializaParametrosdeControl()
 	//Esta función establece los parámetros como velocidad del objeto y distancia de la cámara así como la posición y dirección iniciales
 	player1.visible = true;
 	player1.VelocidadObj = 0.2f;
-	player1.DistanciaCam = 10.0f;
+	player1.DistanciaCam = 20.0f;
 
-	player1.CamaraPosAlt = 5.0f;	//Posición en y de la cámara (altura a la que se situa la cámara)
+	player1.CamaraPosAlt = 10.0f;	//Posición en y de la cámara (altura a la que se situa la cámara)
 	player1.CamaraObjAlt = 6.4f;	//Posición en y del objetivo de la cámara (altura a la que ve la cámara)
 	player1.AngDir = 90.0f;		//Este ángulo inicial hace que la dirección inicial sea paralela al eje Z y con sentido negativo
 	player1.AngObj = 0.0f;		//Este valor se elige dependiendo de la orientación con la que aparece el modelo en la escena al dibujarlo
 								//sin aplicarle ninguna transformación (hacia adonde está volteando). Se elige un ángulo tal que al aplicarle
 								//una rotación inicial con respecto al eje Y esté viendo hacia la misma dirección que la definida por AngDir
 	
-	player1.PosicionObj = CVector( 0.0f, 0.0f, 0.0f); //Esta es la posición inicial del objeto en la escena
+	player1.PosicionObj = CVector( 40.0f, 4.0f, -35.0f); //Esta es la posición inicial del objeto en la escena
 	player1.Direccion.x = cosf( player1.AngDir * PI / 180.0f); //Dirección inicial definida por el ángulo inicial AngDir (x=cos(AngDir), y=0.0, z=sen(AngDir))
 	player1.Direccion.y = 0.0f;
 	player1.Direccion.z = sinf( player1.AngDir * PI / 180.0f);   
-	player1.PosicionCam = CVector( 0.0f, player1.CamaraPosAlt, player1.DistanciaCam ); //Posición inicial de la cámara a [DistanciaCam] unidades detrás del objeto
+	player1.PosicionCam = CVector( player1.PosicionObj.x, player1.PosicionObj.y + player1.CamaraPosAlt, player1.PosicionObj.z +player1.DistanciaCam ); //Posición inicial de la cámara a [DistanciaCam] unidades detrás del objeto
 	player1.ObjetivoCam = player1.PosicionObj;		//La cámara ve siempre al objeto
 	player1.ObjetivoCam.y = player1.CamaraObjAlt;		//Para que no vea a los "pies" del objeto (personaje)
 
@@ -1338,16 +1338,16 @@ void DatosAnimacion()
 	KeyFrame1[0].Angt2=0.0f;
 	KeyFrame1[0].Angc1=-25.0f;
 	KeyFrame1[0].Angc2=0.0f;
-	KeyFrame1[0].Angbi1=-10.0f;
+	KeyFrame1[0].Angbi1=-5.0f;
 	KeyFrame1[0].Angbi2=0.0f;
-	KeyFrame1[0].Angbib=-30.0f;
-	KeyFrame1[0].Angbd1=20.0f;
+	KeyFrame1[0].Angbib=-15.0f;
+	KeyFrame1[0].Angbd1=5.0f;
 	KeyFrame1[0].Angbd2=0.0f;
-	KeyFrame1[0].Angbdb=-80.0f;
-	KeyFrame1[0].Angpizq=40.0f;
-	KeyFrame1[0].Angpder=-60.0f;
-	KeyFrame1[0].Angpizqb=30.0f;
-	KeyFrame1[0].Angpderb=40.0f;
+	KeyFrame1[0].Angbdb=-40.0f;
+	KeyFrame1[0].Angpizq=20.0f;
+	KeyFrame1[0].Angpder=-30.0f;
+	KeyFrame1[0].Angpizqb=15.0f;
+	KeyFrame1[0].Angpderb=10.0f;
 	KeyFrame1[0].Angpi=0.0f;
 	KeyFrame1[0].Angpd=0.0f;
 	KeyFrame1[0].Xtor=0.0f;
@@ -1358,16 +1358,16 @@ void DatosAnimacion()
 	KeyFrame1[1].Angt2=0.0f;
 	KeyFrame1[1].Angc1=-25.0f;
 	KeyFrame1[1].Angc2=0.0f;
-	KeyFrame1[1].Angbi1=20.0f;
+	KeyFrame1[1].Angbi1=10.0f;
 	KeyFrame1[1].Angbi2=0.0f;
-	KeyFrame1[1].Angbib=-80.0f;
+	KeyFrame1[1].Angbib=-40.0f;
 	KeyFrame1[1].Angbd1=-10.0f;
 	KeyFrame1[1].Angbd2=0.0f;
-	KeyFrame1[1].Angbdb=-30.0f;
-	KeyFrame1[1].Angpizq=-60.0f;
-	KeyFrame1[1].Angpder=40.0f;
-	KeyFrame1[1].Angpizqb=40.0f;
-	KeyFrame1[1].Angpderb=30.0f;
+	KeyFrame1[1].Angbdb=-15.0f;
+	KeyFrame1[1].Angpizq=-30.0f;
+	KeyFrame1[1].Angpder=20.0f;
+	KeyFrame1[1].Angpizqb=20.0f;
+	KeyFrame1[1].Angpderb=15.0f;
 	KeyFrame1[1].Angpi=0.0f;
 	KeyFrame1[1].Angpd=0.0f;
 	KeyFrame1[1].Xtor=0.0f;
@@ -1378,16 +1378,16 @@ void DatosAnimacion()
 	KeyFrame1[2].Angt2=0.0f;
 	KeyFrame1[2].Angc1=-25.0f;
 	KeyFrame1[2].Angc2=0.0f;
-	KeyFrame1[2].Angbi1=-10.0f;
+	KeyFrame1[2].Angbi1=-5.0f;
 	KeyFrame1[2].Angbi2=0.0f;
-	KeyFrame1[2].Angbib=-30.0f;
-	KeyFrame1[2].Angbd1=20.0f;
+	KeyFrame1[2].Angbib=-15.0f;
+	KeyFrame1[2].Angbd1=5.0f;
 	KeyFrame1[2].Angbd2=0.0f;
-	KeyFrame1[2].Angbdb=-80.0f;
-	KeyFrame1[2].Angpizq=40.0f;
-	KeyFrame1[2].Angpder=-40.0f;
-	KeyFrame1[2].Angpizqb=30.0f;
-	KeyFrame1[2].Angpderb=20.0f;
+	KeyFrame1[2].Angbdb=-40.0f;
+	KeyFrame1[2].Angpizq=20.0f;
+	KeyFrame1[2].Angpder=-20.0f;
+	KeyFrame1[2].Angpizqb=15.0f;
+	KeyFrame1[2].Angpderb=10.0f;
 	KeyFrame1[2].Angpi=0.0f;
 	KeyFrame1[2].Angpd=0.0f;
 	KeyFrame1[2].Xtor=0.0f;
@@ -1937,13 +1937,13 @@ void DibujaPersonajeAru()
 	
 	//Pierna derecha
 	glPushMatrix();
-		glTranslatef(0.0f, 0.0f, 0.0f);
+		glTranslatef(1.0f, 0.0f, 0.0f);
 		glRotatef(player1modelo.Angpder, 1.0f, 0.0f, 0.0f);
 		glCallList(modelo1aru+1);
 		
 		//Pierna derecha_b
 		glPushMatrix();
-			glTranslatef(-4.5f, 0.7f , 0.0f);
+			glTranslatef(-5.2f, 0.7f , 0.0f);
 			glRotatef(player1modelo.Angpderb, 1.0f, 0.0f, 0.0f);
 			glCallList(modelo1aru+2);
 		glPopMatrix();
@@ -1967,14 +1967,14 @@ void DibujaPersonajeAru()
 
 	//Brazo derecho_a
 	glPushMatrix();
-		glTranslatef(5.0f, 0.0f, 0.0f);
+		glTranslatef(5.65f, 0.2f, 0.2f);
 		glRotatef(player1modelo.Angbd2, 0.0f, 1.0f, 0.0f);
 		glRotatef(player1modelo.Angbd1, 1.0f, 0.0f, 0.0f);
 		glCallList(modelo1aru+5);
 
 		//Brazo derecho_b
 		glPushMatrix();
-			glTranslatef(-4.6f, -0.0f, 0.0f);
+			glTranslatef(-4.6f, 2.0f, 0.0f);
 			glRotatef(player1modelo.Angbdb, 1.0f, 0.0f, 0.0f);
 			glCallList(modelo1aru+7);
 		glPopMatrix();
@@ -1983,14 +1983,14 @@ void DibujaPersonajeAru()
 
 	//Brazo izquierdo
 	glPushMatrix();
-		glTranslatef(-0.5f, 1.5f, 0.0f);
+		glTranslatef(-1.0f, 1.5f, 0.0f);
 		glRotatef(player1modelo.Angbi2, 0.0f, 1.0f, 0.0f);
 		glRotatef(player1modelo.Angbi1, 1.0f, 0.0f, 0.0f);
 		glCallList(modelo1aru+6);
 
 		//Brazo izquierdo_b
 		glPushMatrix();
-			glTranslatef(-1.0f, 0.0f, 0.0f);
+			glTranslatef(-0.7f, 0.5f, 0.0f);
 			glRotatef(player1modelo.Angbib, 1.0f, 0.0f, 0.0f);
 			glCallList(modelo1aru+8);
 		glPopMatrix();
@@ -2250,13 +2250,13 @@ int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 	glLoadIdentity();
 	
-	gluLookAt(10.0f, 45.0f, 45.0f, 10.0f, 25.0f, 0.0f, 0, 1, 0);
+	//gluLookAt(10.0f, 45.0f, 45.0f, 10.0f, 25.0f, 0.0f, 0, 1, 0);
 	
-	/*
+	
 	gluLookAt(player1.PosicionCam.x, player1.PosicionCam.y, player1.PosicionCam.z, 
 			  player1.ObjetivoCam.x, player1.ObjetivoCam.y, player1.ObjetivoCam.z, 
 			  0.0f, 1.0f, 0.0f);
-	*/
+	
 
 	//Se actualizan los parámetros de iluminación
 	glLightfv(GL_LIGHT0, GL_POSITION, LightPos);		// Posicion de la luz1
