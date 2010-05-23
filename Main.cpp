@@ -29,11 +29,12 @@ parametros player1;
 
 parametros enem1;	 //Variable con la que tenemos acceso a la estructura de parámetros de ene1
 parametros MJ6;		 //Variable con la que tenemos acceso a la estructura de parámetros de MJ6
-parametros enem3a;	 //Variable con la que tenemos acceso a la estructura de parámetros de ene1
-parametros enem3b;		 //Variable con la que tenemos acceso a la estructura de parámetros de MJ6
-parametros chang;	 //Variable con la que tenemos acceso a la estructura de parámetros de ene1
-// parametros savage
-parametros enemigo8;
+parametros enem2;	 //Variable con la que tenemos acceso a la estructura de parámetros de ene2
+parametros enem3a;	 //Variable con la que tenemos acceso a la estructura de parámetros de ene3a
+parametros enem3b;	 //Variable con la que tenemos acceso a la estructura de parámetros ene3b
+parametros chang;	 //Variable con la que tenemos acceso a la estructura de parámetros de chango
+
+parametros enemigo8; // parametros savage
 
 CMateriales Material;
 
@@ -82,14 +83,12 @@ CMateriales Material;
 #define FILE_NAME9f	 "Modelos/MJ6PierIzqA.3ds"
 #define FILE_NAME10f "Modelos/MJ6PierIzqB.3ds"
 
-
 //nombre y ubicación de modelo Ene3a
 #define FILE_NAME1h	 "Modelos/torsoe3a.3ds"
 #define FILE_NAME2h	 "Modelos/bder3a.3ds"
 #define FILE_NAME3h	 "Modelos/bizq3a.3ds"
 #define FILE_NAME4h	 "Modelos/pder3a.3ds"
 #define FILE_NAME5h	 "Modelos/pizq3a.3ds"
-
 
 //nombre y ubicación de modelo ene3b
 #define FILE_NAME1i	 "Modelos/torsoe3b.3ds"
@@ -98,7 +97,6 @@ CMateriales Material;
 #define FILE_NAME4i	 "Modelos/pder3b.3ds"
 #define FILE_NAME5i	 "Modelos/pizq3b.3ds"
 
-
 //nombre y ubicación de modelo chango
 #define FILE_NAME1j	 "Modelos/torsoch.3ds"
 #define FILE_NAME2j	 "Modelos/bderch.3ds"
@@ -106,6 +104,10 @@ CMateriales Material;
 #define FILE_NAME4j	 "Modelos/pderch.3ds"
 #define FILE_NAME5j	 "Modelos/pizqch.3ds"
 
+//nombre y ubicación de modelo Enemigo2
+#define FILE_NAME1k	 "Modelos/Ene2nave.3ds"
+#define FILE_NAME2k	 "Modelos/Ene2bomb.3ds"
+//#define FILE_NAME3k	 "Modelos/Ene2pers.3ds"
 
 //Contenedor de texturas de enemigo1
 CTga textureModel1d[20];
@@ -140,6 +142,11 @@ CTga textureModel2j[20];
 CTga textureModel3j[20];
 CTga textureModel4j[20];
 CTga textureModel5j[20];
+
+//Contenedor de texturas de enemigo2
+CTga textureModel1k[20];
+CTga textureModel2k[20];
+CTga textureModel3k[20];
 
 CLoad3DS g_Load3ds;
 
@@ -179,7 +186,6 @@ t3DModel g_3DModel7d;
 t3DModel g_3DModel8d;
 t3DModel g_3DModel9d;
 t3DModel g_3DModel10d;
-
 
 //Acceso a la estructura que almacena a MJ6
 t3DModel g_3DModel1f;
@@ -223,6 +229,11 @@ t3DModel g_3DModel3j;
 t3DModel g_3DModel4j;
 t3DModel g_3DModel5j;
 
+//Acceso a la estructura que almacena a Ene1
+t3DModel g_3DModel1k;
+t3DModel g_3DModel2k;
+t3DModel g_3DModel3k;
+
 //Contenedor de texturas adicionales
 CTga textura[30];
 
@@ -235,6 +246,7 @@ jerarquiaModelo enem3amodelo;
 jerarquiaModelo enem3bmodelo;
 jerarquiaModelo changmodelo;
 jerarquiaModelo enem1modelo;
+jerarquiaModelo enem2modelo;
 jerarquiaModelo MJ6modelo;
 
 bool play=false;//Bandera para iniciar la animación
@@ -247,6 +259,7 @@ CMultitexturas Multitext;
 GLuint modelo1;
 GLuint ene1;
 GLuint noMJ6;
+GLuint ene2;
 GLuint ene3a;
 GLuint ene3b;
 GLuint cha;
@@ -452,7 +465,7 @@ int CargaModelos()
 		return 0;
 	if(!g_Load3ds.Load3DSFile(FILE_NAME10d, &g_3DModel10d, textureModel1d))
 		return 0;
-		
+
 	// Mayra lol
 	if(!g_Load3ds.Load3DSFile(FILE_NAME2e, &g_3DModel2e, textureModel2e))
 		return 0;
@@ -542,6 +555,14 @@ int CargaModelos()
 		return 0;
 	if(!g_Load3ds.Load3DSFile(FILE_NAME5j, &g_3DModel5j, textureModel5j))
 		return 0;
+		
+	//Ene2
+	if(!g_Load3ds.Load3DSFile(FILE_NAME1k, &g_3DModel1k, textureModel1k))
+		return 0;
+	if(!g_Load3ds.Load3DSFile(FILE_NAME2k, &g_3DModel2k, textureModel1k))
+		return 0;
+//	if(!g_Load3ds.Load3DSFile(FILE_NAME3k, &g_3DModel3k, textureModel1k))
+//		return 0;
 
 	return TRUE;
 }
@@ -613,7 +634,10 @@ void DescargaModelos()
 	g_Load3ds.UnLoad3DSFile(&g_3DModel4j, textureModel4j);
 	g_Load3ds.UnLoad3DSFile(&g_3DModel5j, textureModel5j);
 
-	//Escenario
+	//ene2
+	g_Load3ds.UnLoad3DSFile(&g_3DModel1j, textureModel1j);
+	g_Load3ds.UnLoad3DSFile(&g_3DModel2j, textureModel2j);
+	g_Load3ds.UnLoad3DSFile(&g_3DModel3j, textureModel3j);
 }
 
 void IniSombraVolumen()
@@ -653,6 +677,8 @@ void CreaListas()
 	modelo1=glGenLists(9);
 	//Ene1
 	ene1=glGenLists(10);
+	//Ene2
+	ene2=glGenLists(2);
 	//MJ6
 	noMJ6=glGenLists(10);
 	//Ene3a
@@ -857,6 +883,20 @@ void CreaListas()
 	glNewList(cha+4,GL_COMPILE);
 		g_Load3ds.Render3DSFile(&g_3DModel5j, textureModel5j, 1);
 	glEndList();
+
+	//Ene2
+	glNewList(ene2+0,GL_COMPILE);
+		g_Load3ds.Render3DSFile(&g_3DModel1k, textureModel1k, 1);
+	glEndList();
+
+	glNewList(ene2+1,GL_COMPILE);
+		g_Load3ds.Render3DSFile(&g_3DModel2k, textureModel2k, 1);
+	glEndList();
+
+//	glNewList(ene2+2,GL_COMPILE);
+//		g_Load3ds.Render3DSFile(&g_3DModel3k, textureModel3k, 1);
+//	glEndList();
+
 }
 
 void DestruyeListas()
@@ -867,6 +907,7 @@ void DestruyeListas()
 	glDeleteLists(modelo1aru,9);
 	// Borra listas fahl
 	glDeleteLists(ene1,10);
+	glDeleteLists(ene2,2);
 	glDeleteLists(noMJ6,10);
 
 	glDeleteLists(ene3a,5);
@@ -962,6 +1003,35 @@ void InicializaParametrosdeControl()
 	enem1.escalaZ=0.4f;
 
 	enem1.CamaraObjAltE=0.0f;
+	
+	// Enem2
+	enem2.visible=true;
+	enem2.VelocidadObj=0.2f;
+	enem2.DistanciaCam=10.0f;
+
+	enem2.CamaraPosAlt=5.0f;	//Posición en y de la cámara (altura a la que se situa la cámara)
+	enem2.CamaraObjAlt=4.0f;	//Posición en y del objetivo de la cámara (altura a la que ve la cámara)
+	enem2.AngDir=90.0f;		//Este ángulo inicial hace que la dirección inicial sea paralela al eje Z y con sentido negativo
+	enem2.AngObj=0.0f;		//Este valor se elige dependiendo de la orientación con la que aparece el modelo en la escena al dibujarlo
+								//sin aplicarle ninguna transformación (hacia adonde está volteando). Se elige un ángulo tal que al aplicarle
+								//una rotación inicial con respecto al eje Y esté viendo hacia la misma dirección que la definida por AngDir
+	
+	enem2.PosicionObj=CVector(10.0f, 0.0f, 0.0f); //Esta es la posición inicial del objeto en la escena
+	enem2.Direccion.x=(float)cos(player1.AngDir*PI/180.0f); //Dirección inicial definida por el ángulo inicial AngDir (x=cos(AngDir), y=0.0, z=sen(AngDir))
+	enem2.Direccion.y=0.0f;
+	enem2.Direccion.z=(float)sin(player1.AngDir*PI/180.0f);   
+	enem2.PosicionCam=CVector(0.0f, player1.CamaraPosAlt, 10.0f); //Posición inicial de la cámara a [DistanciaCam] unidades detrás del objeto
+	enem2.ObjetivoCam=player1.PosicionObj;		//La cámara ve siempre al objeto
+	enem2.ObjetivoCam.y=player1.CamaraObjAlt;		//Para que no vea a los "pies" del objeto (personaje)
+
+	enem2.Dir=0;
+	enem2.DirAnt=0;
+
+	enem2.escalaX=0.2f;
+	enem2.escalaY=0.2f;
+	enem2.escalaZ=0.2f;
+
+	enem2.CamaraObjAltE=0.0f;
 	
 	//MJ6
 
@@ -1168,6 +1238,20 @@ void InicializaAnim()
 	enem1modelo.Xtor=0.0f;
 	enem1modelo.Ytor=0.0f;
 	enem1modelo.Ztor=0.0f;
+
+	enem2modelo.Angt1=0.0f;
+	enem2modelo.Angt2=0.0f;
+	enem2modelo.Angc1=0.0f;
+	enem2modelo.Angc2=0.0f;
+	enem2modelo.Angbi1=0.0f;
+	enem2modelo.Angbi2=0.0f;
+	enem2modelo.Angbib=0.0f;
+	enem2modelo.Angbd1=0.0f;
+	enem2modelo.Angbd2=0.0f;
+	enem2modelo.Angbdb=0.0f;
+	enem2modelo.Xtor=0.0f;
+	enem2modelo.Ytor=0.0f;
+	enem2modelo.Ztor=0.0f;
 
 	MJ6modelo.Angt1=0.0f;
 	MJ6modelo.Angt2=0.0f;
@@ -1630,6 +1714,20 @@ void DibujaEnemigo1()
 			glPopMatrix();
 		glPopMatrix();
 	glPopMatrix();
+}
+
+void DibujaEnemigo2()
+{
+	glTranslatef(enem2modelo.Xtor, enem2modelo.Ytor, enem2modelo.Ztor);
+	glRotatef(enem2modelo.Angt2, 0.0f, 1.0f, 0.0f);
+	glRotatef(enem2modelo.Angt1, 1.0f, 0.0f, 0.0f);
+
+	//Nave
+	glCallList(ene2+0);
+	//Bomba
+	glCallList(ene2+1);
+	//Piloto
+//	glCallList(ene2+2);
 }
 
 void DibujaMJ6()
@@ -2097,13 +2195,20 @@ void DibujaEscena()
 		DibujaPersonajeAru();
 	glPopMatrix();
 
-
 	//Ene1
 	glPushMatrix();
 		glTranslatef(enem1.PosicionObj.x, enem1.PosicionObj.y+2.4f, enem1.PosicionObj.z);
 		glRotatef(enem1.AngObj, 0.0f, 1.0f, 0.0f);
 		glScalef(enem1.escalaX,enem1.escalaY,enem1.escalaZ);
 		DibujaEnemigo1();
+	glPopMatrix();
+
+	//Ene2
+	glPushMatrix();
+		glTranslatef(enem2.PosicionObj.x, enem2.PosicionObj.y+2.4f, enem2.PosicionObj.z);
+		glRotatef(enem2.AngObj, 0.0f, 1.0f, 0.0f);
+		glScalef(enem2.escalaX,enem1.escalaY,enem1.escalaZ);
+		DibujaEnemigo2();
 	glPopMatrix();
 
 	//Ene3a
