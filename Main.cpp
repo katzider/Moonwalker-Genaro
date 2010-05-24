@@ -2827,6 +2827,7 @@ int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la
 	// Colisiones
 	ActualizaObjetosDinamicosColision();
 	DibujaObjetosdeColision();
+	DibujaEsferasColision();
 	ColisionesPiso();
 
 	return TRUE;
