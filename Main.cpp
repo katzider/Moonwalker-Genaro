@@ -1568,6 +1568,47 @@ void InicializaObjetosdeColision()
 	esfera[0].radio=1.8f;
 	esfera[0].Pos=CVector(player1.PosicionObj.x, player1.PosicionObj.y+2.5f, player1.PosicionObj.z);
 	esfera[0].colision=false;
+
+	esfera[20].radio=4.0;
+	esfera[20].Pos=CVector(210.91f, 6.0f, -93.0f);
+	esfera[20].colision=false;
+
+	esfera[21].radio=4.0;
+	esfera[21].Pos=CVector(203.0f, 6.0f, -96.0f);
+	esfera[21].colision=false;
+
+	esfera[22].radio=4.0;
+	esfera[22].Pos=CVector(43.0f, 6.0f, -92.0f);
+	esfera[22].colision=false;
+
+	esfera[23].radio=4.0;
+	esfera[23].Pos=CVector(47.0f, 6.0f, -92.0f);
+	esfera[23].colision=false;
+
+	esfera[24].radio=8.0;
+	esfera[24].Pos=CVector(-5.0f, 6.0f, -35.0f);
+	esfera[24].colision=false;
+
+	esfera[25].radio=4.0;
+	esfera[25].Pos=CVector(-47.0f, 6.0f, -93.0f);
+	esfera[25].colision=false;
+
+	esfera[26].radio=4.0;
+	esfera[26].Pos=CVector(-53.0f, 6.0f, -91.0f);
+	esfera[26].colision=false;
+
+	esfera[27].radio=4.0;
+	esfera[27].Pos=CVector(-56.0f, 6.0f, -93.0f);
+	esfera[27].colision=false;
+
+	esfera[28].radio=8.0;
+	esfera[28].Pos=CVector(-82.0f, 6.0f, 17.0f);
+	esfera[28].colision=false;
+
+	esfera[29].radio=8.0;
+	esfera[29].Pos=CVector(-22.0f, 6.0f, 120.0f);
+	esfera[29].colision=false;
+
 }
 
 void ActualizaObjetosDinamicosColision()
@@ -1610,11 +1651,14 @@ void DibujaEsferasColision()
 
 	glColor3f(1.0f, 1.0f, 1.0f);
 
-	glPushMatrix();
-		glTranslatef(esfera[0].Pos.x, esfera[0].Pos.y, esfera[0].Pos.z);
-		glRotatef(90.0f,1.0f,0.0f,0.0f);
-		gluSphere(q, esfera[0].radio, 16, 8);
-	glPopMatrix();
+	for( int i = 0; i < 30; i++)
+	{
+		glPushMatrix();
+			glTranslatef(esfera[i].Pos.x, esfera[i].Pos.y, esfera[i].Pos.z);
+			glRotatef(90.0f,1.0f,0.0f,0.0f);
+			gluSphere(q, esfera[i].radio, 16, 8);
+		glPopMatrix();
+	}
 
 	glEnable(GL_LIGHTING);
 
@@ -1956,7 +2000,10 @@ void ControlPersonaje(int funcion)
 		player1.ObjetivoCam.y = player1.CamaraObjAlt;
 
 		// Colisiones
-		//ColisionEsferaEsfera(esfera[0], esfera[1], 1, player1 );
+		for(int i = 1; i <= 30; i++)
+		{
+			ColisionEsferaEsfera(esfera[0], esfera[i], 1, player1 );
+		}
 		ColisionEsferaPlano(0, 1, player1 );
 
 		player1.PosAntObj = player1.PosicionObj;
@@ -1971,7 +2018,10 @@ void ControlPersonaje(int funcion)
 		player1.ObjetivoCam.y = player1.CamaraObjAlt;
 
 		// Colisiones
-		//ColisionEsferaEsfera(esfera[0], esfera[1], 2, player1 );
+		for(int i = 1; i <= 30; i++)
+		{
+			ColisionEsferaEsfera(esfera[0], esfera[i], 2, player1 );
+		}
 		ColisionEsferaPlano(0, 2, player1 );
 
 		player1.PosAntObj = player1.PosicionObj;
