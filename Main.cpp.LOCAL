@@ -33,14 +33,13 @@ boundingsphere esfera[maxPersonajes];
 
 // variables que usaremos para la camara
 int CamPos[6][6] = { 
-	{ 190.0f, 90.0f, 10.0f, 180.0f, 6.5f, -60.0f }, 
-	{ 45.0f, 90.0f, 10.0f, 55.0f, 6.5f, -60.0f }, 
-	{ 15.0f, 90.0f, -56.0f, -50.0f, 6.5f, -56.0f }, 
-	{ 35.0f, 90.0f, 75.0f, -60.0f, 6.5f, 80.0f }, 
-	{ 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f }, 
-	{ 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f } 
+	{ 225.0f, 60.0f, 8.0f, 200.0f, 20.0f, -50.0f }, 
+	{}, 
+	{}, 
+	{}, 
+	{}, 
+	{} 
 };
-int pisoId = 0;
 
 // Variable de acceso a la estructura de parametros
 parametros player1;
@@ -1091,7 +1090,7 @@ void InicializaParametrosdeControl()
 								//sin aplicarle ninguna transformación (hacia adonde está volteando). Se elige un ángulo tal que al aplicarle
 								//una rotación inicial con respecto al eje Y esté viendo hacia la misma dirección que la definida por AngDir
 	
-	enem3a.PosicionObj=CVector(-10.0f, 0.0f, -5.0f); //Esta es la posición inicial del objeto en la escena
+	enem3a.PosicionObj=CVector(-15.0f, 0.0f, 10.0f); //Esta es la posición inicial del objeto en la escena
 	enem3a.Direccion.x=(float)cos(player1.AngDir*PI/180.0f); //Dirección inicial definida por el ángulo inicial AngDir (x=cos(AngDir), y=0.0, z=sen(AngDir))
 	enem3a.Direccion.y=0.0f;
 	enem3a.Direccion.z=(float)sin(player1.AngDir*PI/180.0f);   
@@ -1102,9 +1101,9 @@ void InicializaParametrosdeControl()
 	enem3a.Dir=0;
 	enem3a.DirAnt=0;
 
-	enem3a.escalaX=0.3f;
-	enem3a.escalaY=0.3f;
-	enem3a.escalaZ=0.3f;
+	enem3a.escalaX=0.4f;
+	enem3a.escalaY=0.4f;
+	enem3a.escalaZ=0.4f;
 
 	enem3a.CamaraObjAltE=0.0f;
 
@@ -1120,7 +1119,7 @@ void InicializaParametrosdeControl()
 								//sin aplicarle ninguna transformación (hacia adonde está volteando). Se elige un ángulo tal que al aplicarle
 								//una rotación inicial con respecto al eje Y esté viendo hacia la misma dirección que la definida por AngDir
 	
-	enem3b.PosicionObj=CVector(-19.0f, 0.0f, -10.0f); //Esta es la posición inicial del objeto en la escena
+	enem3b.PosicionObj=CVector(-19.0f, 0.0f, 10.0f); //Esta es la posición inicial del objeto en la escena
 	enem3b.Direccion.x=(float)cos(player1.AngDir*PI/180.0f); //Dirección inicial definida por el ángulo inicial AngDir (x=cos(AngDir), y=0.0, z=sen(AngDir))
 	enem3b.Direccion.y=0.0f;
 	enem3b.Direccion.z=(float)sin(player1.AngDir*PI/180.0f);   
@@ -1131,9 +1130,9 @@ void InicializaParametrosdeControl()
 	enem3b.Dir=0;
 	enem3b.DirAnt=0;
 
-	enem3b.escalaX=0.3f;
-	enem3b.escalaY=0.3f;
-	enem3b.escalaZ=0.3f;
+	enem3b.escalaX=0.4f;
+	enem3b.escalaY=0.4f;
+	enem3b.escalaZ=0.4f;
 
 	enem3b.CamaraObjAltE=0.0f;
 
@@ -1150,7 +1149,7 @@ void InicializaParametrosdeControl()
 								//sin aplicarle ninguna transformación (hacia adonde está volteando). Se elige un ángulo tal que al aplicarle
 								//una rotación inicial con respecto al eje Y esté viendo hacia la misma dirección que la definida por AngDir
 	
-	chang.PosicionObj=CVector(-30.0f, -4.0f, -5.0f); //Esta es la posición inicial del objeto en la escena
+	chang.PosicionObj=CVector(-30.0f, 0.0f, 5.0f); //Esta es la posición inicial del objeto en la escena
 	chang.Direccion.x=(float)cos(player1.AngDir*PI/180.0f); //Dirección inicial definida por el ángulo inicial AngDir (x=cos(AngDir), y=0.0, z=sen(AngDir))
 	chang.Direccion.y=0.0f;
 	chang.Direccion.z=(float)sin(player1.AngDir*PI/180.0f);   
@@ -1528,7 +1527,7 @@ void InicializaObjetosdeColision()
 	plano[6].tipo=1;
 
 	plano[7].A=CVector(-10.5f, 6.5f,5.0f);
-	plano[7].B=CVector(-95.0f, 6.5f,5.0f);
+	plano[7].B=CVector(-95.0f, 6.5f,50.0f);
 	plano[7].C=CVector(-95.0f, 6.5f,50.0f);
 	plano[7].D=CVector(-10.5f, 6.5f,50.0f);
 	plano[7].Normal=CVector(0.0f,1.0f,0.0f);
@@ -1549,77 +1548,16 @@ void InicializaObjetosdeColision()
 	plano[8].C=CVector(-95.0f, 6.5f,150.0f);
 	plano[8].D=CVector(-10.5f, 6.5f,150.0f);
 	plano[8].Normal=CVector(0.0f,1.0f,0.0f);
-	plano[8].b1=plano[8].B-plano[8].A;
-	plano[8].b2=plano[8].C-plano[8].B;
-	plano[8].b3=plano[8].D-plano[8].C;
-	plano[8].b4=plano[8].A-plano[8].D;
-	plano[8].b1Normal=Cruz(plano[8].b1, plano[8].Normal);
-	plano[8].b2Normal=Cruz(plano[8].b2, plano[8].Normal);
-	plano[8].b3Normal=Cruz(plano[8].b3, plano[8].Normal);
-	plano[8].b4Normal=Cruz(plano[8].b4, plano[8].Normal);
+	plano[8].b1=plano[7].B-plano[7].A;
+	plano[8].b2=plano[7].C-plano[7].B;
+	plano[8].b3=plano[7].D-plano[7].C;
+	plano[8].b4=plano[7].A-plano[7].D;
+	plano[8].b1Normal=Cruz(plano[7].b1, plano[7].Normal);
+	plano[8].b2Normal=Cruz(plano[7].b2, plano[7].Normal);
+	plano[8].b3Normal=Cruz(plano[7].b3, plano[7].Normal);
+	plano[8].b4Normal=Cruz(plano[7].b4, plano[7].Normal);
 	plano[8].tipo=1;	
 
-	//Muros invisibles
-
-	plano[9].A=CVector(238.6f, 6.5f,-32.0f);
-	plano[9].B=CVector(238.6f, 50.0f,-32.0f);
-	plano[9].C=CVector(238.6f, 50.0f,-96.7f);
-	plano[9].D=CVector(238.6f, 6.5f,-96.7f);
-	plano[9].Normal=CVector(-1.0f,0.0f,0.0f);
-	plano[9].b1=plano[9].B-plano[9].A;
-	plano[9].b2=plano[9].C-plano[9].B;
-	plano[9].b3=plano[9].D-plano[9].C;
-	plano[9].b4=plano[9].A-plano[9].D;
-	plano[9].b1Normal=Cruz(plano[9].b1, plano[9].Normal);
-	plano[9].b2Normal=Cruz(plano[9].b2, plano[9].Normal);
-	plano[9].b3Normal=Cruz(plano[9].b3, plano[9].Normal);
-	plano[9].b4Normal=Cruz(plano[9].b4, plano[9].Normal);
-	plano[9].tipo=2;	
-
-	plano[10].A=CVector(238.6f, 6.5f,-32.0f);
-	plano[10].B=CVector(5.0f, 6.5f,-32.0f);
-	plano[10].C=CVector(5.0f, 50.0f,-32.0f);
-	plano[10].D=CVector(238.6f, 50.0f,-32.0f);
-	plano[10].Normal=CVector(0.0f,0.0f,-1.0f);
-	plano[10].b1=plano[10].B-plano[10].A;
-	plano[10].b2=plano[10].C-plano[10].B;
-	plano[10].b3=plano[10].D-plano[10].C;
-	plano[10].b4=plano[10].A-plano[10].D;
-	plano[10].b1Normal=Cruz(plano[10].b1, plano[10].Normal);
-	plano[10].b2Normal=Cruz(plano[10].b2, plano[10].Normal);
-	plano[10].b3Normal=Cruz(plano[10].b3, plano[10].Normal);
-	plano[10].b4Normal=Cruz(plano[10].b4, plano[10].Normal);
-	plano[10].tipo=2;	
-
-	plano[11].A=CVector(-10.5f, 6.5f,-32.0f);
-	plano[11].B=CVector(-10.5f, 6.5f,150.0f);
-	plano[11].C=CVector(-10.5f, 50.0f,150.0f);
-	plano[11].D=CVector(-10.5f, 50.0f,-32.0f);
-	plano[11].Normal=CVector(-1.0f,0.0f,0.0f);
-	plano[11].b1=plano[11].B-plano[11].A;
-	plano[11].b2=plano[11].C-plano[11].B;
-	plano[11].b3=plano[11].D-plano[11].C;
-	plano[11].b4=plano[11].A-plano[11].D;
-	plano[11].b1Normal=Cruz(plano[11].b1, plano[11].Normal);
-	plano[11].b2Normal=Cruz(plano[11].b2, plano[11].Normal);
-	plano[11].b3Normal=Cruz(plano[11].b3, plano[11].Normal);
-	plano[11].b4Normal=Cruz(plano[11].b4, plano[11].Normal);
-	plano[11].tipo=2;	
-
-	plano[12].A=CVector(-10.5f, 6.5f,150.0f);
-	plano[12].B=CVector(-97.0f, 6.5f,150.0f);
-	plano[12].C=CVector(-97.0f, 50.0f,150.0f);
-	plano[12].D=CVector(-10.5f, 50.0f,150.0f);
-	plano[12].Normal=CVector(0.0f,0.0f,-1.0f);
-	plano[12].b1=plano[12].B-plano[12].A;
-	plano[12].b2=plano[12].C-plano[12].B;
-	plano[12].b3=plano[12].D-plano[12].C;
-	plano[12].b4=plano[12].A-plano[12].D;
-	plano[12].b1Normal=Cruz(plano[12].b1, plano[12].Normal);
-	plano[12].b2Normal=Cruz(plano[12].b2, plano[12].Normal);
-	plano[12].b3Normal=Cruz(plano[12].b3, plano[12].Normal);
-	plano[12].b4Normal=Cruz(plano[12].b4, plano[12].Normal);
-	plano[12].tipo=2;	
 
 	for(int i=0; i<maxPlanos; i++)
 	{
@@ -1630,7 +1568,10 @@ void InicializaObjetosdeColision()
 	esfera[0].radio=1.8f;
 	esfera[0].Pos=CVector(player1.PosicionObj.x, player1.PosicionObj.y+2.5f, player1.PosicionObj.z);
 	esfera[0].colision=false;
-	
+
+
+
+
 	//Esfera de colision del Enem1
 	esfera[1].radio=2.2f;
 	esfera[1].Pos=CVector(enem1.PosicionObj.x, enem1.PosicionObj.y-2.0f, enem1.PosicionObj.z);
@@ -1641,50 +1582,12 @@ void InicializaObjetosdeColision()
 	esfera[2].Pos=CVector(enem2.PosicionObj.x, enem2.PosicionObj.y+2.5f, enem2.PosicionObj.z);
 	esfera[2].colision=false;
 
-	//Esfera de colision de MJ6
+	//Esfera de colision del Enem1
 	esfera[6].radio=2.0f;
 	esfera[6].Pos=CVector(MJ6.PosicionObj.x, MJ6.PosicionObj.y+3.5f, MJ6.PosicionObj.z);
 	esfera[6].colision=false;
 
-	esfera[20].radio=4.0;
-	esfera[20].Pos=CVector(210.91f, 6.0f, -93.0f);
-	esfera[20].colision=false;
 
-	esfera[21].radio=4.0;
-	esfera[21].Pos=CVector(203.0f, 6.0f, -96.0f);
-	esfera[21].colision=false;
-
-	esfera[22].radio=4.0;
-	esfera[22].Pos=CVector(43.0f, 6.0f, -92.0f);
-	esfera[22].colision=false;
-
-	esfera[23].radio=4.0;
-	esfera[23].Pos=CVector(47.0f, 6.0f, -92.0f);
-	esfera[23].colision=false;
-
-	esfera[24].radio=8.0;
-	esfera[24].Pos=CVector(-5.0f, 6.0f, -35.0f);
-	esfera[24].colision=false;
-	
-	esfera[25].radio=4.0;
-	esfera[25].Pos=CVector(-47.0f, 6.0f, -93.0f);
-	esfera[25].colision=false;
-
-	esfera[26].radio=4.0;
-	esfera[26].Pos=CVector(-53.0f, 6.0f, -91.0f);
-	esfera[26].colision=false;
-
-	esfera[27].radio=4.0;
-	esfera[27].Pos=CVector(-56.0f, 6.0f, -93.0f);
-	esfera[27].colision=false;
-
-	esfera[28].radio=8.0;
-	esfera[28].Pos=CVector(-82.0f, 6.0f, 17.0f);
-	esfera[28].colision=false;
-
-	esfera[29].radio=8.0;
-	esfera[29].Pos=CVector(-22.0f, 6.0f, 120.0f);
-	esfera[29].colision=false;
 
 }
 
@@ -1735,14 +1638,11 @@ void DibujaEsferasColision()
 
 	glColor3f(1.0f, 1.0f, 1.0f);
 
-	for( int i = 0; i < 30; i++)
-	{
-		glPushMatrix();
-			glTranslatef(esfera[i].Pos.x, esfera[i].Pos.y, esfera[i].Pos.z);
-			glRotatef(90.0f,1.0f,0.0f,0.0f);
-			gluSphere(q, esfera[i].radio, 16, 8);
-		glPopMatrix();
-	}
+	glPushMatrix();
+		glTranslatef(esfera[0].Pos.x, esfera[0].Pos.y, esfera[0].Pos.z);
+		glRotatef(90.0f,1.0f,0.0f,0.0f);
+		gluSphere(q, esfera[0].radio, 16, 8);
+	glPopMatrix();
 
 	glPushMatrix();
 		glTranslatef(esfera[1].Pos.x, esfera[1].Pos.y, esfera[1].Pos.z);
@@ -1941,7 +1841,6 @@ void ColisionesPiso()
 				player1.PosicionCam.y=player1.CamaraPosAlt;
 				player1.ObjetivoCam=player1.PosicionObj;
 				player1.ObjetivoCam.y=player1.CamaraObjAlt;
-				pisoId = i;
 			}
 		}
 	}
@@ -2102,10 +2001,7 @@ void ControlPersonaje(int funcion)
 		player1.ObjetivoCam.y = player1.CamaraObjAlt;
 
 		// Colisiones
-		for(int i = 1; i <= 30; i++)
-		{
-			ColisionEsferaEsfera(esfera[0], esfera[i], 1, player1 );
-		}
+		//ColisionEsferaEsfera(esfera[0], esfera[1], 1, player1 );
 		ColisionEsferaPlano(0, 1, player1 );
 
 		player1.PosAntObj = player1.PosicionObj;
@@ -2120,10 +2016,7 @@ void ControlPersonaje(int funcion)
 		player1.ObjetivoCam.y = player1.CamaraObjAlt;
 
 		// Colisiones
-		for(int i = 1; i <= 30; i++)
-		{
-			ColisionEsferaEsfera(esfera[0], esfera[i], 2, player1 );
-		}
+		//ColisionEsferaEsfera(esfera[0], esfera[1], 2, player1 );
 		ColisionEsferaPlano(0, 2, player1 );
 
 		player1.PosAntObj = player1.PosicionObj;
@@ -2673,7 +2566,7 @@ void DibujaTextos()
 
 	// Texto a mostrar en pantalla
 	Font.glPrint((1.0f/640.0f)*glWidth, glWidth*0.05f,glHeight*0.9f,"Pos: %f,%f,%f",player1.PosicionObj.x,player1.PosicionObj.y,player1.PosicionObj.z);
-	Font.glPrint((1.0f/640.0f)*glWidth, glWidth*0.05f,glHeight*0.85f,"Id %d", pisoId);
+	// Font.glPrint((1.2f/640.0f)*glWidth, glWidth*0.05f,glHeight*0.85f,"FPS %d",FPS);
 								
 	glDisable(GL_ALPHA_TEST);
 	glDisable(GL_TEXTURE_2D);
@@ -2847,43 +2740,44 @@ void DibujaEscena()
 	g_Load3ds.Render3DSFile(&g_3DModel2e, textureModel2e, 1);
 	glDisable(GL_NORMALIZE);
 }
-void CamDiff()
-{
-}
 void Camara()
 {
-	if( pisoId == 0 )
+	if( 0 )
 	{
 		gluLookAt( CamPos[ 0 ][ 0 ], CamPos[ 0 ][ 1 ],CamPos[ 0 ][ 2 ], CamPos[ 0 ][ 3 ], CamPos[ 0 ][ 4 ], CamPos[ 0 ][ 5 ], 0.0f, 1.0f, 0.0f);
 	}
-	else if ( pisoId == 2 )
+	else if ( 1 )
 	{
-		gluLookAt(CamPos[ 1 ][ 0 ], CamPos[ 1 ][ 1 ],CamPos[ 1 ][ 2 ], CamPos[ 1 ][ 3 ], CamPos[ 1 ][ 4 ], CamPos[ 1 ][ 5 ], 0.0f, 1.0f, 0.0f);
-	}
-	else if ( pisoId == 6 )
-	{
-		gluLookAt(CamPos[ 2 ][ 0 ], CamPos[ 2 ][ 1 ],CamPos[ 2 ][ 2 ], CamPos[ 2 ][ 3 ], CamPos[ 2 ][ 4 ], CamPos[ 2 ][ 5 ], 0.0f, 1.0f, 0.0f);
-	}
-	else if ( pisoId == 8 )
-	{
-		gluLookAt(CamPos[ 3 ][ 0 ], CamPos[ 3 ][ 1 ],CamPos[ 3 ][ 2 ], CamPos[ 3 ][ 3 ], CamPos[ 3 ][ 4 ], CamPos[ 3 ][ 5 ], 0.0f, 1.0f, 0.0f);
-	}
-	else if ( pisoId == 10 )
-	{
-		gluLookAt( CamPos[ 0 ][ 0 ] - CamPos[ 1 ][ 0 ], CamPos[ 4 ][ 1 ],CamPos[ 4 ][ 2 ], CamPos[ 4 ][ 3 ], CamPos[ 4 ][ 4 ], CamPos[ 0 ][ 5 ], 0.0f, 1.0f, 0.0f );
-	}
-	else
 		gluLookAt(player1.PosicionCam.x, player1.PosicionCam.y, player1.PosicionCam.z, 
 			  player1.ObjetivoCam.x, player1.ObjetivoCam.y, player1.ObjetivoCam.z, 
 			  0.0f, 1.0f, 0.0f);
+	}
+	else if ( 0 )
+	{
+		gluLookAt(player1.PosicionCam.x, player1.PosicionCam.y, player1.PosicionCam.z, 
+			  player1.ObjetivoCam.x, player1.ObjetivoCam.y, player1.ObjetivoCam.z, 
+			  0.0f, 1.0f, 0.0f);
+	}
+	else if ( 0 )
+	{
+		gluLookAt(player1.PosicionCam.x, player1.PosicionCam.y, player1.PosicionCam.z, 
+			  player1.ObjetivoCam.x, player1.ObjetivoCam.y, player1.ObjetivoCam.z, 
+			  0.0f, 1.0f, 0.0f);
+	}
+	else if ( 0 )
+	{
+		gluLookAt(player1.PosicionCam.x, player1.PosicionCam.y, player1.PosicionCam.z, 
+			  player1.ObjetivoCam.x, player1.ObjetivoCam.y, player1.ObjetivoCam.z, 
+			  0.0f, 1.0f, 0.0f);
+	}
 }
 int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la ventana
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 	glLoadIdentity();
 	
+	//gluLookAt(10.0f, 45.0f, 45.0f, 10.0f, 25.0f, 0.0f, 0, 1, 0);
 	Camara();
-	
 	/*
 	gluLookAt(player1.PosicionCam.x, player1.PosicionCam.y, player1.PosicionCam.z, 
 			  player1.ObjetivoCam.x, player1.ObjetivoCam.y, player1.ObjetivoCam.z, 
