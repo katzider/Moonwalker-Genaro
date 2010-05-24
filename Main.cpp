@@ -2192,11 +2192,7 @@ void DibujaMJ()
 void DibujaEscena()
 {
 	// Mayralol
-	glPushMatrix();
-		glTranslatef( 0.0f, -28.0f, -50.0f );
-		glRotatef(180.0f, 0.0f, 1.0f, 0.0f);
-		g_Load3ds.Render3DSFile(&g_3DModel2e, textureModel2e, 1);
-	glPopMatrix();
+	g_Load3ds.Render3DSFile(&g_3DModel2e, textureModel2e, 1);
 
 	// savage
 	glPushMatrix();
