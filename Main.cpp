@@ -2745,6 +2745,9 @@ void DibujaEscena()
 	g_Load3ds.Render3DSFile(&g_3DModel2e, textureModel2e, 1);
 	glDisable(GL_NORMALIZE);
 }
+void CamDiff()
+{
+}
 void Camara()
 {
 	if( pisoId == 0 )
@@ -2777,13 +2780,13 @@ int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 	glLoadIdentity();
 	
-	//gluLookAt(10.0f, 45.0f, 45.0f, 10.0f, 25.0f, 0.0f, 0, 1, 0);
-	//Camara();
+	Camara();
 	
+	/*
 	gluLookAt(player1.PosicionCam.x, player1.PosicionCam.y, player1.PosicionCam.z, 
 			  player1.ObjetivoCam.x, player1.ObjetivoCam.y, player1.ObjetivoCam.z, 
 			  0.0f, 1.0f, 0.0f);
-	
+	*/
 
 	//Se actualizan los parámetros de iluminación
 	glLightfv(GL_LIGHT0, GL_POSITION, LightPos);		// Posicion de la luz1
