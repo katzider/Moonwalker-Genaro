@@ -35,8 +35,8 @@ boundingsphere esfera[maxPersonajes];
 int CamPos[6][6] = { 
 	{ 190.0f, 90.0f, 10.0f, 180.0f, 6.5f, -60.0f }, 
 	{ 45.0f, 90.0f, 10.0f, 55.0f, 6.5f, -60.0f }, 
-	{ -60.0f, 90.0f, 10.0f, -50.0f, 6.5f, -30.0f }, 
-	{ 45.0f, 40.0f, 90.0f, -35.0f, 6.5f, 90.0f }, 
+	{ 15.0f, 90.0f, -56.0f, -50.0f, 6.5f, -56.0f }, 
+	{ 35.0f, 90.0f, 75.0f, -60.0f, 6.5f, 80.0f }, 
 	{ 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f }, 
 	{ 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f } 
 };
@@ -2764,7 +2764,7 @@ void Camara()
 	}
 	else if ( pisoId == 8 )
 	{
-		gluLookAt(CamPos[ 3 ][ 0 ], CamPos[ 3 ][ 1 ],CamPos[ 3 ][ 2 ], CamPos[ 3 ][ 3 ], CamPos[ 3 ][ 4 ], CamPos[ 0 ][ 5 ], 0.0f, 1.0f, 0.0f);
+		gluLookAt(CamPos[ 3 ][ 0 ], CamPos[ 3 ][ 1 ],CamPos[ 3 ][ 2 ], CamPos[ 3 ][ 3 ], CamPos[ 3 ][ 4 ], CamPos[ 3 ][ 5 ], 0.0f, 1.0f, 0.0f);
 	}
 	else if ( pisoId == 10 )
 	{
