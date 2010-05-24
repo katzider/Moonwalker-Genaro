@@ -2867,7 +2867,7 @@ void Camara()
 	{
 		gluLookAt(CamPos[ 3 ][ 0 ], CamPos[ 3 ][ 1 ],CamPos[ 3 ][ 2 ], CamPos[ 3 ][ 3 ], CamPos[ 3 ][ 4 ], CamPos[ 3 ][ 5 ], 0.0f, 1.0f, 0.0f);
 	}
-	else if ( pisoId == 1 )
+	else if ( pisoId == 10 )
 	{
 		gluLookAt( 190.0f * ((9.0f/38.0f)/20.0f) * abs( player1.PosicionCam.x - 145.0f ), CamPos[ 0 ][ 1 ], CamPos[ 0 ][ 2 ], 180.0f * ((55.0f/180.0f)/20.0f) * abs( player1.PosicionCam.x - 145 ), CamPos[ 0 ][ 4 ], CamPos[ 0 ][ 5 ], 0.0f, 1.0f, 0.0f );
 	}
