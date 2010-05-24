@@ -32,8 +32,8 @@ boundingplane plano[maxPlanos];
 boundingsphere esfera[maxPersonajes];
 
 // variables que usaremos para la camara
-int CamPoints[6][6] = { 
-	{0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f }, 
+int CamPos[6][6] = { 
+	{ 225.0f, 60.0f, 8.0f, 200.0f, 20.0f, -50.0f }, 
 	{}, 
 	{}, 
 	{}, 
@@ -946,7 +946,7 @@ void InicializaParametrosdeControl()
 								//sin aplicarle ninguna transformación (hacia adonde está volteando). Se elige un ángulo tal que al aplicarle
 								//una rotación inicial con respecto al eje Y esté viendo hacia la misma dirección que la definida por AngDir
 	
-	player1.PosicionObj = CVector( 40.0f, 4.0f, -35.0f); //Esta es la posición inicial del objeto en la escena
+	player1.PosicionObj = CVector( 220.0f, 4.0f, -45.0f); //Esta es la posición inicial del objeto en la escena
 	player1.Direccion.x = cosf( player1.AngDir * PI / 180.0f); //Dirección inicial definida por el ángulo inicial AngDir (x=cos(AngDir), y=0.0, z=sen(AngDir))
 	player1.Direccion.y = 0.0f;
 	player1.Direccion.z = sinf( player1.AngDir * PI / 180.0f);   
@@ -2651,7 +2651,7 @@ void Camara()
 {
 	if( 0 )
 	{
-		gluLookAt( 160.0f, 60.0f, -5.0f, 120.0f, 10.0f, -40.0f, 0.0f, 1.0f, 0.0f);
+		gluLookAt( CamPos[ 0 ][ 0 ], CamPos[ 0 ][ 1 ],CamPos[ 0 ][ 2 ], CamPos[ 0 ][ 3 ], CamPos[ 0 ][ 4 ], CamPos[ 0 ][ 5 ], 0.0f, 1.0f, 0.0f);
 	}
 	else if ( 1 )
 	{
