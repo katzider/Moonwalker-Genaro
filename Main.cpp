@@ -2891,7 +2891,7 @@ void Camara()
 	}
 	else if ( pisoId == 30 )
 	{
-		gluLookAt( 190.0f - 5.8f * abs( player1.PosicionCam.x - 145.0f ), CamPos[ 0 ][ 1 ], CamPos[ 0 ][ 2 ], 180.0f - 5.0f * abs( player1.PosicionCam.x - 145 ), CamPos[ 0 ][ 4 ], CamPos[ 0 ][ 5 ], 0.0f, 1.0f, 0.0f );
+		gluLookAt( 45.0f + 1.93548f * abs( player1.PosicionCam.x - 15.0f ), CamPos[ 0 ][ 1 ], -56.0f + 4.25806f * abs( player1.PosicionCam.x - 15.0f ), 55.0f - 6.77419f * abs( player1.PosicionCam.x - 15.0f ), CamPos[ 0 ][ 4 ], -60.0f + -0.2580f * abs( player1.PosicionCam.x - 15.0f ), 0.0f, 1.0f, 0.0f );
 	}
 	else if ( pisoId == 50 )
 	{
