@@ -124,7 +124,7 @@ CMateriales Material;
 //nombre y ubicación de modelo Enemigo2
 #define FILE_NAME1k	 "Modelos/Ene2nave.3ds"
 #define FILE_NAME2k	 "Modelos/Ene2bomb.3ds"
-//#define FILE_NAME3k	 "Modelos/Ene2pers.3ds"
+#define FILE_NAME3k	 "Modelos/Ene2pers.3ds"
 
 //Contenedor de texturas de enemigo1
 CTga textureModel1d[20];
@@ -577,8 +577,8 @@ int CargaModelos()
 		return 0;
 	if(!g_Load3ds.Load3DSFile(FILE_NAME2k, &g_3DModel2k, textureModel1k))
 		return 0;
-//	if(!g_Load3ds.Load3DSFile(FILE_NAME3k, &g_3DModel3k, textureModel1k))
-//		return 0;
+	if(!g_Load3ds.Load3DSFile(FILE_NAME3k, &g_3DModel3k, textureModel1k))
+		return 0;
 
 	return TRUE;
 }
@@ -651,9 +651,9 @@ void DescargaModelos()
 	g_Load3ds.UnLoad3DSFile(&g_3DModel5j, textureModel5j);
 
 	//ene2
-	//g_Load3ds.UnLoad3DSFile(&g_3DModel1j, textureModel1j);
-	//g_Load3ds.UnLoad3DSFile(&g_3DModel2j, textureModel2j);
-	//g_Load3ds.UnLoad3DSFile(&g_3DModel3j, textureModel3j);
+	g_Load3ds.UnLoad3DSFile(&g_3DModel1k, textureModel1k);
+	g_Load3ds.UnLoad3DSFile(&g_3DModel2k, textureModel2k);
+	g_Load3ds.UnLoad3DSFile(&g_3DModel3k, textureModel3k);
 }
 
 void IniSombraVolumen()
@@ -693,7 +693,7 @@ void CreaListas()
 	//Ene1
 	ene1=glGenLists(10);
 	//Ene2
-	ene2=glGenLists(2);
+	ene2=glGenLists(3);
 	//MJ6
 	noMJ6=glGenLists(10);
 	//Ene3a
@@ -908,9 +908,9 @@ void CreaListas()
 		g_Load3ds.Render3DSFile(&g_3DModel2k, textureModel2k, 1);
 	glEndList();
 
-//	glNewList(ene2+2,GL_COMPILE);
-//		g_Load3ds.Render3DSFile(&g_3DModel3k, textureModel3k, 1);
-//	glEndList();
+	glNewList(ene2+2,GL_COMPILE);
+		g_Load3ds.Render3DSFile(&g_3DModel3k, textureModel3k, 1);
+	glEndList();
 
 }
 
@@ -921,7 +921,7 @@ void DestruyeListas()
 	glDeleteLists(modelo1aru,9);
 	// Borra listas fahl
 	glDeleteLists(ene1,10);
-	glDeleteLists(ene2,2);
+	glDeleteLists(ene2,3);
 	glDeleteLists(noMJ6,10);
 
 	glDeleteLists(ene3a,5);
@@ -1001,7 +1001,7 @@ void InicializaParametrosdeControl()
 								//sin aplicarle ninguna transformación (hacia adonde está volteando). Se elige un ángulo tal que al aplicarle
 								//una rotación inicial con respecto al eje Y esté viendo hacia la misma dirección que la definida por AngDir
 	
-	enem1.PosicionObj=CVector(5.0f, 0.0f, 0.0f); //Esta es la posición inicial del objeto en la escena
+	enem1.PosicionObj=CVector(180.0f, 9.0f, -60.0f); //Esta es la posición inicial del objeto en la escena
 	enem1.Direccion.x=(float)cos(player1.AngDir*PI/180.0f); //Dirección inicial definida por el ángulo inicial AngDir (x=cos(AngDir), y=0.0, z=sen(AngDir))
 	enem1.Direccion.y=0.0f;
 	enem1.Direccion.z=(float)sin(player1.AngDir*PI/180.0f);   
@@ -1030,7 +1030,7 @@ void InicializaParametrosdeControl()
 								//sin aplicarle ninguna transformación (hacia adonde está volteando). Se elige un ángulo tal que al aplicarle
 								//una rotación inicial con respecto al eje Y esté viendo hacia la misma dirección que la definida por AngDir
 	
-	enem2.PosicionObj=CVector(10.0f, 0.0f, 0.0f); //Esta es la posición inicial del objeto en la escena
+	enem2.PosicionObj=CVector(120.0f, 10.0f, -80.0f); //Esta es la posición inicial del objeto en la escena
 	enem2.Direccion.x=(float)cos(player1.AngDir*PI/180.0f); //Dirección inicial definida por el ángulo inicial AngDir (x=cos(AngDir), y=0.0, z=sen(AngDir))
 	enem2.Direccion.y=0.0f;
 	enem2.Direccion.z=(float)sin(player1.AngDir*PI/180.0f);   
@@ -1041,9 +1041,9 @@ void InicializaParametrosdeControl()
 	enem2.Dir=0;
 	enem2.DirAnt=0;
 
-	enem2.escalaX=0.2f;
-	enem2.escalaY=0.2f;
-	enem2.escalaZ=0.2f;
+	enem2.escalaX=0.5f;
+	enem2.escalaY=0.5f;
+	enem2.escalaZ=0.5f;
 
 	enem2.CamaraObjAltE=0.0f;
 	
@@ -1061,7 +1061,7 @@ void InicializaParametrosdeControl()
 								//sin aplicarle ninguna transformación (hacia adonde está volteando). Se elige un ángulo tal que al aplicarle
 								//una rotación inicial con respecto al eje Y esté viendo hacia la misma dirección que la definida por AngDir
 	
-	MJ6.PosicionObj=CVector(-5.0f, 5.0f, 0.0f); //Esta es la posición inicial del objeto en la escena
+	MJ6.PosicionObj=CVector(-15.0f, 8.5f, -65.0f); //Esta es la posición inicial del objeto en la escena
 	MJ6.Direccion.x=(float)cos(player1.AngDir*PI/180.0f); //Dirección inicial definida por el ángulo inicial AngDir (x=cos(AngDir), y=0.0, z=sen(AngDir))
 	MJ6.Direccion.y=0.0f;
 	MJ6.Direccion.z=(float)sin(player1.AngDir*PI/180.0f);   
@@ -1072,9 +1072,9 @@ void InicializaParametrosdeControl()
 	MJ6.Dir=0;
 	MJ6.DirAnt=0;
 
-	MJ6.escalaX=0.4f;
-	MJ6.escalaY=0.4f;
-	MJ6.escalaZ=0.4f;
+	MJ6.escalaX=0.7f;
+	MJ6.escalaY=0.7f;
+	MJ6.escalaZ=0.7f;
 
 	MJ6.CamaraObjAltE=0.0f;
 
@@ -1510,6 +1510,7 @@ void InicializaObjetosdeColision()
 	plano[5].b4Normal=Cruz(plano[5].b4, plano[5].Normal);
 	plano[5].tipo=2;
 
+	//Continuan los planos de colisión de piso
 	plano[6].A=CVector(-10.5f, 6.5f,-96.7f);
 	plano[6].B=CVector(-95.0f, 6.5f,-96.7f);
 	plano[6].C=CVector(-95.0f, 6.5f,5.0f);
@@ -1567,11 +1568,39 @@ void InicializaObjetosdeColision()
 	esfera[0].radio=1.8f;
 	esfera[0].Pos=CVector(player1.PosicionObj.x, player1.PosicionObj.y+2.5f, player1.PosicionObj.z);
 	esfera[0].colision=false;
+
+
+
+
+	//Esfera de colision del Enem1
+	esfera[1].radio=2.2f;
+	esfera[1].Pos=CVector(enem1.PosicionObj.x, enem1.PosicionObj.y-2.0f, enem1.PosicionObj.z);
+	esfera[1].colision=false;
+
+	//Esfera de colision del Enem2
+	esfera[2].radio=5.5f;
+	esfera[2].Pos=CVector(enem2.PosicionObj.x, enem2.PosicionObj.y+2.5f, enem2.PosicionObj.z);
+	esfera[2].colision=false;
+
+	//Esfera de colision del Enem1
+	esfera[6].radio=2.0f;
+	esfera[6].Pos=CVector(MJ6.PosicionObj.x, MJ6.PosicionObj.y+3.5f, MJ6.PosicionObj.z);
+	esfera[6].colision=false;
+
+
+
 }
 
 void ActualizaObjetosDinamicosColision()
 {
 	esfera[0].Pos=CVector(player1.PosicionObj.x, player1.PosicionObj.y+2.5f, player1.PosicionObj.z);
+
+
+	esfera[1].Pos=CVector(enem1.PosicionObj.x, enem1.PosicionObj.y+2.5f, enem1.PosicionObj.z);
+	esfera[2].Pos=CVector(enem2.PosicionObj.x, enem2.PosicionObj.y+2.5f, enem2.PosicionObj.z);
+	esfera[6].Pos=CVector(MJ6.PosicionObj.x, MJ6.PosicionObj.y+2.5f, MJ6.PosicionObj.z);
+
+
 }
 
 void DibujaObjetosdeColision()
@@ -1613,6 +1642,24 @@ void DibujaEsferasColision()
 		glTranslatef(esfera[0].Pos.x, esfera[0].Pos.y, esfera[0].Pos.z);
 		glRotatef(90.0f,1.0f,0.0f,0.0f);
 		gluSphere(q, esfera[0].radio, 16, 8);
+	glPopMatrix();
+
+	glPushMatrix();
+		glTranslatef(esfera[1].Pos.x, esfera[1].Pos.y, esfera[1].Pos.z);
+		glRotatef(90.0f,1.0f,0.0f,0.0f);
+		gluSphere(q, esfera[1].radio, 16, 8);
+	glPopMatrix();
+
+		glPushMatrix();
+		glTranslatef(esfera[2].Pos.x, esfera[2].Pos.y, esfera[2].Pos.z);
+		glRotatef(90.0f,1.0f,0.0f,0.0f);
+		gluSphere(q, esfera[2].radio, 16, 8);
+	glPopMatrix();
+
+		glPushMatrix();
+		glTranslatef(esfera[6].Pos.x, esfera[6].Pos.y, esfera[6].Pos.z);
+		glRotatef(90.0f,1.0f,0.0f,0.0f);
+		gluSphere(q, esfera[6].radio, 16, 8);
 	glPopMatrix();
 
 	glEnable(GL_LIGHTING);
@@ -2170,7 +2217,7 @@ void DibujaEnemigo2()
 	//Bomba
 	glCallList(ene2+1);
 	//Piloto
-//	glCallList(ene2+2);
+	glCallList(ene2+2);
 }
 
 void DibujaMJ6()
@@ -2648,7 +2695,7 @@ void DibujaEnemigos()
 
 	//Ene1
 	glPushMatrix();
-		glTranslatef(enem1.PosicionObj.x, enem1.PosicionObj.y+2.4f, enem1.PosicionObj.z);
+		glTranslatef(enem1.PosicionObj.x, enem1.PosicionObj.y, enem1.PosicionObj.z);
 		glRotatef(enem1.AngObj, 0.0f, 1.0f, 0.0f);
 		glScalef(enem1.escalaX,enem1.escalaY,enem1.escalaZ);
 		DibujaEnemigo1();
@@ -2656,7 +2703,7 @@ void DibujaEnemigos()
 
 	//Ene2
 	glPushMatrix();
-		glTranslatef(enem2.PosicionObj.x, enem2.PosicionObj.y+2.4f, enem2.PosicionObj.z);
+		glTranslatef(enem2.PosicionObj.x, enem2.PosicionObj.y, enem2.PosicionObj.z);
 		glRotatef(enem2.AngObj, 0.0f, 1.0f, 0.0f);
 		glScalef(enem2.escalaX,enem1.escalaY,enem1.escalaZ);
 		DibujaEnemigo2();
@@ -2759,7 +2806,7 @@ int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la
 	// Dibujo de MJs
 	glPushMatrix();
 		DibujaMJ();
-		glTranslatef(40.0f, 10.0f,-35.0f);
+		//glTranslatef(40.0f, 10.0f,-35.0f);
 		DibujaEnemigos();
 	glPopMatrix();
 
@@ -2803,8 +2850,7 @@ int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la
 	// Dibujo de MJs
 	glPushMatrix();
 		DibujaMJ();
-		glTranslatef(40.0f, 10.0f,-35.0f);
-		DibujaEnemigos();
+//		glTranslatef(40.0f, 10.0f,-35.0f);
 		DibujaEnemigos();
 	glPopMatrix();
 
