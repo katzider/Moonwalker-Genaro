@@ -2889,15 +2889,15 @@ void Camara()
 	{
 		gluLookAt( 190.0f - 5.8f * abs( player1.PosicionCam.x - 145.0f ), CamPos[ 0 ][ 1 ], CamPos[ 0 ][ 2 ], 180.0f - 5.0f * abs( player1.PosicionCam.x - 145 ), CamPos[ 0 ][ 4 ], CamPos[ 0 ][ 5 ], 0.0f, 1.0f, 0.0f );
 	}
-	else if ( pisoId == 3 )
+	else if ( pisoId == 30 )
 	{
 		gluLookAt( 190.0f - 5.8f * abs( player1.PosicionCam.x - 145.0f ), CamPos[ 0 ][ 1 ], CamPos[ 0 ][ 2 ], 180.0f - 5.0f * abs( player1.PosicionCam.x - 145 ), CamPos[ 0 ][ 4 ], CamPos[ 0 ][ 5 ], 0.0f, 1.0f, 0.0f );
 	}
-	else if ( pisoId == 5 )
+	else if ( pisoId == 50 )
 	{
 		gluLookAt( 190.0f - 5.8f * abs( player1.PosicionCam.x - 145.0f ), CamPos[ 0 ][ 1 ], CamPos[ 0 ][ 2 ], 180.0f - 5.0f * abs( player1.PosicionCam.x - 145 ), CamPos[ 0 ][ 4 ], CamPos[ 0 ][ 5 ], 0.0f, 1.0f, 0.0f );
 	}
-	else if ( pisoId == 7 )
+	else if ( pisoId == 70 )
 	{
 		gluLookAt( 190.0f - 5.8f * abs( player1.PosicionCam.x - 145.0f ), CamPos[ 0 ][ 1 ], CamPos[ 0 ][ 2 ], 180.0f - 5.0f * abs( player1.PosicionCam.x - 145 ), CamPos[ 0 ][ 4 ], CamPos[ 0 ][ 5 ], 0.0f, 1.0f, 0.0f );
 	}
