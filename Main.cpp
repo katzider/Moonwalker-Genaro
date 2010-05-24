@@ -2571,7 +2571,7 @@ void DibujaTextos()
 
 	// Texto a mostrar en pantalla
 	Font.glPrint((1.0f/640.0f)*glWidth, glWidth*0.05f,glHeight*0.9f,"Pos: %f,%f,%f",player1.PosicionObj.x,player1.PosicionObj.y,player1.PosicionObj.z);
-	Font.glPrint((1.0f/640.0f)*glWidth, glWidth*0.05f,glHeight*0.85f,"Id %d", pisoId);
+	Font.glPrint((1.0f/640.0f)*glWidth, glWidth*0.05f,glHeight*0.85f,"PosCam %f", player1.PosicionCam.x );
 								
 	glDisable(GL_ALPHA_TEST);
 	glDisable(GL_TEXTURE_2D);
@@ -2766,9 +2766,9 @@ void Camara()
 	{
 		gluLookAt(CamPos[ 3 ][ 0 ], CamPos[ 3 ][ 1 ],CamPos[ 3 ][ 2 ], CamPos[ 3 ][ 3 ], CamPos[ 3 ][ 4 ], CamPos[ 3 ][ 5 ], 0.0f, 1.0f, 0.0f);
 	}
-	else if ( pisoId == 10 )
+	else if ( pisoId == 1 )
 	{
-		gluLookAt( CamPos[ 0 ][ 0 ] - CamPos[ 1 ][ 0 ], CamPos[ 4 ][ 1 ],CamPos[ 4 ][ 2 ], CamPos[ 4 ][ 3 ], CamPos[ 4 ][ 4 ], CamPos[ 0 ][ 5 ], 0.0f, 1.0f, 0.0f );
+		gluLookAt( CamPos[0][0] * (9/760) * -( player1.PosicionCam.x - 145.0f ), CamPos[ 0 ][ 1 ], CamPos[ 0 ][ 2 ], CamPos[ 0 ][ 3 ], CamPos[ 0 ][ 4 ], CamPos[ 0 ][ 5 ], 0.0f, 1.0f, 0.0f );
 	}
 	else
 		gluLookAt(player1.PosicionCam.x, player1.PosicionCam.y, player1.PosicionCam.z, 
