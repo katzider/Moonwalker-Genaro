@@ -1509,7 +1509,8 @@ void InicializaObjetosdeColision()
 	plano[5].b3Normal=Cruz(plano[5].b3, plano[5].Normal);
 	plano[5].b4Normal=Cruz(plano[5].b4, plano[5].Normal);
 	plano[5].tipo=2;
-
+<<<<<<< HEAD
+	
 	plano[6].A=CVector(-10.5f, 6.5f,-96.7f);
 	plano[6].B=CVector(-95.0f, 6.5f,-96.7f);
 	plano[6].C=CVector(-95.0f, 6.5f,5.0f);
@@ -1540,8 +1541,6 @@ void InicializaObjetosdeColision()
 	plano[7].b4Normal=Cruz(plano[7].b4, plano[7].Normal);
 	plano[7].tipo=1;
 
-
-
 	plano[8].A=CVector(-10.5f, 6.5f,50.0f);
 	plano[8].B=CVector(-95.0f, 6.5f,50.0f);
 	plano[8].C=CVector(-95.0f, 6.5f,150.0f);
@@ -1556,7 +1555,8 @@ void InicializaObjetosdeColision()
 	plano[8].b3Normal=Cruz(plano[7].b3, plano[7].Normal);
 	plano[8].b4Normal=Cruz(plano[7].b4, plano[7].Normal);
 	plano[8].tipo=1;	
-
+=======
+>>>>>>> a5a8f1ed5a212d649044d2aca22e4bf44a2e06f0
 
 	for(int i=0; i<maxPlanos; i++)
 	{
