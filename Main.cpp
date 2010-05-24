@@ -1093,7 +1093,7 @@ void InicializaParametrosdeControl()
 								//sin aplicarle ninguna transformación (hacia adonde está volteando). Se elige un ángulo tal que al aplicarle
 								//una rotación inicial con respecto al eje Y esté viendo hacia la misma dirección que la definida por AngDir
 	
-	enem3a.PosicionObj=CVector(-10.0f, 0.0f, -5.0f); //Esta es la posición inicial del objeto en la escena
+	enem3a.PosicionObj=CVector(-15.0f, 8.0f, -5.0f); //Esta es la posición inicial del objeto en la escena
 	enem3a.Direccion.x=(float)cos(player1.AngDir*PI/180.0f); //Dirección inicial definida por el ángulo inicial AngDir (x=cos(AngDir), y=0.0, z=sen(AngDir))
 	enem3a.Direccion.y=0.0f;
 	enem3a.Direccion.z=(float)sin(player1.AngDir*PI/180.0f);   
@@ -1122,7 +1122,7 @@ void InicializaParametrosdeControl()
 								//sin aplicarle ninguna transformación (hacia adonde está volteando). Se elige un ángulo tal que al aplicarle
 								//una rotación inicial con respecto al eje Y esté viendo hacia la misma dirección que la definida por AngDir
 	
-	enem3b.PosicionObj=CVector(-19.0f, 0.0f, -10.0f); //Esta es la posición inicial del objeto en la escena
+	enem3b.PosicionObj=CVector(-19.0f, 8.0f, -10.0f); //Esta es la posición inicial del objeto en la escena
 	enem3b.Direccion.x=(float)cos(player1.AngDir*PI/180.0f); //Dirección inicial definida por el ángulo inicial AngDir (x=cos(AngDir), y=0.0, z=sen(AngDir))
 	enem3b.Direccion.y=0.0f;
 	enem3b.Direccion.z=(float)sin(player1.AngDir*PI/180.0f);   
@@ -1152,7 +1152,7 @@ void InicializaParametrosdeControl()
 								//sin aplicarle ninguna transformación (hacia adonde está volteando). Se elige un ángulo tal que al aplicarle
 								//una rotación inicial con respecto al eje Y esté viendo hacia la misma dirección que la definida por AngDir
 	
-	chang.PosicionObj=CVector(-30.0f, -4.0f, -5.0f); //Esta es la posición inicial del objeto en la escena
+	chang.PosicionObj=CVector(-30.0f, 7.0f, -5.0f); //Esta es la posición inicial del objeto en la escena
 	chang.Direccion.x=(float)cos(player1.AngDir*PI/180.0f); //Dirección inicial definida por el ángulo inicial AngDir (x=cos(AngDir), y=0.0, z=sen(AngDir))
 	chang.Direccion.y=0.0f;
 	chang.Direccion.z=(float)sin(player1.AngDir*PI/180.0f);   
@@ -1648,6 +1648,21 @@ void InicializaObjetosdeColision()
 	esfera[6].Pos=CVector(MJ6.PosicionObj.x, MJ6.PosicionObj.y+3.5f, MJ6.PosicionObj.z);
 	esfera[6].colision=false;
 
+	//Esfera de colision del Enem3a
+	esfera[7].radio=3.0f;
+	esfera[7].Pos=CVector(enem3a.PosicionObj.x, enem3a.PosicionObj.y+2.0f, enem3a.PosicionObj.z);
+	esfera[7].colision=false;
+
+	//Esfera de colision del Enem3b
+	esfera[8].radio=3.0f;
+	esfera[8].Pos=CVector(enem3b.PosicionObj.x, enem3b.PosicionObj.y+2.0f, enem3b.PosicionObj.z);
+	esfera[8].colision=false;
+
+	//Esfera de colision del chango
+	esfera[9].radio=2.5f;
+	esfera[9].Pos=CVector(chang.PosicionObj.x, chang.PosicionObj.y+2.0f, chang.PosicionObj.z);
+	esfera[9].colision=false;
+
 	esfera[20].radio=4.0;
 	esfera[20].Pos=CVector(210.91f, 6.0f, -93.0f);
 	esfera[20].colision=false;
@@ -1698,6 +1713,9 @@ void ActualizaObjetosDinamicosColision()
 	esfera[1].Pos=CVector(enem1.PosicionObj.x, enem1.PosicionObj.y+2.5f, enem1.PosicionObj.z);
 	esfera[2].Pos=CVector(enem2.PosicionObj.x, enem2.PosicionObj.y+2.5f, enem2.PosicionObj.z);
 	esfera[6].Pos=CVector(MJ6.PosicionObj.x, MJ6.PosicionObj.y+2.5f, MJ6.PosicionObj.z);
+	esfera[9].Pos=CVector(chang.PosicionObj.x, chang.PosicionObj.y+2.0f, chang.PosicionObj.z);
+	esfera[8].Pos=CVector(enem3b.PosicionObj.x, enem3b.PosicionObj.y+2.0f, enem3b.PosicionObj.z);
+	esfera[7].Pos=CVector(enem3a.PosicionObj.x, enem3a.PosicionObj.y+2.0f, enem3a.PosicionObj.z);
 
 
 }
