@@ -24,6 +24,13 @@ GLUquadricObj	*e;
 FMOD_SOUND       *sound[2] = { 0, 0 };
 FMOD_CHANNEL     *channel[2] = { 0, 0 };
 
+// Variables para la detección de colisiones
+#define maxPlanos 30
+#define maxPersonajes 2
+
+boundingplane plano[maxPlanos];
+boundingsphere esfera[maxPersonajes];
+
 // Variable de acceso a la estructura de parametros
 parametros player1;
 
@@ -1396,6 +1403,480 @@ void DatosAnimacion()
 			
 }
 
+// Colisiones, todo lo referente a colisiones ira aqui
+void InicializaObjetosdeColision()
+{
+	CVector v1, v2, a, b, c, d, va, vb, vd, Normal;
+	
+	//Inicia planos de colisión del piso
+	plano[0].A=CVector(-10.0f, 0.0f, 60.0f);
+	plano[0].B=CVector( 10.0f, 0.0f, 60.0f);
+	plano[0].C=CVector( 10.0f, 0.0f,  0.0f);
+	plano[0].D=CVector(-10.0f, 0.0f,  0.0f);
+	plano[0].Normal=CVector(0.0f,1.0f,0.0f);
+	plano[0].b1=plano[0].B-plano[0].A;
+	plano[0].b2=plano[0].C-plano[0].B;
+	plano[0].b3=plano[0].D-plano[0].C;
+	plano[0].b4=plano[0].A-plano[0].D;
+	plano[0].b1Normal=Cruz(plano[0].b1, plano[0].Normal);
+	plano[0].b2Normal=Cruz(plano[0].b2, plano[0].Normal);
+	plano[0].b3Normal=Cruz(plano[0].b3, plano[0].Normal);
+	plano[0].b4Normal=Cruz(plano[0].b4, plano[0].Normal);
+	plano[0].tipo=1;
+
+	plano[1].A=CVector( 10.0f,  0.0f,   0.0f);
+	plano[1].B=CVector( 10.0f, 20.0f, -50.0f);
+	plano[1].C=CVector(-10.0f, 20.0f, -50.0f);
+	plano[1].D=CVector(-10.0f,  0.0f,   0.0f);
+	v1=plano[1].B-plano[1].A;
+	v2=plano[1].D-plano[1].A;
+	plano[1].Normal=Normaliza(Cruz(v1,v2));
+	plano[1].b1=plano[1].B-plano[1].A;
+	plano[1].b2=plano[1].C-plano[1].B;
+	plano[1].b3=plano[1].D-plano[1].C;
+	plano[1].b4=plano[1].A-plano[1].D;
+	plano[1].b1Normal=Cruz(plano[1].b1, plano[1].Normal);
+	plano[1].b2Normal=Cruz(plano[1].b2, plano[1].Normal);
+	plano[1].b3Normal=Cruz(plano[1].b3, plano[1].Normal);
+	plano[1].b4Normal=Cruz(plano[1].b4, plano[1].Normal);
+	plano[1].tipo=1;
+
+	plano[2].A=CVector( 70.0f, 20.0f, -50.0f);
+	plano[2].B=CVector( 70.0f, 20.0f, -80.0f);
+	plano[2].C=CVector(-10.0f, 20.0f, -80.0f);
+	plano[2].D=CVector(-10.0f, 20.0f, -50.0f);
+	plano[2].Normal=CVector(0.0f,1.0f,0.0f);
+	plano[2].b1=plano[2].B-plano[2].A;
+	plano[2].b2=plano[2].C-plano[2].B;
+	plano[2].b3=plano[2].D-plano[2].C;
+	plano[2].b4=plano[2].A-plano[2].D;
+	plano[2].b1Normal=Cruz(plano[2].b1, plano[2].Normal);
+	plano[2].b2Normal=Cruz(plano[2].b2, plano[2].Normal);
+	plano[2].b3Normal=Cruz(plano[2].b3, plano[2].Normal);
+	plano[2].b4Normal=Cruz(plano[2].b4, plano[2].Normal);
+	plano[2].tipo=1;
+
+	plano[3].A=CVector( 70.0f, 20.0f,  45.0f);
+	plano[3].B=CVector(290.0f, 20.0f,  45.0f);
+	plano[3].C=CVector(290.0f, 20.0f,-175.0f);
+	plano[3].D=CVector( 70.0f, 20.0f,-175.0f);
+	plano[3].Normal=CVector(0.0f,1.0f,0.0f);
+	plano[3].b1=plano[3].B-plano[3].A;
+	plano[3].b2=plano[3].C-plano[3].B;
+	plano[3].b3=plano[3].D-plano[3].C;
+	plano[3].b4=plano[3].A-plano[3].D;
+	plano[3].b1Normal=Cruz(plano[3].b1, plano[3].Normal);
+	plano[3].b2Normal=Cruz(plano[3].b2, plano[3].Normal);
+	plano[3].b3Normal=Cruz(plano[3].b3, plano[3].Normal);
+	plano[3].b4Normal=Cruz(plano[3].b4, plano[3].Normal);
+	plano[3].tipo=1;
+
+	//Inicia planos de colisión de los muros
+	plano[4].A=CVector(10.0f,  0.0f,-50.0f);
+	plano[4].B=CVector(10.0f,  0.0f, 60.0f);
+	plano[4].C=CVector(10.0f, 40.0f, 60.0f);
+	plano[4].D=CVector(10.0f, 40.0f,-50.0f);
+	plano[4].Normal=CVector(-1.0f,0.0f,0.0f);
+	plano[4].b1=plano[4].B-plano[4].A;
+	plano[4].b2=plano[4].C-plano[4].B;
+	plano[4].b3=plano[4].D-plano[4].C;
+	plano[4].b4=plano[4].A-plano[4].D;
+	plano[4].b1Normal=Cruz(plano[4].b1, plano[4].Normal);
+	plano[4].b2Normal=Cruz(plano[4].b2, plano[4].Normal);
+	plano[4].b3Normal=Cruz(plano[4].b3, plano[4].Normal);
+	plano[4].b4Normal=Cruz(plano[4].b4, plano[4].Normal);
+	plano[4].tipo=2;
+	
+	plano[5].A=CVector(-10.0f,  0.0f, 60.0f);
+	plano[5].B=CVector(-10.0f,  0.0f,-80.0f);
+	plano[5].C=CVector(-10.0f, 40.0f,-80.0f);
+	plano[5].D=CVector(-10.0f, 40.0f, 60.0f);
+	plano[5].Normal=CVector(1.0f,0.0f,0.0f);
+	plano[5].b1=plano[5].B-plano[5].A;
+	plano[5].b2=plano[5].C-plano[5].B;
+	plano[5].b3=plano[5].D-plano[5].C;
+	plano[5].b4=plano[5].A-plano[5].D;
+	plano[5].b1Normal=Cruz(plano[5].b1, plano[5].Normal);
+	plano[5].b2Normal=Cruz(plano[5].b2, plano[5].Normal);
+	plano[5].b3Normal=Cruz(plano[5].b3, plano[5].Normal);
+	plano[5].b4Normal=Cruz(plano[5].b4, plano[5].Normal);
+	plano[5].tipo=2;
+	
+	plano[6].A=CVector(-10.0f, 20.0f, -80.0f);
+	plano[6].B=CVector( 70.0f, 20.0f, -80.0f);
+	plano[6].C=CVector( 70.0f, 40.0f, -80.0f);
+	plano[6].D=CVector(-10.0f, 40.0f, -80.0f);
+	plano[6].Normal=CVector(0.0f,0.0f,1.0f);
+	plano[6].b1=plano[6].B-plano[6].A;
+	plano[6].b2=plano[6].C-plano[6].B;
+	plano[6].b3=plano[6].D-plano[6].C;
+	plano[6].b4=plano[6].A-plano[6].D;
+	plano[6].b1Normal=Cruz(plano[6].b1, plano[6].Normal);
+	plano[6].b2Normal=Cruz(plano[6].b2, plano[6].Normal);
+	plano[6].b3Normal=Cruz(plano[6].b3, plano[6].Normal);
+	plano[6].b4Normal=Cruz(plano[6].b4, plano[6].Normal);
+	plano[6].tipo=2;
+
+	plano[7].A=CVector(70.0f, 20.0f, -50.0f);
+	plano[7].B=CVector(10.0f, 20.0f, -50.0f);
+	plano[7].C=CVector(10.0f, 40.0f, -50.0f);
+	plano[7].D=CVector(70.0f, 40.0f, -50.0f);
+	plano[7].Normal=CVector(0.0f,0.0f,-1.0f);
+	plano[7].b1=plano[7].B-plano[7].A;
+	plano[7].b2=plano[7].C-plano[7].B;
+	plano[7].b3=plano[7].D-plano[7].C;
+	plano[7].b4=plano[7].A-plano[7].D;
+	plano[7].b1Normal=Cruz(plano[7].b1, plano[7].Normal);
+	plano[7].b2Normal=Cruz(plano[7].b2, plano[7].Normal);
+	plano[7].b3Normal=Cruz(plano[7].b3, plano[7].Normal);
+	plano[7].b4Normal=Cruz(plano[7].b4, plano[7].Normal);
+	plano[7].tipo=2;
+
+	float lados=23;
+	float radio=110.0f;
+	
+	float delta=360.0f/lados;
+		
+	for(int i=0; i<lados; i++)
+	{
+		static int j=0;
+
+		float ang=i*delta;
+
+		a.x=radio*cos(ang*PI/180.0f)+178.95f;
+		a.y=0.0f;
+		a.z=radio*sin(ang*PI/180.0f)-64.95f;
+
+		d.x=a.x;
+		d.y=140.0f;
+		d.z=a.z;
+
+		va.x=radio*cos(ang*PI/180.0f);
+		va.y=0.0f;
+		va.z=radio*sin(ang*PI/180.0f);
+
+		vd.x=va.x;
+		vd.y=140.0f;
+		vd.z=va.z;
+
+		ang=(i+1)*delta;
+		b.x=radio*cos(ang*PI/180.0f)+178.95f;
+		b.y=0.0f;
+		b.z=radio*sin(ang*PI/180.0f)-64.95f;
+
+		c.x=b.x;
+		c.y=140.0f;
+		c.z=b.z;
+
+		vb.x=radio*cos(ang*PI/180.0f);
+		vb.y=0.0f;
+		vb.z=radio*sin(ang*PI/180.0f);
+
+		v1=vb-va;
+		v2=vd-va;
+		
+		Normal=Normaliza(Cruz(v1,v2));
+
+		if(i != 11)
+		{
+			plano[8+j].A=a;
+			plano[8+j].B=b;
+			plano[8+j].C=c;
+			plano[8+j].D=d;
+
+			plano[8+j].Normal=Normal;
+						
+			plano[8+j].b1=plano[8+j].B-plano[8+j].A;
+			plano[8+j].b2=plano[8+j].C-plano[8+j].B;
+			plano[8+j].b3=plano[8+j].D-plano[8+j].C;
+			plano[8+j].b4=plano[8+j].A-plano[8+j].D;
+			plano[8+j].b1Normal=Cruz(plano[8+j].b1, plano[8+j].Normal);
+			plano[8+j].b2Normal=Cruz(plano[8+j].b2, plano[8+j].Normal);
+			plano[8+j].b3Normal=Cruz(plano[8+j].b3, plano[8+j].Normal);
+			plano[8+j].b4Normal=Cruz(plano[8+j].b4, plano[8+j].Normal);
+			plano[8+j].tipo=2;
+
+			j++;
+		}
+	}
+	
+
+	for(int i=0; i<maxPlanos; i++)
+	{
+		plano[i].PM=plano[i].A+(plano[i].C-plano[i].A)*0.5f;
+	}
+
+	//Esfera de colision del personaje
+	esfera[0].radio=1.8f;
+	esfera[0].Pos=CVector(player1.PosicionObj.x, player1.PosicionObj.y+2.5f, player1.PosicionObj.z);
+	esfera[0].colision=false;
+}
+
+void ActualizaObjetosDinamicosColision()
+{
+	esfera[0].Pos=CVector(player1.PosicionObj.x, player1.PosicionObj.y+2.5f, player1.PosicionObj.z);
+}
+
+void DibujaObjetosdeColision()
+{
+	glDisable(GL_LIGHTING);
+
+	glColor3f(1.0f,0.0f,0.0f);
+	glLineWidth(4.0f);
+
+	for(int i=0; i<maxPlanos; i++)
+	{
+		glBegin(GL_LINE_LOOP);
+			glVertex3f(plano[i].A.x,plano[i].A.y,plano[i].A.z);
+			glVertex3f(plano[i].B.x,plano[i].B.y,plano[i].B.z);
+			glVertex3f(plano[i].C.x,plano[i].C.y,plano[i].C.z);
+			glVertex3f(plano[i].D.x,plano[i].D.y,plano[i].D.z);
+		glEnd();
+	}
+
+	glColor3f(1.0f,1.0f,1.0f);
+	glLineWidth(1.0f);
+
+	glEnable(GL_LIGHTING);
+}
+
+void DibujaEsferasColision()
+{
+	GLUquadricObj	*q;
+
+	q=gluNewQuadric();
+
+	gluQuadricDrawStyle(q, GLU_LINE);
+
+	glDisable(GL_LIGHTING);
+
+	glColor3f(1.0f, 1.0f, 1.0f);
+
+	glPushMatrix();
+		glTranslatef(esfera[0].Pos.x, esfera[0].Pos.y, esfera[0].Pos.z);
+		glRotatef(90.0f,1.0f,0.0f,0.0f);
+		gluSphere(q, esfera[0].radio, 16, 8);
+	glPopMatrix();
+
+	glEnable(GL_LIGHTING);
+
+	gluDeleteQuadric(q);
+}
+
+void ColisionEsferaPlano(int id, int dir)
+{
+	CVector TestPoint;
+	CVector PMVect;
+
+	CVector bordeNormal;
+	CVector dp;
+
+	CVector PosAux;
+
+	float SaveAltObj, SaveAltCam;
+
+	float Determinante;
+
+	SaveAltObj=player1.PosicionObj.y;
+	SaveAltCam=player1.PosicionCam.y;
+
+	//Se comprueba para cada plano
+	for(int j=0; j<maxPlanos; j++)
+	{
+		if(plano[j].tipo == 2)
+		{
+			//TestPoint=esfera[id].Pos-plano[j].Normal*esfera[id].radio;
+			TestPoint=player1.PosicionObj-plano[j].Normal*esfera[id].radio;
+			PMVect=TestPoint-plano[j].PM;
+
+			float param=Punto(plano[j].Normal,PMVect);
+			if(param <= 0.0001f && param > -0.4f)
+			{
+				//Ahora se comprueba que el punto de prueba se encuentre dentro de los límites del plano
+				dp=TestPoint-plano[j].A;
+				Determinante=Punto(plano[j].b1Normal, dp);
+				if(Determinante > 0.001f) continue;
+
+				dp=TestPoint-plano[j].B;
+				Determinante=Punto(plano[j].b2Normal,dp);	
+				if(Determinante > 0.001f) continue;
+
+				dp=TestPoint-plano[j].C;
+				Determinante=Punto(plano[j].b3Normal,dp);	
+				if(Determinante > 0.001f) continue;
+
+				dp=TestPoint-plano[j].D;
+				Determinante=Punto(plano[j].b4Normal,dp);	
+				if(Determinante > 0.001f) continue;
+
+				//esfera[0].colision=true;
+
+				if(Punto(plano[j].Normal,PMVect) < 0.0f)
+				{
+					float deltaV=player1.VelocidadObj/10.0f;
+
+					for(int k=0; k<10; k++)
+					{
+						float vel=k*deltaV;
+						if(dir == 1)
+							PosAux=player1.PosicionObjA+player1.Direccion*vel;
+						else if(dir == 2)
+							PosAux=player1.PosicionObjA-player1.Direccion*vel;
+
+						CVector TestPointA=PosAux-plano[j].Normal*esfera[id].radio;
+						CVector PMVectA=TestPointA-plano[j].PM;
+						
+						if(Punto(plano[j].Normal,PMVectA) <= 0.0001f)
+						{
+							//float velRet=(k+1)*deltaV;
+							float velRet=k*deltaV;
+							//float velRet=k*deltaV+0.001f;
+
+							player1.PosicionObj=PosAux;
+							//player1.Posicion=player1.Posicion+plano[j].Normal*velRet;
+
+							if(dir == 1)
+								player1.PosicionObj=player1.PosicionObj-player1.Direccion*velRet;
+							else if(dir == 2)
+								player1.PosicionObj=player1.PosicionObj+player1.Direccion*velRet;
+								
+							player1.PosicionCam=player1.PosicionObj-player1.Direccion*player1.DistanciaCam;
+							player1.PosicionCam.y=player1.CamaraPosAlt;
+
+							player1.ObjetivoCam=player1.PosicionObj;
+							player1.ObjetivoCam.y=player1.CamaraObjAlt;
+			
+							esfera[0].Pos=CVector(player1.PosicionObj.x, player1.PosicionObj.y+2.5f, player1.PosicionObj.z);
+
+							break;
+						}
+					}
+				}
+				
+				break;
+								
+			}
+
+		}
+	}
+	
+}
+
+bool InterseccionPlanoPiso(CVector P, CVector Dir, boundingplane *plano, float *Altura, CVector *Qp)
+{
+	float Determinante;
+	CVector Normal, vA, vB, vC, vD;
+	CVector dp;
+
+	Normal=plano->Normal;
+	vA=plano->A;
+	vB=plano->B;
+	vC=plano->C;
+	vD=plano->D;
+
+	float D=Punto(Normal*-1, vA);
+	
+	float denominador=Punto(Normal,Dir);
+
+	if(fabs(denominador) < 0.0001f)
+		return false;
+
+	float numerador=-(Punto(Normal, P)+D);
+
+	float t=numerador/denominador;
+
+	CVector Q = P + Dir*t;
+
+	CVector bordeNormal1=plano->b1Normal;
+	CVector bordeNormal2=plano->b2Normal;
+	CVector bordeNormal3=plano->b3Normal;
+	CVector bordeNormal4=plano->b4Normal;
+
+	dp=Q-vA;
+	Determinante=Punto(bordeNormal1, dp);
+	if(Determinante > 0.001f) return false;
+
+	dp=Q-vB;
+	Determinante=Punto(bordeNormal2,dp);	
+	if(Determinante > 0.001f) return false;
+
+	dp=Q-vC;
+	Determinante=Punto(bordeNormal3,dp);	
+	if(Determinante > 0.001f) return false;
+
+	dp=Q-vD;
+	Determinante=Punto(bordeNormal4,dp);	
+	if(Determinante > 0.001f) return false;
+
+	*Altura=Q.y;
+	*Qp=Q;
+
+	return true;
+}
+
+void ColisionesPiso()
+{
+	float Altura;
+	int index;
+
+	CVector Normal;
+	CVector Qpoint;
+
+	CVector RayStart = CVector(player1.PosicionObj.x, player1.PosicionObj.y, player1.PosicionObj.z);
+	CVector RayDir = CVector(0.0f,-1.0f,0.0f);
+
+	for(int i=0; i<maxPlanos; i++)
+	{
+		if(plano[i].tipo == 1)
+		{
+			if(InterseccionPlanoPiso(RayStart, RayDir, &plano[i], &Altura, &Qpoint))
+			{
+				//player1.PosicionObj.y=Altura;
+
+				player1.PosicionObj.y=Altura;
+				player1.CamaraPosAlt=Altura+5.0f;
+				player1.CamaraObjAlt=Altura+4.0f+player1.CamaraObjAltE;
+
+				player1.PosicionCam.y=player1.CamaraPosAlt;
+				player1.ObjetivoCam=player1.PosicionObj;
+				player1.ObjetivoCam.y=player1.CamaraObjAlt;
+			}
+		}
+	}
+
+}
+
+void ColisionEsferaEsfera( boundingsphere& a, boundingsphere& b, int dir, parametros& player )
+{
+	// Calcula la distancia cuadrada entre los centros
+	CVector d = a.Pos - b.Pos;
+	float dist2 = Punto(d, d);
+	// Las esferas se intersectan si la distancia es menor a la suma cuadrada de sus radios
+	float radiusSum = a.radio + b.radio;
+	float colision = dist2 - radiusSum * radiusSum;
+	// Robado de arriba yeah XD
+	CVector PosAux;
+	float deltaV = player.VelocidadObj/10.0f;
+
+	if( dist2 <= radiusSum * radiusSum ) // si hay una colision
+	{
+		if(dir == 1)
+			PosAux = player.PosAntObj + player.Direccion * ( deltaV + 0.0001f );
+		else if(dir == 2)
+			PosAux = player.PosAntObj - player.Direccion * ( deltaV + 0.0001f );
+
+		player.PosicionObj = PosAux;
+
+		if( colision < -2.0f )
+		{
+		if(dir == 1)
+			player.PosicionObj = player.PosicionObj - player.Direccion * ( deltaV + 0.3f );
+		else if(dir == 2)
+			player.PosicionObj = player.PosicionObj + player.Direccion * ( deltaV + 0.3f );
+		}
+	}
+}
+
 int InitGL(GLvoid)										// Aqui se configuran los parametros iniciales de OpenGL
 {
 	Multitext.InitMultitext(hWnd);
@@ -1442,6 +1923,9 @@ int InitGL(GLvoid)										// Aqui se configuran los parametros iniciales de Op
 	InicializaParametrosdeControl();
 	InicializaAnim();
 	DatosAnimacion();
+
+	// Colisiones
+	InicializaObjetosdeColision();
 
 	return TRUE;										
 }
@@ -2189,11 +2673,9 @@ void DibujaMJ()
 		DibujaMJ6();
 	glPopMatrix();
 }
-void DibujaEscena()
-{
-	// Mayralol
-	g_Load3ds.Render3DSFile(&g_3DModel2e, textureModel2e, 1);
 
+void DibujaEnemigos()
+{
 	// savage
 	glPushMatrix();
 			glTranslatef(enemigo8.PosicionObj.x, enemigo8.PosicionObj.y+2.4f, enemigo8.PosicionObj.z);
@@ -2241,7 +2723,12 @@ void DibujaEscena()
 		glScalef(chang.escalaX,chang.escalaY,chang.escalaZ);
 		DibujaChango();
 	glPopMatrix();
+}
 
+void DibujaEscena()
+{
+	// Mayralol
+	g_Load3ds.Render3DSFile(&g_3DModel2e, textureModel2e, 1);
 	glDisable(GL_NORMALIZE);
 }
 
@@ -2280,6 +2767,8 @@ int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la
 	// Dibujo de MJs
 	glPushMatrix();
 		DibujaMJ();
+		glTranslatef(40.0f, 10.0f,-35.0f);
+		DibujaEnemigos();
 	glPopMatrix();
 
 	// Se desactiva la máscara de color para renderizar la escena en negro
@@ -2322,6 +2811,9 @@ int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la
 	// Dibujo de MJs
 	glPushMatrix();
 		DibujaMJ();
+		glTranslatef(40.0f, 10.0f,-35.0f);
+		DibujaEnemigos();
+		DibujaEnemigos();
 	glPopMatrix();
 
 	// Se desactiva la prueba de profundidad y del buffer stencil ya que no se utilizarán mas.
@@ -2339,6 +2831,12 @@ int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la
 	}
 
 	CalculateFrameRate();
+
+	// Colisiones
+	ActualizaObjetosDinamicosColision();
+	DibujaObjetosdeColision();
+	ColisionesPiso();
+
 	return TRUE;
 }
 
