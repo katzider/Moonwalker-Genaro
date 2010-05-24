@@ -33,13 +33,14 @@ boundingsphere esfera[maxPersonajes];
 
 // variables que usaremos para la camara
 int CamPos[6][6] = { 
-	{ 225.0f, 60.0f, 8.0f, 200.0f, 20.0f, -50.0f }, 
-	{}, 
-	{}, 
-	{}, 
-	{}, 
-	{} 
+	{ 190.0f, 90.0f, 10.0f, 180.0f, 6.5f, -60.0f }, 
+	{ 45.0f, 90.0f, 10.0f, 55.0f, 6.5f, -60.0f }, 
+	{ -60.0f, 90.0f, 10.0f, -50.0f, 6.5f, -30.0f }, 
+	{ 45.0f, 40.0f, 90.0f, -35.0f, 6.5f, 90.0f }, 
+	{ 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f }, 
+	{ 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f } 
 };
+int pisoId = 0;
 
 // Variable de acceso a la estructura de parametros
 parametros player1;
@@ -1526,7 +1527,7 @@ void InicializaObjetosdeColision()
 	plano[6].tipo=1;
 
 	plano[7].A=CVector(-10.5f, 6.5f,5.0f);
-	plano[7].B=CVector(-95.0f, 6.5f,50.0f);
+	plano[7].B=CVector(-95.0f, 6.5f,5.0f);
 	plano[7].C=CVector(-95.0f, 6.5f,50.0f);
 	plano[7].D=CVector(-10.5f, 6.5f,50.0f);
 	plano[7].Normal=CVector(0.0f,1.0f,0.0f);
@@ -1794,6 +1795,7 @@ void ColisionesPiso()
 				player1.PosicionCam.y=player1.CamaraPosAlt;
 				player1.ObjetivoCam=player1.PosicionObj;
 				player1.ObjetivoCam.y=player1.CamaraObjAlt;
+				pisoId = i;
 			}
 		}
 	}
@@ -2519,7 +2521,7 @@ void DibujaTextos()
 
 	// Texto a mostrar en pantalla
 	Font.glPrint((1.0f/640.0f)*glWidth, glWidth*0.05f,glHeight*0.9f,"Pos: %f,%f,%f",player1.PosicionObj.x,player1.PosicionObj.y,player1.PosicionObj.z);
-	// Font.glPrint((1.2f/640.0f)*glWidth, glWidth*0.05f,glHeight*0.85f,"FPS %d",FPS);
+	Font.glPrint((1.0f/640.0f)*glWidth, glWidth*0.05f,glHeight*0.85f,"Id %d", pisoId);
 								
 	glDisable(GL_ALPHA_TEST);
 	glDisable(GL_TEXTURE_2D);
@@ -2695,34 +2697,30 @@ void DibujaEscena()
 }
 void Camara()
 {
-	if( 0 )
+	if( pisoId == 0 )
 	{
 		gluLookAt( CamPos[ 0 ][ 0 ], CamPos[ 0 ][ 1 ],CamPos[ 0 ][ 2 ], CamPos[ 0 ][ 3 ], CamPos[ 0 ][ 4 ], CamPos[ 0 ][ 5 ], 0.0f, 1.0f, 0.0f);
 	}
-	else if ( 1 )
+	else if ( pisoId == 2 )
 	{
+		gluLookAt(CamPos[ 1 ][ 0 ], CamPos[ 1 ][ 1 ],CamPos[ 1 ][ 2 ], CamPos[ 1 ][ 3 ], CamPos[ 1 ][ 4 ], CamPos[ 1 ][ 5 ], 0.0f, 1.0f, 0.0f);
+	}
+	else if ( pisoId == 6 )
+	{
+		gluLookAt(CamPos[ 2 ][ 0 ], CamPos[ 2 ][ 1 ],CamPos[ 2 ][ 2 ], CamPos[ 2 ][ 3 ], CamPos[ 2 ][ 4 ], CamPos[ 2 ][ 5 ], 0.0f, 1.0f, 0.0f);
+	}
+	else if ( pisoId == 8 )
+	{
+		gluLookAt(CamPos[ 3 ][ 0 ], CamPos[ 3 ][ 1 ],CamPos[ 3 ][ 2 ], CamPos[ 3 ][ 3 ], CamPos[ 3 ][ 4 ], CamPos[ 0 ][ 5 ], 0.0f, 1.0f, 0.0f);
+	}
+	else if ( pisoId == 10 )
+	{
+		gluLookAt( CamPos[ 0 ][ 0 ] - CamPos[ 1 ][ 0 ], CamPos[ 4 ][ 1 ],CamPos[ 4 ][ 2 ], CamPos[ 4 ][ 3 ], CamPos[ 4 ][ 4 ], CamPos[ 0 ][ 5 ], 0.0f, 1.0f, 0.0f );
+	}
+	else
 		gluLookAt(player1.PosicionCam.x, player1.PosicionCam.y, player1.PosicionCam.z, 
 			  player1.ObjetivoCam.x, player1.ObjetivoCam.y, player1.ObjetivoCam.z, 
 			  0.0f, 1.0f, 0.0f);
-	}
-	else if ( 0 )
-	{
-		gluLookAt(player1.PosicionCam.x, player1.PosicionCam.y, player1.PosicionCam.z, 
-			  player1.ObjetivoCam.x, player1.ObjetivoCam.y, player1.ObjetivoCam.z, 
-			  0.0f, 1.0f, 0.0f);
-	}
-	else if ( 0 )
-	{
-		gluLookAt(player1.PosicionCam.x, player1.PosicionCam.y, player1.PosicionCam.z, 
-			  player1.ObjetivoCam.x, player1.ObjetivoCam.y, player1.ObjetivoCam.z, 
-			  0.0f, 1.0f, 0.0f);
-	}
-	else if ( 0 )
-	{
-		gluLookAt(player1.PosicionCam.x, player1.PosicionCam.y, player1.PosicionCam.z, 
-			  player1.ObjetivoCam.x, player1.ObjetivoCam.y, player1.ObjetivoCam.z, 
-			  0.0f, 1.0f, 0.0f);
-	}
 }
 int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la ventana
 {
@@ -2730,12 +2728,12 @@ int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la
 	glLoadIdentity();
 	
 	//gluLookAt(10.0f, 45.0f, 45.0f, 10.0f, 25.0f, 0.0f, 0, 1, 0);
-	Camara();
-	/*
+	//Camara();
+	
 	gluLookAt(player1.PosicionCam.x, player1.PosicionCam.y, player1.PosicionCam.z, 
 			  player1.ObjetivoCam.x, player1.ObjetivoCam.y, player1.ObjetivoCam.z, 
 			  0.0f, 1.0f, 0.0f);
-	*/
+	
 
 	//Se actualizan los parámetros de iluminación
 	glLightfv(GL_LIGHT0, GL_POSITION, LightPos);		// Posicion de la luz1
