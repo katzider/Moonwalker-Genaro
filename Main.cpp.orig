@@ -2673,6 +2673,13 @@ void DibujaMJ()
 		DibujaMJ6();
 	glPopMatrix();
 }
+<<<<<<< HEAD
+=======
+void DibujaEscena()
+{
+	// Mayralol
+	g_Load3ds.Render3DSFile(&g_3DModel2e, textureModel2e, 1);
+>>>>>>> ada5bd1... sale gente ahi ta el mio
 
 void DibujaEnemigos()
 {

@@ -132,4 +132,32 @@ struct FRAME
 
 };
 
+//Colisiones
+struct boundingplane
+{
+	CVector Normal;
+	CVector PM;
+	CVector A, B, C, D;
+	CVector b1, b2, b3, b4;
+	CVector b1Normal, b2Normal, b3Normal, b4Normal;
+	float ancho;
+	float alto;
+	int tipo; //1: plano de piso; 2: plano de pared
+};
+
+struct boundingsphere
+{
+	CVector Pos;
+	float radio;
+	bool colision;
+	
+};
+
+struct ray
+{
+	CVector dir;
+	CVector punto;
+	bool colision;
+};
+
 #endif 
