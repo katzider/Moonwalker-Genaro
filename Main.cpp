@@ -2348,7 +2348,7 @@ void DibujaChango()
 	
 	//Brazo derecho
 	glPushMatrix();
-		//glTranslatef(-2.8f, 1.1f, 0.0f);
+		glTranslatef(0.0f, 0.0f, 2.8f);
 		glRotatef(changmodelo.Angbd2, 0.0f, 1.0f, 0.0f);
 		glRotatef(changmodelo.Angbd1, 1.0f, 0.0f, 0.0f);
 		glCallList(cha+1);
@@ -2356,7 +2356,7 @@ void DibujaChango()
 
 	//Brazo izquierdo
 	glPushMatrix();
-		//glTranslatef(-2.8f, 1.1f, 0.0f);
+		glTranslatef(0.0f, 0.0f, 2.8f);
 		glRotatef(changmodelo.Angbd2, 0.0f, 1.0f, 0.0f);
 		glRotatef(changmodelo.Angbd1, 1.0f, 0.0f, 0.0f);
 		glCallList(cha+2);
