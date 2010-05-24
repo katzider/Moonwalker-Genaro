@@ -2556,7 +2556,7 @@ void DibujaTextos()
 	glEnable(GL_ALPHA_TEST);
 
 	// Texto a mostrar en pantalla
-	// Font.glPrint((2.0f/640.0f)*glWidth, glWidth*0.05f,glHeight*0.9f,"Ejemplo texto");
+	Font.glPrint((1.0f/640.0f)*glWidth, glWidth*0.05f,glHeight*0.9f,"Pos: %f,%f,%f",player1.PosicionObj.x,player1.PosicionObj.y,player1.PosicionObj.z);
 	// Font.glPrint((1.2f/640.0f)*glWidth, glWidth*0.05f,glHeight*0.85f,"FPS %d",FPS);
 								
 	glDisable(GL_ALPHA_TEST);
@@ -2731,19 +2731,31 @@ void DibujaEscena()
 	g_Load3ds.Render3DSFile(&g_3DModel2e, textureModel2e, 1);
 	glDisable(GL_NORMALIZE);
 }
-
+void Camara()
+{
+	if( 0 )
+	{
+		gluLookAt( 160.0f, 60.0f, -5.0f, 120.0f, 10.0f, -40.0f, 0.0f, 1.0f, 0.0f);
+	}
+	else if ( 1 )
+	{
+		gluLookAt(player1.PosicionCam.x, player1.PosicionCam.y, player1.PosicionCam.z, 
+			  player1.ObjetivoCam.x, player1.ObjetivoCam.y, player1.ObjetivoCam.z, 
+			  0.0f, 1.0f, 0.0f);
+	}
+}
 int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la ventana
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 	glLoadIdentity();
 	
 	//gluLookAt(10.0f, 45.0f, 45.0f, 10.0f, 25.0f, 0.0f, 0, 1, 0);
-	
-	
+	Camara();
+	/*
 	gluLookAt(player1.PosicionCam.x, player1.PosicionCam.y, player1.PosicionCam.z, 
 			  player1.ObjetivoCam.x, player1.ObjetivoCam.y, player1.ObjetivoCam.z, 
 			  0.0f, 1.0f, 0.0f);
-	
+	*/
 
 	//Se actualizan los parámetros de iluminación
 	glLightfv(GL_LIGHT0, GL_POSITION, LightPos);		// Posicion de la luz1
@@ -2760,7 +2772,7 @@ int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la
 	// Mayralol
 	glPushMatrix();
 		glTranslatef(40.0f, 10.0f,-35.0f);
-		glScalef(0.7f,0.7f,0.7f);
+		glScalef(1.4f,1.4f,1.4f);
 		DibujaEscena();
 	glPopMatrix();
 	
@@ -2804,7 +2816,7 @@ int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la
 	// Mayralol
 	glPushMatrix();
 		glTranslatef(40.0f, 10.0f,-35.0f);
-		glScalef(0.7f,0.7f,0.7f);
+		glScalef(1.4f,1.4f,1.4f);
 		DibujaEscena();
 	glPopMatrix();
 
