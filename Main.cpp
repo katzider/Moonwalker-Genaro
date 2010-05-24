@@ -1574,7 +1574,7 @@ void DibujaEsferasColision()
 	gluDeleteQuadric(q);
 }
 
-void ColisionEsferaPlano(int id, int dir)
+void ColisionEsferaPlano(int id, int dir, parametros& player )
 {
 	CVector TestPoint;
 	CVector PMVect;
@@ -1588,8 +1588,8 @@ void ColisionEsferaPlano(int id, int dir)
 
 	float Determinante;
 
-	SaveAltObj=player1.PosicionObj.y;
-	SaveAltCam=player1.PosicionCam.y;
+	SaveAltObj=player.PosicionObj.y;
+	SaveAltCam=player.PosicionCam.y;
 
 	//Se comprueba para cada plano
 	for(int j=0; j<maxPlanos; j++)
@@ -1597,7 +1597,7 @@ void ColisionEsferaPlano(int id, int dir)
 		if(plano[j].tipo == 2)
 		{
 			//TestPoint=esfera[id].Pos-plano[j].Normal*esfera[id].radio;
-			TestPoint=player1.PosicionObj-plano[j].Normal*esfera[id].radio;
+			TestPoint=player.PosicionObj-plano[j].Normal*esfera[id].radio;
 			PMVect=TestPoint-plano[j].PM;
 
 			float param=Punto(plano[j].Normal,PMVect);
@@ -1624,15 +1624,15 @@ void ColisionEsferaPlano(int id, int dir)
 
 				if(Punto(plano[j].Normal,PMVect) < 0.0f)
 				{
-					float deltaV=player1.VelocidadObj/10.0f;
+					float deltaV=player.VelocidadObj/10.0f;
 
 					for(int k=0; k<10; k++)
 					{
 						float vel=k*deltaV;
 						if(dir == 1)
-							PosAux=player1.PosicionObjA+player1.Direccion*vel;
+							PosAux=player.PosAntObj+player.Direccion*vel;
 						else if(dir == 2)
-							PosAux=player1.PosicionObjA-player1.Direccion*vel;
+							PosAux=player.PosAntObj-player.Direccion*vel;
 
 						CVector TestPointA=PosAux-plano[j].Normal*esfera[id].radio;
 						CVector PMVectA=TestPointA-plano[j].PM;
@@ -1643,21 +1643,19 @@ void ColisionEsferaPlano(int id, int dir)
 							float velRet=k*deltaV;
 							//float velRet=k*deltaV+0.001f;
 
-							player1.PosicionObj=PosAux;
-							//player1.Posicion=player1.Posicion+plano[j].Normal*velRet;
+							player.PosicionObj=PosAux;
+							//player.Posicion=player.Posicion+plano[j].Normal*velRet;
 
 							if(dir == 1)
-								player1.PosicionObj=player1.PosicionObj-player1.Direccion*velRet;
+								player.PosicionObj=player.PosicionObj-player.Direccion*velRet;
 							else if(dir == 2)
-								player1.PosicionObj=player1.PosicionObj+player1.Direccion*velRet;
+								player.PosicionObj=player.PosicionObj+player.Direccion*velRet;
 								
-							player1.PosicionCam=player1.PosicionObj-player1.Direccion*player1.DistanciaCam;
-							player1.PosicionCam.y=player1.CamaraPosAlt;
+							player.PosicionCam=player.PosicionObj-player.Direccion*player.DistanciaCam;
+							player.PosicionCam.y=player.CamaraPosAlt;
 
-							player1.ObjetivoCam=player1.PosicionObj;
-							player1.ObjetivoCam.y=player1.CamaraObjAlt;
-			
-							esfera[0].Pos=CVector(player1.PosicionObj.x, player1.PosicionObj.y+2.5f, player1.PosicionObj.z);
+							player.ObjetivoCam=player.PosicionObj;
+							player.ObjetivoCam.y=player.CamaraObjAlt;
 
 							break;
 						}
@@ -1672,7 +1670,6 @@ void ColisionEsferaPlano(int id, int dir)
 	}
 	
 }
-
 bool InterseccionPlanoPiso(CVector P, CVector Dir, boundingplane *plano, float *Altura, CVector *Qp)
 {
 	float Determinante;
@@ -1910,6 +1907,10 @@ void ControlPersonaje(int funcion)
 		player1.ObjetivoCam = player1.PosicionObj;
 		player1.ObjetivoCam.y = player1.CamaraObjAlt;
 
+		// Colisiones
+		//ColisionEsferaEsfera(esfera[0], esfera[1], 1, player1 );
+		ColisionEsferaPlano(0, 1, player1 );
+
 		player1.PosAntObj = player1.PosicionObj;
 
 	}
@@ -1920,6 +1921,10 @@ void ControlPersonaje(int funcion)
 		player1.PosicionCam.y = player1.CamaraPosAlt;
 		player1.ObjetivoCam = player1.PosicionObj;
 		player1.ObjetivoCam.y = player1.CamaraObjAlt;
+
+		// Colisiones
+		//ColisionEsferaEsfera(esfera[0], esfera[1], 2, player1 );
+		ColisionEsferaPlano(0, 2, player1 );
 
 		player1.PosAntObj = player1.PosicionObj;
 
@@ -3304,7 +3309,7 @@ int ManejaTeclado()
 
 	if(keys[VK_PRIOR])
 	{
-		if(player1.PosicionObj.y < 20.0f)
+		if(player1.PosicionObj.y < 200.0f)
 		{
 			player1.PosicionObj.y+=0.4f;
 			player1.CamaraPosAlt+=0.4f;
