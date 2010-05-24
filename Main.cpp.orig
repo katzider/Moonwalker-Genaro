@@ -1569,7 +1569,11 @@ void InicializaObjetosdeColision()
 	esfera[0].radio=1.8f;
 	esfera[0].Pos=CVector(player1.PosicionObj.x, player1.PosicionObj.y+2.5f, player1.PosicionObj.z);
 	esfera[0].colision=false;
-	
+
+<<<<<<< HEAD
+
+
+
 	//Esfera de colision del Enem1
 	esfera[1].radio=2.2f;
 	esfera[1].Pos=CVector(enem1.PosicionObj.x, enem1.PosicionObj.y-2.0f, enem1.PosicionObj.z);
@@ -1580,11 +1584,13 @@ void InicializaObjetosdeColision()
 	esfera[2].Pos=CVector(enem2.PosicionObj.x, enem2.PosicionObj.y+2.5f, enem2.PosicionObj.z);
 	esfera[2].colision=false;
 
-	//Esfera de colision de MJ6
+	//Esfera de colision del Enem1
 	esfera[6].radio=2.0f;
 	esfera[6].Pos=CVector(MJ6.PosicionObj.x, MJ6.PosicionObj.y+3.5f, MJ6.PosicionObj.z);
 	esfera[6].colision=false;
 
+
+=======
 	esfera[20].radio=4.0;
 	esfera[20].Pos=CVector(210.91f, 6.0f, -93.0f);
 	esfera[20].colision=false;
@@ -1604,7 +1610,7 @@ void InicializaObjetosdeColision()
 	esfera[24].radio=8.0;
 	esfera[24].Pos=CVector(-5.0f, 6.0f, -35.0f);
 	esfera[24].colision=false;
-	
+
 	esfera[25].radio=4.0;
 	esfera[25].Pos=CVector(-47.0f, 6.0f, -93.0f);
 	esfera[25].colision=false;
@@ -1624,6 +1630,7 @@ void InicializaObjetosdeColision()
 	esfera[29].radio=8.0;
 	esfera[29].Pos=CVector(-22.0f, 6.0f, 120.0f);
 	esfera[29].colision=false;
+>>>>>>> f8eed780511f91536a91c5a0bf909ff82f443b66
 
 }
 
