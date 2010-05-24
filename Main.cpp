@@ -32,13 +32,15 @@ boundingplane plano[maxPlanos];
 boundingsphere esfera[maxPersonajes];
 
 // variables que usaremos para la camara
-int CamPos[6][6] = { 
+int CamPos[4][6] = { 
 	{ 190.0f, 90.0f, 10.0f, 180.0f, 6.5f, -60.0f }, 
 	{ 45.0f, 90.0f, 10.0f, 55.0f, 6.5f, -60.0f }, 
 	{ 15.0f, 90.0f, -56.0f, -50.0f, 6.5f, -56.0f }, 
 	{ 35.0f, 90.0f, 75.0f, -60.0f, 6.5f, 80.0f }, 
-	{ 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f }, 
-	{ 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f } 
+};
+int CamDiff[4][6] = 
+{
+	{ 45.0f / 190.0f / 20.0f }
 };
 int pisoId = 0;
 
@@ -2786,9 +2788,6 @@ void DibujaEscena()
 	g_Load3ds.Render3DSFile(&g_3DModel2e, textureModel2e, 1);
 	glDisable(GL_NORMALIZE);
 }
-void CamDiff()
-{
-}
 void Camara()
 {
 	if( pisoId == 0 )
@@ -2809,7 +2808,7 @@ void Camara()
 	}
 	else if ( pisoId == 1 )
 	{
-		gluLookAt( CamPos[0][0] * (9/760) * -( player1.PosicionCam.x - 145.0f ), CamPos[ 0 ][ 1 ], CamPos[ 0 ][ 2 ], CamPos[ 0 ][ 3 ], CamPos[ 0 ][ 4 ], CamPos[ 0 ][ 5 ], 0.0f, 1.0f, 0.0f );
+		gluLookAt( 190.0f * ((9.0f/38.0f)/20.0f) * abs( player1.PosicionCam.x - 145.0f ), CamPos[ 0 ][ 1 ], CamPos[ 0 ][ 2 ], 180.0f * ((55.0f/180.0f)/20.0f) * abs( player1.PosicionCam.x - 145 ), CamPos[ 0 ][ 4 ], CamPos[ 0 ][ 5 ], 0.0f, 1.0f, 0.0f );
 	}
 	else
 		gluLookAt(player1.PosicionCam.x, player1.PosicionCam.y, player1.PosicionCam.z, 
