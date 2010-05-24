@@ -1472,11 +1472,11 @@ void InicializaObjetosdeColision()
 	plano[3].tipo=1;
 
 	//Inicia planos de colisión de los muros
-	plano[4].A=CVector(10.0f,  0.0f,-50.0f);
-	plano[4].B=CVector(10.0f,  0.0f, 60.0f);
-	plano[4].C=CVector(10.0f, 40.0f, 60.0f);
-	plano[4].D=CVector(10.0f, 40.0f,-50.0f);
-	plano[4].Normal=CVector(-1.0f,0.0f,0.0f);
+	plano[4].A=CVector(237.0f,  0.0f,-99.0f);
+	plano[4].B=CVector(237.0f,  50.0f, -99.0f);
+	plano[4].C=CVector(-97.0f, 50.0f, -99.0f);
+	plano[4].D=CVector(-97.0f, 0.0f,-99.0f);
+	plano[4].Normal=CVector(0.0f,0.0f,1.0f);
 	plano[4].b1=plano[4].B-plano[4].A;
 	plano[4].b2=plano[4].C-plano[4].B;
 	plano[4].b3=plano[4].D-plano[4].C;
@@ -1487,10 +1487,10 @@ void InicializaObjetosdeColision()
 	plano[4].b4Normal=Cruz(plano[4].b4, plano[4].Normal);
 	plano[4].tipo=2;
 	
-	plano[5].A=CVector(-10.0f,  0.0f, 60.0f);
-	plano[5].B=CVector(-10.0f,  0.0f,-80.0f);
-	plano[5].C=CVector(-10.0f, 40.0f,-80.0f);
-	plano[5].D=CVector(-10.0f, 40.0f, 60.0f);
+	plano[5].A=CVector(-97.0f,  0.0f, -99.0f);
+	plano[5].B=CVector(-97.0f,  50.0f,-99.0f);
+	plano[5].C=CVector(-97.0f, 50.0f,153.0f);
+	plano[5].D=CVector(-97.0f, 0.0f, 153.0f);
 	plano[5].Normal=CVector(1.0f,0.0f,0.0f);
 	plano[5].b1=plano[5].B-plano[5].A;
 	plano[5].b2=plano[5].C-plano[5].B;
@@ -1501,36 +1501,6 @@ void InicializaObjetosdeColision()
 	plano[5].b3Normal=Cruz(plano[5].b3, plano[5].Normal);
 	plano[5].b4Normal=Cruz(plano[5].b4, plano[5].Normal);
 	plano[5].tipo=2;
-	
-	plano[6].A=CVector(-10.0f, 20.0f, -80.0f);
-	plano[6].B=CVector( 70.0f, 20.0f, -80.0f);
-	plano[6].C=CVector( 70.0f, 40.0f, -80.0f);
-	plano[6].D=CVector(-10.0f, 40.0f, -80.0f);
-	plano[6].Normal=CVector(0.0f,0.0f,1.0f);
-	plano[6].b1=plano[6].B-plano[6].A;
-	plano[6].b2=plano[6].C-plano[6].B;
-	plano[6].b3=plano[6].D-plano[6].C;
-	plano[6].b4=plano[6].A-plano[6].D;
-	plano[6].b1Normal=Cruz(plano[6].b1, plano[6].Normal);
-	plano[6].b2Normal=Cruz(plano[6].b2, plano[6].Normal);
-	plano[6].b3Normal=Cruz(plano[6].b3, plano[6].Normal);
-	plano[6].b4Normal=Cruz(plano[6].b4, plano[6].Normal);
-	plano[6].tipo=2;
-
-	plano[7].A=CVector(70.0f, 20.0f, -50.0f);
-	plano[7].B=CVector(10.0f, 20.0f, -50.0f);
-	plano[7].C=CVector(10.0f, 40.0f, -50.0f);
-	plano[7].D=CVector(70.0f, 40.0f, -50.0f);
-	plano[7].Normal=CVector(0.0f,0.0f,-1.0f);
-	plano[7].b1=plano[7].B-plano[7].A;
-	plano[7].b2=plano[7].C-plano[7].B;
-	plano[7].b3=plano[7].D-plano[7].C;
-	plano[7].b4=plano[7].A-plano[7].D;
-	plano[7].b1Normal=Cruz(plano[7].b1, plano[7].Normal);
-	plano[7].b2Normal=Cruz(plano[7].b2, plano[7].Normal);
-	plano[7].b3Normal=Cruz(plano[7].b3, plano[7].Normal);
-	plano[7].b4Normal=Cruz(plano[7].b4, plano[7].Normal);
-	plano[7].tipo=2;
 
 	float lados=23;
 	float radio=110.0f;
