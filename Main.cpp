@@ -31,6 +31,16 @@ FMOD_CHANNEL     *channel[2] = { 0, 0 };
 boundingplane plano[maxPlanos];
 boundingsphere esfera[maxPersonajes];
 
+// variables que usaremos para la camara
+int CamPoints[6][6] = { 
+	{0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f }, 
+	{}, 
+	{}, 
+	{}, 
+	{}, 
+	{} 
+};
+
 // Variable de acceso a la estructura de parametros
 parametros player1;
 
@@ -2708,6 +2718,24 @@ void Camara()
 		gluLookAt( 160.0f, 60.0f, -5.0f, 120.0f, 10.0f, -40.0f, 0.0f, 1.0f, 0.0f);
 	}
 	else if ( 1 )
+	{
+		gluLookAt(player1.PosicionCam.x, player1.PosicionCam.y, player1.PosicionCam.z, 
+			  player1.ObjetivoCam.x, player1.ObjetivoCam.y, player1.ObjetivoCam.z, 
+			  0.0f, 1.0f, 0.0f);
+	}
+	else if ( 0 )
+	{
+		gluLookAt(player1.PosicionCam.x, player1.PosicionCam.y, player1.PosicionCam.z, 
+			  player1.ObjetivoCam.x, player1.ObjetivoCam.y, player1.ObjetivoCam.z, 
+			  0.0f, 1.0f, 0.0f);
+	}
+	else if ( 0 )
+	{
+		gluLookAt(player1.PosicionCam.x, player1.PosicionCam.y, player1.PosicionCam.z, 
+			  player1.ObjetivoCam.x, player1.ObjetivoCam.y, player1.ObjetivoCam.z, 
+			  0.0f, 1.0f, 0.0f);
+	}
+	else if ( 0 )
 	{
 		gluLookAt(player1.PosicionCam.x, player1.PosicionCam.y, player1.PosicionCam.z, 
 			  player1.ObjetivoCam.x, player1.ObjetivoCam.y, player1.ObjetivoCam.z, 
