@@ -26,7 +26,7 @@ FMOD_CHANNEL     *channel[2] = { 0, 0 };
 
 // Variables para la detección de colisiones
 #define maxPlanos 30
-#define maxPersonajes 2
+#define maxPersonajes 30
 
 boundingplane plano[maxPlanos];
 boundingsphere esfera[maxPersonajes];
