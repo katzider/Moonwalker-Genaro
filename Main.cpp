@@ -32,16 +32,13 @@ boundingplane plano[maxPlanos];
 boundingsphere esfera[maxPersonajes];
 
 // variables que usaremos para la camara
-int CamPos[4][6] = { 
+float CamPos[4][6] = { 
 	{ 190.0f, 90.0f, 10.0f, 180.0f, 6.5f, -60.0f }, 
 	{ 45.0f, 90.0f, 10.0f, 55.0f, 6.5f, -60.0f }, 
 	{ 15.0f, 90.0f, -56.0f, -50.0f, 6.5f, -56.0f }, 
 	{ 35.0f, 90.0f, 75.0f, -60.0f, 6.5f, 80.0f }, 
 };
-int CamDiff[4][6] = 
-{
-	{ 45.0f / 190.0f / 20.0f }
-};
+
 int pisoId = 0;
 
 // Variable de acceso a la estructura de parametros
@@ -2692,8 +2689,9 @@ void DibujaTextos()
 	glEnable(GL_ALPHA_TEST);
 
 	// Texto a mostrar en pantalla
-	Font.glPrint((1.0f/640.0f)*glWidth, glWidth*0.05f,glHeight*0.9f,"Pos: %f,%f,%f",player1.PosicionObj.x,player1.PosicionObj.y,player1.PosicionObj.z);
-	Font.glPrint((1.0f/640.0f)*glWidth, glWidth*0.05f,glHeight*0.85f,"PosCam %f", abs( player1.PosicionCam.x - 145.0f) );
+	Font.glPrint((1.0f/640.0f)*glWidth, glWidth*0.05f,glHeight*0.9f,"pisoId: %d", pisoId );
+	Font.glPrint((1.0f/640.0f)*glWidth, glWidth*0.05f,glHeight*0.85f,"PosCam %f", player1.PosicionCam.x );
+	Font.glPrint((1.0f/640.0f)*glWidth, glWidth*0.05f,glHeight*0.80f,"PosObj %f", player1.PosicionObj.x);
 								
 	glDisable(GL_ALPHA_TEST);
 	glDisable(GL_TEXTURE_2D);
@@ -2869,42 +2867,44 @@ void DibujaEscena()
 }
 void Camara()
 {
-	if( pisoId == 0 )
+	
+	// Obten el valor de pisoID
+	int c = pisoId;
+	switch( pisoId )
 	{
-		gluLookAt( CamPos[ 0 ][ 0 ], CamPos[ 0 ][ 1 ],CamPos[ 0 ][ 2 ], CamPos[ 0 ][ 3 ], CamPos[ 0 ][ 4 ], CamPos[ 0 ][ 5 ], 0.0f, 1.0f, 0.0f);
+		case 0:
+			gluLookAt( CamPos[ 0 ][ 0 ], CamPos[ 0 ][ 1 ],CamPos[ 0 ][ 2 ], CamPos[ 0 ][ 3 ], CamPos[ 0 ][ 4 ], CamPos[ 0 ][ 5 ], 0.0f, 1.0f, 0.0f);
+		break;
+		case 2:
+			gluLookAt(CamPos[ 1 ][ 0 ], CamPos[ 1 ][ 1 ],CamPos[ 1 ][ 2 ], CamPos[ 1 ][ 3 ], CamPos[ 1 ][ 4 ], CamPos[ 1 ][ 5 ], 0.0f, 1.0f, 0.0f);
+		break;
+		case 6:
+			gluLookAt(CamPos[ 2 ][ 0 ], CamPos[ 2 ][ 1 ],CamPos[ 2 ][ 2 ], CamPos[ 2 ][ 3 ], CamPos[ 2 ][ 4 ], CamPos[ 2 ][ 5 ], 0.0f, 1.0f, 0.0f);
+		break;
+		case 8:
+			gluLookAt(CamPos[ 3 ][ 0 ], CamPos[ 3 ][ 1 ],CamPos[ 3 ][ 2 ], CamPos[ 3 ][ 3 ], CamPos[ 3 ][ 4 ], CamPos[ 3 ][ 5 ], 0.0f, 1.0f, 0.0f);
+		break;
+		case 1:
+			gluLookAt( 190.0f - 5.8f * abs( player1.PosicionObj.x - 125.0f ), CamPos[ 0 ][ 1 ], CamPos[ 0 ][ 2 ], 
+						180.0f - 5.0f * abs( player1.PosicionObj.x - 125.0f ), CamPos[ 0 ][ 4 ], CamPos[ 0 ][ 5 ], 
+						0.0f, 1.0f, 0.0f );
+		break;
+		case 3: //15.5f
+			gluLookAt( 45.0f - 1.93548f * abs( player1.PosicionObj.x - 5.5f ), CamPos[ 1 ][ 1 ], 10.0f - 4.25806f * abs( player1.PosicionObj.x - 5.5f ), 
+						55.0f - 6.77419f * abs( player1.PosicionObj.x - 5.5f ), CamPos[ 1 ][ 4 ], -60.0f - 0.258065f * abs( player1.PosicionObj.x - 5.5f ), 
+						0.0f, 1.0f, 0.0f );
+		break;
+		case 7: // 45.0f
+			gluLookAt( 15.0f + 0.444f * abs( player1.PosicionObj.z - 5.0f ), CamPos[ 1 ][ 1 ], -56.0f + 2.9333f * abs( player1.PosicionObj.z - 5.0f ), 
+						-50.0f - 0.222f * abs( player1.PosicionObj.z - 5.0f ), CamPos[ 1 ][ 4 ], -56.0f + 3.0222f * abs( player1.PosicionObj.z - 5.0f ), 
+						0.0f, 1.0f, 0.0f );
+		break;
+		default:
+			gluLookAt(player1.PosicionCam.x, player1.PosicionCam.y, player1.PosicionCam.z, 
+				  player1.ObjetivoCam.x, player1.ObjetivoCam.y, player1.ObjetivoCam.z, 
+					0.0f, 1.0f, 0.0f);
+		break;
 	}
-	else if ( pisoId == 2 )
-	{
-		gluLookAt(CamPos[ 1 ][ 0 ], CamPos[ 1 ][ 1 ],CamPos[ 1 ][ 2 ], CamPos[ 1 ][ 3 ], CamPos[ 1 ][ 4 ], CamPos[ 1 ][ 5 ], 0.0f, 1.0f, 0.0f);
-	}
-	else if ( pisoId == 6 )
-	{
-		gluLookAt(CamPos[ 2 ][ 0 ], CamPos[ 2 ][ 1 ],CamPos[ 2 ][ 2 ], CamPos[ 2 ][ 3 ], CamPos[ 2 ][ 4 ], CamPos[ 2 ][ 5 ], 0.0f, 1.0f, 0.0f);
-	}
-	else if ( pisoId == 8 )
-	{
-		gluLookAt(CamPos[ 3 ][ 0 ], CamPos[ 3 ][ 1 ],CamPos[ 3 ][ 2 ], CamPos[ 3 ][ 3 ], CamPos[ 3 ][ 4 ], CamPos[ 3 ][ 5 ], 0.0f, 1.0f, 0.0f);
-	}
-	else if ( pisoId == 1 )
-	{
-		gluLookAt( 190.0f - 5.8f * abs( player1.PosicionCam.x - 145.0f ), CamPos[ 0 ][ 1 ], CamPos[ 0 ][ 2 ], 180.0f - 5.0f * abs( player1.PosicionCam.x - 145 ), CamPos[ 0 ][ 4 ], CamPos[ 0 ][ 5 ], 0.0f, 1.0f, 0.0f );
-	}
-	else if ( pisoId == 30 )
-	{
-		gluLookAt( 45.0f + 1.93548f * abs( player1.PosicionCam.x - 15.0f ), CamPos[ 0 ][ 1 ], -56.0f + 4.25806f * abs( player1.PosicionCam.x - 15.0f ), 55.0f - 6.77419f * abs( player1.PosicionCam.x - 15.0f ), CamPos[ 0 ][ 4 ], -60.0f + -0.2580f * abs( player1.PosicionCam.x - 15.0f ), 0.0f, 1.0f, 0.0f );
-	}
-	else if ( pisoId == 50 )
-	{
-		gluLookAt( 190.0f - 5.8f * abs( player1.PosicionCam.x - 145.0f ), CamPos[ 0 ][ 1 ], CamPos[ 0 ][ 2 ], 180.0f - 5.0f * abs( player1.PosicionCam.x - 145 ), CamPos[ 0 ][ 4 ], CamPos[ 0 ][ 5 ], 0.0f, 1.0f, 0.0f );
-	}
-	else if ( pisoId == 70 )
-	{
-		gluLookAt( 190.0f - 5.8f * abs( player1.PosicionCam.x - 145.0f ), CamPos[ 0 ][ 1 ], CamPos[ 0 ][ 2 ], 180.0f - 5.0f * abs( player1.PosicionCam.x - 145 ), CamPos[ 0 ][ 4 ], CamPos[ 0 ][ 5 ], 0.0f, 1.0f, 0.0f );
-	}
-	else
-		gluLookAt(player1.PosicionCam.x, player1.PosicionCam.y, player1.PosicionCam.z, 
-			  player1.ObjetivoCam.x, player1.ObjetivoCam.y, player1.ObjetivoCam.z, 
-			  0.0f, 1.0f, 0.0f);
 }
 int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la ventana
 {
