@@ -269,6 +269,14 @@
 		<Filter
 			Name="Shaders"
 			>
+			<File
+				RelativePath=".\Shaders\celshader.frag"
+				>
+			</File>
+			<File
+				RelativePath=".\Shaders\celshader.vert"
+				>
+			</File>
 		</Filter>
 	</Files>
 	<Globals>

@@ -166,6 +166,7 @@ CTga textureModel2k[20];
 CTga textureModel3k[20];
 
 CLoad3DS g_Load3ds;
+CShader cel_Shader;
 
 //Acceso a la estructura que almacena los datos de los modelos
 t3DModel g_3DModel1c;
@@ -297,7 +298,7 @@ GLuint modelo1aruout;
 
 
 //Constantes de iluminación y materiales
-GLfloat LightPos[] = { 0.0f, 20.0f, 25.0f, 1.0f};		// Posición de la luz
+GLfloat LightPos[] = { 200.0f, 20.0f, 25.0f, 1.0f};		// Posición de la luz
 GLfloat LightAmb[] = { 0.8f,  0.8f, 0.8f, 1.0f};			// Valores de la componente ambiente
 GLfloat LightDif[] = { 0.9f,  0.9f, 0.9f, 1.0f};			// Valores de la componente difusa
 GLfloat LightSpc[] = { 0.5f,  0.5f, 0.5f, 1.0f};			// Valores de la componente especular
@@ -2396,6 +2397,11 @@ int InitGL(GLvoid)										// Aqui se configuran los parametros iniciales de Op
 	// Colisiones
 	InicializaObjetosdeColision();
 
+	if(InitGLSL())
+	{
+		cel_Shader.InitShaders("Shaders/celshader.vert","Shaders/celshader.frag");
+	}
+
 	return TRUE;										
 }
 
@@ -3590,6 +3596,7 @@ void DibujaTextos()
 
 void DibujaMJ()
 {
+	cel_Shader.TurnOn();
 	// Aru
 	glPushMatrix();
 		glTranslatef( player1.PosicionObj.x, player1.PosicionObj.y + 2.4f, player1.PosicionObj.z + 0.0f);
@@ -3605,6 +3612,35 @@ void DibujaMJ()
 		glScalef(MJ6.escalaX,MJ6.escalaY,MJ6.escalaZ);
 		DibujaMJ6();
 	glPopMatrix();
+	cel_Shader.TurnOff();
+
+	//contornos
+	glDisable(GL_LIGHTING);
+	glEnable(GL_CULL_FACE);
+	glCullFace(GL_FRONT);
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	glLineWidth(2.5f);
+
+	// Aru
+	glPushMatrix();
+		glTranslatef( player1.PosicionObj.x, player1.PosicionObj.y + 2.4f, player1.PosicionObj.z + 0.0f);
+		glRotatef(player1.AngObj, 0.0f, 1.0f, 0.0f);
+		glScalef(player1.escalaX,player1.escalaY,player1.escalaZ);
+		DibujaPersonajeAruout();
+	glPopMatrix();
+
+	//MJ6
+	glPushMatrix();
+		glTranslatef(MJ6.PosicionObj.x, MJ6.PosicionObj.y+2.4f, MJ6.PosicionObj.z);
+		glRotatef(MJ6.AngObj, 0.0f, 1.0f, 0.0f);
+		glScalef(MJ6.escalaX,MJ6.escalaY,MJ6.escalaZ);
+		DibujaMJ6out();
+	glPopMatrix();
+	glLineWidth(1.0f);
+	glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
+	glCullFace(GL_BACK);
+	glDisable(GL_CULL_FACE);
+	glEnable(GL_LIGHTING);
 }
 
 void ActualizaLuz()
@@ -3864,37 +3900,11 @@ void ActualizaLuz()
 	objectSpaceLightPosition9.y=lightposition9[1];
 	objectSpaceLightPosition9.z=lightposition9[2];
 
-	
-	//contornos
-	glDisable(GL_LIGHTING);
-	glEnable(GL_CULL_FACE);
-	glCullFace(GL_FRONT);
-	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-	glLineWidth(2.5f);
-	// Aru
-	glPushMatrix();
-		glTranslatef( player1.PosicionObj.x, player1.PosicionObj.y + 2.4f, player1.PosicionObj.z + 0.0f);
-		glRotatef(player1.AngObj, 0.0f, 1.0f, 0.0f);
-		glScalef(player1.escalaX,player1.escalaY,player1.escalaZ);
-		DibujaPersonajeAruout();
-	glPopMatrix();
-
-	//MJ6
-	glPushMatrix();
-		glTranslatef(MJ6.PosicionObj.x, MJ6.PosicionObj.y+2.4f, MJ6.PosicionObj.z);
-		glRotatef(MJ6.AngObj, 0.0f, 1.0f, 0.0f);
-		glScalef(MJ6.escalaX,MJ6.escalaY,MJ6.escalaZ);
-		DibujaMJ6out();
-	glPopMatrix();
-	glLineWidth(1.0f);
-	glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
-	glCullFace(GL_BACK);
-	glDisable(GL_CULL_FACE);
-	glEnable(GL_LIGHTING);
 }
 
 void DibujaEnemigos()
 {
+	cel_Shader.TurnOn();
 	// savage
 	glPushMatrix();
 			glTranslatef(enemigo8.PosicionObj.x, enemigo8.PosicionObj.y+2.4f, enemigo8.PosicionObj.z);
@@ -3943,13 +3953,17 @@ void DibujaEnemigos()
 		glScalef(chang.escalaX,chang.escalaY,chang.escalaZ);
 		DibujaChango();
 	glPopMatrix();
+
+	cel_Shader.TurnOff();
+
 	//contorno
 	glDisable(GL_LIGHTING);
 	glEnable(GL_CULL_FACE);
 	glCullFace(GL_FRONT);
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	glLineWidth(2.5f);
-		// savage
+
+	// savage
 	glPushMatrix();
 			glTranslatef(enemigo8.PosicionObj.x, enemigo8.PosicionObj.y+2.4f, enemigo8.PosicionObj.z);
 			glRotatef(enemigo8.AngObj, 0.0f, 1.0f, 0.0f);
