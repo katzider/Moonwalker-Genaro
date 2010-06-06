@@ -342,6 +342,19 @@ bool  framerate_limit = true;
 
 int	  adjust=2;											// Speed Adjustment For Really Slow Video Cards
 
+//Variables del spline
+int running;
+int trayectoria;
+int esperar;
+
+int idxtp, dtidx;
+int ptsXtramo;
+int aw, ah;
+
+int AuxT;
+
+typedef GLfloat TPoint[3];
+
 struct			 										// Create A Structure For The Timer Information
 {
   __int64       frequency;								// Timer Frequency
@@ -425,6 +438,92 @@ void VMatMult(GLmatrix16f M, GLvector4f v)
 	v[2]=res[2];
 	v[3]=res[3];
 }
+
+struct spline {
+	TPoint *ctrlpoints;
+	int	    tpc;
+	int	    drawp;
+	int	    prec;
+};
+
+spline helspline;
+spline camspline;
+TPoint target;
+
+TPoint helsplinepoints[] = {
+	{ 181.5f, 20.0f, -64.0f},
+	{ 181.5f, 20.0f, -64.0f},
+	{ 150.0f, 20.0f, -38.0f},
+	{ 130.0f, 20.0f, -50.0f},
+	{ 130.0f, 20.0f, -78.0f},
+	{ 150.0f, 20.0f, -90.0f},
+	{ 181.5f, 20.0f, -64.0f},
+	{ 211.0f, 20.0f, -90.0f},
+	{ 231.0f, 20.0f, -78.0f},
+	{ 231.0f, 20.0f, -50.0f},
+	{ 211.0f, 20.0f, -38.0f},
+	{ 181.5f, 20.0f, -64.0f},
+	{ 181.5f, 20.0f, -64.0f},
+};
+
+TPoint camsplinepoints[] = {
+	{   0.0f, 40.0f,   0.0f},
+	{   1.5f, 40.0f,  -5.8f},
+	{   5.8f, 40.0f,  -2.4f},
+	{   2.4f, 40.0f,   0.5f},
+	{  -3.9f, 40.0f,  -2.0f},
+	{   0.8f, 40.0f,  -5.0f},
+	{   4.5f, 40.0f,  -8.8f},
+	{   8.2f, 40.0f,  -4.4f},
+	{   3.6f, 40.0f, -14.5f},
+	{  -0.5f, 40.0f, -10.0f},
+	{   5.0f, 40.0f, -20.0f},
+	{  12.5f, 40.0f, -15.8f},
+	{   7.8f, 40.0f, -26.4f},
+	{   9.7f, 40.0f, -19.5f},
+	{  13.9f, 40.0f, -32.5f},
+	{  15.0f, 40.0f, -35.0f},
+};
+
+#define totalCP (sizeof(helsplinepoints)/sizeof(TPoint))
+#define totalCP1 (sizeof(camsplinepoints)/sizeof(TPoint))
+
+int isel;
+int jsel;
+void spline_init( spline &sp, TPoint * ctrl, int tot, int res )
+{
+	sp.ctrlpoints = ctrl;
+	sp.prec = res;
+	sp.tpc = tot;
+	sp.drawp = (tot-3)*res;
+}
+
+void spline_point( spline &sp, int indice,  TPoint P)
+{
+    int i, j;
+	GLfloat t, t3, t2, c1, c2, c3, c4, _1_t;
+	GLfloat * Pj3, * Pj2, * Pj1, * Pj0;
+
+    indice = indice % sp.drawp;
+	j = indice / sp.prec + 3;
+	i = indice % sp.prec;
+	Pj3=sp.ctrlpoints[j-3];
+	Pj2=sp.ctrlpoints[j-2];
+	Pj1=sp.ctrlpoints[j-1];
+	Pj0=sp.ctrlpoints[j-0];
+	t = i/(double)sp.prec;
+	t2 = t*t; 
+	t3 = t2*t;
+	_1_t = 1-t;
+	c1 = (_1_t*_1_t*_1_t) / 6;
+	c2 = (3*t3-6*t2+4) / 6;
+	c3 = (-3*t3+3*t2+3*t+1) / 6;
+	c4 = t3 / 6;
+	P[0] = c1* Pj3[0] + c2*Pj2[0] + c3*Pj1[0] + c4*Pj0[0];
+	P[1] = c1* Pj3[1] + c2*Pj2[1] + c3*Pj1[1] + c4*Pj0[1];
+	P[2] = c1* Pj3[2] + c2*Pj2[2] + c3*Pj1[2] + c4*Pj0[2];
+}
+
 
 GLvoid ReSizeGLScene(GLsizei width, GLsizei height)		// Redimensiona e inicializa la ventana
 {
@@ -2029,6 +2128,21 @@ int InitGL(GLvoid)										// Aqui se configuran los parametros iniciales de Op
 
 	//CargaTexturas();
 
+	// para la Spline de la trayectoria automática
+	ptsXtramo = 20;
+	running = 1;
+	trayectoria = 1;
+	esperar=0;
+
+	spline_init(helspline, helsplinepoints, totalCP, ptsXtramo );
+	spline_init(camspline, camsplinepoints, totalCP1, ptsXtramo );
+
+	jsel = 0;
+	isel = 0;
+
+	idxtp = 2;
+	dtidx = 1;
+
 	CargaModelos();
 	CreaListas();
 	IniSombraVolumen();
@@ -2908,6 +3022,8 @@ void Camara()
 }
 int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la ventana
 {
+	TPoint P;
+
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 	glLoadIdentity();
 	
@@ -3001,6 +3117,53 @@ int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);     //Para que muestre el volumen en alambrado
 		//DibujaVolumendeSombra();
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);     //Volvemos al modo sólido de nuevo
+	}
+
+	//splines
+	if(running) 
+	{	
+		idxtp += dtidx;
+		if( idxtp >= helspline.drawp - 10 || idxtp < 2 )
+		{ 
+			// ¿final o principio?
+  			dtidx = -dtidx; // cambia el sentido de la camara
+			//esperar = 50;
+		}
+		spline_point(helspline, idxtp, target);
+	}
+
+	// Trayectoria del spline
+	if(trayectoria == 1)
+	{
+		glDisable(GL_TEXTURE_2D);
+		glDisable(GL_LIGHTING);
+		glDisable(GL_COLOR_MATERIAL);
+		glColor3f(1.0f, 1.0f, 1.0f);
+		glBegin(GL_LINE_STRIP);
+			for(int i=0; i < helspline.drawp; i++ ) 
+			{
+				spline_point( helspline, i, P );
+				glVertex3fv( P );
+			}
+		glEnd();
+
+		for (int i=0; i< helspline.tpc; i++ )
+		{
+			glColor3f(1.0f,1.0f,1.0f);
+			glPushMatrix();
+				glTranslatef(helspline.ctrlpoints[i][0],
+							helspline.ctrlpoints[i][1],
+							helspline.ctrlpoints[i][2]);
+				glPointSize(10.0f);
+				glColor3f(1.0f,0.0f,0.0f);
+				glBegin(GL_POINTS);
+					glVertex3f(0.0f,0.0f,0.0f);
+				glEnd();
+							
+			glPopMatrix();
+
+			glColor3f(1.0f,1.0f,1.0f);
+		}
 	}
 
 	CalculateFrameRate();
