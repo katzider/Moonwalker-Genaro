@@ -467,22 +467,22 @@ TPoint helsplinepoints[] = {
 };
 
 TPoint camsplinepoints[] = {
-	{   0.0f, 40.0f,   0.0f},
-	{   1.5f, 40.0f,  -5.8f},
-	{   5.8f, 40.0f,  -2.4f},
-	{   2.4f, 40.0f,   0.5f},
-	{  -3.9f, 40.0f,  -2.0f},
-	{   0.8f, 40.0f,  -5.0f},
-	{   4.5f, 40.0f,  -8.8f},
-	{   8.2f, 40.0f,  -4.4f},
-	{   3.6f, 40.0f, -14.5f},
-	{  -0.5f, 40.0f, -10.0f},
-	{   5.0f, 40.0f, -20.0f},
-	{  12.5f, 40.0f, -15.8f},
-	{   7.8f, 40.0f, -26.4f},
-	{   9.7f, 40.0f, -19.5f},
-	{  13.9f, 40.0f, -32.5f},
-	{  15.0f, 40.0f, -35.0f},
+	{ 245.0f, 90.0f, -64.0f},
+	{ 240.5f, 90.0f, -64.0f},
+	{ 200.0f, 90.0f, -64.0f},
+	{ 150.4f, 90.0f, -64.0f},
+	{ 125.0f, 90.0f, -64.0f},
+	{ 100.0f, 90.0f, -64.0f},
+	{  60.5f, 90.0f, -64.0f},
+	{  20.0f, 90.0f, -64.0f},
+	{   5.0f, 90.0f, -64.0f},
+	{   0.5f, 90.0f, -64.0f},
+	{ -10.5f, 90.0f, -64.0f},
+	{ -57.5f, 90.0f, -64.0f},
+	{ -57.5f, 90.0f,  50.4f},
+	{ -57.5f, 90.0f, 100.5f},
+	{ -57.5f, 90.0f, 150.5f},
+	{ -57.5f, 90.0f, 200.0f},
 };
 
 #define totalCP  (sizeof(helsplinepoints)/sizeof(TPoint))
@@ -3351,8 +3351,6 @@ void DibujaSombraMJ()
 	glPopMatrix();
 		
 }
-	
-
 void DibujaPersonajeAruout()
 {
 	glTranslatef(player1modelo.Xtor, player1modelo.Ytor, player1modelo.Ztor);
@@ -3925,7 +3923,8 @@ void DibujaEnemigos()
 
 	//Ene2
 	glPushMatrix();
-		glTranslatef(target[0], target[1], target[2]);
+		if(pisoId < 2)
+			glTranslatef(target[0], target[1], target[2]);
 		glRotatef(enem2.AngObj, 0.0f, 1.0f, 0.0f);
 		glScalef(enem2.escalaX,enem1.escalaY,enem1.escalaZ);
 		DibujaEnemigo2();
@@ -4149,12 +4148,12 @@ int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la
 	DibujaTextos();
 	
 	// Esta parte opcional muestra la silueta extruida que crea el volumen de sombra.
-	if(displayVolume == true)
+	/*if(displayVolume == true)
 	{
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);     //Para que muestre el volumen en alambrado
 		DibujaVolumendeSombra();
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);     //Volvemos al modo sólido de nuevo
-	}
+	}*/
 
 	//splines
 	if(running) 
@@ -4169,39 +4168,68 @@ int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la
 		spline_point(helspline, idxtp, target);
 	}
 
-	// Trayectoria del spline
-	if(trayectoria == 1)
+	//spline helicòptero
+	glDisable(GL_TEXTURE_2D);
+	glDisable(GL_LIGHTING);
+	glDisable(GL_COLOR_MATERIAL);
+	glColor3f(1.0f, 1.0f, 1.0f);
+	glBegin(GL_LINE_STRIP);
+	for(int i=0; i < helspline.drawp; i++ ) 
 	{
-		glDisable(GL_TEXTURE_2D);
-		glDisable(GL_LIGHTING);
-		glDisable(GL_COLOR_MATERIAL);
-		glColor3f(1.0f, 1.0f, 1.0f);
-		glBegin(GL_LINE_STRIP);
-			for(int i=0; i < helspline.drawp; i++ ) 
-			{
-				spline_point( helspline, i, P );
-				glVertex3fv( P );
-			}
-		glEnd();
-
-		for (int i=0; i< helspline.tpc; i++ )
-		{
-			glColor3f(1.0f,1.0f,1.0f);
-			glPushMatrix();
-				glTranslatef(helspline.ctrlpoints[i][0],
-							helspline.ctrlpoints[i][1],
-							helspline.ctrlpoints[i][2]);
-				glPointSize(10.0f);
-				glColor3f(1.0f,0.0f,0.0f);
-				glBegin(GL_POINTS);
-					glVertex3f(0.0f,0.0f,0.0f);
-				glEnd();
-							
-			glPopMatrix();
-
-			glColor3f(1.0f,1.0f,1.0f);
-		}
+		spline_point( helspline, i, P );
+		glVertex3fv( P );
 	}
+	glEnd();
+
+	for (int i=0; i< helspline.tpc; i++ )
+	{
+		glColor3f(1.0f,1.0f,1.0f);
+		glPushMatrix();
+			glTranslatef(helspline.ctrlpoints[i][0],
+						helspline.ctrlpoints[i][1],
+						helspline.ctrlpoints[i][2]);
+			glPointSize(10.0f);
+			glColor3f(1.0f,0.0f,0.0f);
+			glBegin(GL_POINTS);
+				glVertex3f(0.0f,0.0f,0.0f);
+			glEnd();
+						
+		glPopMatrix();
+
+		glColor3f(1.0f,1.0f,1.0f);
+	}
+
+	//spline camara
+	glDisable(GL_TEXTURE_2D);
+	glDisable(GL_LIGHTING);
+	glDisable(GL_COLOR_MATERIAL);
+	glColor3f(0.0f, 1.0f, 0.0f);
+	glBegin(GL_LINE_STRIP);
+	for(int i=0; i < camspline.drawp; i++ ) 
+	{
+		spline_point( camspline, i, P );
+		glVertex3fv( P );
+	}
+	glEnd();
+
+	for (int i=0; i< camspline.tpc; i++ )
+	{
+		glColor3f(1.0f,1.0f,1.0f);
+		glPushMatrix();
+			glTranslatef(camspline.ctrlpoints[i][0],
+						camspline.ctrlpoints[i][1],
+						camspline.ctrlpoints[i][2]);
+			glPointSize(10.0f);
+			glColor3f(0.0f,0.0f,1.0f);
+			glBegin(GL_POINTS);
+				glVertex3f(0.0f,0.0f,0.0f);
+			glEnd();
+						
+		glPopMatrix();
+
+		glColor3f(1.0f,1.0f,1.0f);
+	}
+	
 
 	CalculateFrameRate();
 
