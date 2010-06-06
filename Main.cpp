@@ -166,6 +166,7 @@ CTga textureModel2k[20];
 CTga textureModel3k[20];
 
 CLoad3DS g_Load3ds;
+CShader cel_Shader;
 
 //Acceso a la estructura que almacena los datos de los modelos
 t3DModel g_3DModel1c;
@@ -2396,6 +2397,11 @@ int InitGL(GLvoid)										// Aqui se configuran los parametros iniciales de Op
 	// Colisiones
 	InicializaObjetosdeColision();
 
+	if(InitGLSL())
+	{
+		cel_Shader.InitShaders("Shaders/celshader.vert","Shaders/celshader.frag");
+	}
+
 	return TRUE;										
 }
 
@@ -3592,6 +3598,7 @@ void DibujaTextos()
 
 void DibujaMJ()
 {
+	cel_Shader.TurnOn();
 	// Aru
 	glPushMatrix();
 		glTranslatef( player1.PosicionObj.x, player1.PosicionObj.y + 2.4f, player1.PosicionObj.z + 0.0f);
@@ -3607,6 +3614,7 @@ void DibujaMJ()
 		glScalef(MJ6.escalaX,MJ6.escalaY,MJ6.escalaZ);
 		DibujaMJ6();
 	glPopMatrix();
+	cel_Shader.TurnOff();
 
 	//contornos
 	glDisable(GL_LIGHTING);
@@ -3898,6 +3906,7 @@ void ActualizaLuz()
 
 void DibujaEnemigos()
 {
+	cel_Shader.TurnOn();
 	// savage
 	glPushMatrix();
 			glTranslatef(enemigo8.PosicionObj.x, enemigo8.PosicionObj.y+2.4f, enemigo8.PosicionObj.z);
@@ -3945,6 +3954,8 @@ void DibujaEnemigos()
 		glScalef(chang.escalaX,chang.escalaY,chang.escalaZ);
 		DibujaChango();
 	glPopMatrix();
+
+	cel_Shader.TurnOff();
 
 	//contorno
 	glDisable(GL_LIGHTING);
