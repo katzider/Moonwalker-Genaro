@@ -2136,7 +2136,7 @@ int InitGL(GLvoid)										// Aqui se configuran los parametros iniciales de Op
 	spline_init(camspline, camsplinepoints, totalCP1, ptsXtramo );
 
 	idxtp = 2.0f;
-	dtidx = 0.5f;
+	dtidx = 0.35f;
 
 	CargaModelos();
 	CreaListas();
