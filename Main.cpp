@@ -1807,7 +1807,7 @@ void ActualizaObjetosDinamicosColision()
 
 
 	esfera[1].Pos=CVector(enem1.PosicionObj.x, enem1.PosicionObj.y+2.5f, enem1.PosicionObj.z);
-	esfera[2].Pos=CVector(enem2.PosicionObj.x, enem2.PosicionObj.y+2.5f, enem2.PosicionObj.z);
+	esfera[2].Pos=CVector(target[0], target[1] + 2.5, target[2]);
 	esfera[6].Pos=CVector(MJ6.PosicionObj.x, MJ6.PosicionObj.y+2.5f, MJ6.PosicionObj.z);
 	esfera[9].Pos=CVector(chang.PosicionObj.x, chang.PosicionObj.y+2.0f, chang.PosicionObj.z);
 	esfera[8].Pos=CVector(enem3b.PosicionObj.x, enem3b.PosicionObj.y+2.0f, enem3b.PosicionObj.z);
