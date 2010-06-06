@@ -347,7 +347,7 @@ int running;
 int trayectoria;
 int esperar;
 
-int idxtp, dtidx;
+float idxtp, dtidx;
 int ptsXtramo;
 int aw, ah;
 
@@ -485,11 +485,9 @@ TPoint camsplinepoints[] = {
 	{  15.0f, 40.0f, -35.0f},
 };
 
-#define totalCP (sizeof(helsplinepoints)/sizeof(TPoint))
+#define totalCP  (sizeof(helsplinepoints)/sizeof(TPoint))
 #define totalCP1 (sizeof(camsplinepoints)/sizeof(TPoint))
 
-int isel;
-int jsel;
 void spline_init( spline &sp, TPoint * ctrl, int tot, int res )
 {
 	sp.ctrlpoints = ctrl;
@@ -2137,11 +2135,8 @@ int InitGL(GLvoid)										// Aqui se configuran los parametros iniciales de Op
 	spline_init(helspline, helsplinepoints, totalCP, ptsXtramo );
 	spline_init(camspline, camsplinepoints, totalCP1, ptsXtramo );
 
-	jsel = 0;
-	isel = 0;
-
-	idxtp = 2;
-	dtidx = 1;
+	idxtp = 2.0f;
+	dtidx = 0.5f;
 
 	CargaModelos();
 	CreaListas();
@@ -2942,7 +2937,6 @@ void DibujaEnemigos()
 
 	//Ene2
 	glPushMatrix();
-		//glTranslatef(enem2.PosicionObj.x, enem2.PosicionObj.y, enem2.PosicionObj.z);
 		glTranslatef(target[0], target[1], target[2]);
 		glRotatef(enem2.AngObj, 0.0f, 1.0f, 0.0f);
 		glScalef(enem2.escalaX,enem1.escalaY,enem1.escalaZ);
@@ -3124,7 +3118,7 @@ int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la
 	if(running) 
 	{	
 		idxtp += dtidx;
-		if( idxtp >= helspline.drawp - 10 || idxtp < 2 )
+		if( idxtp >= helspline.drawp - 5 || idxtp < 2 )
 		{ 
 			// ¿final o principio?
   			dtidx = -dtidx; // cambia el sentido de la camara
