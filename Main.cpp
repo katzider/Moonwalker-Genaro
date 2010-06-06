@@ -451,19 +451,19 @@ spline camspline;
 TPoint target;
 
 TPoint helsplinepoints[] = {
-	{ 181.5f, 20.0f, -64.0f},
-	{ 181.5f, 20.0f, -64.0f},
-	{ 150.0f, 20.0f, -38.0f},
-	{ 130.0f, 20.0f, -50.0f},
-	{ 130.0f, 20.0f, -78.0f},
-	{ 150.0f, 20.0f, -90.0f},
-	{ 181.5f, 20.0f, -64.0f},
-	{ 211.0f, 20.0f, -90.0f},
-	{ 231.0f, 20.0f, -78.0f},
-	{ 231.0f, 20.0f, -50.0f},
-	{ 211.0f, 20.0f, -38.0f},
-	{ 181.5f, 20.0f, -64.0f},
-	{ 181.5f, 20.0f, -64.0f},
+	{ 181.5f, 20.0f, -67.0f},
+	{ 181.5f, 20.0f, -67.0f},
+	{ 150.0f, 20.0f, -41.0f},
+	{ 130.0f, 20.0f, -53.0f},
+	{ 130.0f, 20.0f, -81.0f},
+	{ 150.0f, 20.0f, -93.0f},
+	{ 181.5f, 20.0f, -67.0f},
+	{ 211.0f, 20.0f, -93.0f},
+	{ 231.0f, 20.0f, -81.0f},
+	{ 231.0f, 20.0f, -53.0f},
+	{ 211.0f, 20.0f, -41.0f},
+	{ 181.5f, 20.0f, -67.0f},
+	{ 181.5f, 20.0f, -67.0f},
 };
 
 TPoint camsplinepoints[] = {
@@ -2942,7 +2942,8 @@ void DibujaEnemigos()
 
 	//Ene2
 	glPushMatrix();
-		glTranslatef(enem2.PosicionObj.x, enem2.PosicionObj.y, enem2.PosicionObj.z);
+		//glTranslatef(enem2.PosicionObj.x, enem2.PosicionObj.y, enem2.PosicionObj.z);
+		glTranslatef(target[0], target[1], target[2]);
 		glRotatef(enem2.AngObj, 0.0f, 1.0f, 0.0f);
 		glScalef(enem2.escalaX,enem1.escalaY,enem1.escalaZ);
 		DibujaEnemigo2();
