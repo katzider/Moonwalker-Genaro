@@ -3548,7 +3548,7 @@ void DibujaMJ()
 	glEnable(GL_CULL_FACE);
 	glCullFace(GL_FRONT);
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-	glLineWidth(3.5f);
+	glLineWidth(2.5f);
 	// Aru
 	glPushMatrix();
 		glTranslatef( player1.PosicionObj.x, player1.PosicionObj.y + 2.4f, player1.PosicionObj.z + 0.0f);
@@ -3625,7 +3625,7 @@ void DibujaEnemigos()
 	glEnable(GL_CULL_FACE);
 	glCullFace(GL_FRONT);
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-	glLineWidth(3.5f);
+	glLineWidth(2.5f);
 		// savage
 	glPushMatrix();
 			glTranslatef(enemigo8.PosicionObj.x, enemigo8.PosicionObj.y+2.4f, enemigo8.PosicionObj.z);
