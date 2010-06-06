@@ -327,6 +327,17 @@ CVector objectSpaceLightPosition7;
 CVector objectSpaceLightPosition8;
 CVector objectSpaceLightPosition9;
 
+//Posición de la luz para el espacio de objeto de los modelos de Aru
+CVector objectSpaceLightPosition1aru;
+CVector objectSpaceLightPosition2aru;
+CVector objectSpaceLightPosition3aru;
+CVector objectSpaceLightPosition4aru;
+CVector objectSpaceLightPosition5aru;
+CVector objectSpaceLightPosition6aru;
+CVector objectSpaceLightPosition7aru;
+CVector objectSpaceLightPosition8aru;
+CVector objectSpaceLightPosition9aru;
+
 //Variables para el cálculo de transformaciones inversas para las sombras
 typedef float GLvector4f[4];
 typedef float GLmatrix16f[16];
@@ -3267,85 +3278,6 @@ void DibujaPersonajeAru()
 	glPopMatrix();
 }
 
-void DibujaSombraMJ()
-{
-	glPushMatrix();
-
-		glTranslatef( player1.PosicionObj.x, player1.PosicionObj.y + 2.4f, player1.PosicionObj.z + 0.0f);
-		glRotatef(player1.AngObj, 0.0f, 1.0f, 0.0f);
-		glScalef(player1.escalaX,player1.escalaY,player1.escalaZ);
-		glTranslatef(player1modelo.Xtor, player1modelo.Ytor, player1modelo.Ztor);
-		glRotatef(player1modelo.Angt2, 0.0f, 1.0f, 0.0f);
-		glRotatef(player1modelo.Angt1, 1.0f, 0.0f, 0.0f);
-				
-		//Torso
-		objSh.calculaSombraDepthPass(&g_3DModel1aru, objectSpaceLightPosition1);
-		
-		//Pierna derecha
-		glPushMatrix();
-			glTranslatef(1.0f, 0.0f, 0.0f);
-			glRotatef(player1modelo.Angpder, 1.0f, 0.0f, 0.0f);
-			objSh.calculaSombraDepthPass(&g_3DModel2aru, objectSpaceLightPosition2);
-
-			//Pierna derecha_b
-			glPushMatrix();
-				glTranslatef(-5.2f, 0.7f , 0.0f);
-				glRotatef(player1modelo.Angpderb, 1.0f, 0.0f, 0.0f);
-				objSh.calculaSombraDepthPass(&g_3DModel3aru, objectSpaceLightPosition3);
-			glPopMatrix();
-
-		glPopMatrix();
-
-		//Pierna izquierda
-		glPushMatrix();
-			glTranslatef(0.0f, 0.0f ,0.0f);
-			glRotatef(player1modelo.Angpizq, 1.0f, 0.0f, 0.0f);
-			objSh.calculaSombraDepthPass(&g_3DModel4aru, objectSpaceLightPosition4);
-
-			//Pierna izquierda_b
-			glPushMatrix();
-				glTranslatef(-6.5f, 0.8f , 0.0f);
-				glRotatef(player1modelo.Angpizqb, 1.0f, 0.0f, 0.0f);
-				objSh.calculaSombraDepthPass(&g_3DModel5aru, objectSpaceLightPosition5);
-			glPopMatrix();
-
-		glPopMatrix();
-
-		//Brazo derecho_a
-		glPushMatrix();
-			glTranslatef(5.65f, 0.2f, 0.2f);
-			glRotatef(player1modelo.Angbd2, 0.0f, 1.0f, 0.0f);
-			glRotatef(player1modelo.Angbd1, 1.0f, 0.0f, 0.0f);
-			objSh.calculaSombraDepthPass(&g_3DModel6aru, objectSpaceLightPosition6);
-
-			//Brazo derecho_b
-			glPushMatrix();
-				glTranslatef(-4.6f, 2.0f, 0.0f);
-				glRotatef(player1modelo.Angbdb, 1.0f, 0.0f, 0.0f);
-				objSh.calculaSombraDepthPass(&g_3DModel8aru, objectSpaceLightPosition7);
-			glPopMatrix();
-
-		glPopMatrix();
-
-		//Brazo izquierdo
-		glPushMatrix();
-			glTranslatef(-1.0f, 1.5f, 0.0f);
-			glRotatef(player1modelo.Angbi2, 0.0f, 1.0f, 0.0f);
-			glRotatef(player1modelo.Angbi1, 1.0f, 0.0f, 0.0f);
-			objSh.calculaSombraDepthPass(&g_3DModel7aru, objectSpaceLightPosition8);
-
-			//Brazo izquierdo_b
-			glPushMatrix();
-				glTranslatef(-0.7f, 0.5f, 0.0f);
-				glRotatef(player1modelo.Angbib, 1.0f, 0.0f, 0.0f);
-				objSh.calculaSombraDepthPass(&g_3DModel9aru, objectSpaceLightPosition9);
-			glPopMatrix();
-		glPopMatrix();
-
-	glPopMatrix();
-		
-}
-	
 
 void DibujaPersonajeAruout()
 {
@@ -3420,84 +3352,6 @@ void DibujaPersonajeAruout()
 }
 
 
-void DibujaVolumendeSombra()
-{
-	glPushMatrix();
-
-		glTranslatef( player1.PosicionObj.x, player1.PosicionObj.y + 2.4f, player1.PosicionObj.z + 0.0f);
-		glRotatef(player1.AngObj, 0.0f, 1.0f, 0.0f);
-		glScalef(player1.escalaX,player1.escalaY,player1.escalaZ);
-		glTranslatef(player1modelo.Xtor, player1modelo.Ytor, player1modelo.Ztor);
-		glRotatef(player1modelo.Angt2, 0.0f, 1.0f, 0.0f);
-		glRotatef(player1modelo.Angt1, 1.0f, 0.0f, 0.0f);
-				
-		//Torso
-		objSh.DrawShadowVolume(&g_3DModel1aru, objectSpaceLightPosition1);
-		
-		//Pierna derecha
-		glPushMatrix();
-			glTranslatef(1.0f, 0.0f, 0.0f);
-			glRotatef(player1modelo.Angpder, 1.0f, 0.0f, 0.0f);
-			objSh.DrawShadowVolume(&g_3DModel2aru, objectSpaceLightPosition2);
-
-			//Pierna derecha_b
-			glPushMatrix();
-				glTranslatef(-5.2f, 0.7f , 0.0f);
-				glRotatef(player1modelo.Angpderb, 1.0f, 0.0f, 0.0f);
-				objSh.DrawShadowVolume(&g_3DModel3aru, objectSpaceLightPosition3);
-			glPopMatrix();
-
-		glPopMatrix();
-
-		//Pierna izquierda
-		glPushMatrix();
-			glTranslatef(0.0f, 0.0f ,0.0f);
-			glRotatef(player1modelo.Angpizq, 1.0f, 0.0f, 0.0f);
-			objSh.DrawShadowVolume(&g_3DModel4aru, objectSpaceLightPosition4);
-
-			//Pierna izquierda_b
-			glPushMatrix();
-				glTranslatef(-6.5f, 0.8f , 0.0f);
-				glRotatef(player1modelo.Angpizqb, 1.0f, 0.0f, 0.0f);
-				objSh.DrawShadowVolume(&g_3DModel5aru, objectSpaceLightPosition5);
-			glPopMatrix();
-
-		glPopMatrix();
-
-		//Brazo derecho_a
-		glPushMatrix();
-			glTranslatef(5.65f, 0.2f, 0.2f);
-			glRotatef(player1modelo.Angbd2, 0.0f, 1.0f, 0.0f);
-			glRotatef(player1modelo.Angbd1, 1.0f, 0.0f, 0.0f);
-			objSh.DrawShadowVolume(&g_3DModel6aru, objectSpaceLightPosition6);
-
-			//Brazo derecho_b
-			glPushMatrix();
-				glTranslatef(-4.6f, 2.0f, 0.0f);
-				glRotatef(player1modelo.Angbdb, 1.0f, 0.0f, 0.0f);
-				objSh.DrawShadowVolume(&g_3DModel8aru, objectSpaceLightPosition7);
-			glPopMatrix();
-
-		glPopMatrix();
-
-		//Brazo izquierdo
-		glPushMatrix();
-			glTranslatef(-1.0f, 1.5f, 0.0f);
-			glRotatef(player1modelo.Angbi2, 0.0f, 1.0f, 0.0f);
-			glRotatef(player1modelo.Angbi1, 1.0f, 0.0f, 0.0f);
-			objSh.DrawShadowVolume(&g_3DModel7aru, objectSpaceLightPosition8);
-
-			//Brazo izquierdo_b
-			glPushMatrix();
-				glTranslatef(-0.7f, 0.5f, 0.0f);
-				glRotatef(player1modelo.Angbib, 1.0f, 0.0f, 0.0f);
-				objSh.DrawShadowVolume(&g_3DModel9aru, objectSpaceLightPosition9);
-			glPopMatrix();
-
-		glPopMatrix();
-
-	glPopMatrix();
-}
 void DibujaEjes()
 {
 	glColor3f(1.0f,0.0f,0.0f);
@@ -3590,25 +3444,6 @@ void DibujaTextos()
 		
 }
 
-void DibujaMJ()
-{
-	// Aru
-	glPushMatrix();
-		glTranslatef( player1.PosicionObj.x, player1.PosicionObj.y + 2.4f, player1.PosicionObj.z + 0.0f);
-		glRotatef(player1.AngObj, 0.0f, 1.0f, 0.0f);
-		glScalef(player1.escalaX,player1.escalaY,player1.escalaZ);
-		DibujaPersonajeAru();
-	glPopMatrix();
-
-	//MJ6
-	glPushMatrix();
-		glTranslatef(MJ6.PosicionObj.x, MJ6.PosicionObj.y+2.4f, MJ6.PosicionObj.z);
-		glRotatef(MJ6.AngObj, 0.0f, 1.0f, 0.0f);
-		glScalef(MJ6.escalaX,MJ6.escalaY,MJ6.escalaZ);
-		DibujaMJ6();
-	glPopMatrix();
-}
-
 void ActualizaLuz()
 {
 	GLmatrix16f inverseModelMatrix;
@@ -3660,213 +3495,54 @@ void ActualizaLuz()
 
 	//Modelo 2 (Pierna derecha)
 
-	//Aquí se determina a partir de la inversa de la matriz de modelo de vista el espacio de objeto para la luz
-	lightposition2[0]=lightPosition.x;
-	lightposition2[1]=lightPosition.y;
-	lightposition2[2]=lightPosition.z;
-
-	//Se obtiene la matriz inversa de modelo de vista para el modelo 2 aplicando sus transformaciones en orden inverso 
-	//y signos opuestos para los parámetros
-	glPushMatrix();
-		glLoadIdentity();
-		glRotatef(-player1modelo.Angpder, 1.0f, 0.0f, 0.0f);
-		glRotatef(-player1modelo.Angt1, 1.0f, 0.0f, 0.0f);
-		glRotatef(-player1modelo.Angt2, 0.0f, 1.0f, 0.0f);
-		glRotatef(-player1.AngObj, 0.0f, 1.0f, 0.0f);
-		glGetFloatv(GL_MODELVIEW_MATRIX, inverseModelMatrix2);
-	glPopMatrix();
-
-	//Guarda las posiciones de la luz para el espacio de objeto del objeto de sombra 2
-	VMatMult(inverseModelMatrix2, lightposition2);
-	
-	objectSpaceLightPosition2.x=lightposition2[0];
-	objectSpaceLightPosition2.y=lightposition2[1];
-	objectSpaceLightPosition2.z=lightposition2[2];
 	
 
-	//Aquí se determina a partir de la inversa de la matriz de modelo de vista el espacio de objeto para la luz
-	lightposition3[0]=lightPosition.x;
-	lightposition3[1]=lightPosition.y;
-	lightposition3[2]=lightPosition.z;
+	//Modelo 3 (Pierna derecha_b)
 
-	//Se obtiene la matriz inversa de modelo de vista para el modelo 3 aplicando sus transformaciones en orden inverso 
-	//y signos opuestos para los parámetros
-	glPushMatrix();
-		glLoadIdentity();
-		glRotatef(-player1modelo.Angpderb, 1.0f, 0.0f, 0.0f);
-		glRotatef(-player1modelo.Angpder, 1.0f, 0.0f, 0.0f);
-		glRotatef(-player1modelo.Angt1, 1.0f, 0.0f, 0.0f);
-		glRotatef(-player1modelo.Angt2, 0.0f, 1.0f, 0.0f);
-		glRotatef(-player1.AngObj, 0.0f, 1.0f, 0.0f);
-		glGetFloatv(GL_MODELVIEW_MATRIX, inverseModelMatrix3);
-	glPopMatrix();
-
-	//Guarda las posiciones de la luz para el espacio de objeto del objeto de sombra 3
-	VMatMult(inverseModelMatrix3, lightposition3);
-	
-	objectSpaceLightPosition3.x=lightposition3[0];
-	objectSpaceLightPosition3.y=lightposition3[1];
-	objectSpaceLightPosition3.z=lightposition3[2];
 	
 
 	//Modelo 4 (Pierna izquierda)
 
-	//Aquí se determina a partir de la inversa de la matriz de modelo de vista el espacio de objeto para la luz
-	lightposition4[0]=lightPosition.x;
-	lightposition4[1]=lightPosition.y;
-	lightposition4[2]=lightPosition.z;
-
-	//Se obtiene la matriz inversa de modelo de vista para el modelo 4 aplicando sus transformaciones en orden inverso 
-	//y signos opuestos para los parámetros
-	glPushMatrix();
-		glLoadIdentity();
-		glRotatef(-player1modelo.Angpizq, 1.0f, 0.0f, 0.0f);
-		glRotatef(-player1modelo.Angt1, 1.0f, 0.0f, 0.0f);
-		glRotatef(-player1modelo.Angt2, 0.0f, 1.0f, 0.0f);
-		glRotatef(-player1.AngObj, 0.0f, 1.0f, 0.0f);
-		glGetFloatv(GL_MODELVIEW_MATRIX, inverseModelMatrix4);
-	glPopMatrix();
-
-	//Guarda las posiciones de la luz para el espacio de objeto del objeto de sombra 4
-	VMatMult(inverseModelMatrix4, lightposition4);
 	
-	objectSpaceLightPosition4.x=lightposition4[0];
-	objectSpaceLightPosition4.y=lightposition4[1];
-	objectSpaceLightPosition4.z=lightposition4[2];
 
 	//Modelo 5 (Pierna izquierda_b)
 
-	//Aquí se determina a partir de la inversa de la matriz de modelo de vista el espacio de objeto para la luz
-	lightposition5[0]=lightPosition.x;
-	lightposition5[1]=lightPosition.y;
-	lightposition5[2]=lightPosition.z;
-
-	//Se obtiene la matriz inversa de modelo de vista para el modelo 5 aplicando sus transformaciones en orden inverso 
-	//y signos opuestos para los parámetros
-	glPushMatrix();
-		glLoadIdentity();
-		glRotatef(-player1modelo.Angpizqb, 1.0f, 0.0f, 0.0f);
-		glRotatef(-player1modelo.Angpizq, 1.0f, 0.0f, 0.0f);
-		glRotatef(-player1modelo.Angt1, 1.0f, 0.0f, 0.0f);
-		glRotatef(-player1modelo.Angt2, 0.0f, 1.0f, 0.0f);
-		glRotatef(-player1.AngObj, 0.0f, 1.0f, 0.0f);
-		glGetFloatv(GL_MODELVIEW_MATRIX, inverseModelMatrix5);
-	glPopMatrix();
-
-	//Guarda las posiciones de la luz para el espacio de objeto del objeto de sombra 5
-	VMatMult(inverseModelMatrix5, lightposition5);
 	
-	objectSpaceLightPosition5.x=lightposition5[0];
-	objectSpaceLightPosition5.y=lightposition5[1];
-	objectSpaceLightPosition5.z=lightposition5[2];
 
 	//Modelo 6 (Brazo derecho_a)
 
-	//Aquí se determina a partir de la inversa de la matriz de modelo de vista el espacio de objeto para la luz
-	lightposition6[0]=lightPosition.x;
-	lightposition6[1]=lightPosition.y;
-	lightposition6[2]=lightPosition.z;
-
-	//Se obtiene la matriz inversa de modelo de vista para el modelo 6 aplicando sus transformaciones en orden inverso 
-	//y signos opuestos para los parámetros
-	glPushMatrix();
-		glLoadIdentity();
-		glRotatef(-player1modelo.Angbd1, 1.0f, 0.0f, 0.0f);
-		glRotatef(-player1modelo.Angbd2, 1.0f, 1.0f, 0.0f);
-		glRotatef(-player1modelo.Angt1, 1.0f, 0.0f, 0.0f);
-		glRotatef(-player1modelo.Angt2, 0.0f, 1.0f, 0.0f);
-		glRotatef(-player1.AngObj, 0.0f, 1.0f, 0.0f);
-		glGetFloatv(GL_MODELVIEW_MATRIX, inverseModelMatrix6);
-	glPopMatrix();
-
-	//Guarda las posiciones de la luz para el espacio de objeto del objeto de sombra 6
-	VMatMult(inverseModelMatrix6, lightposition6);
 	
-	objectSpaceLightPosition6.x=lightposition6[0];
-	objectSpaceLightPosition6.y=lightposition6[1];
-	objectSpaceLightPosition6.z=lightposition6[2];
 
 	//Modelo 7 (Brazo derecho_b)
 
-	//Aquí se determina a partir de la inversa de la matriz de modelo de vista el espacio de objeto para la luz
-	lightposition7[0]=lightPosition.x;
-	lightposition7[1]=lightPosition.y;
-	lightposition7[2]=lightPosition.z;
-
-	//Se obtiene la matriz inversa de modelo de vista para el modelo 7 aplicando sus transformaciones en orden inverso 
-	//y signos opuestos para los parámetros
-	glPushMatrix();
-		glLoadIdentity();
-		glRotatef(-player1modelo.Angbdb, 1.0f, 0.0f, 0.0f);
-		glRotatef(-player1modelo.Angbd1, 1.0f, 0.0f, 0.0f);
-		glRotatef(-player1modelo.Angbd2, 1.0f, 1.0f, 0.0f);
-		glRotatef(-player1modelo.Angt1, 1.0f, 0.0f, 0.0f);
-		glRotatef(-player1modelo.Angt2, 0.0f, 1.0f, 0.0f);
-		glRotatef(-player1.AngObj, 0.0f, 1.0f, 0.0f);
-		glGetFloatv(GL_MODELVIEW_MATRIX, inverseModelMatrix7);
-	glPopMatrix();
-
-	//Guarda las posiciones de la luz para el espacio de objeto del objeto de sombra 7
-	VMatMult(inverseModelMatrix7, lightposition7);
 	
-	objectSpaceLightPosition7.x=lightposition7[0];
-	objectSpaceLightPosition7.y=lightposition7[1];
-	objectSpaceLightPosition7.z=lightposition7[2];
 
 	//Modelo 8 (Brazo izquierdo_a)
 
-	//Aquí se determina a partir de la inversa de la matriz de modelo de vista el espacio de objeto para la luz
-	lightposition8[0]=lightPosition.x;
-	lightposition8[1]=lightPosition.y;
-	lightposition8[2]=lightPosition.z;
-
-	//Se obtiene la matriz inversa de modelo de vista para el modelo 8 aplicando sus transformaciones en orden inverso 
-	//y signos opuestos para los parámetros
-	glPushMatrix();
-		glLoadIdentity();
-		glRotatef(-player1modelo.Angbi1, 1.0f, 0.0f, 0.0f);
-		glRotatef(-player1modelo.Angbi2, 0.0f, 1.0f, 0.0f);
-		glRotatef(-player1modelo.Angt1, 1.0f, 0.0f, 0.0f);
-		glRotatef(-player1modelo.Angt2, 0.0f, 1.0f, 0.0f);
-		glRotatef(-player1.AngObj, 0.0f, 1.0f, 0.0f);
-		glGetFloatv(GL_MODELVIEW_MATRIX, inverseModelMatrix8);
-	glPopMatrix();
-
-	//Guarda las posiciones de la luz para el espacio de objeto del objeto de sombra 8
-	VMatMult(inverseModelMatrix8, lightposition8);
 	
-	objectSpaceLightPosition8.x=lightposition8[0];
-	objectSpaceLightPosition8.y=lightposition8[1];
-	objectSpaceLightPosition8.z=lightposition8[2];
 	
 	//Modelo 9 (Brazo izquierdo_b)
 
-	//Aquí se determina a partir de la inversa de la matriz de modelo de vista el espacio de objeto para la luz
-	lightposition9[0]=lightPosition.x;
-	lightposition9[1]=lightPosition.y;
-	lightposition9[2]=lightPosition.z;
+	
+}
 
-	//Se obtiene la matriz inversa de modelo de vista para el modelo 9 aplicando sus transformaciones en orden inverso 
-	//y signos opuestos para los parámetros
+void DibujaMJ()
+{
+	// Aru
 	glPushMatrix();
-		glLoadIdentity();
-		glRotatef(-player1modelo.Angbib, 1.0f, 0.0f, 0.0f);
-		glRotatef(-player1modelo.Angbi1, 1.0f, 0.0f, 0.0f);
-		glRotatef(-player1modelo.Angbi2, 0.0f, 1.0f, 0.0f);
-		glRotatef(-player1modelo.Angt1, 1.0f, 0.0f, 0.0f);
-		glRotatef(-player1modelo.Angt2, 0.0f, 1.0f, 0.0f);
-		glRotatef(-player1.AngObj, 0.0f, 1.0f, 0.0f);
-		glGetFloatv(GL_MODELVIEW_MATRIX, inverseModelMatrix9);
+		glTranslatef( player1.PosicionObj.x, player1.PosicionObj.y + 2.4f, player1.PosicionObj.z + 0.0f);
+		glRotatef(player1.AngObj, 0.0f, 1.0f, 0.0f);
+		glScalef(player1.escalaX,player1.escalaY,player1.escalaZ);
+		DibujaPersonajeAru();
 	glPopMatrix();
 
-	//Guarda las posiciones de la luz para el espacio de objeto del objeto de sombra 9
-	VMatMult(inverseModelMatrix9, lightposition9);
-	
-	objectSpaceLightPosition9.x=lightposition9[0];
-	objectSpaceLightPosition9.y=lightposition9[1];
-	objectSpaceLightPosition9.z=lightposition9[2];
-
-	
+	//MJ6
+	glPushMatrix();
+		glTranslatef(MJ6.PosicionObj.x, MJ6.PosicionObj.y+2.4f, MJ6.PosicionObj.z);
+		glRotatef(MJ6.AngObj, 0.0f, 1.0f, 0.0f);
+		glScalef(MJ6.escalaX,MJ6.escalaY,MJ6.escalaZ);
+		DibujaMJ6();
+	glPopMatrix();
 	//contornos
 	glDisable(GL_LIGHTING);
 	glEnable(GL_CULL_FACE);
@@ -4083,6 +3759,13 @@ int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la
 		glScalef(1.4f,1.4f,1.4f);
 		DibujaEscena();
 	glPopMatrix();
+	
+	// Dibujo de MJs
+	glPushMatrix();
+		DibujaMJ();
+		//glTranslatef(40.0f, 10.0f,-35.0f);
+		DibujaEnemigos();
+	glPopMatrix();
 
 	// Se desactiva la máscara de color para renderizar la escena en negro
 	glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);
@@ -4097,7 +3780,7 @@ int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la
 	glStencilFunc(GL_ALWAYS, 0, 0);
 
 	//En este punto se aplica el depth pass (z-pass) o depth fail (z-fail)
-	DibujaSombraMJ();
+	//DibujaSombraPersonaje();
 			
 	// Se habilitan de nuevo los buffers de profundidad y color.
 	glDepthFunc(GL_LEQUAL);
@@ -4121,15 +3804,15 @@ int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la
 		DibujaEscena();
 	glPopMatrix();
 
-	// Se desactiva la prueba de profundidad y del buffer stencil ya que no se utilizarán mas.
-	glDisable(GL_STENCIL_TEST);
-
 	// Dibujo de MJs
 	glPushMatrix();
 		DibujaMJ();
-		//glTranslatef(40.0f, 10.0f,-35.0f);
+//		glTranslatef(40.0f, 10.0f,-35.0f);
 		DibujaEnemigos();
 	glPopMatrix();
+
+	// Se desactiva la prueba de profundidad y del buffer stencil ya que no se utilizarán mas.
+	glDisable(GL_STENCIL_TEST);
 		
 	DibujaLuz(lightPosition);
 	DibujaTextos();
@@ -4138,7 +3821,7 @@ int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la
 	if(displayVolume == true)
 	{
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);     //Para que muestre el volumen en alambrado
-		DibujaVolumendeSombra();
+		//DibujaVolumendeSombra();
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);     //Volvemos al modo sólido de nuevo
 	}
 

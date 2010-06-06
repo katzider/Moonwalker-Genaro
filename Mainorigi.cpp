@@ -32,13 +32,16 @@ boundingplane plano[maxPlanos];
 boundingsphere esfera[maxPersonajes];
 
 // variables que usaremos para la camara
-float CamPos[4][6] = { 
+int CamPos[4][6] = { 
 	{ 190.0f, 90.0f, 10.0f, 180.0f, 6.5f, -60.0f }, 
 	{ 45.0f, 90.0f, 10.0f, 55.0f, 6.5f, -60.0f }, 
 	{ 15.0f, 90.0f, -56.0f, -50.0f, 6.5f, -56.0f }, 
 	{ 35.0f, 90.0f, 75.0f, -60.0f, 6.5f, 80.0f }, 
 };
-
+int CamDiff[4][6] = 
+{
+	{ 45.0f / 190.0f / 20.0f }
+};
 int pisoId = 0;
 
 // Variable de acceso a la estructura de parametros
@@ -271,30 +274,20 @@ int tipoAnim=1; //Indicador del tipo de animación
 
 CMultitexturas Multitext;
 
-// Modelos enemigos y chango
+// Modelo de Bob
 GLuint modelo1;
-GLuint modelo1out;
 GLuint ene1;
-GLuint ene1out;
 GLuint noMJ6;
-GLuint noMJ6out;
 GLuint ene2;
-GLuint ene2out;
 GLuint ene3a;
-GLuint ene3aout;
 GLuint ene3b;
-GLuint ene3bout;
 GLuint cha;
-GLuint chaout; 
 
 // las listas savage
 GLuint enemigo8L;
-GLuint enemigo8Lout;
 
 // Declara enteros para los modelos de Aru
 GLuint modelo1aru;
-GLuint modelo1aruout;
-
 
 //Constantes de iluminación y materiales
 GLfloat LightPos[] = { 0.0f, 20.0f, 25.0f, 1.0f};		// Posición de la luz
@@ -327,6 +320,17 @@ CVector objectSpaceLightPosition7;
 CVector objectSpaceLightPosition8;
 CVector objectSpaceLightPosition9;
 
+//Posición de la luz para el espacio de objeto de los modelos de Aru
+CVector objectSpaceLightPosition1aru;
+CVector objectSpaceLightPosition2aru;
+CVector objectSpaceLightPosition3aru;
+CVector objectSpaceLightPosition4aru;
+CVector objectSpaceLightPosition5aru;
+CVector objectSpaceLightPosition6aru;
+CVector objectSpaceLightPosition7aru;
+CVector objectSpaceLightPosition8aru;
+CVector objectSpaceLightPosition9aru;
+
 //Variables para el cálculo de transformaciones inversas para las sombras
 typedef float GLvector4f[4];
 typedef float GLmatrix16f[16];
@@ -340,19 +344,6 @@ static int FPS = 0;
 bool  framerate_limit = true;
 
 int	  adjust=2;											// Speed Adjustment For Really Slow Video Cards
-
-//Variables del spline
-int running;
-int trayectoria;
-int esperar;
-
-float idxtp, dtidx;
-int ptsXtramo;
-int aw, ah;
-
-int AuxT;
-
-typedef GLfloat TPoint[3];
 
 struct			 										// Create A Structure For The Timer Information
 {
@@ -437,90 +428,6 @@ void VMatMult(GLmatrix16f M, GLvector4f v)
 	v[2]=res[2];
 	v[3]=res[3];
 }
-
-struct spline {
-	TPoint *ctrlpoints;
-	int	    tpc;
-	int	    drawp;
-	int	    prec;
-};
-
-spline helspline;
-spline camspline;
-TPoint target;
-
-TPoint helsplinepoints[] = {
-	{ 181.5f, 20.0f, -67.0f},
-	{ 181.5f, 20.0f, -67.0f},
-	{ 150.0f, 20.0f, -41.0f},
-	{ 130.0f, 20.0f, -53.0f},
-	{ 130.0f, 20.0f, -81.0f},
-	{ 150.0f, 20.0f, -93.0f},
-	{ 181.5f, 20.0f, -67.0f},
-	{ 211.0f, 20.0f, -93.0f},
-	{ 231.0f, 20.0f, -81.0f},
-	{ 231.0f, 20.0f, -53.0f},
-	{ 211.0f, 20.0f, -41.0f},
-	{ 181.5f, 20.0f, -67.0f},
-	{ 181.5f, 20.0f, -67.0f},
-};
-
-TPoint camsplinepoints[] = {
-	{   0.0f, 40.0f,   0.0f},
-	{   1.5f, 40.0f,  -5.8f},
-	{   5.8f, 40.0f,  -2.4f},
-	{   2.4f, 40.0f,   0.5f},
-	{  -3.9f, 40.0f,  -2.0f},
-	{   0.8f, 40.0f,  -5.0f},
-	{   4.5f, 40.0f,  -8.8f},
-	{   8.2f, 40.0f,  -4.4f},
-	{   3.6f, 40.0f, -14.5f},
-	{  -0.5f, 40.0f, -10.0f},
-	{   5.0f, 40.0f, -20.0f},
-	{  12.5f, 40.0f, -15.8f},
-	{   7.8f, 40.0f, -26.4f},
-	{   9.7f, 40.0f, -19.5f},
-	{  13.9f, 40.0f, -32.5f},
-	{  15.0f, 40.0f, -35.0f},
-};
-
-#define totalCP  (sizeof(helsplinepoints)/sizeof(TPoint))
-#define totalCP1 (sizeof(camsplinepoints)/sizeof(TPoint))
-
-void spline_init( spline &sp, TPoint * ctrl, int tot, int res )
-{
-	sp.ctrlpoints = ctrl;
-	sp.prec = res;
-	sp.tpc = tot;
-	sp.drawp = (tot-3)*res;
-}
-
-void spline_point( spline &sp, int indice,  TPoint P)
-{
-    int i, j;
-	GLfloat t, t3, t2, c1, c2, c3, c4, _1_t;
-	GLfloat * Pj3, * Pj2, * Pj1, * Pj0;
-
-    indice = indice % sp.drawp;
-	j = indice / sp.prec + 3;
-	i = indice % sp.prec;
-	Pj3=sp.ctrlpoints[j-3];
-	Pj2=sp.ctrlpoints[j-2];
-	Pj1=sp.ctrlpoints[j-1];
-	Pj0=sp.ctrlpoints[j-0];
-	t = i/(double)sp.prec;
-	t2 = t*t; 
-	t3 = t2*t;
-	_1_t = 1-t;
-	c1 = (_1_t*_1_t*_1_t) / 6;
-	c2 = (3*t3-6*t2+4) / 6;
-	c3 = (-3*t3+3*t2+3*t+1) / 6;
-	c4 = t3 / 6;
-	P[0] = c1* Pj3[0] + c2*Pj2[0] + c3*Pj1[0] + c4*Pj0[0];
-	P[1] = c1* Pj3[1] + c2*Pj2[1] + c3*Pj1[1] + c4*Pj0[1];
-	P[2] = c1* Pj3[2] + c2*Pj2[2] + c3*Pj1[2] + c4*Pj0[2];
-}
-
 
 GLvoid ReSizeGLScene(GLsizei width, GLsizei height)		// Redimensiona e inicializa la ventana
 {
@@ -794,28 +701,12 @@ void CreaListas()
 	noMJ6=glGenLists(10);
 	//Ene3a
 	ene3a=glGenLists(5);
-	//Ene3b
+	//Ene3a
 	ene3b=glGenLists(5);
 	//chango
 	cha=glGenLists(5);
 	// en crea listas savage
 	enemigo8L=glGenLists(3);
-
-	//Ene1 contorno
-	ene1out=glGenLists(10);
-	//Ene2 contorno
-	ene2out=glGenLists(3);
-	//MJ6  contorno
-	noMJ6out=glGenLists(10);
-	//Ene3a  contorno
-	ene3aout=glGenLists(5);
-	//Ene3b contorno	
-	ene3bout=glGenLists(5);
-	//chango contorno
-	chaout=glGenLists(5);
-	// en crea listas savage contorno
-	enemigo8Lout=glGenLists(3);
-
 	glNewList(enemigo8L+0,GL_COMPILE);
 		g_Load3ds.Render3DSFile(&g_3DModel1g, textureModel1g, 1);
 	glEndList();
@@ -828,23 +719,8 @@ void CreaListas()
 		g_Load3ds.Render3DSFile(&g_3DModel3g, textureModel3g, 1);
 	glEndList();
 
-
-	glNewList(enemigo8Lout+0,GL_COMPILE);
-		g_Load3ds.Render3DSContour(&g_3DModel1g);
-	glEndList();
-
-	glNewList(enemigo8Lout+1,GL_COMPILE);
-		g_Load3ds.Render3DSContour(&g_3DModel2g);
-	glEndList();
-
-	glNewList(enemigo8Lout+2,GL_COMPILE);
-		g_Load3ds.Render3DSContour(&g_3DModel3g);
-	glEndList();
-
-
 	// Crea listas para Aru
 	modelo1aru = glGenLists(9);
-	modelo1aruout = glGenLists(9);
 
 	glNewList(modelo1aru+0,GL_COMPILE);
 		g_Load3ds.Render3DSFile(&g_3DModel1aru, textureModel1aru, 1);
@@ -881,44 +757,6 @@ void CreaListas()
 	glNewList(modelo1aru+8,GL_COMPILE);
 		g_Load3ds.Render3DSFile(&g_3DModel9aru, textureModel1aru, 1);
 	glEndList();
-
-
-	glNewList(modelo1aruout+0,GL_COMPILE);
-		g_Load3ds.Render3DSContour(&g_3DModel1aru);
-	glEndList();
-
-	glNewList(modelo1aruout+1,GL_COMPILE);
-		g_Load3ds.Render3DSContour(&g_3DModel2aru);
-	glEndList();
-
-	glNewList(modelo1aruout+2,GL_COMPILE);
-		g_Load3ds.Render3DSContour(&g_3DModel3aru);
-	glEndList();
-
-	glNewList(modelo1aruout+3,GL_COMPILE);
-		g_Load3ds.Render3DSContour(&g_3DModel4aru);
-	glEndList();
-
-	glNewList(modelo1aruout+4,GL_COMPILE);
-		g_Load3ds.Render3DSContour(&g_3DModel5aru);
-	glEndList();
-
-	glNewList(modelo1aruout+5,GL_COMPILE);
-		g_Load3ds.Render3DSContour(&g_3DModel6aru);
-	glEndList();
-
-	glNewList(modelo1aruout+6,GL_COMPILE);
-		g_Load3ds.Render3DSContour(&g_3DModel7aru);
-	glEndList();
-
-	glNewList(modelo1aruout+7,GL_COMPILE);
-		g_Load3ds.Render3DSContour(&g_3DModel8aru);
-	glEndList();
-
-	glNewList(modelo1aruout+8,GL_COMPILE);
-		g_Load3ds.Render3DSContour(&g_3DModel9aru);
-	glEndList();
-
 	//Ene1
 	glNewList(ene1+0,GL_COMPILE);
 		g_Load3ds.Render3DSFile(&g_3DModel1d, textureModel1d, 1);
@@ -958,47 +796,6 @@ void CreaListas()
 
 	glNewList(ene1+9,GL_COMPILE);
 		g_Load3ds.Render3DSFile(&g_3DModel10d, textureModel1d, 1);
-	glEndList();
-
-
-	glNewList(ene1out+0,GL_COMPILE);
-		g_Load3ds.Render3DSContour(&g_3DModel1d);
-	glEndList();
-
-	glNewList(ene1out+1,GL_COMPILE);
-		g_Load3ds.Render3DSContour(&g_3DModel2d);
-	glEndList();
-
-	glNewList(ene1out+2,GL_COMPILE);
-		g_Load3ds.Render3DSContour(&g_3DModel3d);
-	glEndList();
-
-	glNewList(ene1out+3,GL_COMPILE);
-		g_Load3ds.Render3DSContour(&g_3DModel4d);
-	glEndList();
-
-	glNewList(ene1out+4,GL_COMPILE);
-		g_Load3ds.Render3DSContour(&g_3DModel5d);
-	glEndList();
-
-	glNewList(ene1out+5,GL_COMPILE);
-		g_Load3ds.Render3DSContour(&g_3DModel6d);
-	glEndList();
-
-	glNewList(ene1out+6,GL_COMPILE);
-		g_Load3ds.Render3DSContour(&g_3DModel7d);
-	glEndList();
-
-	glNewList(ene1out+7,GL_COMPILE);
-		g_Load3ds.Render3DSContour(&g_3DModel8d);
-	glEndList();
-
-	glNewList(ene1out+8,GL_COMPILE);
-		g_Load3ds.Render3DSContour(&g_3DModel9d);
-	glEndList();
-
-	glNewList(ene1out+9,GL_COMPILE);
-		g_Load3ds.Render3DSContour(&g_3DModel10d);
 	glEndList();
 
 	//MJ6
@@ -1042,48 +839,6 @@ void CreaListas()
 		g_Load3ds.Render3DSFile(&g_3DModel10f, textureModel1f, 1);
 	glEndList();
 
-
-	
-	glNewList(noMJ6out+0,GL_COMPILE);
-		g_Load3ds.Render3DSContour(&g_3DModel1f);
-	glEndList();
-
-	glNewList(noMJ6out+1,GL_COMPILE);
-		g_Load3ds.Render3DSContour(&g_3DModel2f);
-	glEndList();
-
-	glNewList(noMJ6out+2,GL_COMPILE);
-		g_Load3ds.Render3DSContour(&g_3DModel3f);
-	glEndList();
-
-	glNewList(noMJ6out+3,GL_COMPILE);
-		g_Load3ds.Render3DSContour(&g_3DModel4f);
-	glEndList();
-
-	glNewList(noMJ6out+4,GL_COMPILE);
-		g_Load3ds.Render3DSContour(&g_3DModel5f);
-	glEndList();
-
-	glNewList(noMJ6out+5,GL_COMPILE);
-		g_Load3ds.Render3DSContour(&g_3DModel6f);
-	glEndList();
-
-	glNewList(noMJ6out+6,GL_COMPILE);
-		g_Load3ds.Render3DSContour(&g_3DModel7f);
-	glEndList();
-
-	glNewList(noMJ6out+7,GL_COMPILE);
-		g_Load3ds.Render3DSContour(&g_3DModel8f);
-	glEndList();
-
-	glNewList(noMJ6out+8,GL_COMPILE);
-		g_Load3ds.Render3DSContour(&g_3DModel9f);
-	glEndList();
-
-	glNewList(noMJ6out+9,GL_COMPILE);
-		g_Load3ds.Render3DSContour(&g_3DModel10f);
-	glEndList();
-
 	//Ene3a
 	glNewList(ene3a+0,GL_COMPILE);
 		g_Load3ds.Render3DSFile(&g_3DModel1h, textureModel1h, 1);
@@ -1103,27 +858,6 @@ void CreaListas()
 
 	glNewList(ene3a+4,GL_COMPILE);
 		g_Load3ds.Render3DSFile(&g_3DModel5h, textureModel5h, 1);
-	glEndList();
-
-
-	glNewList(ene3aout+0,GL_COMPILE);
-		g_Load3ds.Render3DSContour(&g_3DModel1h);
-	glEndList();
-
-	glNewList(ene3aout+1,GL_COMPILE);
-		g_Load3ds.Render3DSContour(&g_3DModel2h);
-	glEndList();
-
-	glNewList(ene3aout+2,GL_COMPILE);
-		g_Load3ds.Render3DSContour(&g_3DModel3h);
-	glEndList();
-
-	glNewList(ene3aout+3,GL_COMPILE);
-		g_Load3ds.Render3DSContour(&g_3DModel4h);
-	glEndList();
-
-	glNewList(ene3aout+4,GL_COMPILE);
-		g_Load3ds.Render3DSContour(&g_3DModel5h);
 	glEndList();
 
 	//Ene3b
@@ -1147,27 +881,6 @@ void CreaListas()
 		g_Load3ds.Render3DSFile(&g_3DModel5i, textureModel5i, 1);
 	glEndList();
 
-
-	glNewList(ene3bout+0,GL_COMPILE);
-		g_Load3ds.Render3DSContour(&g_3DModel1i);
-	glEndList();
-
-	glNewList(ene3bout+1,GL_COMPILE);
-		g_Load3ds.Render3DSContour(&g_3DModel2i);
-	glEndList();
-
-	glNewList(ene3bout+2,GL_COMPILE);
-		g_Load3ds.Render3DSContour(&g_3DModel3i);
-	glEndList();
-
-	glNewList(ene3bout+3,GL_COMPILE);
-		g_Load3ds.Render3DSContour(&g_3DModel4i);
-	glEndList();
-
-	glNewList(ene3bout+4,GL_COMPILE);
-		g_Load3ds.Render3DSContour(&g_3DModel5i);
-	glEndList();
-
 	//chango
 	glNewList(cha+0,GL_COMPILE);
 		g_Load3ds.Render3DSFile(&g_3DModel1j, textureModel1j, 1);
@@ -1189,28 +902,6 @@ void CreaListas()
 		g_Load3ds.Render3DSFile(&g_3DModel5j, textureModel5j, 1);
 	glEndList();
 
-
-	glNewList(chaout+0,GL_COMPILE);
-		g_Load3ds.Render3DSContour(&g_3DModel1j);
-	glEndList();
-
-	glNewList(chaout+1,GL_COMPILE);
-		g_Load3ds.Render3DSContour(&g_3DModel2j);
-	glEndList();
-
-	glNewList(chaout+2,GL_COMPILE);
-		g_Load3ds.Render3DSContour(&g_3DModel3j);
-	glEndList();
-
-	glNewList(chaout+3,GL_COMPILE);
-		g_Load3ds.Render3DSContour(&g_3DModel4j);
-	glEndList();
-
-	glNewList(chaout+4,GL_COMPILE);
-		g_Load3ds.Render3DSContour(&g_3DModel5j);
-	glEndList();
-
-
 	//Ene2
 	glNewList(ene2+0,GL_COMPILE);
 		g_Load3ds.Render3DSFile(&g_3DModel1k, textureModel1k, 1);
@@ -1224,21 +915,7 @@ void CreaListas()
 		g_Load3ds.Render3DSFile(&g_3DModel3k, textureModel3k, 1);
 	glEndList();
 
-
-	glNewList(ene2out+0,GL_COMPILE);
-		g_Load3ds.Render3DSContour(&g_3DModel1k);
-	glEndList();
-
-	glNewList(ene2out+1,GL_COMPILE);
-		g_Load3ds.Render3DSContour(&g_3DModel2k);
-	glEndList();
-
-	glNewList(ene2out+2,GL_COMPILE);
-		g_Load3ds.Render3DSContour(&g_3DModel3k);
-	glEndList();
-
 }
-
 
 void DestruyeListas()
 {
@@ -1254,19 +931,7 @@ void DestruyeListas()
 	glDeleteLists(ene3b,5);
 	glDeleteLists(cha,5);
 
-	// Borra listas de Aru
-	glDeleteLists(modelo1aruout,9);
-	// Borra listas fahl
-	glDeleteLists(ene1out,10);
-	glDeleteLists(ene2out,3);
-	glDeleteLists(noMJ6out,10);
-
-	glDeleteLists(ene3aout,5);
-	glDeleteLists(ene3bout,5);
-	glDeleteLists(chaout,5);
-
 }
-
 
 void InicializaParametrosdeControl()
 {
@@ -2046,7 +1711,7 @@ void ActualizaObjetosDinamicosColision()
 
 
 	esfera[1].Pos=CVector(enem1.PosicionObj.x, enem1.PosicionObj.y+2.5f, enem1.PosicionObj.z);
-	esfera[2].Pos=CVector(target[0], target[1] + 2.5, target[2]);
+	esfera[2].Pos=CVector(enem2.PosicionObj.x, enem2.PosicionObj.y+2.5f, enem2.PosicionObj.z);
 	esfera[6].Pos=CVector(MJ6.PosicionObj.x, MJ6.PosicionObj.y+2.5f, MJ6.PosicionObj.z);
 	esfera[9].Pos=CVector(chang.PosicionObj.x, chang.PosicionObj.y+2.0f, chang.PosicionObj.z);
 	esfera[8].Pos=CVector(enem3b.PosicionObj.x, enem3b.PosicionObj.y+2.0f, enem3b.PosicionObj.z);
@@ -2367,18 +2032,6 @@ int InitGL(GLvoid)										// Aqui se configuran los parametros iniciales de Op
 
 	//CargaTexturas();
 
-	// para la Spline de la trayectoria automática
-	ptsXtramo = 20;
-	running = 1;
-	trayectoria = 1;
-	esperar=0;
-
-	spline_init(helspline, helsplinepoints, totalCP, ptsXtramo );
-	spline_init(camspline, camsplinepoints, totalCP1, ptsXtramo );
-
-	idxtp = 2.0f;
-	dtidx = 0.35f;
-
 	CargaModelos();
 	CreaListas();
 	IniSombraVolumen();
@@ -2609,24 +2262,6 @@ void dibujaEnemigo8()
 	glPopMatrix();
 }
 
-void dibujaEnemigo8out()
-{
-	static float anglef=0.0f;
-	anglef+=4.0f;
-
-	glCallList(enemigo8Lout);
-
-	glPushMatrix();	
-		glRotatef(anglef, 0.0f, 1.0f, 0.0f);
-		glCallList(enemigo8Lout+1);
-	glPopMatrix();
-
-	glPushMatrix();
-		glRotatef(anglef, 1.0f, 0.0f, 0.0f);
-		glCallList(enemigo8Lout+2);
-	glPopMatrix();
-}
-
 void DibujaEnemigo1()
 {
 	glTranslatef(enem1modelo.Xtor, enem1modelo.Ytor, enem1modelo.Ztor);
@@ -2698,77 +2333,6 @@ void DibujaEnemigo1()
 	glPopMatrix();
 }
 
-void DibujaEnemigo1out()
-{
-	glTranslatef(enem1modelo.Xtor, enem1modelo.Ytor, enem1modelo.Ztor);
-	glRotatef(enem1modelo.Angt2, 0.0f, 1.0f, 0.0f);
-	glRotatef(enem1modelo.Angt1, 1.0f, 0.0f, 0.0f);
-			
-	//Torso
-	glCallList(ene1out+0);
-	
-	//Cabeza
-	glPushMatrix();
-		glRotatef(enem1modelo.Angc1, 0.0f, 1.0f, 0.0f);
-		glCallList(ene1out+1);
-	glPopMatrix();
-
-	//Brazo derecho
-	glPushMatrix();
-		//glTranslatef(-2.8f, 1.1f, 0.0f);
-		glRotatef(enem1modelo.Angbd2, 0.0f, 1.0f, 0.0f);
-		glRotatef(enem1modelo.Angbd1, 1.0f, 0.0f, 0.0f);
-		glCallList(ene1out+2);
-	glPopMatrix();
-
-	//Brazo izquierdo
-	glPushMatrix();
-		//glTranslatef(-2.8f, 1.1f, 0.0f);
-		glRotatef(enem1modelo.Angbd2, 0.0f, 1.0f, 0.0f);
-		glRotatef(enem1modelo.Angbd1, 1.0f, 0.0f, 0.0f);
-		glCallList(ene1out+3);
-	glPopMatrix();
-	
-	//Pierna derecha
-	glPushMatrix();
-		//glTranslatef(-1.2f, -1.3f ,0.0f);
-		glRotatef(enem1modelo.Angpder, 1.0f, 0.0f, 0.0f);
-		glCallList(ene1out+4);
-		
-		//Pierna derecha_b
-		glPushMatrix();
-			//glTranslatef(0.0f, -1.25f , 0.0f);
-			glRotatef(enem1modelo.Angpderb, 1.0f, 0.0f, 0.0f);
-			glCallList(ene1out+5);
-			
-			//Pie derecho
-			glPushMatrix();
-				glRotatef(enem1modelo.Angpd,1.0f, 0.0f, 0.0f);
-				glCallList(ene1out+6);
-			glPopMatrix();
-		glPopMatrix();
-	glPopMatrix();
-
-	//Pierna izquierda
-	glPushMatrix();
-		//glTranslatef(1.2f, -1.3f ,0.0f);
-		glRotatef(enem1modelo.Angpizq, 1.0f, 0.0f, 0.0f);
-		glCallList(ene1out+7);
-
-		//Pierna izquierda_b
-		glPushMatrix();
-			//glTranslatef(0.0f, -1.25f , 0.0f);
-			glRotatef(enem1modelo.Angpizqb, 1.0f, 0.0f, 0.0f);
-			glCallList(ene1out+8);
-			//Pie derecho
-			glPushMatrix();
-				glRotatef(enem1modelo.Angpd,1.0f, 0.0f, 0.0f);
-				glCallList(ene1out+9);
-			glPopMatrix();
-		glPopMatrix();
-	glPopMatrix();
-}
-
 void DibujaEnemigo2()
 {
 	glTranslatef(enem2modelo.Xtor, enem2modelo.Ytor, enem2modelo.Ztor);
@@ -2781,20 +2345,6 @@ void DibujaEnemigo2()
 	glCallList(ene2+1);
 	//Piloto
 	glCallList(ene2+2);
-}
-
-void DibujaEnemigo2out()
-{
-	glTranslatef(enem2modelo.Xtor, enem2modelo.Ytor, enem2modelo.Ztor);
-	glRotatef(enem2modelo.Angt2, 0.0f, 1.0f, 0.0f);
-	glRotatef(enem2modelo.Angt1, 1.0f, 0.0f, 0.0f);
-
-	//Nave
-	glCallList(ene2out+0);
-	//Bomba
-	glCallList(ene2out+1);
-	//Piloto
-	glCallList(ene2out+2);
 }
 
 void DibujaMJ6()
@@ -2871,80 +2421,6 @@ void DibujaMJ6()
 	glPopMatrix();
 }
 
-void DibujaMJ6out()
-{
-	glTranslatef(MJ6modelo.Xtor, MJ6modelo.Ytor, MJ6modelo.Ztor);
-	glRotatef(MJ6modelo.Angt2, 0.0f, 1.0f, 0.0f);
-	glRotatef(MJ6modelo.Angt1, 1.0f, 0.0f, 0.0f);
-			
-	//Torso
-	glCallList(noMJ6out+0);
-	
-	//Cabeza
-	glPushMatrix();
-		glRotatef(MJ6modelo.Angc1, 0.0f, 1.0f, 0.0f);
-		glCallList(noMJ6out+1);
-	glPopMatrix();
-
-	//Brazo derecho
-	glPushMatrix();
-		//glTranslatef(-2.8f, 1.1f, 0.0f);
-		glRotatef(MJ6modelo.Angbd2, 0.0f, 1.0f, 0.0f);
-		glRotatef(MJ6modelo.Angbd1, 1.0f, 0.0f, 0.0f);
-		glCallList(noMJ6out+2);
-
-		//Brazo derecho_b
-		glPushMatrix();
-			//glTranslatef(0.0f, -1.25f , 0.0f);
-			glRotatef(MJ6modelo.Angpderb, 1.0f, 0.0f, 0.0f);
-			glCallList(noMJ6out+3);
-		glPopMatrix();
-	glPopMatrix();
-
-	//Brazo izquierdo
-	glPushMatrix();
-		//glTranslatef(-2.8f, 1.1f, 0.0f);
-		glRotatef(MJ6modelo.Angbd2, 0.0f, 1.0f, 0.0f);
-		glRotatef(MJ6modelo.Angbd1, 1.0f, 0.0f, 0.0f);
-		glCallList(noMJ6out+4);
-
-		//Brazo izquierdo_b
-		glPushMatrix();
-			//glTranslatef(0.0f, -1.25f , 0.0f);
-			glRotatef(MJ6modelo.Angpderb, 1.0f, 0.0f, 0.0f);
-			glCallList(noMJ6out+5);
-		glPopMatrix();
-	glPopMatrix();
-	
-	//Pierna derecha
-	glPushMatrix();
-		//glTranslatef(-1.2f, -1.3f ,0.0f);
-		glRotatef(MJ6modelo.Angpder, 1.0f, 0.0f, 0.0f);
-		glCallList(noMJ6out+6);
-		
-		//Pierna derecha_b
-		glPushMatrix();
-			//glTranslatef(0.0f, -1.25f , 0.0f);
-			glRotatef(MJ6modelo.Angpderb, 1.0f, 0.0f, 0.0f);
-			glCallList(noMJ6out+7);
-		glPopMatrix();
-	glPopMatrix();
-
-	//Pierna izquierda
-	glPushMatrix();
-		//glTranslatef(1.2f, -1.3f ,0.0f);
-		glRotatef(MJ6modelo.Angpizq, 1.0f, 0.0f, 0.0f);
-		glCallList(noMJ6out+8);
-
-		//Pierna izquierda_b
-		glPushMatrix();
-			//glTranslatef(0.0f, -1.25f , 0.0f);
-			glRotatef(MJ6modelo.Angpizqb, 1.0f, 0.0f, 0.0f);
-			glCallList(noMJ6out+9);
-		glPopMatrix();
-	glPopMatrix();
-}
-
 void DibujaEnemigo3a()
 {
 	glTranslatef(enem3amodelo.Xtor, enem3amodelo.Ytor, enem3amodelo.Ztor);
@@ -2986,48 +2462,6 @@ void DibujaEnemigo3a()
 
 }
 
-void DibujaEnemigo3aout()
-{
-	glTranslatef(enem3amodelo.Xtor, enem3amodelo.Ytor, enem3amodelo.Ztor);
-	glRotatef(enem3amodelo.Angt2, 0.0f, 1.0f, 0.0f);
-	glRotatef(enem3amodelo.Angt1, 1.0f, 0.0f, 0.0f);
-			
-	//Torso
-	glCallList(ene3aout+0);
-	
-	//Brazo derecho
-	glPushMatrix();
-		//glTranslatef(-2.8f, 1.1f, 0.0f);
-		glRotatef(enem3amodelo.Angbd2, 0.0f, 1.0f, 0.0f);
-		glRotatef(enem3amodelo.Angbd1, 1.0f, 0.0f, 0.0f);
-		glCallList(ene3aout+1);
-	glPopMatrix();
-
-	//Brazo izquierdo
-	glPushMatrix();
-		//glTranslatef(-2.8f, 1.1f, 0.0f);
-		glRotatef(enem3amodelo.Angbd2, 0.0f, 1.0f, 0.0f);
-		glRotatef(enem3amodelo.Angbd1, 1.0f, 0.0f, 0.0f);
-		glCallList(ene3aout+2);
-	glPopMatrix();
-	
-	//Pierna derecha
-	glPushMatrix();
-		//glTranslatef(-1.2f, -1.3f ,0.0f);
-		glRotatef(enem3amodelo.Angpder, 1.0f, 0.0f, 0.0f);
-		glCallList(ene3aout+3);
-	glPopMatrix();
-
-	//Pierna izquierda
-	glPushMatrix();
-		//glTranslatef(1.2f, -1.3f ,0.0f);
-		glRotatef(enem3amodelo.Angpizq, 1.0f, 0.0f, 0.0f);
-		glCallList(ene3aout+4);
-	glPopMatrix();
-
-}
-
-
 void DibujaEnemigo3b()
 {
 	glTranslatef(enem3bmodelo.Xtor, enem3bmodelo.Ytor, enem3bmodelo.Ztor);
@@ -3067,47 +2501,6 @@ void DibujaEnemigo3b()
 		glCallList(ene3b+4);
 	glPopMatrix();
 }
-
-void DibujaEnemigo3bout()
-{
-	glTranslatef(enem3bmodelo.Xtor, enem3bmodelo.Ytor, enem3bmodelo.Ztor);
-	glRotatef(enem3bmodelo.Angt2, 0.0f, 1.0f, 0.0f);
-	glRotatef(enem3bmodelo.Angt1, 1.0f, 0.0f, 0.0f);
-			
-	//Torso
-	glCallList(ene3bout+0);
-	
-	//Brazo derecho
-	glPushMatrix();
-		//glTranslatef(-2.8f, 1.1f, 0.0f);
-		glRotatef(enem3bmodelo.Angbd2, 0.0f, 1.0f, 0.0f);
-		glRotatef(enem3bmodelo.Angbd1, 1.0f, 0.0f, 0.0f);
-		glCallList(ene3bout+1);
-	glPopMatrix();
-
-	//Brazo izquierdo
-	glPushMatrix();
-		//glTranslatef(-2.8f, 1.1f, 0.0f);
-		glRotatef(enem3bmodelo.Angbd2, 0.0f, 1.0f, 0.0f);
-		glRotatef(enem3bmodelo.Angbd1, 1.0f, 0.0f, 0.0f);
-		glCallList(ene3bout+2);
-	glPopMatrix();
-	
-	//Pierna derecha
-	glPushMatrix();
-		//glTranslatef(-1.2f, -1.3f ,0.0f);
-		glRotatef(enem3bmodelo.Angpder, 1.0f, 0.0f, 0.0f);
-		glCallList(ene3bout+3);
-	glPopMatrix();
-
-	//Pierna izquierda
-	glPushMatrix();
-		//glTranslatef(1.2f, -1.3f ,0.0f);
-		glRotatef(enem3bmodelo.Angpizq, 1.0f, 0.0f, 0.0f);
-		glCallList(ene3bout+4);
-	glPopMatrix();
-}
-
 
 
 void DibujaChango()
@@ -3149,48 +2542,6 @@ void DibujaChango()
 		glCallList(cha+4);
 	glPopMatrix();
 }
-
-
-void DibujaChangoout()
-{
-	glTranslatef(changmodelo.Xtor, changmodelo.Ytor, changmodelo.Ztor);
-	glRotatef(changmodelo.Angt2, 0.0f, 1.0f, 0.0f);
-	glRotatef(changmodelo.Angt1, 1.0f, 0.0f, 0.0f);
-			
-	//Torso
-	glCallList(chaout+0);
-	
-	//Brazo derecho
-	glPushMatrix();
-		glTranslatef(0.0f, 0.0f, 2.8f);
-		glRotatef(changmodelo.Angbd2, 0.0f, 1.0f, 0.0f);
-		glRotatef(changmodelo.Angbd1, 1.0f, 0.0f, 0.0f);
-		glCallList(chaout+1);
-	glPopMatrix();
-
-	//Brazo izquierdo
-	glPushMatrix();
-		glTranslatef(0.0f, 0.0f, 2.8f);
-		glRotatef(changmodelo.Angbd2, 0.0f, 1.0f, 0.0f);
-		glRotatef(changmodelo.Angbd1, 1.0f, 0.0f, 0.0f);
-		glCallList(chaout+2);
-	glPopMatrix();
-	
-	//Pierna derecha
-	glPushMatrix();
-		//glTranslatef(-1.2f, -1.3f ,0.0f);
-		glRotatef(changmodelo.Angpder, 1.0f, 0.0f, 0.0f);
-		glCallList(chaout+3);
-	glPopMatrix();
-
-	//Pierna izquierda
-	glPushMatrix();
-		//glTranslatef(1.2f, -1.3f ,0.0f);
-		glRotatef(changmodelo.Angpizq, 1.0f, 0.0f, 0.0f);
-		glCallList(chaout+4);
-	glPopMatrix();
-}
-
 
 
 
@@ -3267,237 +2618,6 @@ void DibujaPersonajeAru()
 	glPopMatrix();
 }
 
-void DibujaSombraMJ()
-{
-	glPushMatrix();
-
-		glTranslatef( player1.PosicionObj.x, player1.PosicionObj.y + 2.4f, player1.PosicionObj.z + 0.0f);
-		glRotatef(player1.AngObj, 0.0f, 1.0f, 0.0f);
-		glScalef(player1.escalaX,player1.escalaY,player1.escalaZ);
-		glTranslatef(player1modelo.Xtor, player1modelo.Ytor, player1modelo.Ztor);
-		glRotatef(player1modelo.Angt2, 0.0f, 1.0f, 0.0f);
-		glRotatef(player1modelo.Angt1, 1.0f, 0.0f, 0.0f);
-				
-		//Torso
-		objSh.calculaSombraDepthPass(&g_3DModel1aru, objectSpaceLightPosition1);
-		
-		//Pierna derecha
-		glPushMatrix();
-			glTranslatef(1.0f, 0.0f, 0.0f);
-			glRotatef(player1modelo.Angpder, 1.0f, 0.0f, 0.0f);
-			objSh.calculaSombraDepthPass(&g_3DModel2aru, objectSpaceLightPosition2);
-
-			//Pierna derecha_b
-			glPushMatrix();
-				glTranslatef(-5.2f, 0.7f , 0.0f);
-				glRotatef(player1modelo.Angpderb, 1.0f, 0.0f, 0.0f);
-				objSh.calculaSombraDepthPass(&g_3DModel3aru, objectSpaceLightPosition3);
-			glPopMatrix();
-
-		glPopMatrix();
-
-		//Pierna izquierda
-		glPushMatrix();
-			glTranslatef(0.0f, 0.0f ,0.0f);
-			glRotatef(player1modelo.Angpizq, 1.0f, 0.0f, 0.0f);
-			objSh.calculaSombraDepthPass(&g_3DModel4aru, objectSpaceLightPosition4);
-
-			//Pierna izquierda_b
-			glPushMatrix();
-				glTranslatef(-6.5f, 0.8f , 0.0f);
-				glRotatef(player1modelo.Angpizqb, 1.0f, 0.0f, 0.0f);
-				objSh.calculaSombraDepthPass(&g_3DModel5aru, objectSpaceLightPosition5);
-			glPopMatrix();
-
-		glPopMatrix();
-
-		//Brazo derecho_a
-		glPushMatrix();
-			glTranslatef(5.65f, 0.2f, 0.2f);
-			glRotatef(player1modelo.Angbd2, 0.0f, 1.0f, 0.0f);
-			glRotatef(player1modelo.Angbd1, 1.0f, 0.0f, 0.0f);
-			objSh.calculaSombraDepthPass(&g_3DModel6aru, objectSpaceLightPosition6);
-
-			//Brazo derecho_b
-			glPushMatrix();
-				glTranslatef(-4.6f, 2.0f, 0.0f);
-				glRotatef(player1modelo.Angbdb, 1.0f, 0.0f, 0.0f);
-				objSh.calculaSombraDepthPass(&g_3DModel8aru, objectSpaceLightPosition7);
-			glPopMatrix();
-
-		glPopMatrix();
-
-		//Brazo izquierdo
-		glPushMatrix();
-			glTranslatef(-1.0f, 1.5f, 0.0f);
-			glRotatef(player1modelo.Angbi2, 0.0f, 1.0f, 0.0f);
-			glRotatef(player1modelo.Angbi1, 1.0f, 0.0f, 0.0f);
-			objSh.calculaSombraDepthPass(&g_3DModel7aru, objectSpaceLightPosition8);
-
-			//Brazo izquierdo_b
-			glPushMatrix();
-				glTranslatef(-0.7f, 0.5f, 0.0f);
-				glRotatef(player1modelo.Angbib, 1.0f, 0.0f, 0.0f);
-				objSh.calculaSombraDepthPass(&g_3DModel9aru, objectSpaceLightPosition9);
-			glPopMatrix();
-		glPopMatrix();
-
-	glPopMatrix();
-		
-}
-	
-
-void DibujaPersonajeAruout()
-{
-	glTranslatef(player1modelo.Xtor, player1modelo.Ytor, player1modelo.Ztor);
-	glRotatef(player1modelo.Angt2, 0.0f, 1.0f, 0.0f);
-	glRotatef(player1modelo.Angt1, 1.0f, 0.0f, 0.0f);
-			
-	//Torso
-	glCallList(modelo1aruout+0);
-	
-	//Pierna derecha
-	glPushMatrix();
-		glTranslatef(1.0f, 0.0f, 0.0f);
-		glRotatef(player1modelo.Angpder, 1.0f, 0.0f, 0.0f);
-		glCallList(modelo1aruout+1);
-		
-		//Pierna derecha_b
-		glPushMatrix();
-			glTranslatef(-5.2f, 0.7f , 0.0f);
-			glRotatef(player1modelo.Angpderb, 1.0f, 0.0f, 0.0f);
-			glCallList(modelo1aruout+2);
-		glPopMatrix();
-
-	glPopMatrix();
-
-	//Pierna izquierda
-	glPushMatrix();
-		glTranslatef(0.0f, 0.0f ,0.0f);
-		glRotatef(player1modelo.Angpizq, 1.0f, 0.0f, 0.0f);
-		glCallList(modelo1aruout+3);
-
-		//Pierna izquierda_b
-		glPushMatrix();
-			glTranslatef(-6.5f, 0.8f , 0.0f);
-			glRotatef(player1modelo.Angpizqb, 1.0f, 0.0f, 0.0f);
-			glCallList(modelo1aruout+4);
-		glPopMatrix();
-
-	glPopMatrix();
-
-	//Brazo derecho_a
-	glPushMatrix();
-		glTranslatef(5.65f, 0.2f, 0.2f);
-		glRotatef(player1modelo.Angbd2, 0.0f, 1.0f, 0.0f);
-		glRotatef(player1modelo.Angbd1, 1.0f, 0.0f, 0.0f);
-		glCallList(modelo1aruout+5);
-
-		//Brazo derecho_b
-		glPushMatrix();
-			glTranslatef(-4.6f, 2.0f, 0.0f);
-			glRotatef(player1modelo.Angbdb, 1.0f, 0.0f, 0.0f);
-			glCallList(modelo1aruout+7);
-		glPopMatrix();
-
-	glPopMatrix();
-
-	//Brazo izquierdo
-	glPushMatrix();
-		glTranslatef(-1.0f, 1.5f, 0.0f);
-		glRotatef(player1modelo.Angbi2, 0.0f, 1.0f, 0.0f);
-		glRotatef(player1modelo.Angbi1, 1.0f, 0.0f, 0.0f);
-		glCallList(modelo1aruout+6);
-
-		//Brazo izquierdo_b
-		glPushMatrix();
-			glTranslatef(-0.7f, 0.5f, 0.0f);
-			glRotatef(player1modelo.Angbib, 1.0f, 0.0f, 0.0f);
-			glCallList(modelo1aruout+8);
-		glPopMatrix();
-
-	glPopMatrix();
-}
-
-
-void DibujaVolumendeSombra()
-{
-	glPushMatrix();
-
-		glTranslatef( player1.PosicionObj.x, player1.PosicionObj.y + 2.4f, player1.PosicionObj.z + 0.0f);
-		glRotatef(player1.AngObj, 0.0f, 1.0f, 0.0f);
-		glScalef(player1.escalaX,player1.escalaY,player1.escalaZ);
-		glTranslatef(player1modelo.Xtor, player1modelo.Ytor, player1modelo.Ztor);
-		glRotatef(player1modelo.Angt2, 0.0f, 1.0f, 0.0f);
-		glRotatef(player1modelo.Angt1, 1.0f, 0.0f, 0.0f);
-				
-		//Torso
-		objSh.DrawShadowVolume(&g_3DModel1aru, objectSpaceLightPosition1);
-		
-		//Pierna derecha
-		glPushMatrix();
-			glTranslatef(1.0f, 0.0f, 0.0f);
-			glRotatef(player1modelo.Angpder, 1.0f, 0.0f, 0.0f);
-			objSh.DrawShadowVolume(&g_3DModel2aru, objectSpaceLightPosition2);
-
-			//Pierna derecha_b
-			glPushMatrix();
-				glTranslatef(-5.2f, 0.7f , 0.0f);
-				glRotatef(player1modelo.Angpderb, 1.0f, 0.0f, 0.0f);
-				objSh.DrawShadowVolume(&g_3DModel3aru, objectSpaceLightPosition3);
-			glPopMatrix();
-
-		glPopMatrix();
-
-		//Pierna izquierda
-		glPushMatrix();
-			glTranslatef(0.0f, 0.0f ,0.0f);
-			glRotatef(player1modelo.Angpizq, 1.0f, 0.0f, 0.0f);
-			objSh.DrawShadowVolume(&g_3DModel4aru, objectSpaceLightPosition4);
-
-			//Pierna izquierda_b
-			glPushMatrix();
-				glTranslatef(-6.5f, 0.8f , 0.0f);
-				glRotatef(player1modelo.Angpizqb, 1.0f, 0.0f, 0.0f);
-				objSh.DrawShadowVolume(&g_3DModel5aru, objectSpaceLightPosition5);
-			glPopMatrix();
-
-		glPopMatrix();
-
-		//Brazo derecho_a
-		glPushMatrix();
-			glTranslatef(5.65f, 0.2f, 0.2f);
-			glRotatef(player1modelo.Angbd2, 0.0f, 1.0f, 0.0f);
-			glRotatef(player1modelo.Angbd1, 1.0f, 0.0f, 0.0f);
-			objSh.DrawShadowVolume(&g_3DModel6aru, objectSpaceLightPosition6);
-
-			//Brazo derecho_b
-			glPushMatrix();
-				glTranslatef(-4.6f, 2.0f, 0.0f);
-				glRotatef(player1modelo.Angbdb, 1.0f, 0.0f, 0.0f);
-				objSh.DrawShadowVolume(&g_3DModel8aru, objectSpaceLightPosition7);
-			glPopMatrix();
-
-		glPopMatrix();
-
-		//Brazo izquierdo
-		glPushMatrix();
-			glTranslatef(-1.0f, 1.5f, 0.0f);
-			glRotatef(player1modelo.Angbi2, 0.0f, 1.0f, 0.0f);
-			glRotatef(player1modelo.Angbi1, 1.0f, 0.0f, 0.0f);
-			objSh.DrawShadowVolume(&g_3DModel7aru, objectSpaceLightPosition8);
-
-			//Brazo izquierdo_b
-			glPushMatrix();
-				glTranslatef(-0.7f, 0.5f, 0.0f);
-				glRotatef(player1modelo.Angbib, 1.0f, 0.0f, 0.0f);
-				objSh.DrawShadowVolume(&g_3DModel9aru, objectSpaceLightPosition9);
-			glPopMatrix();
-
-		glPopMatrix();
-
-	glPopMatrix();
-}
 void DibujaEjes()
 {
 	glColor3f(1.0f,0.0f,0.0f);
@@ -3572,9 +2692,8 @@ void DibujaTextos()
 	glEnable(GL_ALPHA_TEST);
 
 	// Texto a mostrar en pantalla
-	Font.glPrint((1.0f/640.0f)*glWidth, glWidth*0.05f,glHeight*0.9f,"pisoId: %d", pisoId );
-	Font.glPrint((1.0f/640.0f)*glWidth, glWidth*0.05f,glHeight*0.85f,"PosCam %f", player1.PosicionCam.x );
-	Font.glPrint((1.0f/640.0f)*glWidth, glWidth*0.05f,glHeight*0.80f,"PosObj %f", player1.PosicionObj.x);
+	Font.glPrint((1.0f/640.0f)*glWidth, glWidth*0.05f,glHeight*0.9f,"Pos: %f,%f,%f",player1.PosicionObj.x,player1.PosicionObj.y,player1.PosicionObj.z);
+	Font.glPrint((1.0f/640.0f)*glWidth, glWidth*0.05f,glHeight*0.85f,"PosCam %f", abs( player1.PosicionCam.x - 145.0f) );
 								
 	glDisable(GL_ALPHA_TEST);
 	glDisable(GL_TEXTURE_2D);
@@ -3588,25 +2707,6 @@ void DibujaTextos()
 	glPopMatrix();										// Recupera la anterior matriz de modelo de vista
 	glEnable(GL_DEPTH_TEST);							// Activa la prueba de profundidad
 		
-}
-
-void DibujaMJ()
-{
-	// Aru
-	glPushMatrix();
-		glTranslatef( player1.PosicionObj.x, player1.PosicionObj.y + 2.4f, player1.PosicionObj.z + 0.0f);
-		glRotatef(player1.AngObj, 0.0f, 1.0f, 0.0f);
-		glScalef(player1.escalaX,player1.escalaY,player1.escalaZ);
-		DibujaPersonajeAru();
-	glPopMatrix();
-
-	//MJ6
-	glPushMatrix();
-		glTranslatef(MJ6.PosicionObj.x, MJ6.PosicionObj.y+2.4f, MJ6.PosicionObj.z);
-		glRotatef(MJ6.AngObj, 0.0f, 1.0f, 0.0f);
-		glScalef(MJ6.escalaX,MJ6.escalaY,MJ6.escalaZ);
-		DibujaMJ6();
-	glPopMatrix();
 }
 
 void ActualizaLuz()
@@ -3660,225 +2760,45 @@ void ActualizaLuz()
 
 	//Modelo 2 (Pierna derecha)
 
-	//Aquí se determina a partir de la inversa de la matriz de modelo de vista el espacio de objeto para la luz
-	lightposition2[0]=lightPosition.x;
-	lightposition2[1]=lightPosition.y;
-	lightposition2[2]=lightPosition.z;
-
-	//Se obtiene la matriz inversa de modelo de vista para el modelo 2 aplicando sus transformaciones en orden inverso 
-	//y signos opuestos para los parámetros
-	glPushMatrix();
-		glLoadIdentity();
-		glRotatef(-player1modelo.Angpder, 1.0f, 0.0f, 0.0f);
-		glRotatef(-player1modelo.Angt1, 1.0f, 0.0f, 0.0f);
-		glRotatef(-player1modelo.Angt2, 0.0f, 1.0f, 0.0f);
-		glRotatef(-player1.AngObj, 0.0f, 1.0f, 0.0f);
-		glGetFloatv(GL_MODELVIEW_MATRIX, inverseModelMatrix2);
-	glPopMatrix();
-
-	//Guarda las posiciones de la luz para el espacio de objeto del objeto de sombra 2
-	VMatMult(inverseModelMatrix2, lightposition2);
-	
-	objectSpaceLightPosition2.x=lightposition2[0];
-	objectSpaceLightPosition2.y=lightposition2[1];
-	objectSpaceLightPosition2.z=lightposition2[2];
 	
 
-	//Aquí se determina a partir de la inversa de la matriz de modelo de vista el espacio de objeto para la luz
-	lightposition3[0]=lightPosition.x;
-	lightposition3[1]=lightPosition.y;
-	lightposition3[2]=lightPosition.z;
+	//Modelo 3 (Pierna derecha_b)
 
-	//Se obtiene la matriz inversa de modelo de vista para el modelo 3 aplicando sus transformaciones en orden inverso 
-	//y signos opuestos para los parámetros
-	glPushMatrix();
-		glLoadIdentity();
-		glRotatef(-player1modelo.Angpderb, 1.0f, 0.0f, 0.0f);
-		glRotatef(-player1modelo.Angpder, 1.0f, 0.0f, 0.0f);
-		glRotatef(-player1modelo.Angt1, 1.0f, 0.0f, 0.0f);
-		glRotatef(-player1modelo.Angt2, 0.0f, 1.0f, 0.0f);
-		glRotatef(-player1.AngObj, 0.0f, 1.0f, 0.0f);
-		glGetFloatv(GL_MODELVIEW_MATRIX, inverseModelMatrix3);
-	glPopMatrix();
-
-	//Guarda las posiciones de la luz para el espacio de objeto del objeto de sombra 3
-	VMatMult(inverseModelMatrix3, lightposition3);
-	
-	objectSpaceLightPosition3.x=lightposition3[0];
-	objectSpaceLightPosition3.y=lightposition3[1];
-	objectSpaceLightPosition3.z=lightposition3[2];
 	
 
 	//Modelo 4 (Pierna izquierda)
 
-	//Aquí se determina a partir de la inversa de la matriz de modelo de vista el espacio de objeto para la luz
-	lightposition4[0]=lightPosition.x;
-	lightposition4[1]=lightPosition.y;
-	lightposition4[2]=lightPosition.z;
-
-	//Se obtiene la matriz inversa de modelo de vista para el modelo 4 aplicando sus transformaciones en orden inverso 
-	//y signos opuestos para los parámetros
-	glPushMatrix();
-		glLoadIdentity();
-		glRotatef(-player1modelo.Angpizq, 1.0f, 0.0f, 0.0f);
-		glRotatef(-player1modelo.Angt1, 1.0f, 0.0f, 0.0f);
-		glRotatef(-player1modelo.Angt2, 0.0f, 1.0f, 0.0f);
-		glRotatef(-player1.AngObj, 0.0f, 1.0f, 0.0f);
-		glGetFloatv(GL_MODELVIEW_MATRIX, inverseModelMatrix4);
-	glPopMatrix();
-
-	//Guarda las posiciones de la luz para el espacio de objeto del objeto de sombra 4
-	VMatMult(inverseModelMatrix4, lightposition4);
 	
-	objectSpaceLightPosition4.x=lightposition4[0];
-	objectSpaceLightPosition4.y=lightposition4[1];
-	objectSpaceLightPosition4.z=lightposition4[2];
 
 	//Modelo 5 (Pierna izquierda_b)
 
-	//Aquí se determina a partir de la inversa de la matriz de modelo de vista el espacio de objeto para la luz
-	lightposition5[0]=lightPosition.x;
-	lightposition5[1]=lightPosition.y;
-	lightposition5[2]=lightPosition.z;
-
-	//Se obtiene la matriz inversa de modelo de vista para el modelo 5 aplicando sus transformaciones en orden inverso 
-	//y signos opuestos para los parámetros
-	glPushMatrix();
-		glLoadIdentity();
-		glRotatef(-player1modelo.Angpizqb, 1.0f, 0.0f, 0.0f);
-		glRotatef(-player1modelo.Angpizq, 1.0f, 0.0f, 0.0f);
-		glRotatef(-player1modelo.Angt1, 1.0f, 0.0f, 0.0f);
-		glRotatef(-player1modelo.Angt2, 0.0f, 1.0f, 0.0f);
-		glRotatef(-player1.AngObj, 0.0f, 1.0f, 0.0f);
-		glGetFloatv(GL_MODELVIEW_MATRIX, inverseModelMatrix5);
-	glPopMatrix();
-
-	//Guarda las posiciones de la luz para el espacio de objeto del objeto de sombra 5
-	VMatMult(inverseModelMatrix5, lightposition5);
 	
-	objectSpaceLightPosition5.x=lightposition5[0];
-	objectSpaceLightPosition5.y=lightposition5[1];
-	objectSpaceLightPosition5.z=lightposition5[2];
 
 	//Modelo 6 (Brazo derecho_a)
 
-	//Aquí se determina a partir de la inversa de la matriz de modelo de vista el espacio de objeto para la luz
-	lightposition6[0]=lightPosition.x;
-	lightposition6[1]=lightPosition.y;
-	lightposition6[2]=lightPosition.z;
-
-	//Se obtiene la matriz inversa de modelo de vista para el modelo 6 aplicando sus transformaciones en orden inverso 
-	//y signos opuestos para los parámetros
-	glPushMatrix();
-		glLoadIdentity();
-		glRotatef(-player1modelo.Angbd1, 1.0f, 0.0f, 0.0f);
-		glRotatef(-player1modelo.Angbd2, 1.0f, 1.0f, 0.0f);
-		glRotatef(-player1modelo.Angt1, 1.0f, 0.0f, 0.0f);
-		glRotatef(-player1modelo.Angt2, 0.0f, 1.0f, 0.0f);
-		glRotatef(-player1.AngObj, 0.0f, 1.0f, 0.0f);
-		glGetFloatv(GL_MODELVIEW_MATRIX, inverseModelMatrix6);
-	glPopMatrix();
-
-	//Guarda las posiciones de la luz para el espacio de objeto del objeto de sombra 6
-	VMatMult(inverseModelMatrix6, lightposition6);
 	
-	objectSpaceLightPosition6.x=lightposition6[0];
-	objectSpaceLightPosition6.y=lightposition6[1];
-	objectSpaceLightPosition6.z=lightposition6[2];
 
 	//Modelo 7 (Brazo derecho_b)
 
-	//Aquí se determina a partir de la inversa de la matriz de modelo de vista el espacio de objeto para la luz
-	lightposition7[0]=lightPosition.x;
-	lightposition7[1]=lightPosition.y;
-	lightposition7[2]=lightPosition.z;
-
-	//Se obtiene la matriz inversa de modelo de vista para el modelo 7 aplicando sus transformaciones en orden inverso 
-	//y signos opuestos para los parámetros
-	glPushMatrix();
-		glLoadIdentity();
-		glRotatef(-player1modelo.Angbdb, 1.0f, 0.0f, 0.0f);
-		glRotatef(-player1modelo.Angbd1, 1.0f, 0.0f, 0.0f);
-		glRotatef(-player1modelo.Angbd2, 1.0f, 1.0f, 0.0f);
-		glRotatef(-player1modelo.Angt1, 1.0f, 0.0f, 0.0f);
-		glRotatef(-player1modelo.Angt2, 0.0f, 1.0f, 0.0f);
-		glRotatef(-player1.AngObj, 0.0f, 1.0f, 0.0f);
-		glGetFloatv(GL_MODELVIEW_MATRIX, inverseModelMatrix7);
-	glPopMatrix();
-
-	//Guarda las posiciones de la luz para el espacio de objeto del objeto de sombra 7
-	VMatMult(inverseModelMatrix7, lightposition7);
 	
-	objectSpaceLightPosition7.x=lightposition7[0];
-	objectSpaceLightPosition7.y=lightposition7[1];
-	objectSpaceLightPosition7.z=lightposition7[2];
 
 	//Modelo 8 (Brazo izquierdo_a)
 
-	//Aquí se determina a partir de la inversa de la matriz de modelo de vista el espacio de objeto para la luz
-	lightposition8[0]=lightPosition.x;
-	lightposition8[1]=lightPosition.y;
-	lightposition8[2]=lightPosition.z;
-
-	//Se obtiene la matriz inversa de modelo de vista para el modelo 8 aplicando sus transformaciones en orden inverso 
-	//y signos opuestos para los parámetros
-	glPushMatrix();
-		glLoadIdentity();
-		glRotatef(-player1modelo.Angbi1, 1.0f, 0.0f, 0.0f);
-		glRotatef(-player1modelo.Angbi2, 0.0f, 1.0f, 0.0f);
-		glRotatef(-player1modelo.Angt1, 1.0f, 0.0f, 0.0f);
-		glRotatef(-player1modelo.Angt2, 0.0f, 1.0f, 0.0f);
-		glRotatef(-player1.AngObj, 0.0f, 1.0f, 0.0f);
-		glGetFloatv(GL_MODELVIEW_MATRIX, inverseModelMatrix8);
-	glPopMatrix();
-
-	//Guarda las posiciones de la luz para el espacio de objeto del objeto de sombra 8
-	VMatMult(inverseModelMatrix8, lightposition8);
 	
-	objectSpaceLightPosition8.x=lightposition8[0];
-	objectSpaceLightPosition8.y=lightposition8[1];
-	objectSpaceLightPosition8.z=lightposition8[2];
 	
 	//Modelo 9 (Brazo izquierdo_b)
 
-	//Aquí se determina a partir de la inversa de la matriz de modelo de vista el espacio de objeto para la luz
-	lightposition9[0]=lightPosition.x;
-	lightposition9[1]=lightPosition.y;
-	lightposition9[2]=lightPosition.z;
-
-	//Se obtiene la matriz inversa de modelo de vista para el modelo 9 aplicando sus transformaciones en orden inverso 
-	//y signos opuestos para los parámetros
-	glPushMatrix();
-		glLoadIdentity();
-		glRotatef(-player1modelo.Angbib, 1.0f, 0.0f, 0.0f);
-		glRotatef(-player1modelo.Angbi1, 1.0f, 0.0f, 0.0f);
-		glRotatef(-player1modelo.Angbi2, 0.0f, 1.0f, 0.0f);
-		glRotatef(-player1modelo.Angt1, 1.0f, 0.0f, 0.0f);
-		glRotatef(-player1modelo.Angt2, 0.0f, 1.0f, 0.0f);
-		glRotatef(-player1.AngObj, 0.0f, 1.0f, 0.0f);
-		glGetFloatv(GL_MODELVIEW_MATRIX, inverseModelMatrix9);
-	glPopMatrix();
-
-	//Guarda las posiciones de la luz para el espacio de objeto del objeto de sombra 9
-	VMatMult(inverseModelMatrix9, lightposition9);
 	
-	objectSpaceLightPosition9.x=lightposition9[0];
-	objectSpaceLightPosition9.y=lightposition9[1];
-	objectSpaceLightPosition9.z=lightposition9[2];
+}
 
-	
-	//contornos
-	glDisable(GL_LIGHTING);
-	glEnable(GL_CULL_FACE);
-	glCullFace(GL_FRONT);
-	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-	glLineWidth(2.5f);
+void DibujaMJ()
+{
 	// Aru
 	glPushMatrix();
 		glTranslatef( player1.PosicionObj.x, player1.PosicionObj.y + 2.4f, player1.PosicionObj.z + 0.0f);
 		glRotatef(player1.AngObj, 0.0f, 1.0f, 0.0f);
 		glScalef(player1.escalaX,player1.escalaY,player1.escalaZ);
-		DibujaPersonajeAruout();
+		DibujaPersonajeAru();
 	glPopMatrix();
 
 	//MJ6
@@ -3886,13 +2806,8 @@ void ActualizaLuz()
 		glTranslatef(MJ6.PosicionObj.x, MJ6.PosicionObj.y+2.4f, MJ6.PosicionObj.z);
 		glRotatef(MJ6.AngObj, 0.0f, 1.0f, 0.0f);
 		glScalef(MJ6.escalaX,MJ6.escalaY,MJ6.escalaZ);
-		DibujaMJ6out();
+		DibujaMJ6();
 	glPopMatrix();
-	glLineWidth(1.0f);
-	glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
-	glCullFace(GL_BACK);
-	glDisable(GL_CULL_FACE);
-	glEnable(GL_LIGHTING);
 }
 
 void DibujaEnemigos()
@@ -3915,7 +2830,7 @@ void DibujaEnemigos()
 
 	//Ene2
 	glPushMatrix();
-		glTranslatef(target[0], target[1], target[2]);
+		glTranslatef(enem2.PosicionObj.x, enem2.PosicionObj.y, enem2.PosicionObj.z);
 		glRotatef(enem2.AngObj, 0.0f, 1.0f, 0.0f);
 		glScalef(enem2.escalaX,enem1.escalaY,enem1.escalaZ);
 		DibujaEnemigo2();
@@ -3944,65 +2859,8 @@ void DibujaEnemigos()
 		glScalef(chang.escalaX,chang.escalaY,chang.escalaZ);
 		DibujaChango();
 	glPopMatrix();
-	//contorno
-	glDisable(GL_LIGHTING);
-	glEnable(GL_CULL_FACE);
-	glCullFace(GL_FRONT);
-	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-	glLineWidth(2.5f);
-		// savage
-	glPushMatrix();
-			glTranslatef(enemigo8.PosicionObj.x, enemigo8.PosicionObj.y+2.4f, enemigo8.PosicionObj.z);
-			glRotatef(enemigo8.AngObj, 0.0f, 1.0f, 0.0f);
-			glScalef(enemigo8.escalaX,enemigo8.escalaY,enemigo8.escalaZ);
-			dibujaEnemigo8out();
-	glPopMatrix();
-
-	//Ene1
-	glPushMatrix();
-		glTranslatef(enem1.PosicionObj.x, enem1.PosicionObj.y, enem1.PosicionObj.z);
-		glRotatef(enem1.AngObj, 0.0f, 1.0f, 0.0f);
-		glScalef(enem1.escalaX,enem1.escalaY,enem1.escalaZ);
-		DibujaEnemigo1out();
-	glPopMatrix();
-
-	//Ene2
-	glPushMatrix();
-		glTranslatef(target[0], target[1], target[2]);
-		glRotatef(enem2.AngObj, 0.0f, 1.0f, 0.0f);
-		glScalef(enem2.escalaX,enem1.escalaY,enem1.escalaZ);
-		DibujaEnemigo2out();
-	glPopMatrix();
-
-	//Ene3a
-	glPushMatrix();
-		glTranslatef(enem3a.PosicionObj.x, enem3a.PosicionObj.y+2.4f, enem3a.PosicionObj.z);
-		glRotatef(enem3a.AngObj,0.0f, 1.0f, 0.0f);
-		glScalef(enem3a.escalaX,enem3a.escalaY,enem3a.escalaZ);
-		DibujaEnemigo3aout();
-	glPopMatrix();
-
-	//Ene3b
-	glPushMatrix();
-		glTranslatef(enem3b.PosicionObj.x, enem3b.PosicionObj.y+2.4f, enem3b.PosicionObj.z);
-		glRotatef(enem3b.AngObj, 0.0f, 1.0f, 0.0f);
-		glScalef(enem3b.escalaX,enem3b.escalaY,enem3b.escalaZ);
-		DibujaEnemigo3bout();
-	glPopMatrix();
-
-	//Ene3chango
-	glPushMatrix();
-		glTranslatef(chang.PosicionObj.x, chang.PosicionObj.y+2.4f, chang.PosicionObj.z);
-		glRotatef(chang.AngObj, 0.0f, 1.0f, 0.0f);
-		glScalef(chang.escalaX,chang.escalaY,chang.escalaZ);
-		DibujaChangoout();
-	glPopMatrix();
-	glLineWidth(1.0f);
-	glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
-	glCullFace(GL_BACK);
-	glDisable(GL_CULL_FACE);
-	glEnable(GL_LIGHTING);
 }
+
 void DibujaEscena()
 {
 	// Mayralol
@@ -4011,49 +2869,45 @@ void DibujaEscena()
 }
 void Camara()
 {
-	
-	// Obten el valor de pisoID
-	int c = pisoId;
-	switch( pisoId )
+	if( pisoId == 0 )
 	{
-		case 0:
-			gluLookAt( CamPos[ 0 ][ 0 ], CamPos[ 0 ][ 1 ],CamPos[ 0 ][ 2 ], CamPos[ 0 ][ 3 ], CamPos[ 0 ][ 4 ], CamPos[ 0 ][ 5 ], 0.0f, 1.0f, 0.0f);
-		break;
-		case 2:
-			gluLookAt(CamPos[ 1 ][ 0 ], CamPos[ 1 ][ 1 ],CamPos[ 1 ][ 2 ], CamPos[ 1 ][ 3 ], CamPos[ 1 ][ 4 ], CamPos[ 1 ][ 5 ], 0.0f, 1.0f, 0.0f);
-		break;
-		case 6:
-			gluLookAt(CamPos[ 2 ][ 0 ], CamPos[ 2 ][ 1 ],CamPos[ 2 ][ 2 ], CamPos[ 2 ][ 3 ], CamPos[ 2 ][ 4 ], CamPos[ 2 ][ 5 ], 0.0f, 1.0f, 0.0f);
-		break;
-		case 8:
-			gluLookAt(CamPos[ 3 ][ 0 ], CamPos[ 3 ][ 1 ],CamPos[ 3 ][ 2 ], CamPos[ 3 ][ 3 ], CamPos[ 3 ][ 4 ], CamPos[ 3 ][ 5 ], 0.0f, 1.0f, 0.0f);
-		break;
-		case 1:
-			gluLookAt( 190.0f - 5.8f * abs( player1.PosicionObj.x - 125.0f ), CamPos[ 0 ][ 1 ], CamPos[ 0 ][ 2 ], 
-						180.0f - 5.0f * abs( player1.PosicionObj.x - 125.0f ), CamPos[ 0 ][ 4 ], CamPos[ 0 ][ 5 ], 
-						0.0f, 1.0f, 0.0f );
-		break;
-		case 3: //15.5f
-			gluLookAt( 45.0f - 1.93548f * abs( player1.PosicionObj.x - 5.5f ), CamPos[ 1 ][ 1 ], 10.0f - 4.25806f * abs( player1.PosicionObj.x - 5.5f ), 
-						55.0f - 6.77419f * abs( player1.PosicionObj.x - 5.5f ), CamPos[ 1 ][ 4 ], -60.0f - 0.258065f * abs( player1.PosicionObj.x - 5.5f ), 
-						0.0f, 1.0f, 0.0f );
-		break;
-		case 7: // 45.0f
-			gluLookAt( 15.0f + 0.444f * abs( player1.PosicionObj.z - 5.0f ), CamPos[ 1 ][ 1 ], -56.0f + 2.9333f * abs( player1.PosicionObj.z - 5.0f ), 
-						-50.0f - 0.222f * abs( player1.PosicionObj.z - 5.0f ), CamPos[ 1 ][ 4 ], -56.0f + 3.0222f * abs( player1.PosicionObj.z - 5.0f ), 
-						0.0f, 1.0f, 0.0f );
-		break;
-		default:
-			gluLookAt(player1.PosicionCam.x, player1.PosicionCam.y, player1.PosicionCam.z, 
-				  player1.ObjetivoCam.x, player1.ObjetivoCam.y, player1.ObjetivoCam.z, 
-					0.0f, 1.0f, 0.0f);
-		break;
+		gluLookAt( CamPos[ 0 ][ 0 ], CamPos[ 0 ][ 1 ],CamPos[ 0 ][ 2 ], CamPos[ 0 ][ 3 ], CamPos[ 0 ][ 4 ], CamPos[ 0 ][ 5 ], 0.0f, 1.0f, 0.0f);
 	}
+	else if ( pisoId == 2 )
+	{
+		gluLookAt(CamPos[ 1 ][ 0 ], CamPos[ 1 ][ 1 ],CamPos[ 1 ][ 2 ], CamPos[ 1 ][ 3 ], CamPos[ 1 ][ 4 ], CamPos[ 1 ][ 5 ], 0.0f, 1.0f, 0.0f);
+	}
+	else if ( pisoId == 6 )
+	{
+		gluLookAt(CamPos[ 2 ][ 0 ], CamPos[ 2 ][ 1 ],CamPos[ 2 ][ 2 ], CamPos[ 2 ][ 3 ], CamPos[ 2 ][ 4 ], CamPos[ 2 ][ 5 ], 0.0f, 1.0f, 0.0f);
+	}
+	else if ( pisoId == 8 )
+	{
+		gluLookAt(CamPos[ 3 ][ 0 ], CamPos[ 3 ][ 1 ],CamPos[ 3 ][ 2 ], CamPos[ 3 ][ 3 ], CamPos[ 3 ][ 4 ], CamPos[ 3 ][ 5 ], 0.0f, 1.0f, 0.0f);
+	}
+	else if ( pisoId == 1 )
+	{
+		gluLookAt( 190.0f - 5.8f * abs( player1.PosicionCam.x - 145.0f ), CamPos[ 0 ][ 1 ], CamPos[ 0 ][ 2 ], 180.0f - 5.0f * abs( player1.PosicionCam.x - 145 ), CamPos[ 0 ][ 4 ], CamPos[ 0 ][ 5 ], 0.0f, 1.0f, 0.0f );
+	}
+	else if ( pisoId == 30 )
+	{
+		gluLookAt( 45.0f + 1.93548f * abs( player1.PosicionCam.x - 15.0f ), CamPos[ 0 ][ 1 ], -56.0f + 4.25806f * abs( player1.PosicionCam.x - 15.0f ), 55.0f - 6.77419f * abs( player1.PosicionCam.x - 15.0f ), CamPos[ 0 ][ 4 ], -60.0f + -0.2580f * abs( player1.PosicionCam.x - 15.0f ), 0.0f, 1.0f, 0.0f );
+	}
+	else if ( pisoId == 50 )
+	{
+		gluLookAt( 190.0f - 5.8f * abs( player1.PosicionCam.x - 145.0f ), CamPos[ 0 ][ 1 ], CamPos[ 0 ][ 2 ], 180.0f - 5.0f * abs( player1.PosicionCam.x - 145 ), CamPos[ 0 ][ 4 ], CamPos[ 0 ][ 5 ], 0.0f, 1.0f, 0.0f );
+	}
+	else if ( pisoId == 70 )
+	{
+		gluLookAt( 190.0f - 5.8f * abs( player1.PosicionCam.x - 145.0f ), CamPos[ 0 ][ 1 ], CamPos[ 0 ][ 2 ], 180.0f - 5.0f * abs( player1.PosicionCam.x - 145 ), CamPos[ 0 ][ 4 ], CamPos[ 0 ][ 5 ], 0.0f, 1.0f, 0.0f );
+	}
+	else
+		gluLookAt(player1.PosicionCam.x, player1.PosicionCam.y, player1.PosicionCam.z, 
+			  player1.ObjetivoCam.x, player1.ObjetivoCam.y, player1.ObjetivoCam.z, 
+			  0.0f, 1.0f, 0.0f);
 }
 int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la ventana
 {
-	TPoint P;
-
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 	glLoadIdentity();
 	
@@ -4083,6 +2937,13 @@ int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la
 		glScalef(1.4f,1.4f,1.4f);
 		DibujaEscena();
 	glPopMatrix();
+	
+	// Dibujo de MJs
+	glPushMatrix();
+		DibujaMJ();
+		//glTranslatef(40.0f, 10.0f,-35.0f);
+		DibujaEnemigos();
+	glPopMatrix();
 
 	// Se desactiva la máscara de color para renderizar la escena en negro
 	glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);
@@ -4097,7 +2958,7 @@ int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la
 	glStencilFunc(GL_ALWAYS, 0, 0);
 
 	//En este punto se aplica el depth pass (z-pass) o depth fail (z-fail)
-	DibujaSombraMJ();
+	//DibujaSombraPersonaje();
 			
 	// Se habilitan de nuevo los buffers de profundidad y color.
 	glDepthFunc(GL_LEQUAL);
@@ -4121,15 +2982,15 @@ int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la
 		DibujaEscena();
 	glPopMatrix();
 
-	// Se desactiva la prueba de profundidad y del buffer stencil ya que no se utilizarán mas.
-	glDisable(GL_STENCIL_TEST);
-
 	// Dibujo de MJs
 	glPushMatrix();
 		DibujaMJ();
-		//glTranslatef(40.0f, 10.0f,-35.0f);
+//		glTranslatef(40.0f, 10.0f,-35.0f);
 		DibujaEnemigos();
 	glPopMatrix();
+
+	// Se desactiva la prueba de profundidad y del buffer stencil ya que no se utilizarán mas.
+	glDisable(GL_STENCIL_TEST);
 		
 	DibujaLuz(lightPosition);
 	DibujaTextos();
@@ -4138,55 +2999,8 @@ int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la
 	if(displayVolume == true)
 	{
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);     //Para que muestre el volumen en alambrado
-		DibujaVolumendeSombra();
+		//DibujaVolumendeSombra();
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);     //Volvemos al modo sólido de nuevo
-	}
-
-	//splines
-	if(running) 
-	{	
-		idxtp += dtidx;
-		if( idxtp >= helspline.drawp - 5 || idxtp < 2 )
-		{ 
-			// ¿final o principio?
-  			dtidx = -dtidx; // cambia el sentido de la camara
-			//esperar = 50;
-		}
-		spline_point(helspline, idxtp, target);
-	}
-
-	// Trayectoria del spline
-	if(trayectoria == 1)
-	{
-		glDisable(GL_TEXTURE_2D);
-		glDisable(GL_LIGHTING);
-		glDisable(GL_COLOR_MATERIAL);
-		glColor3f(1.0f, 1.0f, 1.0f);
-		glBegin(GL_LINE_STRIP);
-			for(int i=0; i < helspline.drawp; i++ ) 
-			{
-				spline_point( helspline, i, P );
-				glVertex3fv( P );
-			}
-		glEnd();
-
-		for (int i=0; i< helspline.tpc; i++ )
-		{
-			glColor3f(1.0f,1.0f,1.0f);
-			glPushMatrix();
-				glTranslatef(helspline.ctrlpoints[i][0],
-							helspline.ctrlpoints[i][1],
-							helspline.ctrlpoints[i][2]);
-				glPointSize(10.0f);
-				glColor3f(1.0f,0.0f,0.0f);
-				glBegin(GL_POINTS);
-					glVertex3f(0.0f,0.0f,0.0f);
-				glEnd();
-							
-			glPopMatrix();
-
-			glColor3f(1.0f,1.0f,1.0f);
-		}
 	}
 
 	CalculateFrameRate();
@@ -4194,7 +3008,7 @@ int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la
 	// Colisiones
 	ActualizaObjetosDinamicosColision();
 	DibujaObjetosdeColision();
-	//DibujaEsferasColision();
+	DibujaEsferasColision();
 	ColisionesPiso();
 
 	return TRUE;

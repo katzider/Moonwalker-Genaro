@@ -271,30 +271,20 @@ int tipoAnim=1; //Indicador del tipo de animación
 
 CMultitexturas Multitext;
 
-// Modelos enemigos y chango
+// Modelo de Bob
 GLuint modelo1;
-GLuint modelo1out;
 GLuint ene1;
-GLuint ene1out;
 GLuint noMJ6;
-GLuint noMJ6out;
 GLuint ene2;
-GLuint ene2out;
 GLuint ene3a;
-GLuint ene3aout;
 GLuint ene3b;
-GLuint ene3bout;
 GLuint cha;
-GLuint chaout; 
 
 // las listas savage
 GLuint enemigo8L;
-GLuint enemigo8Lout;
 
 // Declara enteros para los modelos de Aru
 GLuint modelo1aru;
-GLuint modelo1aruout;
-
 
 //Constantes de iluminación y materiales
 GLfloat LightPos[] = { 0.0f, 20.0f, 25.0f, 1.0f};		// Posición de la luz
@@ -794,28 +784,12 @@ void CreaListas()
 	noMJ6=glGenLists(10);
 	//Ene3a
 	ene3a=glGenLists(5);
-	//Ene3b
+	//Ene3a
 	ene3b=glGenLists(5);
 	//chango
 	cha=glGenLists(5);
 	// en crea listas savage
 	enemigo8L=glGenLists(3);
-
-	//Ene1 contorno
-	ene1out=glGenLists(10);
-	//Ene2 contorno
-	ene2out=glGenLists(3);
-	//MJ6  contorno
-	noMJ6out=glGenLists(10);
-	//Ene3a  contorno
-	ene3aout=glGenLists(5);
-	//Ene3b contorno	
-	ene3bout=glGenLists(5);
-	//chango contorno
-	chaout=glGenLists(5);
-	// en crea listas savage contorno
-	enemigo8Lout=glGenLists(3);
-
 	glNewList(enemigo8L+0,GL_COMPILE);
 		g_Load3ds.Render3DSFile(&g_3DModel1g, textureModel1g, 1);
 	glEndList();
@@ -828,23 +802,8 @@ void CreaListas()
 		g_Load3ds.Render3DSFile(&g_3DModel3g, textureModel3g, 1);
 	glEndList();
 
-
-	glNewList(enemigo8Lout+0,GL_COMPILE);
-		g_Load3ds.Render3DSContour(&g_3DModel1g);
-	glEndList();
-
-	glNewList(enemigo8Lout+1,GL_COMPILE);
-		g_Load3ds.Render3DSContour(&g_3DModel2g);
-	glEndList();
-
-	glNewList(enemigo8Lout+2,GL_COMPILE);
-		g_Load3ds.Render3DSContour(&g_3DModel3g);
-	glEndList();
-
-
 	// Crea listas para Aru
 	modelo1aru = glGenLists(9);
-	modelo1aruout = glGenLists(9);
 
 	glNewList(modelo1aru+0,GL_COMPILE);
 		g_Load3ds.Render3DSFile(&g_3DModel1aru, textureModel1aru, 1);
@@ -881,44 +840,6 @@ void CreaListas()
 	glNewList(modelo1aru+8,GL_COMPILE);
 		g_Load3ds.Render3DSFile(&g_3DModel9aru, textureModel1aru, 1);
 	glEndList();
-
-
-	glNewList(modelo1aruout+0,GL_COMPILE);
-		g_Load3ds.Render3DSContour(&g_3DModel1aru);
-	glEndList();
-
-	glNewList(modelo1aruout+1,GL_COMPILE);
-		g_Load3ds.Render3DSContour(&g_3DModel2aru);
-	glEndList();
-
-	glNewList(modelo1aruout+2,GL_COMPILE);
-		g_Load3ds.Render3DSContour(&g_3DModel3aru);
-	glEndList();
-
-	glNewList(modelo1aruout+3,GL_COMPILE);
-		g_Load3ds.Render3DSContour(&g_3DModel4aru);
-	glEndList();
-
-	glNewList(modelo1aruout+4,GL_COMPILE);
-		g_Load3ds.Render3DSContour(&g_3DModel5aru);
-	glEndList();
-
-	glNewList(modelo1aruout+5,GL_COMPILE);
-		g_Load3ds.Render3DSContour(&g_3DModel6aru);
-	glEndList();
-
-	glNewList(modelo1aruout+6,GL_COMPILE);
-		g_Load3ds.Render3DSContour(&g_3DModel7aru);
-	glEndList();
-
-	glNewList(modelo1aruout+7,GL_COMPILE);
-		g_Load3ds.Render3DSContour(&g_3DModel8aru);
-	glEndList();
-
-	glNewList(modelo1aruout+8,GL_COMPILE);
-		g_Load3ds.Render3DSContour(&g_3DModel9aru);
-	glEndList();
-
 	//Ene1
 	glNewList(ene1+0,GL_COMPILE);
 		g_Load3ds.Render3DSFile(&g_3DModel1d, textureModel1d, 1);
@@ -958,47 +879,6 @@ void CreaListas()
 
 	glNewList(ene1+9,GL_COMPILE);
 		g_Load3ds.Render3DSFile(&g_3DModel10d, textureModel1d, 1);
-	glEndList();
-
-
-	glNewList(ene1out+0,GL_COMPILE);
-		g_Load3ds.Render3DSContour(&g_3DModel1d);
-	glEndList();
-
-	glNewList(ene1out+1,GL_COMPILE);
-		g_Load3ds.Render3DSContour(&g_3DModel2d);
-	glEndList();
-
-	glNewList(ene1out+2,GL_COMPILE);
-		g_Load3ds.Render3DSContour(&g_3DModel3d);
-	glEndList();
-
-	glNewList(ene1out+3,GL_COMPILE);
-		g_Load3ds.Render3DSContour(&g_3DModel4d);
-	glEndList();
-
-	glNewList(ene1out+4,GL_COMPILE);
-		g_Load3ds.Render3DSContour(&g_3DModel5d);
-	glEndList();
-
-	glNewList(ene1out+5,GL_COMPILE);
-		g_Load3ds.Render3DSContour(&g_3DModel6d);
-	glEndList();
-
-	glNewList(ene1out+6,GL_COMPILE);
-		g_Load3ds.Render3DSContour(&g_3DModel7d);
-	glEndList();
-
-	glNewList(ene1out+7,GL_COMPILE);
-		g_Load3ds.Render3DSContour(&g_3DModel8d);
-	glEndList();
-
-	glNewList(ene1out+8,GL_COMPILE);
-		g_Load3ds.Render3DSContour(&g_3DModel9d);
-	glEndList();
-
-	glNewList(ene1out+9,GL_COMPILE);
-		g_Load3ds.Render3DSContour(&g_3DModel10d);
 	glEndList();
 
 	//MJ6
@@ -1042,48 +922,6 @@ void CreaListas()
 		g_Load3ds.Render3DSFile(&g_3DModel10f, textureModel1f, 1);
 	glEndList();
 
-
-	
-	glNewList(noMJ6out+0,GL_COMPILE);
-		g_Load3ds.Render3DSContour(&g_3DModel1f);
-	glEndList();
-
-	glNewList(noMJ6out+1,GL_COMPILE);
-		g_Load3ds.Render3DSContour(&g_3DModel2f);
-	glEndList();
-
-	glNewList(noMJ6out+2,GL_COMPILE);
-		g_Load3ds.Render3DSContour(&g_3DModel3f);
-	glEndList();
-
-	glNewList(noMJ6out+3,GL_COMPILE);
-		g_Load3ds.Render3DSContour(&g_3DModel4f);
-	glEndList();
-
-	glNewList(noMJ6out+4,GL_COMPILE);
-		g_Load3ds.Render3DSContour(&g_3DModel5f);
-	glEndList();
-
-	glNewList(noMJ6out+5,GL_COMPILE);
-		g_Load3ds.Render3DSContour(&g_3DModel6f);
-	glEndList();
-
-	glNewList(noMJ6out+6,GL_COMPILE);
-		g_Load3ds.Render3DSContour(&g_3DModel7f);
-	glEndList();
-
-	glNewList(noMJ6out+7,GL_COMPILE);
-		g_Load3ds.Render3DSContour(&g_3DModel8f);
-	glEndList();
-
-	glNewList(noMJ6out+8,GL_COMPILE);
-		g_Load3ds.Render3DSContour(&g_3DModel9f);
-	glEndList();
-
-	glNewList(noMJ6out+9,GL_COMPILE);
-		g_Load3ds.Render3DSContour(&g_3DModel10f);
-	glEndList();
-
 	//Ene3a
 	glNewList(ene3a+0,GL_COMPILE);
 		g_Load3ds.Render3DSFile(&g_3DModel1h, textureModel1h, 1);
@@ -1103,27 +941,6 @@ void CreaListas()
 
 	glNewList(ene3a+4,GL_COMPILE);
 		g_Load3ds.Render3DSFile(&g_3DModel5h, textureModel5h, 1);
-	glEndList();
-
-
-	glNewList(ene3aout+0,GL_COMPILE);
-		g_Load3ds.Render3DSContour(&g_3DModel1h);
-	glEndList();
-
-	glNewList(ene3aout+1,GL_COMPILE);
-		g_Load3ds.Render3DSContour(&g_3DModel2h);
-	glEndList();
-
-	glNewList(ene3aout+2,GL_COMPILE);
-		g_Load3ds.Render3DSContour(&g_3DModel3h);
-	glEndList();
-
-	glNewList(ene3aout+3,GL_COMPILE);
-		g_Load3ds.Render3DSContour(&g_3DModel4h);
-	glEndList();
-
-	glNewList(ene3aout+4,GL_COMPILE);
-		g_Load3ds.Render3DSContour(&g_3DModel5h);
 	glEndList();
 
 	//Ene3b
@@ -1147,27 +964,6 @@ void CreaListas()
 		g_Load3ds.Render3DSFile(&g_3DModel5i, textureModel5i, 1);
 	glEndList();
 
-
-	glNewList(ene3bout+0,GL_COMPILE);
-		g_Load3ds.Render3DSContour(&g_3DModel1i);
-	glEndList();
-
-	glNewList(ene3bout+1,GL_COMPILE);
-		g_Load3ds.Render3DSContour(&g_3DModel2i);
-	glEndList();
-
-	glNewList(ene3bout+2,GL_COMPILE);
-		g_Load3ds.Render3DSContour(&g_3DModel3i);
-	glEndList();
-
-	glNewList(ene3bout+3,GL_COMPILE);
-		g_Load3ds.Render3DSContour(&g_3DModel4i);
-	glEndList();
-
-	glNewList(ene3bout+4,GL_COMPILE);
-		g_Load3ds.Render3DSContour(&g_3DModel5i);
-	glEndList();
-
 	//chango
 	glNewList(cha+0,GL_COMPILE);
 		g_Load3ds.Render3DSFile(&g_3DModel1j, textureModel1j, 1);
@@ -1189,28 +985,6 @@ void CreaListas()
 		g_Load3ds.Render3DSFile(&g_3DModel5j, textureModel5j, 1);
 	glEndList();
 
-
-	glNewList(chaout+0,GL_COMPILE);
-		g_Load3ds.Render3DSContour(&g_3DModel1j);
-	glEndList();
-
-	glNewList(chaout+1,GL_COMPILE);
-		g_Load3ds.Render3DSContour(&g_3DModel2j);
-	glEndList();
-
-	glNewList(chaout+2,GL_COMPILE);
-		g_Load3ds.Render3DSContour(&g_3DModel3j);
-	glEndList();
-
-	glNewList(chaout+3,GL_COMPILE);
-		g_Load3ds.Render3DSContour(&g_3DModel4j);
-	glEndList();
-
-	glNewList(chaout+4,GL_COMPILE);
-		g_Load3ds.Render3DSContour(&g_3DModel5j);
-	glEndList();
-
-
 	//Ene2
 	glNewList(ene2+0,GL_COMPILE);
 		g_Load3ds.Render3DSFile(&g_3DModel1k, textureModel1k, 1);
@@ -1224,21 +998,7 @@ void CreaListas()
 		g_Load3ds.Render3DSFile(&g_3DModel3k, textureModel3k, 1);
 	glEndList();
 
-
-	glNewList(ene2out+0,GL_COMPILE);
-		g_Load3ds.Render3DSContour(&g_3DModel1k);
-	glEndList();
-
-	glNewList(ene2out+1,GL_COMPILE);
-		g_Load3ds.Render3DSContour(&g_3DModel2k);
-	glEndList();
-
-	glNewList(ene2out+2,GL_COMPILE);
-		g_Load3ds.Render3DSContour(&g_3DModel3k);
-	glEndList();
-
 }
-
 
 void DestruyeListas()
 {
@@ -1254,19 +1014,7 @@ void DestruyeListas()
 	glDeleteLists(ene3b,5);
 	glDeleteLists(cha,5);
 
-	// Borra listas de Aru
-	glDeleteLists(modelo1aruout,9);
-	// Borra listas fahl
-	glDeleteLists(ene1out,10);
-	glDeleteLists(ene2out,3);
-	glDeleteLists(noMJ6out,10);
-
-	glDeleteLists(ene3aout,5);
-	glDeleteLists(ene3bout,5);
-	glDeleteLists(chaout,5);
-
 }
-
 
 void InicializaParametrosdeControl()
 {
@@ -2609,24 +2357,6 @@ void dibujaEnemigo8()
 	glPopMatrix();
 }
 
-void dibujaEnemigo8out()
-{
-	static float anglef=0.0f;
-	anglef+=4.0f;
-
-	glCallList(enemigo8Lout);
-
-	glPushMatrix();	
-		glRotatef(anglef, 0.0f, 1.0f, 0.0f);
-		glCallList(enemigo8Lout+1);
-	glPopMatrix();
-
-	glPushMatrix();
-		glRotatef(anglef, 1.0f, 0.0f, 0.0f);
-		glCallList(enemigo8Lout+2);
-	glPopMatrix();
-}
-
 void DibujaEnemigo1()
 {
 	glTranslatef(enem1modelo.Xtor, enem1modelo.Ytor, enem1modelo.Ztor);
@@ -2698,77 +2428,6 @@ void DibujaEnemigo1()
 	glPopMatrix();
 }
 
-void DibujaEnemigo1out()
-{
-	glTranslatef(enem1modelo.Xtor, enem1modelo.Ytor, enem1modelo.Ztor);
-	glRotatef(enem1modelo.Angt2, 0.0f, 1.0f, 0.0f);
-	glRotatef(enem1modelo.Angt1, 1.0f, 0.0f, 0.0f);
-			
-	//Torso
-	glCallList(ene1out+0);
-	
-	//Cabeza
-	glPushMatrix();
-		glRotatef(enem1modelo.Angc1, 0.0f, 1.0f, 0.0f);
-		glCallList(ene1out+1);
-	glPopMatrix();
-
-	//Brazo derecho
-	glPushMatrix();
-		//glTranslatef(-2.8f, 1.1f, 0.0f);
-		glRotatef(enem1modelo.Angbd2, 0.0f, 1.0f, 0.0f);
-		glRotatef(enem1modelo.Angbd1, 1.0f, 0.0f, 0.0f);
-		glCallList(ene1out+2);
-	glPopMatrix();
-
-	//Brazo izquierdo
-	glPushMatrix();
-		//glTranslatef(-2.8f, 1.1f, 0.0f);
-		glRotatef(enem1modelo.Angbd2, 0.0f, 1.0f, 0.0f);
-		glRotatef(enem1modelo.Angbd1, 1.0f, 0.0f, 0.0f);
-		glCallList(ene1out+3);
-	glPopMatrix();
-	
-	//Pierna derecha
-	glPushMatrix();
-		//glTranslatef(-1.2f, -1.3f ,0.0f);
-		glRotatef(enem1modelo.Angpder, 1.0f, 0.0f, 0.0f);
-		glCallList(ene1out+4);
-		
-		//Pierna derecha_b
-		glPushMatrix();
-			//glTranslatef(0.0f, -1.25f , 0.0f);
-			glRotatef(enem1modelo.Angpderb, 1.0f, 0.0f, 0.0f);
-			glCallList(ene1out+5);
-			
-			//Pie derecho
-			glPushMatrix();
-				glRotatef(enem1modelo.Angpd,1.0f, 0.0f, 0.0f);
-				glCallList(ene1out+6);
-			glPopMatrix();
-		glPopMatrix();
-	glPopMatrix();
-
-	//Pierna izquierda
-	glPushMatrix();
-		//glTranslatef(1.2f, -1.3f ,0.0f);
-		glRotatef(enem1modelo.Angpizq, 1.0f, 0.0f, 0.0f);
-		glCallList(ene1out+7);
-
-		//Pierna izquierda_b
-		glPushMatrix();
-			//glTranslatef(0.0f, -1.25f , 0.0f);
-			glRotatef(enem1modelo.Angpizqb, 1.0f, 0.0f, 0.0f);
-			glCallList(ene1out+8);
-			//Pie derecho
-			glPushMatrix();
-				glRotatef(enem1modelo.Angpd,1.0f, 0.0f, 0.0f);
-				glCallList(ene1out+9);
-			glPopMatrix();
-		glPopMatrix();
-	glPopMatrix();
-}
-
 void DibujaEnemigo2()
 {
 	glTranslatef(enem2modelo.Xtor, enem2modelo.Ytor, enem2modelo.Ztor);
@@ -2781,20 +2440,6 @@ void DibujaEnemigo2()
 	glCallList(ene2+1);
 	//Piloto
 	glCallList(ene2+2);
-}
-
-void DibujaEnemigo2out()
-{
-	glTranslatef(enem2modelo.Xtor, enem2modelo.Ytor, enem2modelo.Ztor);
-	glRotatef(enem2modelo.Angt2, 0.0f, 1.0f, 0.0f);
-	glRotatef(enem2modelo.Angt1, 1.0f, 0.0f, 0.0f);
-
-	//Nave
-	glCallList(ene2out+0);
-	//Bomba
-	glCallList(ene2out+1);
-	//Piloto
-	glCallList(ene2out+2);
 }
 
 void DibujaMJ6()
@@ -2871,80 +2516,6 @@ void DibujaMJ6()
 	glPopMatrix();
 }
 
-void DibujaMJ6out()
-{
-	glTranslatef(MJ6modelo.Xtor, MJ6modelo.Ytor, MJ6modelo.Ztor);
-	glRotatef(MJ6modelo.Angt2, 0.0f, 1.0f, 0.0f);
-	glRotatef(MJ6modelo.Angt1, 1.0f, 0.0f, 0.0f);
-			
-	//Torso
-	glCallList(noMJ6out+0);
-	
-	//Cabeza
-	glPushMatrix();
-		glRotatef(MJ6modelo.Angc1, 0.0f, 1.0f, 0.0f);
-		glCallList(noMJ6out+1);
-	glPopMatrix();
-
-	//Brazo derecho
-	glPushMatrix();
-		//glTranslatef(-2.8f, 1.1f, 0.0f);
-		glRotatef(MJ6modelo.Angbd2, 0.0f, 1.0f, 0.0f);
-		glRotatef(MJ6modelo.Angbd1, 1.0f, 0.0f, 0.0f);
-		glCallList(noMJ6out+2);
-
-		//Brazo derecho_b
-		glPushMatrix();
-			//glTranslatef(0.0f, -1.25f , 0.0f);
-			glRotatef(MJ6modelo.Angpderb, 1.0f, 0.0f, 0.0f);
-			glCallList(noMJ6out+3);
-		glPopMatrix();
-	glPopMatrix();
-
-	//Brazo izquierdo
-	glPushMatrix();
-		//glTranslatef(-2.8f, 1.1f, 0.0f);
-		glRotatef(MJ6modelo.Angbd2, 0.0f, 1.0f, 0.0f);
-		glRotatef(MJ6modelo.Angbd1, 1.0f, 0.0f, 0.0f);
-		glCallList(noMJ6out+4);
-
-		//Brazo izquierdo_b
-		glPushMatrix();
-			//glTranslatef(0.0f, -1.25f , 0.0f);
-			glRotatef(MJ6modelo.Angpderb, 1.0f, 0.0f, 0.0f);
-			glCallList(noMJ6out+5);
-		glPopMatrix();
-	glPopMatrix();
-	
-	//Pierna derecha
-	glPushMatrix();
-		//glTranslatef(-1.2f, -1.3f ,0.0f);
-		glRotatef(MJ6modelo.Angpder, 1.0f, 0.0f, 0.0f);
-		glCallList(noMJ6out+6);
-		
-		//Pierna derecha_b
-		glPushMatrix();
-			//glTranslatef(0.0f, -1.25f , 0.0f);
-			glRotatef(MJ6modelo.Angpderb, 1.0f, 0.0f, 0.0f);
-			glCallList(noMJ6out+7);
-		glPopMatrix();
-	glPopMatrix();
-
-	//Pierna izquierda
-	glPushMatrix();
-		//glTranslatef(1.2f, -1.3f ,0.0f);
-		glRotatef(MJ6modelo.Angpizq, 1.0f, 0.0f, 0.0f);
-		glCallList(noMJ6out+8);
-
-		//Pierna izquierda_b
-		glPushMatrix();
-			//glTranslatef(0.0f, -1.25f , 0.0f);
-			glRotatef(MJ6modelo.Angpizqb, 1.0f, 0.0f, 0.0f);
-			glCallList(noMJ6out+9);
-		glPopMatrix();
-	glPopMatrix();
-}
-
 void DibujaEnemigo3a()
 {
 	glTranslatef(enem3amodelo.Xtor, enem3amodelo.Ytor, enem3amodelo.Ztor);
@@ -2986,48 +2557,6 @@ void DibujaEnemigo3a()
 
 }
 
-void DibujaEnemigo3aout()
-{
-	glTranslatef(enem3amodelo.Xtor, enem3amodelo.Ytor, enem3amodelo.Ztor);
-	glRotatef(enem3amodelo.Angt2, 0.0f, 1.0f, 0.0f);
-	glRotatef(enem3amodelo.Angt1, 1.0f, 0.0f, 0.0f);
-			
-	//Torso
-	glCallList(ene3aout+0);
-	
-	//Brazo derecho
-	glPushMatrix();
-		//glTranslatef(-2.8f, 1.1f, 0.0f);
-		glRotatef(enem3amodelo.Angbd2, 0.0f, 1.0f, 0.0f);
-		glRotatef(enem3amodelo.Angbd1, 1.0f, 0.0f, 0.0f);
-		glCallList(ene3aout+1);
-	glPopMatrix();
-
-	//Brazo izquierdo
-	glPushMatrix();
-		//glTranslatef(-2.8f, 1.1f, 0.0f);
-		glRotatef(enem3amodelo.Angbd2, 0.0f, 1.0f, 0.0f);
-		glRotatef(enem3amodelo.Angbd1, 1.0f, 0.0f, 0.0f);
-		glCallList(ene3aout+2);
-	glPopMatrix();
-	
-	//Pierna derecha
-	glPushMatrix();
-		//glTranslatef(-1.2f, -1.3f ,0.0f);
-		glRotatef(enem3amodelo.Angpder, 1.0f, 0.0f, 0.0f);
-		glCallList(ene3aout+3);
-	glPopMatrix();
-
-	//Pierna izquierda
-	glPushMatrix();
-		//glTranslatef(1.2f, -1.3f ,0.0f);
-		glRotatef(enem3amodelo.Angpizq, 1.0f, 0.0f, 0.0f);
-		glCallList(ene3aout+4);
-	glPopMatrix();
-
-}
-
-
 void DibujaEnemigo3b()
 {
 	glTranslatef(enem3bmodelo.Xtor, enem3bmodelo.Ytor, enem3bmodelo.Ztor);
@@ -3067,47 +2596,6 @@ void DibujaEnemigo3b()
 		glCallList(ene3b+4);
 	glPopMatrix();
 }
-
-void DibujaEnemigo3bout()
-{
-	glTranslatef(enem3bmodelo.Xtor, enem3bmodelo.Ytor, enem3bmodelo.Ztor);
-	glRotatef(enem3bmodelo.Angt2, 0.0f, 1.0f, 0.0f);
-	glRotatef(enem3bmodelo.Angt1, 1.0f, 0.0f, 0.0f);
-			
-	//Torso
-	glCallList(ene3bout+0);
-	
-	//Brazo derecho
-	glPushMatrix();
-		//glTranslatef(-2.8f, 1.1f, 0.0f);
-		glRotatef(enem3bmodelo.Angbd2, 0.0f, 1.0f, 0.0f);
-		glRotatef(enem3bmodelo.Angbd1, 1.0f, 0.0f, 0.0f);
-		glCallList(ene3bout+1);
-	glPopMatrix();
-
-	//Brazo izquierdo
-	glPushMatrix();
-		//glTranslatef(-2.8f, 1.1f, 0.0f);
-		glRotatef(enem3bmodelo.Angbd2, 0.0f, 1.0f, 0.0f);
-		glRotatef(enem3bmodelo.Angbd1, 1.0f, 0.0f, 0.0f);
-		glCallList(ene3bout+2);
-	glPopMatrix();
-	
-	//Pierna derecha
-	glPushMatrix();
-		//glTranslatef(-1.2f, -1.3f ,0.0f);
-		glRotatef(enem3bmodelo.Angpder, 1.0f, 0.0f, 0.0f);
-		glCallList(ene3bout+3);
-	glPopMatrix();
-
-	//Pierna izquierda
-	glPushMatrix();
-		//glTranslatef(1.2f, -1.3f ,0.0f);
-		glRotatef(enem3bmodelo.Angpizq, 1.0f, 0.0f, 0.0f);
-		glCallList(ene3bout+4);
-	glPopMatrix();
-}
-
 
 
 void DibujaChango()
@@ -3149,48 +2637,6 @@ void DibujaChango()
 		glCallList(cha+4);
 	glPopMatrix();
 }
-
-
-void DibujaChangoout()
-{
-	glTranslatef(changmodelo.Xtor, changmodelo.Ytor, changmodelo.Ztor);
-	glRotatef(changmodelo.Angt2, 0.0f, 1.0f, 0.0f);
-	glRotatef(changmodelo.Angt1, 1.0f, 0.0f, 0.0f);
-			
-	//Torso
-	glCallList(chaout+0);
-	
-	//Brazo derecho
-	glPushMatrix();
-		glTranslatef(0.0f, 0.0f, 2.8f);
-		glRotatef(changmodelo.Angbd2, 0.0f, 1.0f, 0.0f);
-		glRotatef(changmodelo.Angbd1, 1.0f, 0.0f, 0.0f);
-		glCallList(chaout+1);
-	glPopMatrix();
-
-	//Brazo izquierdo
-	glPushMatrix();
-		glTranslatef(0.0f, 0.0f, 2.8f);
-		glRotatef(changmodelo.Angbd2, 0.0f, 1.0f, 0.0f);
-		glRotatef(changmodelo.Angbd1, 1.0f, 0.0f, 0.0f);
-		glCallList(chaout+2);
-	glPopMatrix();
-	
-	//Pierna derecha
-	glPushMatrix();
-		//glTranslatef(-1.2f, -1.3f ,0.0f);
-		glRotatef(changmodelo.Angpder, 1.0f, 0.0f, 0.0f);
-		glCallList(chaout+3);
-	glPopMatrix();
-
-	//Pierna izquierda
-	glPushMatrix();
-		//glTranslatef(1.2f, -1.3f ,0.0f);
-		glRotatef(changmodelo.Angpizq, 1.0f, 0.0f, 0.0f);
-		glCallList(chaout+4);
-	glPopMatrix();
-}
-
 
 
 
@@ -3340,85 +2786,12 @@ void DibujaSombraMJ()
 				glRotatef(player1modelo.Angbib, 1.0f, 0.0f, 0.0f);
 				objSh.calculaSombraDepthPass(&g_3DModel9aru, objectSpaceLightPosition9);
 			glPopMatrix();
+
 		glPopMatrix();
 
 	glPopMatrix();
 		
 }
-	
-
-void DibujaPersonajeAruout()
-{
-	glTranslatef(player1modelo.Xtor, player1modelo.Ytor, player1modelo.Ztor);
-	glRotatef(player1modelo.Angt2, 0.0f, 1.0f, 0.0f);
-	glRotatef(player1modelo.Angt1, 1.0f, 0.0f, 0.0f);
-			
-	//Torso
-	glCallList(modelo1aruout+0);
-	
-	//Pierna derecha
-	glPushMatrix();
-		glTranslatef(1.0f, 0.0f, 0.0f);
-		glRotatef(player1modelo.Angpder, 1.0f, 0.0f, 0.0f);
-		glCallList(modelo1aruout+1);
-		
-		//Pierna derecha_b
-		glPushMatrix();
-			glTranslatef(-5.2f, 0.7f , 0.0f);
-			glRotatef(player1modelo.Angpderb, 1.0f, 0.0f, 0.0f);
-			glCallList(modelo1aruout+2);
-		glPopMatrix();
-
-	glPopMatrix();
-
-	//Pierna izquierda
-	glPushMatrix();
-		glTranslatef(0.0f, 0.0f ,0.0f);
-		glRotatef(player1modelo.Angpizq, 1.0f, 0.0f, 0.0f);
-		glCallList(modelo1aruout+3);
-
-		//Pierna izquierda_b
-		glPushMatrix();
-			glTranslatef(-6.5f, 0.8f , 0.0f);
-			glRotatef(player1modelo.Angpizqb, 1.0f, 0.0f, 0.0f);
-			glCallList(modelo1aruout+4);
-		glPopMatrix();
-
-	glPopMatrix();
-
-	//Brazo derecho_a
-	glPushMatrix();
-		glTranslatef(5.65f, 0.2f, 0.2f);
-		glRotatef(player1modelo.Angbd2, 0.0f, 1.0f, 0.0f);
-		glRotatef(player1modelo.Angbd1, 1.0f, 0.0f, 0.0f);
-		glCallList(modelo1aruout+5);
-
-		//Brazo derecho_b
-		glPushMatrix();
-			glTranslatef(-4.6f, 2.0f, 0.0f);
-			glRotatef(player1modelo.Angbdb, 1.0f, 0.0f, 0.0f);
-			glCallList(modelo1aruout+7);
-		glPopMatrix();
-
-	glPopMatrix();
-
-	//Brazo izquierdo
-	glPushMatrix();
-		glTranslatef(-1.0f, 1.5f, 0.0f);
-		glRotatef(player1modelo.Angbi2, 0.0f, 1.0f, 0.0f);
-		glRotatef(player1modelo.Angbi1, 1.0f, 0.0f, 0.0f);
-		glCallList(modelo1aruout+6);
-
-		//Brazo izquierdo_b
-		glPushMatrix();
-			glTranslatef(-0.7f, 0.5f, 0.0f);
-			glRotatef(player1modelo.Angbib, 1.0f, 0.0f, 0.0f);
-			glCallList(modelo1aruout+8);
-		glPopMatrix();
-
-	glPopMatrix();
-}
-
 
 void DibujaVolumendeSombra()
 {
@@ -3867,32 +3240,6 @@ void ActualizaLuz()
 	objectSpaceLightPosition9.z=lightposition9[2];
 
 	
-	//contornos
-	glDisable(GL_LIGHTING);
-	glEnable(GL_CULL_FACE);
-	glCullFace(GL_FRONT);
-	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-	glLineWidth(2.5f);
-	// Aru
-	glPushMatrix();
-		glTranslatef( player1.PosicionObj.x, player1.PosicionObj.y + 2.4f, player1.PosicionObj.z + 0.0f);
-		glRotatef(player1.AngObj, 0.0f, 1.0f, 0.0f);
-		glScalef(player1.escalaX,player1.escalaY,player1.escalaZ);
-		DibujaPersonajeAruout();
-	glPopMatrix();
-
-	//MJ6
-	glPushMatrix();
-		glTranslatef(MJ6.PosicionObj.x, MJ6.PosicionObj.y+2.4f, MJ6.PosicionObj.z);
-		glRotatef(MJ6.AngObj, 0.0f, 1.0f, 0.0f);
-		glScalef(MJ6.escalaX,MJ6.escalaY,MJ6.escalaZ);
-		DibujaMJ6out();
-	glPopMatrix();
-	glLineWidth(1.0f);
-	glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
-	glCullFace(GL_BACK);
-	glDisable(GL_CULL_FACE);
-	glEnable(GL_LIGHTING);
 }
 
 void DibujaEnemigos()
@@ -3944,65 +3291,8 @@ void DibujaEnemigos()
 		glScalef(chang.escalaX,chang.escalaY,chang.escalaZ);
 		DibujaChango();
 	glPopMatrix();
-	//contorno
-	glDisable(GL_LIGHTING);
-	glEnable(GL_CULL_FACE);
-	glCullFace(GL_FRONT);
-	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-	glLineWidth(2.5f);
-		// savage
-	glPushMatrix();
-			glTranslatef(enemigo8.PosicionObj.x, enemigo8.PosicionObj.y+2.4f, enemigo8.PosicionObj.z);
-			glRotatef(enemigo8.AngObj, 0.0f, 1.0f, 0.0f);
-			glScalef(enemigo8.escalaX,enemigo8.escalaY,enemigo8.escalaZ);
-			dibujaEnemigo8out();
-	glPopMatrix();
-
-	//Ene1
-	glPushMatrix();
-		glTranslatef(enem1.PosicionObj.x, enem1.PosicionObj.y, enem1.PosicionObj.z);
-		glRotatef(enem1.AngObj, 0.0f, 1.0f, 0.0f);
-		glScalef(enem1.escalaX,enem1.escalaY,enem1.escalaZ);
-		DibujaEnemigo1out();
-	glPopMatrix();
-
-	//Ene2
-	glPushMatrix();
-		glTranslatef(target[0], target[1], target[2]);
-		glRotatef(enem2.AngObj, 0.0f, 1.0f, 0.0f);
-		glScalef(enem2.escalaX,enem1.escalaY,enem1.escalaZ);
-		DibujaEnemigo2out();
-	glPopMatrix();
-
-	//Ene3a
-	glPushMatrix();
-		glTranslatef(enem3a.PosicionObj.x, enem3a.PosicionObj.y+2.4f, enem3a.PosicionObj.z);
-		glRotatef(enem3a.AngObj,0.0f, 1.0f, 0.0f);
-		glScalef(enem3a.escalaX,enem3a.escalaY,enem3a.escalaZ);
-		DibujaEnemigo3aout();
-	glPopMatrix();
-
-	//Ene3b
-	glPushMatrix();
-		glTranslatef(enem3b.PosicionObj.x, enem3b.PosicionObj.y+2.4f, enem3b.PosicionObj.z);
-		glRotatef(enem3b.AngObj, 0.0f, 1.0f, 0.0f);
-		glScalef(enem3b.escalaX,enem3b.escalaY,enem3b.escalaZ);
-		DibujaEnemigo3bout();
-	glPopMatrix();
-
-	//Ene3chango
-	glPushMatrix();
-		glTranslatef(chang.PosicionObj.x, chang.PosicionObj.y+2.4f, chang.PosicionObj.z);
-		glRotatef(chang.AngObj, 0.0f, 1.0f, 0.0f);
-		glScalef(chang.escalaX,chang.escalaY,chang.escalaZ);
-		DibujaChangoout();
-	glPopMatrix();
-	glLineWidth(1.0f);
-	glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
-	glCullFace(GL_BACK);
-	glDisable(GL_CULL_FACE);
-	glEnable(GL_LIGHTING);
 }
+
 void DibujaEscena()
 {
 	// Mayralol
@@ -4194,7 +3484,7 @@ int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la
 	// Colisiones
 	ActualizaObjetosDinamicosColision();
 	DibujaObjetosdeColision();
-	//DibujaEsferasColision();
+	DibujaEsferasColision();
 	ColisionesPiso();
 
 	return TRUE;
