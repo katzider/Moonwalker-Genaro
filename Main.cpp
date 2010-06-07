@@ -364,7 +364,7 @@ GLuint enemigo8Lout;
 GLuint modelo1aru;
 GLuint modelo1aruout;
 GLuint modelo1miku;
-GLuint mikuout;
+GLuint modelo1mikuout;
 
 //Constantes de iluminación y materiales
 GLfloat LightPos[] = { 200.0f, 20.0f, 25.0f, 1.0f};		// Posición de la luz
@@ -946,6 +946,7 @@ void CreaListas()
 	modelo1aru = glGenLists(9);
 	modelo1aruout = glGenLists(9);
 	modelo1miku = glGenLists( 5 );
+	modelo1mikuout = glGenLists( 5 );
 
 	glNewList(modelo1aru+0,GL_COMPILE);
 		g_Load3ds.Render3DSFile(&g_3DModel1aru, textureModel1aru, 1);
@@ -1039,6 +1040,27 @@ void CreaListas()
 	
 	glNewList( modelo1miku + 4, GL_COMPILE );
 		g_Load3ds.Render3DSFile( &g_3DModel5miku, textureModel5miku, 1 );
+	glEndList();
+
+	// Miku contorno
+	glNewList( modelo1mikuout + 0, GL_COMPILE );
+		g_Load3ds.Render3DSContour( &g_3DModel1miku );
+	glEndList();
+
+	glNewList( modelo1mikuout + 1, GL_COMPILE );
+		g_Load3ds.Render3DSContour( &g_3DModel2miku );
+	glEndList();
+	
+	glNewList( modelo1mikuout + 2, GL_COMPILE );
+		g_Load3ds.Render3DSContour( &g_3DModel3miku );
+	glEndList();
+	
+	glNewList( modelo1mikuout + 3, GL_COMPILE );
+		g_Load3ds.Render3DSContour( &g_3DModel4miku );
+	glEndList();
+	
+	glNewList( modelo1mikuout + 4, GL_COMPILE );
+		g_Load3ds.Render3DSContour( &g_3DModel5miku );
 	glEndList();
 
 	//Ene1
@@ -1395,6 +1417,7 @@ void DestruyeListas()
 
 	// Borra listas de Aru
 	glDeleteLists(modelo1aruout,9);
+	glDeleteLists(modelo1mikuout,9);
 	// Borra listas fahl
 	glDeleteLists(ene1out,10);
 	glDeleteLists(ene2out,3);
@@ -3392,6 +3415,50 @@ void DibujaMiku()
 
 	glPopMatrix();
 }
+void DibujaMikuout()
+{
+	glTranslatef( mikumodelo.Xtor, mikumodelo.Ytor, mikumodelo.Ztor);
+	glRotatef( mikumodelo.Angt2, 0.0f, 1.0f, 0.0f);
+	glRotatef( mikumodelo.Angt1, 1.0f, 0.0f, 0.0f);
+			
+	//Torso
+	glCallList( modelo1mikuout + 0 );
+
+	//Pierna derecha
+	glPushMatrix();
+		glTranslatef(0.0f, 0.0f, 0.0f);
+		glRotatef(mikumodelo.Angpder, 1.0f, 0.0f, 0.0f);
+		glCallList( modelo1mikuout + 1 );
+
+	glPopMatrix();
+
+	//Pierna izquierda
+	glPushMatrix();
+		glTranslatef(0.0f, 0.0f ,0.0f);
+		glRotatef( mikumodelo.Angpizq, 1.0f, 0.0f, 0.0f);
+		glCallList( modelo1mikuout + 2 );
+
+	glPopMatrix();
+
+	//Brazo derecho_a
+	glPushMatrix();
+		glTranslatef(0.0f, 0.0f, 0.0f);
+		glRotatef(mikumodelo.Angbd2, 0.0f, 1.0f, 0.0f);
+		glRotatef(mikumodelo.Angbd1, 1.0f, 0.0f, 0.0f);
+		glCallList( modelo1mikuout + 3 );
+
+	glPopMatrix();
+
+	//Brazo izquierdo
+	glPushMatrix();
+		glTranslatef(0.0f, 0.0f, 0.0f);
+		glRotatef(mikumodelo.Angbi2, 0.0f, 1.0f, 0.0f);
+		glRotatef(mikumodelo.Angbi1, 1.0f, 0.0f, 0.0f);
+		glCallList(modelo1mikuout + 4);
+
+	glPopMatrix();
+}
+
 void DibujaSombraMJ()
 {
 	glPushMatrix();
@@ -3763,7 +3830,17 @@ void DibujaMJ()
 		glScalef(MJ6.escalaX,MJ6.escalaY,MJ6.escalaZ);
 		DibujaMJ6out();
 	glPopMatrix();
+
 	glLineWidth(1.0f);
+	// Miku
+	glPushMatrix();
+		glTranslatef( miku.PosicionObj.x, miku.PosicionObj.y + 2.4f, miku.PosicionObj.z + 0.0f);
+		glRotatef(miku.AngObj, 0.0f, 1.0f, 0.0f);
+		glScalef(miku.escalaX,miku.escalaY,miku.escalaZ);
+		DibujaMikuout();
+	glPopMatrix();
+
+
 	glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
 	glCullFace(GL_BACK);
 	glDisable(GL_CULL_FACE);
