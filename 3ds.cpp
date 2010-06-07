@@ -8,6 +8,10 @@ extern CShader g_Shader;
 extern GLuint mSkinLoc;
 extern GLuint mCelLoc;
 
+std::vector<float> m_vertices;
+std::vector<float> m_texcoords;
+std::vector<float> m_colors;
+
 // This file handles all of the code needed to load a .3DS file.
 // Basically, how it works is, you load a chunk, then you check
 // the chunk ID.  Depending on the chunk ID, you load the information
@@ -646,7 +650,9 @@ void CLoad3DS::Render3DSFile(t3DModel *pModel, CTga *Textura, int tipo)
 
 		// This determines if we are in wireframe or normal mode
 		if(tipo == 1)
+		{
 			glBegin(GL_TRIANGLES);					// Begin drawing with our selected mode (triangles or lines)
+		}
 		else if(tipo == 2)
 		{
 			glDisable(GL_TEXTURE_2D);
@@ -672,7 +678,7 @@ void CLoad3DS::Render3DSFile(t3DModel *pModel, CTga *Textura, int tipo)
 
 						// Make sure there was a UVW map applied to the object or else it won't have tex coords.
 						if(pObject->pTexVerts) {
-							glTexCoord2f(pObject->pTexVerts[ index ].x, pObject->pTexVerts[ index ].y);
+							glTexCoord2f( pObject->pTexVerts[ index ].x, pObject->pTexVerts[ index ].y);
 						}
 					} else {
 
@@ -681,10 +687,10 @@ void CLoad3DS::Render3DSFile(t3DModel *pModel, CTga *Textura, int tipo)
 						// but just in case we want to check the size of the material list.
 						// if the size is at least one, and the material ID != -1,
 						// then we have a valid material.
-						if(pModel->pMaterials.size() && pObject->materialID >= 0) 
+						if( pModel->pMaterials.size() && pObject->materialID >= 0) 
 						{
 							// Get and set the color that the object is, since it must not have a texture
-							BYTE *pColor = pModel->pMaterials[pObject->materialID].color;
+							BYTE *pColor = pModel->pMaterials[ pObject->materialID ].color;
 
 							// Assign the current color to this model
 							glColor3ub(pColor[0], pColor[1], pColor[2]);
