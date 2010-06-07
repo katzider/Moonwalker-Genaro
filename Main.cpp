@@ -74,7 +74,11 @@ CMateriales Material;
 #define FILE_NAME8aru  "Modelos/MJ_brazoder_b.3ds"
 #define FILE_NAME9aru  "Modelos/MJ_brazoizq_b.3ds"
 
-#define FILE_NAME1miku "Modelos/miku/miku.3ds"
+#define FILE_NAME1miku "Modelos/miku/miku_torso.3ds"
+#define FILE_NAME2miku "Modelos/miku/miku_pder.3ds"
+#define FILE_NAME3miku "Modelos/miku/miku_pizq.3ds"
+#define FILE_NAME4miku "Modelos/miku/miku_bder.3ds"
+#define FILE_NAME5miku "Modelos/miku/miku_bizq.3ds"
 
 //nombre y ubicación de modelo Enemigo1
 #define FILE_NAME1d	 "Modelos/Ene1torso.3ds"
@@ -144,7 +148,12 @@ CTga textureModel3g[20];
 
 // Contenedores de texturas de los modelos de Aru(MJ y Miku)
 CTga textureModel1aru[20]; //MJ.tga
-CTga textureModel1miku[20]; //MJ.tga
+
+CTga textureModel1miku[20]; //miku.tga
+CTga textureModel2miku[20];
+CTga textureModel3miku[20];
+CTga textureModel4miku[20];
+CTga textureModel5miku[20];
 
 // Contenedores de texturas del escenario
 CTga textureModel2e[20];
@@ -201,6 +210,10 @@ t3DModel g_3DModel8aru;
 t3DModel g_3DModel9aru;
 
 t3DModel g_3DModel1miku;
+t3DModel g_3DModel2miku;
+t3DModel g_3DModel3miku;
+t3DModel g_3DModel4miku;
+t3DModel g_3DModel5miku;
 
 // Acceso a la estructura que almacena los datos del escenario
 t3DModel g_3DModel2e;
@@ -272,9 +285,6 @@ t3DModel g_3DModel1t;
 CTga textura[30];
 
 jerarquiaModelo player1modelo;	//Acceso a la estructura con las variables de cada pieza del modelo
-const int maxKF1=3;				//Num. total de KeyFrames para la secuencia 1 (caminar)
-FRAME KeyFrame1[maxKF1];		//Contenedor para almacenar cada keyframe de la secuencia 1
-
 jerarquiaModelo enem3amodelo;
 jerarquiaModelo enem3bmodelo;
 jerarquiaModelo changmodelo;
@@ -282,12 +292,56 @@ jerarquiaModelo enem1modelo;
 jerarquiaModelo enem2modelo;
 jerarquiaModelo MJ6modelo;
 
+/* Declaracion de keyframes, aqui puse todos los keyframes que chance usaran
+ * ya le puse un comentario a quien le pertenece cada frame, si requieren mas,
+ * agreguenlas despues de las que ya estan aqui 
+ */
+
+// Animacion de caminar de MJ
+const int maxKF1=3;				//Num. total de KeyFrames para la secuencia 1 (caminar)
+FRAME KeyFrame1[maxKF1];		//Contenedor para almacenar cada keyframe de la secuencia 1
+
+// Animacion Miku
+const int maxKF2 = 3;
+FRAME KeyFrame2[maxKF2];
+
+// Animacion enem1
+const int maxKF3 = 3;
+FRAME KeyFrame3[maxKF3];
+
+// Animacion enem2
+const int maxKF4 = 3;
+FRAME KeyFrame4[maxKF4];
+
+// Animacion MJ6modelo
+const int maxKF5 = 3;
+FRAME KeyFrame5[maxKF5];
+
+// Animacion enem3A
+const int maxKF6 = 3;
+FRAME KeyFrame6[maxKF6];
+
+// Animacion enem3B
+const int maxKF7 = 3;
+FRAME KeyFrame7[maxKF7];
+
+// Animacion changmodelo
+const int maxKF8 = 3;
+FRAME KeyFrame8[maxKF8];
+
 // Miku
 jerarquiaModelo mikumodelo;
 
 bool play=false;//Bandera para iniciar la animación
-int playIndex=0;//Auxiliar para leer la información del contenedor de keyframes
-int tipoAnim=1; //Indicador del tipo de animación
+int playIndex = 0;//Auxiliar para leer la información del contenedor de keyframes
+int tipoAnim = 1; //Indicador del tipo de animación
+
+// Banderas para iniciar las demas animaciones
+const int otros = 8;
+
+bool playOtros[ otros ] = { false };
+int playIndexOtros[ otros ] = { 0 };
+int tipoAnimOtros[ otros ] = { 1 };
 
 CMultitexturas Multitext;
 
@@ -317,10 +371,10 @@ GLuint enemigo8Lout;
 GLuint modelo1aru;
 GLuint modelo1aruout;
 GLuint modelo1miku;
-GLuint mikuout;
+GLuint modelo1mikuout;
 
 //Constantes de iluminación y materiales
-GLfloat LightPos[] = { 200.0f, 20.0f, 25.0f, 1.0f};		// Posición de la luz
+GLfloat LightPos[] = { 200.0f, 20.0f, 0.0f, 1.0f};		// Posición de la luz
 GLfloat LightAmb[] = { 0.8f,  0.8f, 0.8f, 1.0f};			// Valores de la componente ambiente
 GLfloat LightDif[] = { 0.9f,  0.9f, 0.9f, 1.0f};			// Valores de la componente difusa
 GLfloat LightSpc[] = { 0.5f,  0.5f, 0.5f, 1.0f};			// Valores de la componente especular
@@ -634,7 +688,15 @@ int CargaModelos()
 		return 0;
 
 	// Miku
-	if(!g_Load3ds.Load3DSFile(FILE_NAME1miku, &g_3DModel1miku, textureModel1miku))
+	if(!g_Load3ds.Load3DSFile(FILE_NAME1miku, &g_3DModel1miku, textureModel1miku ))
+		return 0;
+	if(!g_Load3ds.Load3DSFile(FILE_NAME2miku, &g_3DModel2miku, textureModel2miku ))
+		return 0;
+	if(!g_Load3ds.Load3DSFile(FILE_NAME3miku, &g_3DModel3miku, textureModel3miku ))
+		return 0;
+	if(!g_Load3ds.Load3DSFile(FILE_NAME4miku, &g_3DModel4miku, textureModel4miku ))
+		return 0;
+	if(!g_Load3ds.Load3DSFile(FILE_NAME5miku, &g_3DModel5miku, textureModel5miku ))
 		return 0;
 
 	//MJ6
@@ -734,6 +796,10 @@ void DescargaModelos()
 	g_Load3ds.UnLoad3DSFile(&g_3DModel9aru, textureModel1aru);
 	// Miku
 	g_Load3ds.UnLoad3DSFile( &g_3DModel1miku, textureModel1miku );
+	g_Load3ds.UnLoad3DSFile( &g_3DModel2miku, textureModel2miku );
+	g_Load3ds.UnLoad3DSFile( &g_3DModel3miku, textureModel3miku );
+	g_Load3ds.UnLoad3DSFile( &g_3DModel4miku, textureModel4miku );
+	g_Load3ds.UnLoad3DSFile( &g_3DModel5miku, textureModel5miku );
 
 	//Ene1
 	g_Load3ds.UnLoad3DSFile(&g_3DModel1d, textureModel1d);
@@ -886,7 +952,8 @@ void CreaListas()
 	// Crea listas para Aru
 	modelo1aru = glGenLists(9);
 	modelo1aruout = glGenLists(9);
-	modelo1miku = glGenLists( 9 );
+	modelo1miku = glGenLists( 5 );
+	modelo1mikuout = glGenLists( 5 );
 
 	glNewList(modelo1aru+0,GL_COMPILE);
 		g_Load3ds.Render3DSFile(&g_3DModel1aru, textureModel1aru, 1);
@@ -964,6 +1031,43 @@ void CreaListas()
 	// Miku
 	glNewList( modelo1miku + 0, GL_COMPILE );
 		g_Load3ds.Render3DSFile( &g_3DModel1miku, textureModel1miku, 1 );
+	glEndList();
+
+	glNewList( modelo1miku + 1, GL_COMPILE );
+		g_Load3ds.Render3DSFile( &g_3DModel2miku, textureModel2miku, 1 );
+	glEndList();
+	
+	glNewList( modelo1miku + 2, GL_COMPILE );
+		g_Load3ds.Render3DSFile( &g_3DModel3miku, textureModel3miku, 1 );
+	glEndList();
+	
+	glNewList( modelo1miku + 3, GL_COMPILE );
+		g_Load3ds.Render3DSFile( &g_3DModel4miku, textureModel4miku, 1 );
+	glEndList();
+	
+	glNewList( modelo1miku + 4, GL_COMPILE );
+		g_Load3ds.Render3DSFile( &g_3DModel5miku, textureModel5miku, 1 );
+	glEndList();
+
+	// Miku contorno
+	glNewList( modelo1mikuout + 0, GL_COMPILE );
+		g_Load3ds.Render3DSContour( &g_3DModel1miku );
+	glEndList();
+
+	glNewList( modelo1mikuout + 1, GL_COMPILE );
+		g_Load3ds.Render3DSContour( &g_3DModel2miku );
+	glEndList();
+	
+	glNewList( modelo1mikuout + 2, GL_COMPILE );
+		g_Load3ds.Render3DSContour( &g_3DModel3miku );
+	glEndList();
+	
+	glNewList( modelo1mikuout + 3, GL_COMPILE );
+		g_Load3ds.Render3DSContour( &g_3DModel4miku );
+	glEndList();
+	
+	glNewList( modelo1mikuout + 4, GL_COMPILE );
+		g_Load3ds.Render3DSContour( &g_3DModel5miku );
 	glEndList();
 
 	//Ene1
@@ -1307,6 +1411,7 @@ void DestruyeListas()
 
 	// Borra listas de Aru
 	glDeleteLists(modelo1aru,9);
+	glDeleteLists(modelo1miku,5);
 	// Borra listas fahl
 	glDeleteLists(ene1,10);
 	glDeleteLists(ene2,3);
@@ -1319,6 +1424,7 @@ void DestruyeListas()
 
 	// Borra listas de Aru
 	glDeleteLists(modelo1aruout,9);
+	glDeleteLists(modelo1mikuout,9);
 	// Borra listas fahl
 	glDeleteLists(ene1out,10);
 	glDeleteLists(ene2out,3);
@@ -1379,7 +1485,7 @@ void InicializaParametrosdeControl()
 								//sin aplicarle ninguna transformación (hacia adonde está volteando). Se elige un ángulo tal que al aplicarle
 								//una rotación inicial con respecto al eje Y esté viendo hacia la misma dirección que la definida por AngDir
 	
-	miku.PosicionObj = CVector( 185.0f, 70.0f, -5.0f); //Esta es la posición inicial del objeto en la escena
+	miku.PosicionObj = CVector( 35.0f, 7.7f, -90.0f); //Esta es la posición inicial del objeto en la escena
 	miku.Direccion.x = cosf( miku.AngDir * PI / 180.0f); //Dirección inicial definida por el ángulo inicial AngDir (x=cos(AngDir), y=0.0, z=sen(AngDir))
 	miku.Direccion.y = 0.0f;
 	miku.Direccion.z = sinf( miku.AngDir * PI / 180.0f);   
@@ -1390,9 +1496,9 @@ void InicializaParametrosdeControl()
 	miku.Dir=0;
 	miku.DirAnt=0;
 
-	miku.escalaX=0.4f;
-	miku.escalaY=0.4f;
-	miku.escalaZ=0.4f;
+	miku.escalaX=0.8f;
+	miku.escalaY=0.8f;
+	miku.escalaZ=0.8f;
 	
 	miku.CamaraObjAltE=0.0f;
 
@@ -1600,205 +1706,71 @@ void InicializaParametrosdeControl()
 	chang.CamaraObjAltE=0.0f;
 }
 
-void InicializaAnim()
+void InicializaAnim( FRAME *KeyFrame, int maxKF, jerarquiaModelo* modelo )
 {
 	//Se inicializan las variables de la secuencia 1
-	for(int i=0; i<maxKF1; i++)
+	for(int i = 0; i < maxKF; i++)
 	{
-		KeyFrame1[i].Angt1=0.0f;
-		KeyFrame1[i].Angt2=0.0f;
-		KeyFrame1[i].Angc1=0.0f;
-		KeyFrame1[i].Angc2=0.0f;
-		KeyFrame1[i].Angbi1=0.0f;
-		KeyFrame1[i].Angbi2=0.0f;
-		KeyFrame1[i].Angbib=0.0f;
-		KeyFrame1[i].Angbd1=0.0f;
-		KeyFrame1[i].Angbd2=0.0f;
-		KeyFrame1[i].Angbdb=0.0f;
-		KeyFrame1[i].Angpizq=0.0f;
-		KeyFrame1[i].Angpizqb=0.0f;
-		KeyFrame1[i].Angpder=0.0f;
-		KeyFrame1[i].Angpderb=0.0f;
-		KeyFrame1[i].Angpi=0.0f;
-		KeyFrame1[i].Angpd=0.0f;
-		KeyFrame1[i].Xtor=0.0f;
-		KeyFrame1[i].Ytor=0.0f;
-		KeyFrame1[i].Ztor=0.0f;
+		KeyFrame[i].Angt1=0.0f;
+		KeyFrame[i].Angt2=0.0f;
+		KeyFrame[i].Angc1=0.0f;
+		KeyFrame[i].Angc2=0.0f;
+		KeyFrame[i].Angbi1=0.0f;
+		KeyFrame[i].Angbi2=0.0f;
+		KeyFrame[i].Angbib=0.0f;
+		KeyFrame[i].Angbd1=0.0f;
+		KeyFrame[i].Angbd2=0.0f;
+		KeyFrame[i].Angbdb=0.0f;
+		KeyFrame[i].Angpizq=0.0f;
+		KeyFrame[i].Angpizqb=0.0f;
+		KeyFrame[i].Angpder=0.0f;
+		KeyFrame[i].Angpderb=0.0f;
+		KeyFrame[i].Angpi=0.0f;
+		KeyFrame[i].Angpd=0.0f;
+		KeyFrame[i].Xtor=0.0f;
+		KeyFrame[i].Ytor=0.0f;
+		KeyFrame[i].Ztor=0.0f;
 
-		KeyFrame1[i].incAngt1=false;
-		KeyFrame1[i].incAngt1=false;
-		KeyFrame1[i].incAngc1=false;
-		KeyFrame1[i].incAngc2=false;
-		KeyFrame1[i].incAngbi1=false;
-		KeyFrame1[i].incAngbi2=false;
-		KeyFrame1[i].incAngbib=false;
-		KeyFrame1[i].incAngbd1=false;
-		KeyFrame1[i].incAngbd2=false;
-		KeyFrame1[i].incAngbdb=false;
-		KeyFrame1[i].incAngpizq=false;
-		KeyFrame1[i].incAngpizqb=false;
-		KeyFrame1[i].incAngpder=false;
-		KeyFrame1[i].incAngpderb=false;
-		KeyFrame1[i].incAngpi=false;
-		KeyFrame1[i].incAngpd=false;
-		KeyFrame1[i].incXtor=false;
-		KeyFrame1[i].incYtor=false;
-		KeyFrame1[i].incZtor=false;
+		KeyFrame[i].incAngt1=false;
+		KeyFrame[i].incAngt1=false;
+		KeyFrame[i].incAngc1=false;
+		KeyFrame[i].incAngc2=false;
+		KeyFrame[i].incAngbi1=false;
+		KeyFrame[i].incAngbi2=false;
+		KeyFrame[i].incAngbib=false;
+		KeyFrame[i].incAngbd1=false;
+		KeyFrame[i].incAngbd2=false;
+		KeyFrame[i].incAngbdb=false;
+		KeyFrame[i].incAngpizq=false;
+		KeyFrame[i].incAngpizqb=false;
+		KeyFrame[i].incAngpder=false;
+		KeyFrame[i].incAngpderb=false;
+		KeyFrame[i].incAngpi=false;
+		KeyFrame[i].incAngpd=false;
+		KeyFrame[i].incXtor=false;
+		KeyFrame[i].incYtor=false;
+		KeyFrame[i].incZtor=false;
 	}
 
-	player1modelo.Angt1=0.0f;
-	player1modelo.Angt2=0.0f;
-	player1modelo.Angc1=0.0f;
-	player1modelo.Angc2=0.0f;
-	player1modelo.Angbi1=0.0f;
-	player1modelo.Angbi2=0.0f;
-	player1modelo.Angbib=0.0f;
-	player1modelo.Angbd1=0.0f;
-	player1modelo.Angbd2=0.0f;
-	player1modelo.Angbdb=0.0f;
-	player1modelo.Angpizq=0.0f;
-	player1modelo.Angpizqb=0.0f;
-	player1modelo.Angpder=0.0f;
-	player1modelo.Angpderb=0.0f;
-	player1modelo.Angpi=0.0f;
-	player1modelo.Angpd=0.0f;
-	player1modelo.Xtor=0.0f;
-	player1modelo.Ytor=0.0f;
-	player1modelo.Ztor=0.0f;
-
-	mikumodelo.Angt1=0.0f;
-	mikumodelo.Angt2=0.0f;
-	mikumodelo.Angc1=0.0f;
-	mikumodelo.Angc2=0.0f;
-	mikumodelo.Angbi1=0.0f;
-	mikumodelo.Angbi2=0.0f;
-	mikumodelo.Angbib=0.0f;
-	mikumodelo.Angbd1=0.0f;
-	mikumodelo.Angbd2=0.0f;
-	mikumodelo.Angbdb=0.0f;
-	mikumodelo.Angpizq=0.0f;
-	mikumodelo.Angpizqb=0.0f;
-	mikumodelo.Angpder=0.0f;
-	mikumodelo.Angpderb=0.0f;
-	mikumodelo.Angpi=0.0f;
-	mikumodelo.Angpd=0.0f;
-	mikumodelo.Xtor=0.0f;
-	mikumodelo.Ytor=0.0f;
-	mikumodelo.Ztor=0.0f;
-	
-	enem1modelo.Angt1=0.0f;
-	enem1modelo.Angt2=0.0f;
-	enem1modelo.Angc1=0.0f;
-	enem1modelo.Angc2=0.0f;
-	enem1modelo.Angbi1=0.0f;
-	enem1modelo.Angbi2=0.0f;
-	enem1modelo.Angbib=0.0f;
-	enem1modelo.Angbd1=0.0f;
-	enem1modelo.Angbd2=0.0f;
-	enem1modelo.Angbdb=0.0f;
-	enem1modelo.Angpizq=0.0f;
-	enem1modelo.Angpizqb=0.0f;
-	enem1modelo.Angpder=0.0f;
-	enem1modelo.Angpderb=0.0f;
-	enem1modelo.Angpi=0.0f;
-	enem1modelo.Angpd=0.0f;
-	enem1modelo.Xtor=0.0f;
-	enem1modelo.Ytor=0.0f;
-	enem1modelo.Ztor=0.0f;
-
-	enem2modelo.Angt1=0.0f;
-	enem2modelo.Angt2=0.0f;
-	enem2modelo.Angc1=0.0f;
-	enem2modelo.Angc2=0.0f;
-	enem2modelo.Angbi1=0.0f;
-	enem2modelo.Angbi2=0.0f;
-	enem2modelo.Angbib=0.0f;
-	enem2modelo.Angbd1=0.0f;
-	enem2modelo.Angbd2=0.0f;
-	enem2modelo.Angbdb=0.0f;
-	enem2modelo.Xtor=0.0f;
-	enem2modelo.Ytor=0.0f;
-	enem2modelo.Ztor=0.0f;
-
-	MJ6modelo.Angt1=0.0f;
-	MJ6modelo.Angt2=0.0f;
-	MJ6modelo.Angc1=0.0f;
-	MJ6modelo.Angc2=0.0f;
-	MJ6modelo.Angbi1=0.0f;
-	MJ6modelo.Angbi2=0.0f;
-	MJ6modelo.Angbib=0.0f;
-	MJ6modelo.Angbd1=0.0f;
-	MJ6modelo.Angbd2=0.0f;
-	MJ6modelo.Angbdb=0.0f;
-	MJ6modelo.Angpizq=0.0f;
-	MJ6modelo.Angpizqb=0.0f;
-	MJ6modelo.Angpder=0.0f;
-	MJ6modelo.Angpderb=0.0f;
-	MJ6modelo.Angpi=0.0f;
-	MJ6modelo.Angpd=0.0f;
-	MJ6modelo.Xtor=0.0f;
-	MJ6modelo.Ytor=0.0f;
-	MJ6modelo.Ztor=0.0f;
-
-	enem3amodelo.Angt1=0.0f;
-	enem3amodelo.Angt2=0.0f;
-	enem3amodelo.Angc1=0.0f;
-	enem3amodelo.Angc2=0.0f;
-	enem3amodelo.Angbi1=0.0f;
-	enem3amodelo.Angbi2=0.0f;
-	enem3amodelo.Angbib=0.0f;
-	enem3amodelo.Angbd1=0.0f;
-	enem3amodelo.Angbd2=0.0f;
-	enem3amodelo.Angbdb=0.0f;
-	enem3amodelo.Angpizq=0.0f;
-	enem3amodelo.Angpizqb=0.0f;
-	enem3amodelo.Angpder=0.0f;
-	enem3amodelo.Angpderb=0.0f;
-	enem3amodelo.Angpi=0.0f;
-	enem3amodelo.Angpd=0.0f;
-	enem3amodelo.Xtor=0.0f;
-	enem3amodelo.Ytor=0.0f;
-	enem3amodelo.Ztor=0.0f;
-
-	enem3bmodelo.Angt1=0.0f;
-	enem3bmodelo.Angt2=0.0f;
-	enem3bmodelo.Angc1=0.0f;
-	enem3bmodelo.Angc2=0.0f;
-	enem3bmodelo.Angbi1=0.0f;
-	enem3bmodelo.Angbi2=0.0f;
-	enem3bmodelo.Angbib=0.0f;
-	enem3bmodelo.Angbd1=0.0f;
-	enem3bmodelo.Angbd2=0.0f;
-	enem3bmodelo.Angbdb=0.0f;
-	enem3bmodelo.Angpizq=0.0f;
-	enem3bmodelo.Angpizqb=0.0f;
-	enem3bmodelo.Angpder=0.0f;
-	enem3bmodelo.Angpderb=0.0f;
-	enem3bmodelo.Angpi=0.0f;
-	enem3bmodelo.Angpd=0.0f;
-	enem3bmodelo.Xtor=0.0f;
-	enem3bmodelo.Ytor=0.0f;
-	enem3bmodelo.Ztor=0.0f;
-
-	changmodelo.Angt1=0.0f;
-	changmodelo.Angt2=0.0f;
-	changmodelo.Angc1=0.0f;
-	changmodelo.Angc2=0.0f;
-	changmodelo.Angbi1=0.0f;
-	changmodelo.Angbi2=0.0f;
-	changmodelo.Angbib=0.0f;
-	changmodelo.Angbd1=0.0f;
-	changmodelo.Angbd2=0.0f;
-	changmodelo.Angbdb=0.0f;
-	changmodelo.Angpizq=0.0f;
-	changmodelo.Angpizqb=0.0f;
-	changmodelo.Angpder=0.0f;
-	changmodelo.Angpderb=0.0f;
-	changmodelo.Angpi=0.0f;
-	changmodelo.Angpd=0.0f;
-	changmodelo.Xtor=0.0f;
-	changmodelo.Ytor=0.0f;
-	changmodelo.Ztor=0.0f;
+	modelo->Angt1=0.0f;
+	modelo->Angt2=0.0f;
+	modelo->Angc1=0.0f;
+	modelo->Angc2=0.0f;
+	modelo->Angbi1=0.0f;
+	modelo->Angbi2=0.0f;
+	modelo->Angbib=0.0f;
+	modelo->Angbd1=0.0f;
+	modelo->Angbd2=0.0f;
+	modelo->Angbdb=0.0f;
+	modelo->Angpizq=0.0f;
+	modelo->Angpizqb=0.0f;
+	modelo->Angpder=0.0f;
+	modelo->Angpderb=0.0f;
+	modelo->Angpi=0.0f;
+	modelo->Angpd=0.0f;
+	modelo->Xtor=0.0f;
+	modelo->Ytor=0.0f;
+	modelo->Ztor=0.0f;
 }
 
 void DatosAnimacion()
@@ -2505,7 +2477,14 @@ int InitGL(GLvoid)										// Aqui se configuran los parametros iniciales de Op
 	e=gluNewQuadric();
 
 	InicializaParametrosdeControl();
-	InicializaAnim();
+	InicializaAnim( KeyFrame1, maxKF1, &player1modelo );
+	InicializaAnim( KeyFrame2, maxKF2, &mikumodelo );
+	InicializaAnim( KeyFrame3, maxKF3, &enem1modelo );
+	InicializaAnim( KeyFrame4, maxKF4, &enem2modelo );
+	InicializaAnim( KeyFrame5, maxKF5, &MJ6modelo );
+	InicializaAnim( KeyFrame6, maxKF6, &enem3amodelo );
+	InicializaAnim( KeyFrame7, maxKF7, &enem3bmodelo );
+	InicializaAnim( KeyFrame8, maxKF8, &changmodelo );
 	DatosAnimacion();
 
 	// Colisiones
@@ -2632,79 +2611,82 @@ void ControlPersonaje(int funcion)
 	}
 }
 
-void animacion(FRAME *KeyFrame, int maxKF , int frames)
+/* animacion() ahora recibe un apuntador hacia el modelo que quieran usar, ej. &mikumodelo
+ * tambien recibe el playIndex de su personaje a animar, ese nada mas lo pasan como argumento
+ */
+void animacion(FRAME *KeyFrame, int maxKF , int frames, jerarquiaModelo* modelo, int& pIndex)
 {
 	if(play)
 	{		
-		if((abs(KeyFrame[playIndex+1].Angt1-player1modelo.Angt1))<0.1 &&
-		   (abs(KeyFrame[playIndex+1].Angt2-player1modelo.Angt2))<0.1 &&
-		   (abs(KeyFrame[playIndex+1].Angc1-player1modelo.Angc1))<0.1 &&
-		   (abs(KeyFrame[playIndex+1].Angc2-player1modelo.Angc2))<0.1 &&
-		   (abs(KeyFrame[playIndex+1].Angbi1-player1modelo.Angbi1))<0.1 &&
-		   (abs(KeyFrame[playIndex+1].Angbi2-player1modelo.Angbi2))<0.1 &&
-		   (abs(KeyFrame[playIndex+1].Angbib-player1modelo.Angbib))<0.1 &&
-		   (abs(KeyFrame[playIndex+1].Angbd1-player1modelo.Angbd1))<0.1 &&
-		   (abs(KeyFrame[playIndex+1].Angbd2-player1modelo.Angbd2))<0.1 &&
-		   (abs(KeyFrame[playIndex+1].Angbdb-player1modelo.Angbdb))<0.1 &&
-		   (abs(KeyFrame[playIndex+1].Angpizq-player1modelo.Angpizq))<0.1 &&
-		   (abs(KeyFrame[playIndex+1].Angpizqb-player1modelo.Angpizqb))<0.1 &&
-		   (abs(KeyFrame[playIndex+1].Angpder-player1modelo.Angpder))<0.1 &&
-		   (abs(KeyFrame[playIndex+1].Angpderb-player1modelo.Angpderb))<0.1 &&
-		   (abs(KeyFrame[playIndex+1].Angpi-player1modelo.Angpi))<0.1 &&
-		   (abs(KeyFrame[playIndex+1].Angpd-player1modelo.Angpd))<0.1 &&
-		   (abs(KeyFrame[playIndex+1].Xtor-player1modelo.Xtor))<0.1 &&
-		   (abs(KeyFrame[playIndex+1].Ytor-player1modelo.Ytor))<0.1 &&
-		   (abs(KeyFrame[playIndex+1].Ztor-player1modelo.Ztor))<0.1)
+		if((abs(KeyFrame[ pIndex+1].Angt1-modelo->Angt1))<0.1 &&
+		   (abs(KeyFrame[ pIndex+1].Angt2-modelo->Angt2))<0.1 &&
+		   (abs(KeyFrame[ pIndex+1].Angc1-modelo->Angc1))<0.1 &&
+		   (abs(KeyFrame[ pIndex+1].Angc2-modelo->Angc2))<0.1 &&
+		   (abs(KeyFrame[ pIndex+1].Angbi1-modelo->Angbi1))<0.1 &&
+		   (abs(KeyFrame[ pIndex+1].Angbi2-modelo->Angbi2))<0.1 &&
+		   (abs(KeyFrame[ pIndex+1].Angbib-modelo->Angbib))<0.1 &&
+		   (abs(KeyFrame[ pIndex+1].Angbd1-modelo->Angbd1))<0.1 &&
+		   (abs(KeyFrame[ pIndex+1].Angbd2-modelo->Angbd2))<0.1 &&
+		   (abs(KeyFrame[ pIndex+1].Angbdb-modelo->Angbdb))<0.1 &&
+		   (abs(KeyFrame[ pIndex+1].Angpizq-modelo->Angpizq))<0.1 &&
+		   (abs(KeyFrame[ pIndex+1].Angpizqb-modelo->Angpizqb))<0.1 &&
+		   (abs(KeyFrame[ pIndex+1].Angpder-modelo->Angpder))<0.1 &&
+		   (abs(KeyFrame[ pIndex+1].Angpderb-modelo->Angpderb))<0.1 &&
+		   (abs(KeyFrame[ pIndex+1].Angpi-modelo->Angpi))<0.1 &&
+		   (abs(KeyFrame[ pIndex+1].Angpd-modelo->Angpd))<0.1 &&
+		   (abs(KeyFrame[ pIndex+1].Xtor-modelo->Xtor))<0.1 &&
+		   (abs(KeyFrame[pIndex+1].Ytor-modelo->Ytor))<0.1 &&
+		   (abs(KeyFrame[pIndex+1].Ztor-modelo->Ztor))<0.1)
 		{			
-			playIndex++;			
-			if(playIndex>maxKF-2)
+			pIndex++;			
+			if(pIndex>maxKF-2)
 			{
-				playIndex=0;
+				pIndex=0;
 				play=false;
 								
 			}
 		}
 		else
 		{
-			KeyFrame[playIndex].incAngt1    = (KeyFrame[playIndex+1].Angt1-KeyFrame[playIndex].Angt1)/frames;
-			KeyFrame[playIndex].incAngt2    = (KeyFrame[playIndex+1].Angt2-KeyFrame[playIndex].Angt2)/frames;
-			KeyFrame[playIndex].incAngc1    = (KeyFrame[playIndex+1].Angc1-KeyFrame[playIndex].Angc1)/frames;
-			KeyFrame[playIndex].incAngc2    = (KeyFrame[playIndex+1].Angc2-KeyFrame[playIndex].Angc2)/frames;
-			KeyFrame[playIndex].incAngbi1   = (KeyFrame[playIndex+1].Angbi1-KeyFrame[playIndex].Angbi1)/frames;
-			KeyFrame[playIndex].incAngbi2   = (KeyFrame[playIndex+1].Angbi2-KeyFrame[playIndex].Angbi2)/frames;
-			KeyFrame[playIndex].incAngbib   = (KeyFrame[playIndex+1].Angbib-KeyFrame[playIndex].Angbib)/frames;
-			KeyFrame[playIndex].incAngbd1   = (KeyFrame[playIndex+1].Angbd1-KeyFrame[playIndex].Angbd1)/frames;
-			KeyFrame[playIndex].incAngbd2   = (KeyFrame[playIndex+1].Angbd2-KeyFrame[playIndex].Angbd2)/frames;
-			KeyFrame[playIndex].incAngbdb   = (KeyFrame[playIndex+1].Angbdb-KeyFrame[playIndex].Angbdb)/frames;
-			KeyFrame[playIndex].incAngpizq  = (KeyFrame[playIndex+1].Angpizq-KeyFrame[playIndex].Angpizq)/frames;
-			KeyFrame[playIndex].incAngpizqb = (KeyFrame[playIndex+1].Angpizqb-KeyFrame[playIndex].Angpizqb)/frames;
-			KeyFrame[playIndex].incAngpder  = (KeyFrame[playIndex+1].Angpder-KeyFrame[playIndex].Angpder)/frames;
-			KeyFrame[playIndex].incAngpderb = (KeyFrame[playIndex+1].Angpderb-KeyFrame[playIndex].Angpderb)/frames;
-			KeyFrame[playIndex].incAngpi    = (KeyFrame[playIndex+1].Angpi-KeyFrame[playIndex].Angpi)/frames;
-			KeyFrame[playIndex].incAngpd    = (KeyFrame[playIndex+1].Angpd-KeyFrame[playIndex].Angpd)/frames;
-			KeyFrame[playIndex].incXtor     = (KeyFrame[playIndex+1].Xtor-KeyFrame[playIndex].Xtor)/frames;
-			KeyFrame[playIndex].incYtor     = (KeyFrame[playIndex+1].Ytor-KeyFrame[playIndex].Ytor)/frames;
-			KeyFrame[playIndex].incZtor     = (KeyFrame[playIndex+1].Ztor-KeyFrame[playIndex].Ztor)/frames;
+			KeyFrame[pIndex].incAngt1    = (KeyFrame[pIndex+1].Angt1-KeyFrame[pIndex].Angt1)/frames;
+			KeyFrame[pIndex].incAngt2    = (KeyFrame[pIndex+1].Angt2-KeyFrame[pIndex].Angt2)/frames;
+			KeyFrame[pIndex].incAngc1    = (KeyFrame[pIndex+1].Angc1-KeyFrame[pIndex].Angc1)/frames;
+			KeyFrame[pIndex].incAngc2    = (KeyFrame[pIndex+1].Angc2-KeyFrame[pIndex].Angc2)/frames;
+			KeyFrame[pIndex].incAngbi1   = (KeyFrame[pIndex+1].Angbi1-KeyFrame[pIndex].Angbi1)/frames;
+			KeyFrame[pIndex].incAngbi2   = (KeyFrame[pIndex+1].Angbi2-KeyFrame[pIndex].Angbi2)/frames;
+			KeyFrame[pIndex].incAngbib   = (KeyFrame[pIndex+1].Angbib-KeyFrame[pIndex].Angbib)/frames;
+			KeyFrame[pIndex].incAngbd1   = (KeyFrame[pIndex+1].Angbd1-KeyFrame[pIndex].Angbd1)/frames;
+			KeyFrame[pIndex].incAngbd2   = (KeyFrame[pIndex+1].Angbd2-KeyFrame[pIndex].Angbd2)/frames;
+			KeyFrame[pIndex].incAngbdb   = (KeyFrame[pIndex+1].Angbdb-KeyFrame[pIndex].Angbdb)/frames;
+			KeyFrame[pIndex].incAngpizq  = (KeyFrame[pIndex+1].Angpizq-KeyFrame[pIndex].Angpizq)/frames;
+			KeyFrame[pIndex].incAngpizqb = (KeyFrame[pIndex+1].Angpizqb-KeyFrame[pIndex].Angpizqb)/frames;
+			KeyFrame[pIndex].incAngpder  = (KeyFrame[pIndex+1].Angpder-KeyFrame[pIndex].Angpder)/frames;
+			KeyFrame[pIndex].incAngpderb = (KeyFrame[pIndex+1].Angpderb-KeyFrame[pIndex].Angpderb)/frames;
+			KeyFrame[pIndex].incAngpi    = (KeyFrame[pIndex+1].Angpi-KeyFrame[pIndex].Angpi)/frames;
+			KeyFrame[pIndex].incAngpd    = (KeyFrame[pIndex+1].Angpd-KeyFrame[pIndex].Angpd)/frames;
+			KeyFrame[pIndex].incXtor     = (KeyFrame[pIndex+1].Xtor-KeyFrame[pIndex].Xtor)/frames;
+			KeyFrame[pIndex].incYtor     = (KeyFrame[pIndex+1].Ytor-KeyFrame[pIndex].Ytor)/frames;
+			KeyFrame[pIndex].incZtor     = (KeyFrame[pIndex+1].Ztor-KeyFrame[pIndex].Ztor)/frames;
 			
-			player1modelo.Angt1    += KeyFrame[playIndex].incAngt1;
-			player1modelo.Angt2    += KeyFrame[playIndex].incAngt2;
-			player1modelo.Angc1    += KeyFrame[playIndex].incAngc1;
-			player1modelo.Angc2    += KeyFrame[playIndex].incAngc2;
-			player1modelo.Angbi1   += KeyFrame[playIndex].incAngbi1;
-			player1modelo.Angbi2   += KeyFrame[playIndex].incAngbi2;
-			player1modelo.Angbib   += KeyFrame[playIndex].incAngbib;
-			player1modelo.Angbd1   += KeyFrame[playIndex].incAngbd1;
-			player1modelo.Angbd2   += KeyFrame[playIndex].incAngbd2;
-			player1modelo.Angbdb   += KeyFrame[playIndex].incAngbdb;
-			player1modelo.Angpizq  += KeyFrame[playIndex].incAngpizq;
-			player1modelo.Angpizqb += KeyFrame[playIndex].incAngpizqb;
-			player1modelo.Angpder  += KeyFrame[playIndex].incAngpder;
-			player1modelo.Angpderb += KeyFrame[playIndex].incAngpderb;
-			player1modelo.Angpi    += KeyFrame[playIndex].incAngpi;
-			player1modelo.Angpd    += KeyFrame[playIndex].incAngpd;
-			player1modelo.Xtor     += KeyFrame[playIndex].incXtor;
-			player1modelo.Ytor     += KeyFrame[playIndex].incYtor;
-			player1modelo.Ztor     += KeyFrame[playIndex].incZtor;
+			modelo->Angt1    += KeyFrame[pIndex].incAngt1;
+			modelo->Angt2    += KeyFrame[pIndex].incAngt2;
+			modelo->Angc1    += KeyFrame[pIndex].incAngc1;
+			modelo->Angc2    += KeyFrame[pIndex].incAngc2;
+			modelo->Angbi1   += KeyFrame[pIndex].incAngbi1;
+			modelo->Angbi2   += KeyFrame[pIndex].incAngbi2;
+			modelo->Angbib   += KeyFrame[pIndex].incAngbib;
+			modelo->Angbd1   += KeyFrame[pIndex].incAngbd1;
+			modelo->Angbd2   += KeyFrame[pIndex].incAngbd2;
+			modelo->Angbdb   += KeyFrame[pIndex].incAngbdb;
+			modelo->Angpizq  += KeyFrame[pIndex].incAngpizq;
+			modelo->Angpizqb += KeyFrame[pIndex].incAngpizqb;
+			modelo->Angpder  += KeyFrame[pIndex].incAngpder;
+			modelo->Angpderb += KeyFrame[pIndex].incAngpderb;
+			modelo->Angpi    += KeyFrame[pIndex].incAngpi;
+			modelo->Angpd    += KeyFrame[pIndex].incAngpd;
+			modelo->Xtor     += KeyFrame[pIndex].incXtor;
+			modelo->Ytor     += KeyFrame[pIndex].incYtor;
+			modelo->Ztor     += KeyFrame[pIndex].incZtor;
 			
 		}
 	}
@@ -3408,7 +3390,85 @@ void DibujaMiku()
 			
 	//Torso
 	glCallList( modelo1miku + 0 );
+
+	//Pierna derecha
+	glPushMatrix();
+		glTranslatef(0.0f, 0.0f, 0.0f);
+		glRotatef(mikumodelo.Angpder, 1.0f, 0.0f, 0.0f);
+		glCallList( modelo1miku + 1 );
+
+	glPopMatrix();
+
+	//Pierna izquierda
+	glPushMatrix();
+		glTranslatef(0.0f, 0.0f ,0.0f);
+		glRotatef( mikumodelo.Angpizq, 1.0f, 0.0f, 0.0f);
+		glCallList( modelo1miku + 2 );
+
+	glPopMatrix();
+
+	//Brazo derecho_a
+	glPushMatrix();
+		glTranslatef(0.0f, 0.0f, 0.0f);
+		glRotatef(mikumodelo.Angbd2, 0.0f, 1.0f, 0.0f);
+		glRotatef(mikumodelo.Angbd1, 1.0f, 0.0f, 0.0f);
+		glCallList( modelo1miku + 3 );
+
+	glPopMatrix();
+
+	//Brazo izquierdo
+	glPushMatrix();
+		glTranslatef(0.0f, 0.0f, 0.0f);
+		glRotatef(mikumodelo.Angbi2, 0.0f, 1.0f, 0.0f);
+		glRotatef(mikumodelo.Angbi1, 1.0f, 0.0f, 0.0f);
+		glCallList(modelo1miku + 4);
+
+	glPopMatrix();
 }
+void DibujaMikuout()
+{
+	glTranslatef( mikumodelo.Xtor, mikumodelo.Ytor, mikumodelo.Ztor);
+	glRotatef( mikumodelo.Angt2, 0.0f, 1.0f, 0.0f);
+	glRotatef( mikumodelo.Angt1, 1.0f, 0.0f, 0.0f);
+			
+	//Torso
+	glCallList( modelo1mikuout + 0 );
+
+	//Pierna derecha
+	glPushMatrix();
+		glTranslatef(0.0f, 0.0f, 0.0f);
+		glRotatef(mikumodelo.Angpder, 1.0f, 0.0f, 0.0f);
+		glCallList( modelo1mikuout + 1 );
+
+	glPopMatrix();
+
+	//Pierna izquierda
+	glPushMatrix();
+		glTranslatef(0.0f, 0.0f ,0.0f);
+		glRotatef( mikumodelo.Angpizq, 1.0f, 0.0f, 0.0f);
+		glCallList( modelo1mikuout + 2 );
+
+	glPopMatrix();
+
+	//Brazo derecho_a
+	glPushMatrix();
+		glTranslatef(0.0f, 0.0f, 0.0f);
+		glRotatef(mikumodelo.Angbd2, 0.0f, 1.0f, 0.0f);
+		glRotatef(mikumodelo.Angbd1, 1.0f, 0.0f, 0.0f);
+		glCallList( modelo1mikuout + 3 );
+
+	glPopMatrix();
+
+	//Brazo izquierdo
+	glPushMatrix();
+		glTranslatef(0.0f, 0.0f, 0.0f);
+		glRotatef(mikumodelo.Angbi2, 0.0f, 1.0f, 0.0f);
+		glRotatef(mikumodelo.Angbi1, 1.0f, 0.0f, 0.0f);
+		glCallList(modelo1mikuout + 4);
+
+	glPopMatrix();
+}
+
 void DibujaSombraMJ()
 {
 	glPushMatrix();
@@ -3780,7 +3840,17 @@ void DibujaMJ()
 		glScalef(MJ6.escalaX,MJ6.escalaY,MJ6.escalaZ);
 		DibujaMJ6out();
 	glPopMatrix();
+
 	glLineWidth(1.0f);
+	// Miku
+	glPushMatrix();
+		glTranslatef( miku.PosicionObj.x, miku.PosicionObj.y + 2.4f, miku.PosicionObj.z + 0.0f);
+		glRotatef(miku.AngObj, 0.0f, 1.0f, 0.0f);
+		glScalef(miku.escalaX,miku.escalaY,miku.escalaZ);
+		DibujaMikuout();
+	glPopMatrix();
+
+
 	glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
 	glCullFace(GL_BACK);
 	glDisable(GL_CULL_FACE);
@@ -4098,16 +4168,56 @@ void DibujaEnemigos()
 		DibujaChango();
 	glPopMatrix();
 
-	//tarantula
-	glPushMatrix();
-		glTranslatef(210.0f, 8.5f, -65.0f);
+	//tarantulas tipo pelicula Moonwalker
+	glPushMatrix();   //1 (rocas inicio)
+		glTranslatef(205.7f, 2.0f, -88.0f);
+		glScalef(0.25,0.25,0.25);
+		DibujaTarantula();
+	glPopMatrix();
+	glPushMatrix();   //2 (plataforma inicio grande)
+		glTranslatef(230.0f, 2.5f, -35.0f);
+		glRotatef(200.0f,0,1,0);
+		glScalef(0.2,0.2,0.2);
+		DibujaTarantula();
+	glPopMatrix();
+	glPushMatrix();   //3 (plataforma inicio chica)
+		glTranslatef(229.0f, 5.5f, -32.0f);
+		glRotatef(240.0f,0,1,0);
 		glScalef(0.1,0.1,0.1);
 		DibujaTarantula();
 	glPopMatrix();
+	glPushMatrix();   //4 (pared plano 2)
+		glTranslatef(45.0f, 17.0f, -100.0f);
+		glRotatef(100.0f,0,0,1);
+		glRotatef(90.0f,1,0,0);
+		glScalef(0.1,0.1,0.1);
+		DibujaTarantula();
+	glPopMatrix();
+	glPopMatrix();
+		glPushMatrix();   //5 (esquina interior)
+		glTranslatef(-3.5f, 4.5f, -40.0f);
+		glRotatef(160.0f,0,1,0);
+		glScalef(0.11,0.11,0.11);
+		DibujaTarantula();
+	glPopMatrix();
+	glPopMatrix();
+		glPushMatrix();   //6 (rocas inicio plano 7)
+		glTranslatef(-87.0f, 5.27f, 16.0f);
+		glScalef(0.14,0.14,0.14);
+		DibujaTarantula();
+	glPopMatrix();
+	glPopMatrix();
+		glPushMatrix();   //7 (rocas final)
+		glTranslatef(-16.0f, 5.3f, 115.0f);
+		glRotatef(160.0f,0,1,0);
+		glScalef(0.15,0.15,0.15);
+		DibujaTarantula();
+	glPopMatrix();
+
 
 	cel_Shader.TurnOff();
 
-	//contorno
+	//contornos
 	glDisable(GL_LIGHTING);
 	glEnable(GL_CULL_FACE);
 	glCullFace(GL_FRONT);
@@ -4162,19 +4272,59 @@ void DibujaEnemigos()
 		DibujaChangoout();
 	glPopMatrix();
 
-	/*//tarantula
-	glPushMatrix();
-		glTranslatef(210.0f, 8.5f, -65.0f);
+	//tarantulas tipo pelicula Moonwalker
+	glLineWidth(1.0f);
+	glPushMatrix();   //1 (rocas inicio)
+		glTranslatef(205.7f, 2.0f, -88.0f);
+		glScalef(0.25,0.25,0.25);
+		DibujaTarantulaout();
+	glPopMatrix();
+	glPushMatrix();   //2 (plataforma inicio grande)
+		glTranslatef(230.0f, 2.5f, -35.0f);
+		glRotatef(200.0f,0,1,0);
+		glScalef(0.2,0.2,0.2);
+		DibujaTarantulaout();
+	glPopMatrix();
+	glPushMatrix();   //3 (plataforma inicio chica)
+		glTranslatef(229.0f, 5.5f, -32.0f);
+		glRotatef(240.0f,0,1,0);
 		glScalef(0.1,0.1,0.1);
 		DibujaTarantulaout();
-	glPopMatrix();*/
+	glPopMatrix();
+	glPushMatrix();   //4 (pared plano 2)
+		glTranslatef(45.0f, 17.0f, -100.0f);
+		glRotatef(100.0f,0,0,1);
+		glRotatef(90.0f,1,0,0);
+		glScalef(0.1,0.1,0.1);
+		DibujaTarantulaout();
+	glPopMatrix();
+	glPopMatrix();
+		glPushMatrix();   //5 (esquina interior)
+		glTranslatef(-3.5f, 4.5f, -40.0f);
+		glRotatef(160.0f,0,1,0);
+		glScalef(0.11,0.11,0.11);
+		DibujaTarantulaout();
+	glPopMatrix();
+	glPopMatrix();
+		glPushMatrix();   //6 (rocas inicio plano 7)
+		glTranslatef(-87.0f, 5.27f, 16.0f);
+		glScalef(0.14,0.14,0.14);
+		DibujaTarantulaout();
+	glPopMatrix();
+	glPopMatrix();
+		glPushMatrix();   //7 (rocas final)
+		glTranslatef(-16.0f, 5.3f, 115.0f);
+		glRotatef(160.0f,0,1,0);
+		glScalef(0.15,0.15,0.15);
+		DibujaTarantulaout();
+	glPopMatrix();
 
-	glLineWidth(1.0f);
 	glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
 	glCullFace(GL_BACK);
 	glDisable(GL_CULL_FACE);
 	glEnable(GL_LIGHTING);
 }
+
 void DibujaEscena()
 {
 	// Mayralol
@@ -4269,7 +4419,7 @@ int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la
 	glStencilFunc(GL_ALWAYS, 0, 0);
 
 	//En este punto se aplica el depth pass (z-pass) o depth fail (z-fail)
-	DibujaSombraMJ();
+	//DibujaSombraMJ();
 			
 	// Se habilitan de nuevo los buffers de profundidad y color.
 	glDepthFunc(GL_LEQUAL);
@@ -4307,12 +4457,12 @@ int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la
 	DibujaTextos();
 	
 	// Esta parte opcional muestra la silueta extruida que crea el volumen de sombra.
-	/*if(displayVolume == true)
+	if(displayVolume == true)
 	{
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);     //Para que muestre el volumen en alambrado
 		DibujaVolumendeSombra();
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);     //Volvemos al modo sólido de nuevo
-	}*/
+	}
 
 	//splines
 	if(running) 
@@ -4730,7 +4880,7 @@ int WINAPI WinMain(	HINSTANCE	hInstance,			// Instancia
 					if(play)
 					{
 						if(tipoAnim == 1)
-							animacion(KeyFrame1, maxKF1 , 18);
+							animacion(KeyFrame1, maxKF1 , 18, &player1modelo, playIndex );
 					}
 					SwapBuffers(hDC);				// Intercambia los Buffers (Double Buffering)
 				}

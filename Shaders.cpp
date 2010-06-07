@@ -162,6 +162,7 @@ void CShader::InitShaders(string strVertex, string strFragment)
 	int logLength = 0;
     glGetObjectParameterivARB(m_hProgramObject, GL_OBJECT_INFO_LOG_LENGTH_ARB, &logLength);
 	
+	/* comente esto para detener el mensaje de los shaders
 	if (logLength > 1)
 	{
 		char *szLog = (char*)malloc(logLength);
@@ -172,7 +173,7 @@ void CShader::InitShaders(string strVertex, string strFragment)
 		
 		free(szLog);
 	}
-
+	*/
 	// Now, let's turn off the shader initially.
 	glUseProgramObjectARB(0);
 }
