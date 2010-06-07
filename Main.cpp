@@ -43,6 +43,7 @@ int pisoId = 0;
 
 // Variable de acceso a la estructura de parametros
 parametros player1;
+parametros miku;
 
 parametros enem1;	 //Variable con la que tenemos acceso a la estructura de parámetros de ene1
 parametros MJ6;		 //Variable con la que tenemos acceso a la estructura de parámetros de MJ6
@@ -72,6 +73,8 @@ CMateriales Material;
 #define FILE_NAME7aru  "Modelos/MJ_brazoizq_a.3ds"
 #define FILE_NAME8aru  "Modelos/MJ_brazoder_b.3ds"
 #define FILE_NAME9aru  "Modelos/MJ_brazoizq_b.3ds"
+
+#define FILE_NAME1miku "Modelos/miku/miku.3ds"
 
 //nombre y ubicación de modelo Enemigo1
 #define FILE_NAME1d	 "Modelos/Ene1torso.3ds"
@@ -141,6 +144,7 @@ CTga textureModel3g[20];
 
 // Contenedores de texturas de los modelos de Aru(MJ y Miku)
 CTga textureModel1aru[20]; //MJ.tga
+CTga textureModel1miku[20]; //MJ.tga
 
 // Contenedores de texturas del escenario
 CTga textureModel2e[20];
@@ -185,7 +189,7 @@ t3DModel g_3DModel7c;
 t3DModel g_3DModel8c;
 t3DModel g_3DModel9c;
 
-//Acceso a la estructura que almacena los datos de los modelos
+//Acceso a la estructura que almacena los datos de los modelos (MJ y miku)
 t3DModel g_3DModel1aru;
 t3DModel g_3DModel2aru;
 t3DModel g_3DModel3aru;
@@ -195,6 +199,8 @@ t3DModel g_3DModel6aru;
 t3DModel g_3DModel7aru;
 t3DModel g_3DModel8aru;
 t3DModel g_3DModel9aru;
+
+t3DModel g_3DModel1miku;
 
 // Acceso a la estructura que almacena los datos del escenario
 t3DModel g_3DModel2e;
@@ -276,6 +282,9 @@ jerarquiaModelo enem1modelo;
 jerarquiaModelo enem2modelo;
 jerarquiaModelo MJ6modelo;
 
+// Miku
+jerarquiaModelo mikumodelo;
+
 bool play=false;//Bandera para iniciar la animación
 int playIndex=0;//Auxiliar para leer la información del contenedor de keyframes
 int tipoAnim=1; //Indicador del tipo de animación
@@ -307,7 +316,8 @@ GLuint enemigo8Lout;
 // Declara enteros para los modelos de Aru
 GLuint modelo1aru;
 GLuint modelo1aruout;
-
+GLuint modelo1miku;
+GLuint mikuout;
 
 //Constantes de iluminación y materiales
 GLfloat LightPos[] = { 200.0f, 20.0f, 25.0f, 1.0f};		// Posición de la luz
@@ -623,6 +633,10 @@ int CargaModelos()
 	if(!g_Load3ds.Load3DSFile(FILE_NAME9aru, &g_3DModel9aru, textureModel1aru))
 		return 0;
 
+	// Miku
+	if(!g_Load3ds.Load3DSFile(FILE_NAME1miku, &g_3DModel1miku, textureModel1miku))
+		return 0;
+
 	//MJ6
 	if(!g_Load3ds.Load3DSFile(FILE_NAME1f, &g_3DModel1f, textureModel1f))
 		return 0;
@@ -718,6 +732,9 @@ void DescargaModelos()
 	g_Load3ds.UnLoad3DSFile(&g_3DModel7aru, textureModel1aru);
 	g_Load3ds.UnLoad3DSFile(&g_3DModel8aru, textureModel1aru);
 	g_Load3ds.UnLoad3DSFile(&g_3DModel9aru, textureModel1aru);
+	// Miku
+	g_Load3ds.UnLoad3DSFile( &g_3DModel1miku, textureModel1miku );
+
 	//Ene1
 	g_Load3ds.UnLoad3DSFile(&g_3DModel1d, textureModel1d);
 	g_Load3ds.UnLoad3DSFile(&g_3DModel2d, textureModel1d);
@@ -869,6 +886,7 @@ void CreaListas()
 	// Crea listas para Aru
 	modelo1aru = glGenLists(9);
 	modelo1aruout = glGenLists(9);
+	modelo1miku = glGenLists( 9 );
 
 	glNewList(modelo1aru+0,GL_COMPILE);
 		g_Load3ds.Render3DSFile(&g_3DModel1aru, textureModel1aru, 1);
@@ -906,7 +924,7 @@ void CreaListas()
 		g_Load3ds.Render3DSFile(&g_3DModel9aru, textureModel1aru, 1);
 	glEndList();
 
-
+	// Contorno
 	glNewList(modelo1aruout+0,GL_COMPILE);
 		g_Load3ds.Render3DSContour(&g_3DModel1aru);
 	glEndList();
@@ -941,6 +959,11 @@ void CreaListas()
 
 	glNewList(modelo1aruout+8,GL_COMPILE);
 		g_Load3ds.Render3DSContour(&g_3DModel9aru);
+	glEndList();
+
+	// Miku
+	glNewList( modelo1miku + 0, GL_COMPILE );
+		g_Load3ds.Render3DSFile( &g_3DModel1miku, textureModel1miku, 1 );
 	glEndList();
 
 	//Ene1
@@ -1343,6 +1366,36 @@ void InicializaParametrosdeControl()
 	
 	player1.CamaraObjAltE=0.0f;
 
+	// Miku
+	//Esta función establece los parámetros como velocidad del objeto y distancia de la cámara así como la posición y dirección iniciales
+	miku.visible = true;
+	miku.VelocidadObj = 0.2f;
+	miku.DistanciaCam = 20.0f;
+
+	miku.CamaraPosAlt = 10.0f;	//Posición en y de la cámara (altura a la que se situa la cámara)
+	miku.CamaraObjAlt = 6.4f;	//Posición en y del objetivo de la cámara (altura a la que ve la cámara)
+	miku.AngDir = 90.0f;		//Este ángulo inicial hace que la dirección inicial sea paralela al eje Z y con sentido negativo
+	miku.AngObj = 0.0f;		//Este valor se elige dependiendo de la orientación con la que aparece el modelo en la escena al dibujarlo
+								//sin aplicarle ninguna transformación (hacia adonde está volteando). Se elige un ángulo tal que al aplicarle
+								//una rotación inicial con respecto al eje Y esté viendo hacia la misma dirección que la definida por AngDir
+	
+	miku.PosicionObj = CVector( 185.0f, 70.0f, -5.0f); //Esta es la posición inicial del objeto en la escena
+	miku.Direccion.x = cosf( miku.AngDir * PI / 180.0f); //Dirección inicial definida por el ángulo inicial AngDir (x=cos(AngDir), y=0.0, z=sen(AngDir))
+	miku.Direccion.y = 0.0f;
+	miku.Direccion.z = sinf( miku.AngDir * PI / 180.0f);   
+	miku.PosicionCam = CVector( miku.PosicionObj.x, miku.PosicionObj.y + miku.CamaraPosAlt, miku.PosicionObj.z +miku.DistanciaCam ); //Posición inicial de la cámara a [DistanciaCam] unidades detrás del objeto
+	miku.ObjetivoCam = miku.PosicionObj;		//La cámara ve siempre al objeto
+	miku.ObjetivoCam.y = miku.CamaraObjAlt;		//Para que no vea a los "pies" del objeto (personaje)
+
+	miku.Dir=0;
+	miku.DirAnt=0;
+
+	miku.escalaX=0.4f;
+	miku.escalaY=0.4f;
+	miku.escalaZ=0.4f;
+	
+	miku.CamaraObjAltE=0.0f;
+
 	// en inicializa parametro de control savage
 	enemigo8.visible=true;
 	enemigo8.VelocidadObj=0.4f;
@@ -1612,6 +1665,26 @@ void InicializaAnim()
 	player1modelo.Xtor=0.0f;
 	player1modelo.Ytor=0.0f;
 	player1modelo.Ztor=0.0f;
+
+	mikumodelo.Angt1=0.0f;
+	mikumodelo.Angt2=0.0f;
+	mikumodelo.Angc1=0.0f;
+	mikumodelo.Angc2=0.0f;
+	mikumodelo.Angbi1=0.0f;
+	mikumodelo.Angbi2=0.0f;
+	mikumodelo.Angbib=0.0f;
+	mikumodelo.Angbd1=0.0f;
+	mikumodelo.Angbd2=0.0f;
+	mikumodelo.Angbdb=0.0f;
+	mikumodelo.Angpizq=0.0f;
+	mikumodelo.Angpizqb=0.0f;
+	mikumodelo.Angpder=0.0f;
+	mikumodelo.Angpderb=0.0f;
+	mikumodelo.Angpi=0.0f;
+	mikumodelo.Angpd=0.0f;
+	mikumodelo.Xtor=0.0f;
+	mikumodelo.Ytor=0.0f;
+	mikumodelo.Ztor=0.0f;
 	
 	enem1modelo.Angt1=0.0f;
 	enem1modelo.Angt2=0.0f;
@@ -3327,6 +3400,15 @@ void DibujaPersonajeAru()
 	glPopMatrix();
 }
 
+void DibujaMiku()
+{
+	glTranslatef( mikumodelo.Xtor, mikumodelo.Ytor, mikumodelo.Ztor);
+	glRotatef( mikumodelo.Angt2, 0.0f, 1.0f, 0.0f);
+	glRotatef( mikumodelo.Angt1, 1.0f, 0.0f, 0.0f);
+			
+	//Torso
+	glCallList( modelo1miku + 0 );
+}
 void DibujaSombraMJ()
 {
 	glPushMatrix();
@@ -3657,6 +3739,14 @@ void DibujaMJ()
 		glRotatef(player1.AngObj, 0.0f, 1.0f, 0.0f);
 		glScalef(player1.escalaX,player1.escalaY,player1.escalaZ);
 		DibujaPersonajeAru();
+	glPopMatrix();
+
+	// Miku
+	glPushMatrix();
+		glTranslatef( miku.PosicionObj.x, miku.PosicionObj.y + 2.4f, miku.PosicionObj.z + 0.0f);
+		glRotatef(miku.AngObj, 0.0f, 1.0f, 0.0f);
+		glScalef(miku.escalaX,miku.escalaY,miku.escalaZ);
+		DibujaMiku();
 	glPopMatrix();
 
 	//MJ6
