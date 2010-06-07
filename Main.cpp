@@ -126,6 +126,9 @@ CMateriales Material;
 #define FILE_NAME2k	 "Modelos/Ene2bomb.3ds"
 #define FILE_NAME3k	 "Modelos/Ene2pers.3ds"
 
+//nombre y ubicación de modelo tarantula
+#define FILE_NAME1t	 "Modelos/tarantula.3ds"
+
 //Contenedor de texturas de enemigo1
 CTga textureModel1d[20];
 //Contenedor de texturas de MJ6 (MJ Robot)
@@ -164,6 +167,9 @@ CTga textureModel5j[20];
 CTga textureModel1k[20];
 CTga textureModel2k[20];
 CTga textureModel3k[20];
+
+//Contenedor de texturas de tarantula
+CTga textureModel1t[20];
 
 CLoad3DS g_Load3ds;
 CShader cel_Shader;
@@ -252,6 +258,10 @@ t3DModel g_3DModel1k;
 t3DModel g_3DModel2k;
 t3DModel g_3DModel3k;
 
+
+//Acceso a la estructura que almacena a tarantula
+t3DModel g_3DModel1t;
+
 //Contenedor de texturas adicionales
 CTga textura[30];
 
@@ -287,6 +297,8 @@ GLuint ene3b;
 GLuint ene3bout;
 GLuint cha;
 GLuint chaout; 
+GLuint taran;
+GLuint taranout; 
 
 // las listas savage
 GLuint enemigo8L;
@@ -677,6 +689,10 @@ int CargaModelos()
 	if(!g_Load3ds.Load3DSFile(FILE_NAME3k, &g_3DModel3k, textureModel1k))
 		return 0;
 
+	//tarantula
+	if(!g_Load3ds.Load3DSFile(FILE_NAME1t, &g_3DModel1t, textureModel1t))
+		return 0;
+
 	return TRUE;
 }
 
@@ -751,6 +767,9 @@ void DescargaModelos()
 	g_Load3ds.UnLoad3DSFile(&g_3DModel1k, textureModel1k);
 	g_Load3ds.UnLoad3DSFile(&g_3DModel2k, textureModel2k);
 	g_Load3ds.UnLoad3DSFile(&g_3DModel3k, textureModel3k);
+
+	//tarantula
+	g_Load3ds.UnLoad3DSFile(&g_3DModel1t, textureModel1t);
 }
 
 void IniSombraVolumen()
@@ -801,6 +820,8 @@ void CreaListas()
 	cha=glGenLists(5);
 	// en crea listas savage
 	enemigo8L=glGenLists(3);
+	//tarantula
+	taran=glGenLists(1);
 
 	//Ene1 contorno
 	ene1out=glGenLists(10);
@@ -816,6 +837,8 @@ void CreaListas()
 	chaout=glGenLists(5);
 	// en crea listas savage contorno
 	enemigo8Lout=glGenLists(3);
+	//tarantula contorno
+	taranout=glGenLists(1);
 
 	glNewList(enemigo8L+0,GL_COMPILE);
 		g_Load3ds.Render3DSFile(&g_3DModel1g, textureModel1g, 1);
@@ -1238,6 +1261,21 @@ void CreaListas()
 		g_Load3ds.Render3DSContour(&g_3DModel3k);
 	glEndList();
 
+
+	
+	//tarantula
+	glNewList(taran+0,GL_COMPILE);
+		g_Load3ds.Render3DSFile(&g_3DModel1t, textureModel1t, 1);
+	glEndList();
+
+
+
+	glNewList(taranout+0,GL_COMPILE);
+		g_Load3ds.Render3DSContour(&g_3DModel1t);
+	glEndList();
+
+
+
 }
 
 
@@ -1254,6 +1292,7 @@ void DestruyeListas()
 	glDeleteLists(ene3a,5);
 	glDeleteLists(ene3b,5);
 	glDeleteLists(cha,5);
+	glDeleteLists(taran,5);
 
 	// Borra listas de Aru
 	glDeleteLists(modelo1aruout,9);
@@ -1265,6 +1304,8 @@ void DestruyeListas()
 	glDeleteLists(ene3aout,5);
 	glDeleteLists(ene3bout,5);
 	glDeleteLists(chaout,5);
+	glDeleteLists(taranout,5);
+
 
 }
 
@@ -3198,6 +3239,19 @@ void DibujaChangoout()
 }
 
 
+void DibujaTarantula()
+{
+	//Torso
+	glCallList(taran+0);
+}
+
+
+void DibujaTarantulaout()
+{
+	//Torso
+	glCallList(taranout+0);
+}
+
 
 
 // Dibuja Personajes de Aru
@@ -3946,12 +4000,19 @@ void DibujaEnemigos()
 		DibujaEnemigo3b();
 	glPopMatrix();
 
-	//Ene3chango
+	//chango
 	glPushMatrix();
 		glTranslatef(chang.PosicionObj.x, chang.PosicionObj.y+2.4f, chang.PosicionObj.z);
 		glRotatef(chang.AngObj, 0.0f, 1.0f, 0.0f);
 		glScalef(chang.escalaX,chang.escalaY,chang.escalaZ);
 		DibujaChango();
+	glPopMatrix();
+
+	//tarantula
+	glPushMatrix();
+		glTranslatef(210.0f, 8.5f, -65.0f);
+		glScalef(0.1,0.1,0.1);
+		DibujaTarantula();
 	glPopMatrix();
 
 	cel_Shader.TurnOff();
@@ -4003,13 +4064,21 @@ void DibujaEnemigos()
 		DibujaEnemigo3bout();
 	glPopMatrix();
 
-	//Ene3chango
+	//chango
 	glPushMatrix();
 		glTranslatef(chang.PosicionObj.x, chang.PosicionObj.y+2.4f, chang.PosicionObj.z);
 		glRotatef(chang.AngObj, 0.0f, 1.0f, 0.0f);
 		glScalef(chang.escalaX,chang.escalaY,chang.escalaZ);
 		DibujaChangoout();
 	glPopMatrix();
+
+	/*//tarantula
+	glPushMatrix();
+		glTranslatef(210.0f, 8.5f, -65.0f);
+		glScalef(0.1,0.1,0.1);
+		DibujaTarantulaout();
+	glPopMatrix();*/
+
 	glLineWidth(1.0f);
 	glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
 	glCullFace(GL_BACK);
