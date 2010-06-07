@@ -285,15 +285,49 @@ t3DModel g_3DModel1t;
 CTga textura[30];
 
 jerarquiaModelo player1modelo;	//Acceso a la estructura con las variables de cada pieza del modelo
-const int maxKF1=3;				//Num. total de KeyFrames para la secuencia 1 (caminar)
-FRAME KeyFrame1[maxKF1];		//Contenedor para almacenar cada keyframe de la secuencia 1
-
 jerarquiaModelo enem3amodelo;
 jerarquiaModelo enem3bmodelo;
 jerarquiaModelo changmodelo;
 jerarquiaModelo enem1modelo;
 jerarquiaModelo enem2modelo;
 jerarquiaModelo MJ6modelo;
+
+/* Declaracion de keyframes, aqui puse todos los keyframes que chance usaran
+ * ya le puse un comentario a quien le pertenece cada frame, si requieren mas,
+ * agreguenlas despues de las que ya estan aqui 
+ */
+
+// Animacion de caminar de MJ
+const int maxKF1=3;				//Num. total de KeyFrames para la secuencia 1 (caminar)
+FRAME KeyFrame1[maxKF1];		//Contenedor para almacenar cada keyframe de la secuencia 1
+
+// Animacion Miku
+const int maxKF2 = 3;
+FRAME KeyFrame2[maxKF2];
+
+// Animacion enem1
+const int maxKF3 = 3;
+FRAME KeyFrame3[maxKF3];
+
+// Animacion enem2
+const int maxKF4 = 3;
+FRAME KeyFrame4[maxKF4];
+
+// Animacion MJ6modelo
+const int maxKF5 = 3;
+FRAME KeyFrame5[maxKF5];
+
+// Animacion enem3A
+const int maxKF6 = 3;
+FRAME KeyFrame6[maxKF6];
+
+// Animacion enem3B
+const int maxKF7 = 3;
+FRAME KeyFrame7[maxKF7];
+
+// Animacion changmodelo
+const int maxKF8 = 3;
+FRAME KeyFrame8[maxKF8];
 
 // Miku
 jerarquiaModelo mikumodelo;
@@ -1642,205 +1676,71 @@ void InicializaParametrosdeControl()
 	chang.CamaraObjAltE=0.0f;
 }
 
-void InicializaAnim()
+void InicializaAnim( FRAME *KeyFrame, int maxKF, jerarquiaModelo* modelo )
 {
 	//Se inicializan las variables de la secuencia 1
-	for(int i=0; i<maxKF1; i++)
+	for(int i = 0; i < maxKF; i++)
 	{
-		KeyFrame1[i].Angt1=0.0f;
-		KeyFrame1[i].Angt2=0.0f;
-		KeyFrame1[i].Angc1=0.0f;
-		KeyFrame1[i].Angc2=0.0f;
-		KeyFrame1[i].Angbi1=0.0f;
-		KeyFrame1[i].Angbi2=0.0f;
-		KeyFrame1[i].Angbib=0.0f;
-		KeyFrame1[i].Angbd1=0.0f;
-		KeyFrame1[i].Angbd2=0.0f;
-		KeyFrame1[i].Angbdb=0.0f;
-		KeyFrame1[i].Angpizq=0.0f;
-		KeyFrame1[i].Angpizqb=0.0f;
-		KeyFrame1[i].Angpder=0.0f;
-		KeyFrame1[i].Angpderb=0.0f;
-		KeyFrame1[i].Angpi=0.0f;
-		KeyFrame1[i].Angpd=0.0f;
-		KeyFrame1[i].Xtor=0.0f;
-		KeyFrame1[i].Ytor=0.0f;
-		KeyFrame1[i].Ztor=0.0f;
+		KeyFrame[i].Angt1=0.0f;
+		KeyFrame[i].Angt2=0.0f;
+		KeyFrame[i].Angc1=0.0f;
+		KeyFrame[i].Angc2=0.0f;
+		KeyFrame[i].Angbi1=0.0f;
+		KeyFrame[i].Angbi2=0.0f;
+		KeyFrame[i].Angbib=0.0f;
+		KeyFrame[i].Angbd1=0.0f;
+		KeyFrame[i].Angbd2=0.0f;
+		KeyFrame[i].Angbdb=0.0f;
+		KeyFrame[i].Angpizq=0.0f;
+		KeyFrame[i].Angpizqb=0.0f;
+		KeyFrame[i].Angpder=0.0f;
+		KeyFrame[i].Angpderb=0.0f;
+		KeyFrame[i].Angpi=0.0f;
+		KeyFrame[i].Angpd=0.0f;
+		KeyFrame[i].Xtor=0.0f;
+		KeyFrame[i].Ytor=0.0f;
+		KeyFrame[i].Ztor=0.0f;
 
-		KeyFrame1[i].incAngt1=false;
-		KeyFrame1[i].incAngt1=false;
-		KeyFrame1[i].incAngc1=false;
-		KeyFrame1[i].incAngc2=false;
-		KeyFrame1[i].incAngbi1=false;
-		KeyFrame1[i].incAngbi2=false;
-		KeyFrame1[i].incAngbib=false;
-		KeyFrame1[i].incAngbd1=false;
-		KeyFrame1[i].incAngbd2=false;
-		KeyFrame1[i].incAngbdb=false;
-		KeyFrame1[i].incAngpizq=false;
-		KeyFrame1[i].incAngpizqb=false;
-		KeyFrame1[i].incAngpder=false;
-		KeyFrame1[i].incAngpderb=false;
-		KeyFrame1[i].incAngpi=false;
-		KeyFrame1[i].incAngpd=false;
-		KeyFrame1[i].incXtor=false;
-		KeyFrame1[i].incYtor=false;
-		KeyFrame1[i].incZtor=false;
+		KeyFrame[i].incAngt1=false;
+		KeyFrame[i].incAngt1=false;
+		KeyFrame[i].incAngc1=false;
+		KeyFrame[i].incAngc2=false;
+		KeyFrame[i].incAngbi1=false;
+		KeyFrame[i].incAngbi2=false;
+		KeyFrame[i].incAngbib=false;
+		KeyFrame[i].incAngbd1=false;
+		KeyFrame[i].incAngbd2=false;
+		KeyFrame[i].incAngbdb=false;
+		KeyFrame[i].incAngpizq=false;
+		KeyFrame[i].incAngpizqb=false;
+		KeyFrame[i].incAngpder=false;
+		KeyFrame[i].incAngpderb=false;
+		KeyFrame[i].incAngpi=false;
+		KeyFrame[i].incAngpd=false;
+		KeyFrame[i].incXtor=false;
+		KeyFrame[i].incYtor=false;
+		KeyFrame[i].incZtor=false;
 	}
 
-	player1modelo.Angt1=0.0f;
-	player1modelo.Angt2=0.0f;
-	player1modelo.Angc1=0.0f;
-	player1modelo.Angc2=0.0f;
-	player1modelo.Angbi1=0.0f;
-	player1modelo.Angbi2=0.0f;
-	player1modelo.Angbib=0.0f;
-	player1modelo.Angbd1=0.0f;
-	player1modelo.Angbd2=0.0f;
-	player1modelo.Angbdb=0.0f;
-	player1modelo.Angpizq=0.0f;
-	player1modelo.Angpizqb=0.0f;
-	player1modelo.Angpder=0.0f;
-	player1modelo.Angpderb=0.0f;
-	player1modelo.Angpi=0.0f;
-	player1modelo.Angpd=0.0f;
-	player1modelo.Xtor=0.0f;
-	player1modelo.Ytor=0.0f;
-	player1modelo.Ztor=0.0f;
-
-	mikumodelo.Angt1=0.0f;
-	mikumodelo.Angt2=0.0f;
-	mikumodelo.Angc1=0.0f;
-	mikumodelo.Angc2=0.0f;
-	mikumodelo.Angbi1=0.0f;
-	mikumodelo.Angbi2=0.0f;
-	mikumodelo.Angbib=0.0f;
-	mikumodelo.Angbd1=0.0f;
-	mikumodelo.Angbd2=0.0f;
-	mikumodelo.Angbdb=0.0f;
-	mikumodelo.Angpizq=0.0f;
-	mikumodelo.Angpizqb=0.0f;
-	mikumodelo.Angpder=0.0f;
-	mikumodelo.Angpderb=0.0f;
-	mikumodelo.Angpi=0.0f;
-	mikumodelo.Angpd=0.0f;
-	mikumodelo.Xtor=0.0f;
-	mikumodelo.Ytor=0.0f;
-	mikumodelo.Ztor=0.0f;
-	
-	enem1modelo.Angt1=0.0f;
-	enem1modelo.Angt2=0.0f;
-	enem1modelo.Angc1=0.0f;
-	enem1modelo.Angc2=0.0f;
-	enem1modelo.Angbi1=0.0f;
-	enem1modelo.Angbi2=0.0f;
-	enem1modelo.Angbib=0.0f;
-	enem1modelo.Angbd1=0.0f;
-	enem1modelo.Angbd2=0.0f;
-	enem1modelo.Angbdb=0.0f;
-	enem1modelo.Angpizq=0.0f;
-	enem1modelo.Angpizqb=0.0f;
-	enem1modelo.Angpder=0.0f;
-	enem1modelo.Angpderb=0.0f;
-	enem1modelo.Angpi=0.0f;
-	enem1modelo.Angpd=0.0f;
-	enem1modelo.Xtor=0.0f;
-	enem1modelo.Ytor=0.0f;
-	enem1modelo.Ztor=0.0f;
-
-	enem2modelo.Angt1=0.0f;
-	enem2modelo.Angt2=0.0f;
-	enem2modelo.Angc1=0.0f;
-	enem2modelo.Angc2=0.0f;
-	enem2modelo.Angbi1=0.0f;
-	enem2modelo.Angbi2=0.0f;
-	enem2modelo.Angbib=0.0f;
-	enem2modelo.Angbd1=0.0f;
-	enem2modelo.Angbd2=0.0f;
-	enem2modelo.Angbdb=0.0f;
-	enem2modelo.Xtor=0.0f;
-	enem2modelo.Ytor=0.0f;
-	enem2modelo.Ztor=0.0f;
-
-	MJ6modelo.Angt1=0.0f;
-	MJ6modelo.Angt2=0.0f;
-	MJ6modelo.Angc1=0.0f;
-	MJ6modelo.Angc2=0.0f;
-	MJ6modelo.Angbi1=0.0f;
-	MJ6modelo.Angbi2=0.0f;
-	MJ6modelo.Angbib=0.0f;
-	MJ6modelo.Angbd1=0.0f;
-	MJ6modelo.Angbd2=0.0f;
-	MJ6modelo.Angbdb=0.0f;
-	MJ6modelo.Angpizq=0.0f;
-	MJ6modelo.Angpizqb=0.0f;
-	MJ6modelo.Angpder=0.0f;
-	MJ6modelo.Angpderb=0.0f;
-	MJ6modelo.Angpi=0.0f;
-	MJ6modelo.Angpd=0.0f;
-	MJ6modelo.Xtor=0.0f;
-	MJ6modelo.Ytor=0.0f;
-	MJ6modelo.Ztor=0.0f;
-
-	enem3amodelo.Angt1=0.0f;
-	enem3amodelo.Angt2=0.0f;
-	enem3amodelo.Angc1=0.0f;
-	enem3amodelo.Angc2=0.0f;
-	enem3amodelo.Angbi1=0.0f;
-	enem3amodelo.Angbi2=0.0f;
-	enem3amodelo.Angbib=0.0f;
-	enem3amodelo.Angbd1=0.0f;
-	enem3amodelo.Angbd2=0.0f;
-	enem3amodelo.Angbdb=0.0f;
-	enem3amodelo.Angpizq=0.0f;
-	enem3amodelo.Angpizqb=0.0f;
-	enem3amodelo.Angpder=0.0f;
-	enem3amodelo.Angpderb=0.0f;
-	enem3amodelo.Angpi=0.0f;
-	enem3amodelo.Angpd=0.0f;
-	enem3amodelo.Xtor=0.0f;
-	enem3amodelo.Ytor=0.0f;
-	enem3amodelo.Ztor=0.0f;
-
-	enem3bmodelo.Angt1=0.0f;
-	enem3bmodelo.Angt2=0.0f;
-	enem3bmodelo.Angc1=0.0f;
-	enem3bmodelo.Angc2=0.0f;
-	enem3bmodelo.Angbi1=0.0f;
-	enem3bmodelo.Angbi2=0.0f;
-	enem3bmodelo.Angbib=0.0f;
-	enem3bmodelo.Angbd1=0.0f;
-	enem3bmodelo.Angbd2=0.0f;
-	enem3bmodelo.Angbdb=0.0f;
-	enem3bmodelo.Angpizq=0.0f;
-	enem3bmodelo.Angpizqb=0.0f;
-	enem3bmodelo.Angpder=0.0f;
-	enem3bmodelo.Angpderb=0.0f;
-	enem3bmodelo.Angpi=0.0f;
-	enem3bmodelo.Angpd=0.0f;
-	enem3bmodelo.Xtor=0.0f;
-	enem3bmodelo.Ytor=0.0f;
-	enem3bmodelo.Ztor=0.0f;
-
-	changmodelo.Angt1=0.0f;
-	changmodelo.Angt2=0.0f;
-	changmodelo.Angc1=0.0f;
-	changmodelo.Angc2=0.0f;
-	changmodelo.Angbi1=0.0f;
-	changmodelo.Angbi2=0.0f;
-	changmodelo.Angbib=0.0f;
-	changmodelo.Angbd1=0.0f;
-	changmodelo.Angbd2=0.0f;
-	changmodelo.Angbdb=0.0f;
-	changmodelo.Angpizq=0.0f;
-	changmodelo.Angpizqb=0.0f;
-	changmodelo.Angpder=0.0f;
-	changmodelo.Angpderb=0.0f;
-	changmodelo.Angpi=0.0f;
-	changmodelo.Angpd=0.0f;
-	changmodelo.Xtor=0.0f;
-	changmodelo.Ytor=0.0f;
-	changmodelo.Ztor=0.0f;
+	modelo->Angt1=0.0f;
+	modelo->Angt2=0.0f;
+	modelo->Angc1=0.0f;
+	modelo->Angc2=0.0f;
+	modelo->Angbi1=0.0f;
+	modelo->Angbi2=0.0f;
+	modelo->Angbib=0.0f;
+	modelo->Angbd1=0.0f;
+	modelo->Angbd2=0.0f;
+	modelo->Angbdb=0.0f;
+	modelo->Angpizq=0.0f;
+	modelo->Angpizqb=0.0f;
+	modelo->Angpder=0.0f;
+	modelo->Angpderb=0.0f;
+	modelo->Angpi=0.0f;
+	modelo->Angpd=0.0f;
+	modelo->Xtor=0.0f;
+	modelo->Ytor=0.0f;
+	modelo->Ztor=0.0f;
 }
 
 void DatosAnimacion()
@@ -2547,7 +2447,14 @@ int InitGL(GLvoid)										// Aqui se configuran los parametros iniciales de Op
 	e=gluNewQuadric();
 
 	InicializaParametrosdeControl();
-	InicializaAnim();
+	InicializaAnim( KeyFrame1, maxKF1, &player1modelo );
+	InicializaAnim( KeyFrame2, maxKF2, &mikumodelo );
+	InicializaAnim( KeyFrame3, maxKF3, &enem1modelo );
+	InicializaAnim( KeyFrame4, maxKF4, &enem2modelo );
+	InicializaAnim( KeyFrame5, maxKF5, &MJ6modelo );
+	InicializaAnim( KeyFrame6, maxKF6, &enem3amodelo );
+	InicializaAnim( KeyFrame7, maxKF7, &enem3bmodelo );
+	InicializaAnim( KeyFrame8, maxKF8, &changmodelo );
 	DatosAnimacion();
 
 	// Colisiones
