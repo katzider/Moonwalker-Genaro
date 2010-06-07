@@ -74,7 +74,11 @@ CMateriales Material;
 #define FILE_NAME8aru  "Modelos/MJ_brazoder_b.3ds"
 #define FILE_NAME9aru  "Modelos/MJ_brazoizq_b.3ds"
 
-#define FILE_NAME1miku "Modelos/miku/miku.3ds"
+#define FILE_NAME1miku "Modelos/miku/miku_torso.3ds"
+#define FILE_NAME2miku "Modelos/miku/miku_pder.3ds"
+#define FILE_NAME3miku "Modelos/miku/miku_pizq.3ds"
+#define FILE_NAME4miku "Modelos/miku/miku_bder.3ds"
+#define FILE_NAME5miku "Modelos/miku/miku_bizq.3ds"
 
 //nombre y ubicación de modelo Enemigo1
 #define FILE_NAME1d	 "Modelos/Ene1torso.3ds"
@@ -144,7 +148,12 @@ CTga textureModel3g[20];
 
 // Contenedores de texturas de los modelos de Aru(MJ y Miku)
 CTga textureModel1aru[20]; //MJ.tga
-CTga textureModel1miku[20]; //MJ.tga
+
+CTga textureModel1miku[20]; //miku.tga
+CTga textureModel2miku[20];
+CTga textureModel3miku[20];
+CTga textureModel4miku[20];
+CTga textureModel5miku[20];
 
 // Contenedores de texturas del escenario
 CTga textureModel2e[20];
@@ -201,6 +210,10 @@ t3DModel g_3DModel8aru;
 t3DModel g_3DModel9aru;
 
 t3DModel g_3DModel1miku;
+t3DModel g_3DModel2miku;
+t3DModel g_3DModel3miku;
+t3DModel g_3DModel4miku;
+t3DModel g_3DModel5miku;
 
 // Acceso a la estructura que almacena los datos del escenario
 t3DModel g_3DModel2e;
@@ -634,7 +647,15 @@ int CargaModelos()
 		return 0;
 
 	// Miku
-	if(!g_Load3ds.Load3DSFile(FILE_NAME1miku, &g_3DModel1miku, textureModel1miku))
+	if(!g_Load3ds.Load3DSFile(FILE_NAME1miku, &g_3DModel1miku, textureModel1miku ))
+		return 0;
+	if(!g_Load3ds.Load3DSFile(FILE_NAME2miku, &g_3DModel2miku, textureModel2miku ))
+		return 0;
+	if(!g_Load3ds.Load3DSFile(FILE_NAME3miku, &g_3DModel3miku, textureModel3miku ))
+		return 0;
+	if(!g_Load3ds.Load3DSFile(FILE_NAME4miku, &g_3DModel4miku, textureModel4miku ))
+		return 0;
+	if(!g_Load3ds.Load3DSFile(FILE_NAME5miku, &g_3DModel5miku, textureModel5miku ))
 		return 0;
 
 	//MJ6
@@ -734,6 +755,10 @@ void DescargaModelos()
 	g_Load3ds.UnLoad3DSFile(&g_3DModel9aru, textureModel1aru);
 	// Miku
 	g_Load3ds.UnLoad3DSFile( &g_3DModel1miku, textureModel1miku );
+	g_Load3ds.UnLoad3DSFile( &g_3DModel2miku, textureModel2miku );
+	g_Load3ds.UnLoad3DSFile( &g_3DModel3miku, textureModel3miku );
+	g_Load3ds.UnLoad3DSFile( &g_3DModel4miku, textureModel4miku );
+	g_Load3ds.UnLoad3DSFile( &g_3DModel5miku, textureModel5miku );
 
 	//Ene1
 	g_Load3ds.UnLoad3DSFile(&g_3DModel1d, textureModel1d);
@@ -886,7 +911,7 @@ void CreaListas()
 	// Crea listas para Aru
 	modelo1aru = glGenLists(9);
 	modelo1aruout = glGenLists(9);
-	modelo1miku = glGenLists( 9 );
+	modelo1miku = glGenLists( 5 );
 
 	glNewList(modelo1aru+0,GL_COMPILE);
 		g_Load3ds.Render3DSFile(&g_3DModel1aru, textureModel1aru, 1);
@@ -964,6 +989,22 @@ void CreaListas()
 	// Miku
 	glNewList( modelo1miku + 0, GL_COMPILE );
 		g_Load3ds.Render3DSFile( &g_3DModel1miku, textureModel1miku, 1 );
+	glEndList();
+
+	glNewList( modelo1miku + 1, GL_COMPILE );
+		g_Load3ds.Render3DSFile( &g_3DModel2miku, textureModel2miku, 1 );
+	glEndList();
+	
+	glNewList( modelo1miku + 2, GL_COMPILE );
+		g_Load3ds.Render3DSFile( &g_3DModel3miku, textureModel3miku, 1 );
+	glEndList();
+	
+	glNewList( modelo1miku + 3, GL_COMPILE );
+		g_Load3ds.Render3DSFile( &g_3DModel4miku, textureModel4miku, 1 );
+	glEndList();
+	
+	glNewList( modelo1miku + 4, GL_COMPILE );
+		g_Load3ds.Render3DSFile( &g_3DModel5miku, textureModel5miku, 1 );
 	glEndList();
 
 	//Ene1
@@ -1307,6 +1348,7 @@ void DestruyeListas()
 
 	// Borra listas de Aru
 	glDeleteLists(modelo1aru,9);
+	glDeleteLists(modelo1miku,5);
 	// Borra listas fahl
 	glDeleteLists(ene1,10);
 	glDeleteLists(ene2,3);
@@ -2632,29 +2674,29 @@ void ControlPersonaje(int funcion)
 	}
 }
 
-void animacion(FRAME *KeyFrame, int maxKF , int frames)
+void animacion(FRAME *KeyFrame, int maxKF , int frames, jerarquiaModelo* modelo)
 {
 	if(play)
 	{		
-		if((abs(KeyFrame[playIndex+1].Angt1-player1modelo.Angt1))<0.1 &&
-		   (abs(KeyFrame[playIndex+1].Angt2-player1modelo.Angt2))<0.1 &&
-		   (abs(KeyFrame[playIndex+1].Angc1-player1modelo.Angc1))<0.1 &&
-		   (abs(KeyFrame[playIndex+1].Angc2-player1modelo.Angc2))<0.1 &&
-		   (abs(KeyFrame[playIndex+1].Angbi1-player1modelo.Angbi1))<0.1 &&
-		   (abs(KeyFrame[playIndex+1].Angbi2-player1modelo.Angbi2))<0.1 &&
-		   (abs(KeyFrame[playIndex+1].Angbib-player1modelo.Angbib))<0.1 &&
-		   (abs(KeyFrame[playIndex+1].Angbd1-player1modelo.Angbd1))<0.1 &&
-		   (abs(KeyFrame[playIndex+1].Angbd2-player1modelo.Angbd2))<0.1 &&
-		   (abs(KeyFrame[playIndex+1].Angbdb-player1modelo.Angbdb))<0.1 &&
-		   (abs(KeyFrame[playIndex+1].Angpizq-player1modelo.Angpizq))<0.1 &&
-		   (abs(KeyFrame[playIndex+1].Angpizqb-player1modelo.Angpizqb))<0.1 &&
-		   (abs(KeyFrame[playIndex+1].Angpder-player1modelo.Angpder))<0.1 &&
-		   (abs(KeyFrame[playIndex+1].Angpderb-player1modelo.Angpderb))<0.1 &&
-		   (abs(KeyFrame[playIndex+1].Angpi-player1modelo.Angpi))<0.1 &&
-		   (abs(KeyFrame[playIndex+1].Angpd-player1modelo.Angpd))<0.1 &&
-		   (abs(KeyFrame[playIndex+1].Xtor-player1modelo.Xtor))<0.1 &&
-		   (abs(KeyFrame[playIndex+1].Ytor-player1modelo.Ytor))<0.1 &&
-		   (abs(KeyFrame[playIndex+1].Ztor-player1modelo.Ztor))<0.1)
+		if((abs(KeyFrame[playIndex+1].Angt1-modelo->Angt1))<0.1 &&
+		   (abs(KeyFrame[playIndex+1].Angt2-modelo->Angt2))<0.1 &&
+		   (abs(KeyFrame[playIndex+1].Angc1-modelo->Angc1))<0.1 &&
+		   (abs(KeyFrame[playIndex+1].Angc2-modelo->Angc2))<0.1 &&
+		   (abs(KeyFrame[playIndex+1].Angbi1-modelo->Angbi1))<0.1 &&
+		   (abs(KeyFrame[playIndex+1].Angbi2-modelo->Angbi2))<0.1 &&
+		   (abs(KeyFrame[playIndex+1].Angbib-modelo->Angbib))<0.1 &&
+		   (abs(KeyFrame[playIndex+1].Angbd1-modelo->Angbd1))<0.1 &&
+		   (abs(KeyFrame[playIndex+1].Angbd2-modelo->Angbd2))<0.1 &&
+		   (abs(KeyFrame[playIndex+1].Angbdb-modelo->Angbdb))<0.1 &&
+		   (abs(KeyFrame[playIndex+1].Angpizq-modelo->Angpizq))<0.1 &&
+		   (abs(KeyFrame[playIndex+1].Angpizqb-modelo->Angpizqb))<0.1 &&
+		   (abs(KeyFrame[playIndex+1].Angpder-modelo->Angpder))<0.1 &&
+		   (abs(KeyFrame[playIndex+1].Angpderb-modelo->Angpderb))<0.1 &&
+		   (abs(KeyFrame[playIndex+1].Angpi-modelo->Angpi))<0.1 &&
+		   (abs(KeyFrame[playIndex+1].Angpd-modelo->Angpd))<0.1 &&
+		   (abs(KeyFrame[playIndex+1].Xtor-modelo->Xtor))<0.1 &&
+		   (abs(KeyFrame[playIndex+1].Ytor-modelo->Ytor))<0.1 &&
+		   (abs(KeyFrame[playIndex+1].Ztor-modelo->Ztor))<0.1)
 		{			
 			playIndex++;			
 			if(playIndex>maxKF-2)
@@ -2686,25 +2728,25 @@ void animacion(FRAME *KeyFrame, int maxKF , int frames)
 			KeyFrame[playIndex].incYtor     = (KeyFrame[playIndex+1].Ytor-KeyFrame[playIndex].Ytor)/frames;
 			KeyFrame[playIndex].incZtor     = (KeyFrame[playIndex+1].Ztor-KeyFrame[playIndex].Ztor)/frames;
 			
-			player1modelo.Angt1    += KeyFrame[playIndex].incAngt1;
-			player1modelo.Angt2    += KeyFrame[playIndex].incAngt2;
-			player1modelo.Angc1    += KeyFrame[playIndex].incAngc1;
-			player1modelo.Angc2    += KeyFrame[playIndex].incAngc2;
-			player1modelo.Angbi1   += KeyFrame[playIndex].incAngbi1;
-			player1modelo.Angbi2   += KeyFrame[playIndex].incAngbi2;
-			player1modelo.Angbib   += KeyFrame[playIndex].incAngbib;
-			player1modelo.Angbd1   += KeyFrame[playIndex].incAngbd1;
-			player1modelo.Angbd2   += KeyFrame[playIndex].incAngbd2;
-			player1modelo.Angbdb   += KeyFrame[playIndex].incAngbdb;
-			player1modelo.Angpizq  += KeyFrame[playIndex].incAngpizq;
-			player1modelo.Angpizqb += KeyFrame[playIndex].incAngpizqb;
-			player1modelo.Angpder  += KeyFrame[playIndex].incAngpder;
-			player1modelo.Angpderb += KeyFrame[playIndex].incAngpderb;
-			player1modelo.Angpi    += KeyFrame[playIndex].incAngpi;
-			player1modelo.Angpd    += KeyFrame[playIndex].incAngpd;
-			player1modelo.Xtor     += KeyFrame[playIndex].incXtor;
-			player1modelo.Ytor     += KeyFrame[playIndex].incYtor;
-			player1modelo.Ztor     += KeyFrame[playIndex].incZtor;
+			modelo->Angt1    += KeyFrame[playIndex].incAngt1;
+			modelo->Angt2    += KeyFrame[playIndex].incAngt2;
+			modelo->Angc1    += KeyFrame[playIndex].incAngc1;
+			modelo->Angc2    += KeyFrame[playIndex].incAngc2;
+			modelo->Angbi1   += KeyFrame[playIndex].incAngbi1;
+			modelo->Angbi2   += KeyFrame[playIndex].incAngbi2;
+			modelo->Angbib   += KeyFrame[playIndex].incAngbib;
+			modelo->Angbd1   += KeyFrame[playIndex].incAngbd1;
+			modelo->Angbd2   += KeyFrame[playIndex].incAngbd2;
+			modelo->Angbdb   += KeyFrame[playIndex].incAngbdb;
+			modelo->Angpizq  += KeyFrame[playIndex].incAngpizq;
+			modelo->Angpizqb += KeyFrame[playIndex].incAngpizqb;
+			modelo->Angpder  += KeyFrame[playIndex].incAngpder;
+			modelo->Angpderb += KeyFrame[playIndex].incAngpderb;
+			modelo->Angpi    += KeyFrame[playIndex].incAngpi;
+			modelo->Angpd    += KeyFrame[playIndex].incAngpd;
+			modelo->Xtor     += KeyFrame[playIndex].incXtor;
+			modelo->Ytor     += KeyFrame[playIndex].incYtor;
+			modelo->Ztor     += KeyFrame[playIndex].incZtor;
 			
 		}
 	}
@@ -3408,6 +3450,40 @@ void DibujaMiku()
 			
 	//Torso
 	glCallList( modelo1miku + 0 );
+
+	//Pierna derecha
+	glPushMatrix();
+		glTranslatef(0.0f, 0.0f, 0.0f);
+		glRotatef(mikumodelo.Angpder, 1.0f, 0.0f, 0.0f);
+		glCallList( modelo1miku + 1 );
+
+	glPopMatrix();
+
+	//Pierna izquierda
+	glPushMatrix();
+		glTranslatef(0.0f, 0.0f ,0.0f);
+		glRotatef( mikumodelo.Angpizq, 1.0f, 0.0f, 0.0f);
+		glCallList( modelo1miku + 2 );
+
+	glPopMatrix();
+
+	//Brazo derecho_a
+	glPushMatrix();
+		glTranslatef(0.0f, 0.0f, 0.0f);
+		glRotatef(mikumodelo.Angbd2, 0.0f, 1.0f, 0.0f);
+		glRotatef(mikumodelo.Angbd1, 1.0f, 0.0f, 0.0f);
+		glCallList( modelo1miku + 3 );
+
+	glPopMatrix();
+
+	//Brazo izquierdo
+	glPushMatrix();
+		glTranslatef(0.0f, 0.0f, 0.0f);
+		glRotatef(mikumodelo.Angbi2, 0.0f, 1.0f, 0.0f);
+		glRotatef(mikumodelo.Angbi1, 1.0f, 0.0f, 0.0f);
+		glCallList(modelo1miku + 4);
+
+	glPopMatrix();
 }
 void DibujaSombraMJ()
 {
@@ -4730,7 +4806,7 @@ int WINAPI WinMain(	HINSTANCE	hInstance,			// Instancia
 					if(play)
 					{
 						if(tipoAnim == 1)
-							animacion(KeyFrame1, maxKF1 , 18);
+							animacion(KeyFrame1, maxKF1 , 18, &player1modelo );
 					}
 					SwapBuffers(hDC);				// Intercambia los Buffers (Double Buffering)
 				}
