@@ -2674,29 +2674,29 @@ void ControlPersonaje(int funcion)
 	}
 }
 
-void animacion(FRAME *KeyFrame, int maxKF , int frames)
+void animacion(FRAME *KeyFrame, int maxKF , int frames, jerarquiaModelo* modelo)
 {
 	if(play)
 	{		
-		if((abs(KeyFrame[playIndex+1].Angt1-player1modelo.Angt1))<0.1 &&
-		   (abs(KeyFrame[playIndex+1].Angt2-player1modelo.Angt2))<0.1 &&
-		   (abs(KeyFrame[playIndex+1].Angc1-player1modelo.Angc1))<0.1 &&
-		   (abs(KeyFrame[playIndex+1].Angc2-player1modelo.Angc2))<0.1 &&
-		   (abs(KeyFrame[playIndex+1].Angbi1-player1modelo.Angbi1))<0.1 &&
-		   (abs(KeyFrame[playIndex+1].Angbi2-player1modelo.Angbi2))<0.1 &&
-		   (abs(KeyFrame[playIndex+1].Angbib-player1modelo.Angbib))<0.1 &&
-		   (abs(KeyFrame[playIndex+1].Angbd1-player1modelo.Angbd1))<0.1 &&
-		   (abs(KeyFrame[playIndex+1].Angbd2-player1modelo.Angbd2))<0.1 &&
-		   (abs(KeyFrame[playIndex+1].Angbdb-player1modelo.Angbdb))<0.1 &&
-		   (abs(KeyFrame[playIndex+1].Angpizq-player1modelo.Angpizq))<0.1 &&
-		   (abs(KeyFrame[playIndex+1].Angpizqb-player1modelo.Angpizqb))<0.1 &&
-		   (abs(KeyFrame[playIndex+1].Angpder-player1modelo.Angpder))<0.1 &&
-		   (abs(KeyFrame[playIndex+1].Angpderb-player1modelo.Angpderb))<0.1 &&
-		   (abs(KeyFrame[playIndex+1].Angpi-player1modelo.Angpi))<0.1 &&
-		   (abs(KeyFrame[playIndex+1].Angpd-player1modelo.Angpd))<0.1 &&
-		   (abs(KeyFrame[playIndex+1].Xtor-player1modelo.Xtor))<0.1 &&
-		   (abs(KeyFrame[playIndex+1].Ytor-player1modelo.Ytor))<0.1 &&
-		   (abs(KeyFrame[playIndex+1].Ztor-player1modelo.Ztor))<0.1)
+		if((abs(KeyFrame[playIndex+1].Angt1-modelo->Angt1))<0.1 &&
+		   (abs(KeyFrame[playIndex+1].Angt2-modelo->Angt2))<0.1 &&
+		   (abs(KeyFrame[playIndex+1].Angc1-modelo->Angc1))<0.1 &&
+		   (abs(KeyFrame[playIndex+1].Angc2-modelo->Angc2))<0.1 &&
+		   (abs(KeyFrame[playIndex+1].Angbi1-modelo->Angbi1))<0.1 &&
+		   (abs(KeyFrame[playIndex+1].Angbi2-modelo->Angbi2))<0.1 &&
+		   (abs(KeyFrame[playIndex+1].Angbib-modelo->Angbib))<0.1 &&
+		   (abs(KeyFrame[playIndex+1].Angbd1-modelo->Angbd1))<0.1 &&
+		   (abs(KeyFrame[playIndex+1].Angbd2-modelo->Angbd2))<0.1 &&
+		   (abs(KeyFrame[playIndex+1].Angbdb-modelo->Angbdb))<0.1 &&
+		   (abs(KeyFrame[playIndex+1].Angpizq-modelo->Angpizq))<0.1 &&
+		   (abs(KeyFrame[playIndex+1].Angpizqb-modelo->Angpizqb))<0.1 &&
+		   (abs(KeyFrame[playIndex+1].Angpder-modelo->Angpder))<0.1 &&
+		   (abs(KeyFrame[playIndex+1].Angpderb-modelo->Angpderb))<0.1 &&
+		   (abs(KeyFrame[playIndex+1].Angpi-modelo->Angpi))<0.1 &&
+		   (abs(KeyFrame[playIndex+1].Angpd-modelo->Angpd))<0.1 &&
+		   (abs(KeyFrame[playIndex+1].Xtor-modelo->Xtor))<0.1 &&
+		   (abs(KeyFrame[playIndex+1].Ytor-modelo->Ytor))<0.1 &&
+		   (abs(KeyFrame[playIndex+1].Ztor-modelo->Ztor))<0.1)
 		{			
 			playIndex++;			
 			if(playIndex>maxKF-2)
@@ -2728,25 +2728,25 @@ void animacion(FRAME *KeyFrame, int maxKF , int frames)
 			KeyFrame[playIndex].incYtor     = (KeyFrame[playIndex+1].Ytor-KeyFrame[playIndex].Ytor)/frames;
 			KeyFrame[playIndex].incZtor     = (KeyFrame[playIndex+1].Ztor-KeyFrame[playIndex].Ztor)/frames;
 			
-			player1modelo.Angt1    += KeyFrame[playIndex].incAngt1;
-			player1modelo.Angt2    += KeyFrame[playIndex].incAngt2;
-			player1modelo.Angc1    += KeyFrame[playIndex].incAngc1;
-			player1modelo.Angc2    += KeyFrame[playIndex].incAngc2;
-			player1modelo.Angbi1   += KeyFrame[playIndex].incAngbi1;
-			player1modelo.Angbi2   += KeyFrame[playIndex].incAngbi2;
-			player1modelo.Angbib   += KeyFrame[playIndex].incAngbib;
-			player1modelo.Angbd1   += KeyFrame[playIndex].incAngbd1;
-			player1modelo.Angbd2   += KeyFrame[playIndex].incAngbd2;
-			player1modelo.Angbdb   += KeyFrame[playIndex].incAngbdb;
-			player1modelo.Angpizq  += KeyFrame[playIndex].incAngpizq;
-			player1modelo.Angpizqb += KeyFrame[playIndex].incAngpizqb;
-			player1modelo.Angpder  += KeyFrame[playIndex].incAngpder;
-			player1modelo.Angpderb += KeyFrame[playIndex].incAngpderb;
-			player1modelo.Angpi    += KeyFrame[playIndex].incAngpi;
-			player1modelo.Angpd    += KeyFrame[playIndex].incAngpd;
-			player1modelo.Xtor     += KeyFrame[playIndex].incXtor;
-			player1modelo.Ytor     += KeyFrame[playIndex].incYtor;
-			player1modelo.Ztor     += KeyFrame[playIndex].incZtor;
+			modelo->Angt1    += KeyFrame[playIndex].incAngt1;
+			modelo->Angt2    += KeyFrame[playIndex].incAngt2;
+			modelo->Angc1    += KeyFrame[playIndex].incAngc1;
+			modelo->Angc2    += KeyFrame[playIndex].incAngc2;
+			modelo->Angbi1   += KeyFrame[playIndex].incAngbi1;
+			modelo->Angbi2   += KeyFrame[playIndex].incAngbi2;
+			modelo->Angbib   += KeyFrame[playIndex].incAngbib;
+			modelo->Angbd1   += KeyFrame[playIndex].incAngbd1;
+			modelo->Angbd2   += KeyFrame[playIndex].incAngbd2;
+			modelo->Angbdb   += KeyFrame[playIndex].incAngbdb;
+			modelo->Angpizq  += KeyFrame[playIndex].incAngpizq;
+			modelo->Angpizqb += KeyFrame[playIndex].incAngpizqb;
+			modelo->Angpder  += KeyFrame[playIndex].incAngpder;
+			modelo->Angpderb += KeyFrame[playIndex].incAngpderb;
+			modelo->Angpi    += KeyFrame[playIndex].incAngpi;
+			modelo->Angpd    += KeyFrame[playIndex].incAngpd;
+			modelo->Xtor     += KeyFrame[playIndex].incXtor;
+			modelo->Ytor     += KeyFrame[playIndex].incYtor;
+			modelo->Ztor     += KeyFrame[playIndex].incZtor;
 			
 		}
 	}
@@ -4806,7 +4806,7 @@ int WINAPI WinMain(	HINSTANCE	hInstance,			// Instancia
 					if(play)
 					{
 						if(tipoAnim == 1)
-							animacion(KeyFrame1, maxKF1 , 18);
+							animacion(KeyFrame1, maxKF1 , 18, &player1modelo );
 					}
 					SwapBuffers(hDC);				// Intercambia los Buffers (Double Buffering)
 				}
