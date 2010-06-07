@@ -4011,7 +4011,7 @@ void DibujaEnemigos()
 	//tarantula
 	glPushMatrix();
 		glTranslatef(210.0f, 8.5f, -65.0f);
-		glScalef(0.1,0.1,0.1);
+		glScalef(0.15,0.15,0.15);
 		DibujaTarantula();
 	glPopMatrix();
 
@@ -4075,7 +4075,7 @@ void DibujaEnemigos()
 	/*//tarantula
 	glPushMatrix();
 		glTranslatef(210.0f, 8.5f, -65.0f);
-		glScalef(0.1,0.1,0.1);
+		glScalef(0.15,0.15,0.15);
 		DibujaTarantulaout();
 	glPopMatrix();*/
 
