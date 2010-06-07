@@ -1421,7 +1421,7 @@ void InicializaParametrosdeControl()
 								//sin aplicarle ninguna transformación (hacia adonde está volteando). Se elige un ángulo tal que al aplicarle
 								//una rotación inicial con respecto al eje Y esté viendo hacia la misma dirección que la definida por AngDir
 	
-	miku.PosicionObj = CVector( 185.0f, 70.0f, -5.0f); //Esta es la posición inicial del objeto en la escena
+	miku.PosicionObj = CVector( 35.0f, 7.7f, -90.0f); //Esta es la posición inicial del objeto en la escena
 	miku.Direccion.x = cosf( miku.AngDir * PI / 180.0f); //Dirección inicial definida por el ángulo inicial AngDir (x=cos(AngDir), y=0.0, z=sen(AngDir))
 	miku.Direccion.y = 0.0f;
 	miku.Direccion.z = sinf( miku.AngDir * PI / 180.0f);   
@@ -1432,9 +1432,9 @@ void InicializaParametrosdeControl()
 	miku.Dir=0;
 	miku.DirAnt=0;
 
-	miku.escalaX=0.4f;
-	miku.escalaY=0.4f;
-	miku.escalaZ=0.4f;
+	miku.escalaX=0.8f;
+	miku.escalaY=0.8f;
+	miku.escalaZ=0.8f;
 	
 	miku.CamaraObjAltE=0.0f;
 
@@ -4174,16 +4174,56 @@ void DibujaEnemigos()
 		DibujaChango();
 	glPopMatrix();
 
-	//tarantula
-	glPushMatrix();
-		glTranslatef(210.0f, 8.5f, -65.0f);
+	//tarantulas tipo pelicula Moonwalker
+	glPushMatrix();   //1 (rocas inicio)
+		glTranslatef(205.7f, 2.0f, -88.0f);
+		glScalef(0.25,0.25,0.25);
+		DibujaTarantula();
+	glPopMatrix();
+	glPushMatrix();   //2 (plataforma inicio grande)
+		glTranslatef(230.0f, 2.5f, -35.0f);
+		glRotatef(200.0f,0,1,0);
+		glScalef(0.2,0.2,0.2);
+		DibujaTarantula();
+	glPopMatrix();
+	glPushMatrix();   //3 (plataforma inicio chica)
+		glTranslatef(229.0f, 5.5f, -32.0f);
+		glRotatef(240.0f,0,1,0);
+		glScalef(0.1,0.1,0.1);
+		DibujaTarantula();
+	glPopMatrix();
+	glPushMatrix();   //4 (pared plano 2)
+		glTranslatef(45.0f, 17.0f, -100.0f);
+		glRotatef(100.0f,0,0,1);
+		glRotatef(90.0f,1,0,0);
+		glScalef(0.1,0.1,0.1);
+		DibujaTarantula();
+	glPopMatrix();
+	glPopMatrix();
+		glPushMatrix();   //5 (esquina interior)
+		glTranslatef(-3.5f, 4.5f, -40.0f);
+		glRotatef(160.0f,0,1,0);
+		glScalef(0.11,0.11,0.11);
+		DibujaTarantula();
+	glPopMatrix();
+	glPopMatrix();
+		glPushMatrix();   //6 (rocas inicio plano 7)
+		glTranslatef(-87.0f, 5.27f, 16.0f);
+		glScalef(0.14,0.14,0.14);
+		DibujaTarantula();
+	glPopMatrix();
+	glPopMatrix();
+		glPushMatrix();   //7 (rocas final)
+		glTranslatef(-16.0f, 5.3f, 115.0f);
+		glRotatef(160.0f,0,1,0);
 		glScalef(0.15,0.15,0.15);
 		DibujaTarantula();
 	glPopMatrix();
 
+
 	cel_Shader.TurnOff();
 
-	//contorno
+	//contornos
 	glDisable(GL_LIGHTING);
 	glEnable(GL_CULL_FACE);
 	glCullFace(GL_FRONT);
@@ -4238,19 +4278,59 @@ void DibujaEnemigos()
 		DibujaChangoout();
 	glPopMatrix();
 
-	/*//tarantula
-	glPushMatrix();
-		glTranslatef(210.0f, 8.5f, -65.0f);
+	//tarantulas tipo pelicula Moonwalker
+	glLineWidth(1.0f);
+	glPushMatrix();   //1 (rocas inicio)
+		glTranslatef(205.7f, 2.0f, -88.0f);
+		glScalef(0.25,0.25,0.25);
+		DibujaTarantulaout();
+	glPopMatrix();
+	glPushMatrix();   //2 (plataforma inicio grande)
+		glTranslatef(230.0f, 2.5f, -35.0f);
+		glRotatef(200.0f,0,1,0);
+		glScalef(0.2,0.2,0.2);
+		DibujaTarantulaout();
+	glPopMatrix();
+	glPushMatrix();   //3 (plataforma inicio chica)
+		glTranslatef(229.0f, 5.5f, -32.0f);
+		glRotatef(240.0f,0,1,0);
+		glScalef(0.1,0.1,0.1);
+		DibujaTarantulaout();
+	glPopMatrix();
+	glPushMatrix();   //4 (pared plano 2)
+		glTranslatef(45.0f, 17.0f, -100.0f);
+		glRotatef(100.0f,0,0,1);
+		glRotatef(90.0f,1,0,0);
+		glScalef(0.1,0.1,0.1);
+		DibujaTarantulaout();
+	glPopMatrix();
+	glPopMatrix();
+		glPushMatrix();   //5 (esquina interior)
+		glTranslatef(-3.5f, 4.5f, -40.0f);
+		glRotatef(160.0f,0,1,0);
+		glScalef(0.11,0.11,0.11);
+		DibujaTarantulaout();
+	glPopMatrix();
+	glPopMatrix();
+		glPushMatrix();   //6 (rocas inicio plano 7)
+		glTranslatef(-87.0f, 5.27f, 16.0f);
+		glScalef(0.14,0.14,0.14);
+		DibujaTarantulaout();
+	glPopMatrix();
+	glPopMatrix();
+		glPushMatrix();   //7 (rocas final)
+		glTranslatef(-16.0f, 5.3f, 115.0f);
+		glRotatef(160.0f,0,1,0);
 		glScalef(0.15,0.15,0.15);
 		DibujaTarantulaout();
-	glPopMatrix();*/
+	glPopMatrix();
 
-	glLineWidth(1.0f);
 	glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
 	glCullFace(GL_BACK);
 	glDisable(GL_CULL_FACE);
 	glEnable(GL_LIGHTING);
 }
+
 void DibujaEscena()
 {
 	// Mayralol
