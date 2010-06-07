@@ -43,6 +43,7 @@ int pisoId = 0;
 
 // Variable de acceso a la estructura de parametros
 parametros player1;
+parametros miku;
 
 parametros enem1;	 //Variable con la que tenemos acceso a la estructura de parámetros de ene1
 parametros MJ6;		 //Variable con la que tenemos acceso a la estructura de parámetros de MJ6
@@ -72,6 +73,12 @@ CMateriales Material;
 #define FILE_NAME7aru  "Modelos/MJ_brazoizq_a.3ds"
 #define FILE_NAME8aru  "Modelos/MJ_brazoder_b.3ds"
 #define FILE_NAME9aru  "Modelos/MJ_brazoizq_b.3ds"
+
+#define FILE_NAME1miku "Modelos/miku/miku_torso.3ds"
+#define FILE_NAME2miku "Modelos/miku/miku_pder.3ds"
+#define FILE_NAME3miku "Modelos/miku/miku_pizq.3ds"
+#define FILE_NAME4miku "Modelos/miku/miku_bder.3ds"
+#define FILE_NAME5miku "Modelos/miku/miku_bizq.3ds"
 
 //nombre y ubicación de modelo Enemigo1
 #define FILE_NAME1d	 "Modelos/Ene1torso.3ds"
@@ -126,6 +133,9 @@ CMateriales Material;
 #define FILE_NAME2k	 "Modelos/Ene2bomb.3ds"
 #define FILE_NAME3k	 "Modelos/Ene2pers.3ds"
 
+//nombre y ubicación de modelo tarantula
+#define FILE_NAME1t	 "Modelos/tarantula.3ds"
+
 //Contenedor de texturas de enemigo1
 CTga textureModel1d[20];
 //Contenedor de texturas de MJ6 (MJ Robot)
@@ -138,6 +148,12 @@ CTga textureModel3g[20];
 
 // Contenedores de texturas de los modelos de Aru(MJ y Miku)
 CTga textureModel1aru[20]; //MJ.tga
+
+CTga textureModel1miku[20]; //miku.tga
+CTga textureModel2miku[20];
+CTga textureModel3miku[20];
+CTga textureModel4miku[20];
+CTga textureModel5miku[20];
 
 // Contenedores de texturas del escenario
 CTga textureModel2e[20];
@@ -165,6 +181,9 @@ CTga textureModel1k[20];
 CTga textureModel2k[20];
 CTga textureModel3k[20];
 
+//Contenedor de texturas de tarantula
+CTga textureModel1t[20];
+
 CLoad3DS g_Load3ds;
 CShader cel_Shader;
 
@@ -179,7 +198,7 @@ t3DModel g_3DModel7c;
 t3DModel g_3DModel8c;
 t3DModel g_3DModel9c;
 
-//Acceso a la estructura que almacena los datos de los modelos
+//Acceso a la estructura que almacena los datos de los modelos (MJ y miku)
 t3DModel g_3DModel1aru;
 t3DModel g_3DModel2aru;
 t3DModel g_3DModel3aru;
@@ -189,6 +208,12 @@ t3DModel g_3DModel6aru;
 t3DModel g_3DModel7aru;
 t3DModel g_3DModel8aru;
 t3DModel g_3DModel9aru;
+
+t3DModel g_3DModel1miku;
+t3DModel g_3DModel2miku;
+t3DModel g_3DModel3miku;
+t3DModel g_3DModel4miku;
+t3DModel g_3DModel5miku;
 
 // Acceso a la estructura que almacena los datos del escenario
 t3DModel g_3DModel2e;
@@ -252,19 +277,60 @@ t3DModel g_3DModel1k;
 t3DModel g_3DModel2k;
 t3DModel g_3DModel3k;
 
+
+//Acceso a la estructura que almacena a tarantula
+t3DModel g_3DModel1t;
+
 //Contenedor de texturas adicionales
 CTga textura[30];
 
 jerarquiaModelo player1modelo;	//Acceso a la estructura con las variables de cada pieza del modelo
-const int maxKF1=3;				//Num. total de KeyFrames para la secuencia 1 (caminar)
-FRAME KeyFrame1[maxKF1];		//Contenedor para almacenar cada keyframe de la secuencia 1
-
 jerarquiaModelo enem3amodelo;
 jerarquiaModelo enem3bmodelo;
 jerarquiaModelo changmodelo;
 jerarquiaModelo enem1modelo;
 jerarquiaModelo enem2modelo;
 jerarquiaModelo MJ6modelo;
+
+/* Declaracion de keyframes, aqui puse todos los keyframes que chance usaran
+ * ya le puse un comentario a quien le pertenece cada frame, si requieren mas,
+ * agreguenlas despues de las que ya estan aqui 
+ */
+
+// Animacion de caminar de MJ
+const int maxKF1=3;				//Num. total de KeyFrames para la secuencia 1 (caminar)
+FRAME KeyFrame1[maxKF1];		//Contenedor para almacenar cada keyframe de la secuencia 1
+
+// Animacion Miku
+const int maxKF2 = 3;
+FRAME KeyFrame2[maxKF2];
+
+// Animacion enem1
+const int maxKF3 = 3;
+FRAME KeyFrame3[maxKF3];
+
+// Animacion enem2
+const int maxKF4 = 3;
+FRAME KeyFrame4[maxKF4];
+
+// Animacion MJ6modelo
+const int maxKF5 = 3;
+FRAME KeyFrame5[maxKF5];
+
+// Animacion enem3A
+const int maxKF6 = 3;
+FRAME KeyFrame6[maxKF6];
+
+// Animacion enem3B
+const int maxKF7 = 3;
+FRAME KeyFrame7[maxKF7];
+
+// Animacion changmodelo
+const int maxKF8 = 3;
+FRAME KeyFrame8[maxKF8];
+
+// Miku
+jerarquiaModelo mikumodelo;
 
 bool play=false;//Bandera para iniciar la animación
 int playIndex=0;//Auxiliar para leer la información del contenedor de keyframes
@@ -287,6 +353,8 @@ GLuint ene3b;
 GLuint ene3bout;
 GLuint cha;
 GLuint chaout; 
+GLuint taran;
+GLuint taranout; 
 
 // las listas savage
 GLuint enemigo8L;
@@ -295,7 +363,8 @@ GLuint enemigo8Lout;
 // Declara enteros para los modelos de Aru
 GLuint modelo1aru;
 GLuint modelo1aruout;
-
+GLuint modelo1miku;
+GLuint mikuout;
 
 //Constantes de iluminación y materiales
 GLfloat LightPos[] = { 200.0f, 20.0f, 25.0f, 1.0f};		// Posición de la luz
@@ -611,6 +680,18 @@ int CargaModelos()
 	if(!g_Load3ds.Load3DSFile(FILE_NAME9aru, &g_3DModel9aru, textureModel1aru))
 		return 0;
 
+	// Miku
+	if(!g_Load3ds.Load3DSFile(FILE_NAME1miku, &g_3DModel1miku, textureModel1miku ))
+		return 0;
+	if(!g_Load3ds.Load3DSFile(FILE_NAME2miku, &g_3DModel2miku, textureModel2miku ))
+		return 0;
+	if(!g_Load3ds.Load3DSFile(FILE_NAME3miku, &g_3DModel3miku, textureModel3miku ))
+		return 0;
+	if(!g_Load3ds.Load3DSFile(FILE_NAME4miku, &g_3DModel4miku, textureModel4miku ))
+		return 0;
+	if(!g_Load3ds.Load3DSFile(FILE_NAME5miku, &g_3DModel5miku, textureModel5miku ))
+		return 0;
+
 	//MJ6
 	if(!g_Load3ds.Load3DSFile(FILE_NAME1f, &g_3DModel1f, textureModel1f))
 		return 0;
@@ -677,6 +758,10 @@ int CargaModelos()
 	if(!g_Load3ds.Load3DSFile(FILE_NAME3k, &g_3DModel3k, textureModel1k))
 		return 0;
 
+	//tarantula
+	if(!g_Load3ds.Load3DSFile(FILE_NAME1t, &g_3DModel1t, textureModel1t))
+		return 0;
+
 	return TRUE;
 }
 
@@ -702,6 +787,13 @@ void DescargaModelos()
 	g_Load3ds.UnLoad3DSFile(&g_3DModel7aru, textureModel1aru);
 	g_Load3ds.UnLoad3DSFile(&g_3DModel8aru, textureModel1aru);
 	g_Load3ds.UnLoad3DSFile(&g_3DModel9aru, textureModel1aru);
+	// Miku
+	g_Load3ds.UnLoad3DSFile( &g_3DModel1miku, textureModel1miku );
+	g_Load3ds.UnLoad3DSFile( &g_3DModel2miku, textureModel2miku );
+	g_Load3ds.UnLoad3DSFile( &g_3DModel3miku, textureModel3miku );
+	g_Load3ds.UnLoad3DSFile( &g_3DModel4miku, textureModel4miku );
+	g_Load3ds.UnLoad3DSFile( &g_3DModel5miku, textureModel5miku );
+
 	//Ene1
 	g_Load3ds.UnLoad3DSFile(&g_3DModel1d, textureModel1d);
 	g_Load3ds.UnLoad3DSFile(&g_3DModel2d, textureModel1d);
@@ -751,6 +843,9 @@ void DescargaModelos()
 	g_Load3ds.UnLoad3DSFile(&g_3DModel1k, textureModel1k);
 	g_Load3ds.UnLoad3DSFile(&g_3DModel2k, textureModel2k);
 	g_Load3ds.UnLoad3DSFile(&g_3DModel3k, textureModel3k);
+
+	//tarantula
+	g_Load3ds.UnLoad3DSFile(&g_3DModel1t, textureModel1t);
 }
 
 void IniSombraVolumen()
@@ -801,6 +896,8 @@ void CreaListas()
 	cha=glGenLists(5);
 	// en crea listas savage
 	enemigo8L=glGenLists(3);
+	//tarantula
+	taran=glGenLists(1);
 
 	//Ene1 contorno
 	ene1out=glGenLists(10);
@@ -816,6 +913,8 @@ void CreaListas()
 	chaout=glGenLists(5);
 	// en crea listas savage contorno
 	enemigo8Lout=glGenLists(3);
+	//tarantula contorno
+	taranout=glGenLists(1);
 
 	glNewList(enemigo8L+0,GL_COMPILE);
 		g_Load3ds.Render3DSFile(&g_3DModel1g, textureModel1g, 1);
@@ -846,6 +945,7 @@ void CreaListas()
 	// Crea listas para Aru
 	modelo1aru = glGenLists(9);
 	modelo1aruout = glGenLists(9);
+	modelo1miku = glGenLists( 5 );
 
 	glNewList(modelo1aru+0,GL_COMPILE);
 		g_Load3ds.Render3DSFile(&g_3DModel1aru, textureModel1aru, 1);
@@ -883,7 +983,7 @@ void CreaListas()
 		g_Load3ds.Render3DSFile(&g_3DModel9aru, textureModel1aru, 1);
 	glEndList();
 
-
+	// Contorno
 	glNewList(modelo1aruout+0,GL_COMPILE);
 		g_Load3ds.Render3DSContour(&g_3DModel1aru);
 	glEndList();
@@ -918,6 +1018,27 @@ void CreaListas()
 
 	glNewList(modelo1aruout+8,GL_COMPILE);
 		g_Load3ds.Render3DSContour(&g_3DModel9aru);
+	glEndList();
+
+	// Miku
+	glNewList( modelo1miku + 0, GL_COMPILE );
+		g_Load3ds.Render3DSFile( &g_3DModel1miku, textureModel1miku, 1 );
+	glEndList();
+
+	glNewList( modelo1miku + 1, GL_COMPILE );
+		g_Load3ds.Render3DSFile( &g_3DModel2miku, textureModel2miku, 1 );
+	glEndList();
+	
+	glNewList( modelo1miku + 2, GL_COMPILE );
+		g_Load3ds.Render3DSFile( &g_3DModel3miku, textureModel3miku, 1 );
+	glEndList();
+	
+	glNewList( modelo1miku + 3, GL_COMPILE );
+		g_Load3ds.Render3DSFile( &g_3DModel4miku, textureModel4miku, 1 );
+	glEndList();
+	
+	glNewList( modelo1miku + 4, GL_COMPILE );
+		g_Load3ds.Render3DSFile( &g_3DModel5miku, textureModel5miku, 1 );
 	glEndList();
 
 	//Ene1
@@ -1238,6 +1359,21 @@ void CreaListas()
 		g_Load3ds.Render3DSContour(&g_3DModel3k);
 	glEndList();
 
+
+	
+	//tarantula
+	glNewList(taran+0,GL_COMPILE);
+		g_Load3ds.Render3DSFile(&g_3DModel1t, textureModel1t, 1);
+	glEndList();
+
+
+
+	glNewList(taranout+0,GL_COMPILE);
+		g_Load3ds.Render3DSContour(&g_3DModel1t);
+	glEndList();
+
+
+
 }
 
 
@@ -1246,6 +1382,7 @@ void DestruyeListas()
 
 	// Borra listas de Aru
 	glDeleteLists(modelo1aru,9);
+	glDeleteLists(modelo1miku,5);
 	// Borra listas fahl
 	glDeleteLists(ene1,10);
 	glDeleteLists(ene2,3);
@@ -1254,6 +1391,7 @@ void DestruyeListas()
 	glDeleteLists(ene3a,5);
 	glDeleteLists(ene3b,5);
 	glDeleteLists(cha,5);
+	glDeleteLists(taran,5);
 
 	// Borra listas de Aru
 	glDeleteLists(modelo1aruout,9);
@@ -1265,6 +1403,8 @@ void DestruyeListas()
 	glDeleteLists(ene3aout,5);
 	glDeleteLists(ene3bout,5);
 	glDeleteLists(chaout,5);
+	glDeleteLists(taranout,5);
+
 
 }
 
@@ -1301,6 +1441,36 @@ void InicializaParametrosdeControl()
 	player1.escalaZ=0.4f;
 	
 	player1.CamaraObjAltE=0.0f;
+
+	// Miku
+	//Esta función establece los parámetros como velocidad del objeto y distancia de la cámara así como la posición y dirección iniciales
+	miku.visible = true;
+	miku.VelocidadObj = 0.2f;
+	miku.DistanciaCam = 20.0f;
+
+	miku.CamaraPosAlt = 10.0f;	//Posición en y de la cámara (altura a la que se situa la cámara)
+	miku.CamaraObjAlt = 6.4f;	//Posición en y del objetivo de la cámara (altura a la que ve la cámara)
+	miku.AngDir = 90.0f;		//Este ángulo inicial hace que la dirección inicial sea paralela al eje Z y con sentido negativo
+	miku.AngObj = 0.0f;		//Este valor se elige dependiendo de la orientación con la que aparece el modelo en la escena al dibujarlo
+								//sin aplicarle ninguna transformación (hacia adonde está volteando). Se elige un ángulo tal que al aplicarle
+								//una rotación inicial con respecto al eje Y esté viendo hacia la misma dirección que la definida por AngDir
+	
+	miku.PosicionObj = CVector( 35.0f, 7.7f, -90.0f); //Esta es la posición inicial del objeto en la escena
+	miku.Direccion.x = cosf( miku.AngDir * PI / 180.0f); //Dirección inicial definida por el ángulo inicial AngDir (x=cos(AngDir), y=0.0, z=sen(AngDir))
+	miku.Direccion.y = 0.0f;
+	miku.Direccion.z = sinf( miku.AngDir * PI / 180.0f);   
+	miku.PosicionCam = CVector( miku.PosicionObj.x, miku.PosicionObj.y + miku.CamaraPosAlt, miku.PosicionObj.z +miku.DistanciaCam ); //Posición inicial de la cámara a [DistanciaCam] unidades detrás del objeto
+	miku.ObjetivoCam = miku.PosicionObj;		//La cámara ve siempre al objeto
+	miku.ObjetivoCam.y = miku.CamaraObjAlt;		//Para que no vea a los "pies" del objeto (personaje)
+
+	miku.Dir=0;
+	miku.DirAnt=0;
+
+	miku.escalaX=0.8f;
+	miku.escalaY=0.8f;
+	miku.escalaZ=0.8f;
+	
+	miku.CamaraObjAltE=0.0f;
 
 	// en inicializa parametro de control savage
 	enemigo8.visible=true;
@@ -1506,185 +1676,71 @@ void InicializaParametrosdeControl()
 	chang.CamaraObjAltE=0.0f;
 }
 
-void InicializaAnim()
+void InicializaAnim( FRAME *KeyFrame, int maxKF, jerarquiaModelo* modelo )
 {
 	//Se inicializan las variables de la secuencia 1
-	for(int i=0; i<maxKF1; i++)
+	for(int i = 0; i < maxKF; i++)
 	{
-		KeyFrame1[i].Angt1=0.0f;
-		KeyFrame1[i].Angt2=0.0f;
-		KeyFrame1[i].Angc1=0.0f;
-		KeyFrame1[i].Angc2=0.0f;
-		KeyFrame1[i].Angbi1=0.0f;
-		KeyFrame1[i].Angbi2=0.0f;
-		KeyFrame1[i].Angbib=0.0f;
-		KeyFrame1[i].Angbd1=0.0f;
-		KeyFrame1[i].Angbd2=0.0f;
-		KeyFrame1[i].Angbdb=0.0f;
-		KeyFrame1[i].Angpizq=0.0f;
-		KeyFrame1[i].Angpizqb=0.0f;
-		KeyFrame1[i].Angpder=0.0f;
-		KeyFrame1[i].Angpderb=0.0f;
-		KeyFrame1[i].Angpi=0.0f;
-		KeyFrame1[i].Angpd=0.0f;
-		KeyFrame1[i].Xtor=0.0f;
-		KeyFrame1[i].Ytor=0.0f;
-		KeyFrame1[i].Ztor=0.0f;
+		KeyFrame[i].Angt1=0.0f;
+		KeyFrame[i].Angt2=0.0f;
+		KeyFrame[i].Angc1=0.0f;
+		KeyFrame[i].Angc2=0.0f;
+		KeyFrame[i].Angbi1=0.0f;
+		KeyFrame[i].Angbi2=0.0f;
+		KeyFrame[i].Angbib=0.0f;
+		KeyFrame[i].Angbd1=0.0f;
+		KeyFrame[i].Angbd2=0.0f;
+		KeyFrame[i].Angbdb=0.0f;
+		KeyFrame[i].Angpizq=0.0f;
+		KeyFrame[i].Angpizqb=0.0f;
+		KeyFrame[i].Angpder=0.0f;
+		KeyFrame[i].Angpderb=0.0f;
+		KeyFrame[i].Angpi=0.0f;
+		KeyFrame[i].Angpd=0.0f;
+		KeyFrame[i].Xtor=0.0f;
+		KeyFrame[i].Ytor=0.0f;
+		KeyFrame[i].Ztor=0.0f;
 
-		KeyFrame1[i].incAngt1=false;
-		KeyFrame1[i].incAngt1=false;
-		KeyFrame1[i].incAngc1=false;
-		KeyFrame1[i].incAngc2=false;
-		KeyFrame1[i].incAngbi1=false;
-		KeyFrame1[i].incAngbi2=false;
-		KeyFrame1[i].incAngbib=false;
-		KeyFrame1[i].incAngbd1=false;
-		KeyFrame1[i].incAngbd2=false;
-		KeyFrame1[i].incAngbdb=false;
-		KeyFrame1[i].incAngpizq=false;
-		KeyFrame1[i].incAngpizqb=false;
-		KeyFrame1[i].incAngpder=false;
-		KeyFrame1[i].incAngpderb=false;
-		KeyFrame1[i].incAngpi=false;
-		KeyFrame1[i].incAngpd=false;
-		KeyFrame1[i].incXtor=false;
-		KeyFrame1[i].incYtor=false;
-		KeyFrame1[i].incZtor=false;
+		KeyFrame[i].incAngt1=false;
+		KeyFrame[i].incAngt1=false;
+		KeyFrame[i].incAngc1=false;
+		KeyFrame[i].incAngc2=false;
+		KeyFrame[i].incAngbi1=false;
+		KeyFrame[i].incAngbi2=false;
+		KeyFrame[i].incAngbib=false;
+		KeyFrame[i].incAngbd1=false;
+		KeyFrame[i].incAngbd2=false;
+		KeyFrame[i].incAngbdb=false;
+		KeyFrame[i].incAngpizq=false;
+		KeyFrame[i].incAngpizqb=false;
+		KeyFrame[i].incAngpder=false;
+		KeyFrame[i].incAngpderb=false;
+		KeyFrame[i].incAngpi=false;
+		KeyFrame[i].incAngpd=false;
+		KeyFrame[i].incXtor=false;
+		KeyFrame[i].incYtor=false;
+		KeyFrame[i].incZtor=false;
 	}
 
-	player1modelo.Angt1=0.0f;
-	player1modelo.Angt2=0.0f;
-	player1modelo.Angc1=0.0f;
-	player1modelo.Angc2=0.0f;
-	player1modelo.Angbi1=0.0f;
-	player1modelo.Angbi2=0.0f;
-	player1modelo.Angbib=0.0f;
-	player1modelo.Angbd1=0.0f;
-	player1modelo.Angbd2=0.0f;
-	player1modelo.Angbdb=0.0f;
-	player1modelo.Angpizq=0.0f;
-	player1modelo.Angpizqb=0.0f;
-	player1modelo.Angpder=0.0f;
-	player1modelo.Angpderb=0.0f;
-	player1modelo.Angpi=0.0f;
-	player1modelo.Angpd=0.0f;
-	player1modelo.Xtor=0.0f;
-	player1modelo.Ytor=0.0f;
-	player1modelo.Ztor=0.0f;
-	
-	enem1modelo.Angt1=0.0f;
-	enem1modelo.Angt2=0.0f;
-	enem1modelo.Angc1=0.0f;
-	enem1modelo.Angc2=0.0f;
-	enem1modelo.Angbi1=0.0f;
-	enem1modelo.Angbi2=0.0f;
-	enem1modelo.Angbib=0.0f;
-	enem1modelo.Angbd1=0.0f;
-	enem1modelo.Angbd2=0.0f;
-	enem1modelo.Angbdb=0.0f;
-	enem1modelo.Angpizq=0.0f;
-	enem1modelo.Angpizqb=0.0f;
-	enem1modelo.Angpder=0.0f;
-	enem1modelo.Angpderb=0.0f;
-	enem1modelo.Angpi=0.0f;
-	enem1modelo.Angpd=0.0f;
-	enem1modelo.Xtor=0.0f;
-	enem1modelo.Ytor=0.0f;
-	enem1modelo.Ztor=0.0f;
-
-	enem2modelo.Angt1=0.0f;
-	enem2modelo.Angt2=0.0f;
-	enem2modelo.Angc1=0.0f;
-	enem2modelo.Angc2=0.0f;
-	enem2modelo.Angbi1=0.0f;
-	enem2modelo.Angbi2=0.0f;
-	enem2modelo.Angbib=0.0f;
-	enem2modelo.Angbd1=0.0f;
-	enem2modelo.Angbd2=0.0f;
-	enem2modelo.Angbdb=0.0f;
-	enem2modelo.Xtor=0.0f;
-	enem2modelo.Ytor=0.0f;
-	enem2modelo.Ztor=0.0f;
-
-	MJ6modelo.Angt1=0.0f;
-	MJ6modelo.Angt2=0.0f;
-	MJ6modelo.Angc1=0.0f;
-	MJ6modelo.Angc2=0.0f;
-	MJ6modelo.Angbi1=0.0f;
-	MJ6modelo.Angbi2=0.0f;
-	MJ6modelo.Angbib=0.0f;
-	MJ6modelo.Angbd1=0.0f;
-	MJ6modelo.Angbd2=0.0f;
-	MJ6modelo.Angbdb=0.0f;
-	MJ6modelo.Angpizq=0.0f;
-	MJ6modelo.Angpizqb=0.0f;
-	MJ6modelo.Angpder=0.0f;
-	MJ6modelo.Angpderb=0.0f;
-	MJ6modelo.Angpi=0.0f;
-	MJ6modelo.Angpd=0.0f;
-	MJ6modelo.Xtor=0.0f;
-	MJ6modelo.Ytor=0.0f;
-	MJ6modelo.Ztor=0.0f;
-
-	enem3amodelo.Angt1=0.0f;
-	enem3amodelo.Angt2=0.0f;
-	enem3amodelo.Angc1=0.0f;
-	enem3amodelo.Angc2=0.0f;
-	enem3amodelo.Angbi1=0.0f;
-	enem3amodelo.Angbi2=0.0f;
-	enem3amodelo.Angbib=0.0f;
-	enem3amodelo.Angbd1=0.0f;
-	enem3amodelo.Angbd2=0.0f;
-	enem3amodelo.Angbdb=0.0f;
-	enem3amodelo.Angpizq=0.0f;
-	enem3amodelo.Angpizqb=0.0f;
-	enem3amodelo.Angpder=0.0f;
-	enem3amodelo.Angpderb=0.0f;
-	enem3amodelo.Angpi=0.0f;
-	enem3amodelo.Angpd=0.0f;
-	enem3amodelo.Xtor=0.0f;
-	enem3amodelo.Ytor=0.0f;
-	enem3amodelo.Ztor=0.0f;
-
-	enem3bmodelo.Angt1=0.0f;
-	enem3bmodelo.Angt2=0.0f;
-	enem3bmodelo.Angc1=0.0f;
-	enem3bmodelo.Angc2=0.0f;
-	enem3bmodelo.Angbi1=0.0f;
-	enem3bmodelo.Angbi2=0.0f;
-	enem3bmodelo.Angbib=0.0f;
-	enem3bmodelo.Angbd1=0.0f;
-	enem3bmodelo.Angbd2=0.0f;
-	enem3bmodelo.Angbdb=0.0f;
-	enem3bmodelo.Angpizq=0.0f;
-	enem3bmodelo.Angpizqb=0.0f;
-	enem3bmodelo.Angpder=0.0f;
-	enem3bmodelo.Angpderb=0.0f;
-	enem3bmodelo.Angpi=0.0f;
-	enem3bmodelo.Angpd=0.0f;
-	enem3bmodelo.Xtor=0.0f;
-	enem3bmodelo.Ytor=0.0f;
-	enem3bmodelo.Ztor=0.0f;
-
-	changmodelo.Angt1=0.0f;
-	changmodelo.Angt2=0.0f;
-	changmodelo.Angc1=0.0f;
-	changmodelo.Angc2=0.0f;
-	changmodelo.Angbi1=0.0f;
-	changmodelo.Angbi2=0.0f;
-	changmodelo.Angbib=0.0f;
-	changmodelo.Angbd1=0.0f;
-	changmodelo.Angbd2=0.0f;
-	changmodelo.Angbdb=0.0f;
-	changmodelo.Angpizq=0.0f;
-	changmodelo.Angpizqb=0.0f;
-	changmodelo.Angpder=0.0f;
-	changmodelo.Angpderb=0.0f;
-	changmodelo.Angpi=0.0f;
-	changmodelo.Angpd=0.0f;
-	changmodelo.Xtor=0.0f;
-	changmodelo.Ytor=0.0f;
-	changmodelo.Ztor=0.0f;
+	modelo->Angt1=0.0f;
+	modelo->Angt2=0.0f;
+	modelo->Angc1=0.0f;
+	modelo->Angc2=0.0f;
+	modelo->Angbi1=0.0f;
+	modelo->Angbi2=0.0f;
+	modelo->Angbib=0.0f;
+	modelo->Angbd1=0.0f;
+	modelo->Angbd2=0.0f;
+	modelo->Angbdb=0.0f;
+	modelo->Angpizq=0.0f;
+	modelo->Angpizqb=0.0f;
+	modelo->Angpder=0.0f;
+	modelo->Angpderb=0.0f;
+	modelo->Angpi=0.0f;
+	modelo->Angpd=0.0f;
+	modelo->Xtor=0.0f;
+	modelo->Ytor=0.0f;
+	modelo->Ztor=0.0f;
 }
 
 void DatosAnimacion()
@@ -2391,7 +2447,14 @@ int InitGL(GLvoid)										// Aqui se configuran los parametros iniciales de Op
 	e=gluNewQuadric();
 
 	InicializaParametrosdeControl();
-	InicializaAnim();
+	InicializaAnim( KeyFrame1, maxKF1, &player1modelo );
+	InicializaAnim( KeyFrame2, maxKF2, &mikumodelo );
+	InicializaAnim( KeyFrame3, maxKF3, &enem1modelo );
+	InicializaAnim( KeyFrame4, maxKF4, &enem2modelo );
+	InicializaAnim( KeyFrame5, maxKF5, &MJ6modelo );
+	InicializaAnim( KeyFrame6, maxKF6, &enem3amodelo );
+	InicializaAnim( KeyFrame7, maxKF7, &enem3bmodelo );
+	InicializaAnim( KeyFrame8, maxKF8, &changmodelo );
 	DatosAnimacion();
 
 	// Colisiones
@@ -2518,29 +2581,29 @@ void ControlPersonaje(int funcion)
 	}
 }
 
-void animacion(FRAME *KeyFrame, int maxKF , int frames)
+void animacion(FRAME *KeyFrame, int maxKF , int frames, jerarquiaModelo* modelo)
 {
 	if(play)
 	{		
-		if((abs(KeyFrame[playIndex+1].Angt1-player1modelo.Angt1))<0.1 &&
-		   (abs(KeyFrame[playIndex+1].Angt2-player1modelo.Angt2))<0.1 &&
-		   (abs(KeyFrame[playIndex+1].Angc1-player1modelo.Angc1))<0.1 &&
-		   (abs(KeyFrame[playIndex+1].Angc2-player1modelo.Angc2))<0.1 &&
-		   (abs(KeyFrame[playIndex+1].Angbi1-player1modelo.Angbi1))<0.1 &&
-		   (abs(KeyFrame[playIndex+1].Angbi2-player1modelo.Angbi2))<0.1 &&
-		   (abs(KeyFrame[playIndex+1].Angbib-player1modelo.Angbib))<0.1 &&
-		   (abs(KeyFrame[playIndex+1].Angbd1-player1modelo.Angbd1))<0.1 &&
-		   (abs(KeyFrame[playIndex+1].Angbd2-player1modelo.Angbd2))<0.1 &&
-		   (abs(KeyFrame[playIndex+1].Angbdb-player1modelo.Angbdb))<0.1 &&
-		   (abs(KeyFrame[playIndex+1].Angpizq-player1modelo.Angpizq))<0.1 &&
-		   (abs(KeyFrame[playIndex+1].Angpizqb-player1modelo.Angpizqb))<0.1 &&
-		   (abs(KeyFrame[playIndex+1].Angpder-player1modelo.Angpder))<0.1 &&
-		   (abs(KeyFrame[playIndex+1].Angpderb-player1modelo.Angpderb))<0.1 &&
-		   (abs(KeyFrame[playIndex+1].Angpi-player1modelo.Angpi))<0.1 &&
-		   (abs(KeyFrame[playIndex+1].Angpd-player1modelo.Angpd))<0.1 &&
-		   (abs(KeyFrame[playIndex+1].Xtor-player1modelo.Xtor))<0.1 &&
-		   (abs(KeyFrame[playIndex+1].Ytor-player1modelo.Ytor))<0.1 &&
-		   (abs(KeyFrame[playIndex+1].Ztor-player1modelo.Ztor))<0.1)
+		if((abs(KeyFrame[playIndex+1].Angt1-modelo->Angt1))<0.1 &&
+		   (abs(KeyFrame[playIndex+1].Angt2-modelo->Angt2))<0.1 &&
+		   (abs(KeyFrame[playIndex+1].Angc1-modelo->Angc1))<0.1 &&
+		   (abs(KeyFrame[playIndex+1].Angc2-modelo->Angc2))<0.1 &&
+		   (abs(KeyFrame[playIndex+1].Angbi1-modelo->Angbi1))<0.1 &&
+		   (abs(KeyFrame[playIndex+1].Angbi2-modelo->Angbi2))<0.1 &&
+		   (abs(KeyFrame[playIndex+1].Angbib-modelo->Angbib))<0.1 &&
+		   (abs(KeyFrame[playIndex+1].Angbd1-modelo->Angbd1))<0.1 &&
+		   (abs(KeyFrame[playIndex+1].Angbd2-modelo->Angbd2))<0.1 &&
+		   (abs(KeyFrame[playIndex+1].Angbdb-modelo->Angbdb))<0.1 &&
+		   (abs(KeyFrame[playIndex+1].Angpizq-modelo->Angpizq))<0.1 &&
+		   (abs(KeyFrame[playIndex+1].Angpizqb-modelo->Angpizqb))<0.1 &&
+		   (abs(KeyFrame[playIndex+1].Angpder-modelo->Angpder))<0.1 &&
+		   (abs(KeyFrame[playIndex+1].Angpderb-modelo->Angpderb))<0.1 &&
+		   (abs(KeyFrame[playIndex+1].Angpi-modelo->Angpi))<0.1 &&
+		   (abs(KeyFrame[playIndex+1].Angpd-modelo->Angpd))<0.1 &&
+		   (abs(KeyFrame[playIndex+1].Xtor-modelo->Xtor))<0.1 &&
+		   (abs(KeyFrame[playIndex+1].Ytor-modelo->Ytor))<0.1 &&
+		   (abs(KeyFrame[playIndex+1].Ztor-modelo->Ztor))<0.1)
 		{			
 			playIndex++;			
 			if(playIndex>maxKF-2)
@@ -2572,25 +2635,25 @@ void animacion(FRAME *KeyFrame, int maxKF , int frames)
 			KeyFrame[playIndex].incYtor     = (KeyFrame[playIndex+1].Ytor-KeyFrame[playIndex].Ytor)/frames;
 			KeyFrame[playIndex].incZtor     = (KeyFrame[playIndex+1].Ztor-KeyFrame[playIndex].Ztor)/frames;
 			
-			player1modelo.Angt1    += KeyFrame[playIndex].incAngt1;
-			player1modelo.Angt2    += KeyFrame[playIndex].incAngt2;
-			player1modelo.Angc1    += KeyFrame[playIndex].incAngc1;
-			player1modelo.Angc2    += KeyFrame[playIndex].incAngc2;
-			player1modelo.Angbi1   += KeyFrame[playIndex].incAngbi1;
-			player1modelo.Angbi2   += KeyFrame[playIndex].incAngbi2;
-			player1modelo.Angbib   += KeyFrame[playIndex].incAngbib;
-			player1modelo.Angbd1   += KeyFrame[playIndex].incAngbd1;
-			player1modelo.Angbd2   += KeyFrame[playIndex].incAngbd2;
-			player1modelo.Angbdb   += KeyFrame[playIndex].incAngbdb;
-			player1modelo.Angpizq  += KeyFrame[playIndex].incAngpizq;
-			player1modelo.Angpizqb += KeyFrame[playIndex].incAngpizqb;
-			player1modelo.Angpder  += KeyFrame[playIndex].incAngpder;
-			player1modelo.Angpderb += KeyFrame[playIndex].incAngpderb;
-			player1modelo.Angpi    += KeyFrame[playIndex].incAngpi;
-			player1modelo.Angpd    += KeyFrame[playIndex].incAngpd;
-			player1modelo.Xtor     += KeyFrame[playIndex].incXtor;
-			player1modelo.Ytor     += KeyFrame[playIndex].incYtor;
-			player1modelo.Ztor     += KeyFrame[playIndex].incZtor;
+			modelo->Angt1    += KeyFrame[playIndex].incAngt1;
+			modelo->Angt2    += KeyFrame[playIndex].incAngt2;
+			modelo->Angc1    += KeyFrame[playIndex].incAngc1;
+			modelo->Angc2    += KeyFrame[playIndex].incAngc2;
+			modelo->Angbi1   += KeyFrame[playIndex].incAngbi1;
+			modelo->Angbi2   += KeyFrame[playIndex].incAngbi2;
+			modelo->Angbib   += KeyFrame[playIndex].incAngbib;
+			modelo->Angbd1   += KeyFrame[playIndex].incAngbd1;
+			modelo->Angbd2   += KeyFrame[playIndex].incAngbd2;
+			modelo->Angbdb   += KeyFrame[playIndex].incAngbdb;
+			modelo->Angpizq  += KeyFrame[playIndex].incAngpizq;
+			modelo->Angpizqb += KeyFrame[playIndex].incAngpizqb;
+			modelo->Angpder  += KeyFrame[playIndex].incAngpder;
+			modelo->Angpderb += KeyFrame[playIndex].incAngpderb;
+			modelo->Angpi    += KeyFrame[playIndex].incAngpi;
+			modelo->Angpd    += KeyFrame[playIndex].incAngpd;
+			modelo->Xtor     += KeyFrame[playIndex].incXtor;
+			modelo->Ytor     += KeyFrame[playIndex].incYtor;
+			modelo->Ztor     += KeyFrame[playIndex].incZtor;
 			
 		}
 	}
@@ -3198,6 +3261,19 @@ void DibujaChangoout()
 }
 
 
+void DibujaTarantula()
+{
+	//Torso
+	glCallList(taran+0);
+}
+
+
+void DibujaTarantulaout()
+{
+	//Torso
+	glCallList(taranout+0);
+}
+
 
 
 // Dibuja Personajes de Aru
@@ -3273,6 +3349,49 @@ void DibujaPersonajeAru()
 	glPopMatrix();
 }
 
+void DibujaMiku()
+{
+	glTranslatef( mikumodelo.Xtor, mikumodelo.Ytor, mikumodelo.Ztor);
+	glRotatef( mikumodelo.Angt2, 0.0f, 1.0f, 0.0f);
+	glRotatef( mikumodelo.Angt1, 1.0f, 0.0f, 0.0f);
+			
+	//Torso
+	glCallList( modelo1miku + 0 );
+
+	//Pierna derecha
+	glPushMatrix();
+		glTranslatef(0.0f, 0.0f, 0.0f);
+		glRotatef(mikumodelo.Angpder, 1.0f, 0.0f, 0.0f);
+		glCallList( modelo1miku + 1 );
+
+	glPopMatrix();
+
+	//Pierna izquierda
+	glPushMatrix();
+		glTranslatef(0.0f, 0.0f ,0.0f);
+		glRotatef( mikumodelo.Angpizq, 1.0f, 0.0f, 0.0f);
+		glCallList( modelo1miku + 2 );
+
+	glPopMatrix();
+
+	//Brazo derecho_a
+	glPushMatrix();
+		glTranslatef(0.0f, 0.0f, 0.0f);
+		glRotatef(mikumodelo.Angbd2, 0.0f, 1.0f, 0.0f);
+		glRotatef(mikumodelo.Angbd1, 1.0f, 0.0f, 0.0f);
+		glCallList( modelo1miku + 3 );
+
+	glPopMatrix();
+
+	//Brazo izquierdo
+	glPushMatrix();
+		glTranslatef(0.0f, 0.0f, 0.0f);
+		glRotatef(mikumodelo.Angbi2, 0.0f, 1.0f, 0.0f);
+		glRotatef(mikumodelo.Angbi1, 1.0f, 0.0f, 0.0f);
+		glCallList(modelo1miku + 4);
+
+	glPopMatrix();
+}
 void DibujaSombraMJ()
 {
 	glPushMatrix();
@@ -3603,6 +3722,14 @@ void DibujaMJ()
 		glRotatef(player1.AngObj, 0.0f, 1.0f, 0.0f);
 		glScalef(player1.escalaX,player1.escalaY,player1.escalaZ);
 		DibujaPersonajeAru();
+	glPopMatrix();
+
+	// Miku
+	glPushMatrix();
+		glTranslatef( miku.PosicionObj.x, miku.PosicionObj.y + 2.4f, miku.PosicionObj.z + 0.0f);
+		glRotatef(miku.AngObj, 0.0f, 1.0f, 0.0f);
+		glScalef(miku.escalaX,miku.escalaY,miku.escalaZ);
+		DibujaMiku();
 	glPopMatrix();
 
 	//MJ6
@@ -3946,7 +4073,7 @@ void DibujaEnemigos()
 		DibujaEnemigo3b();
 	glPopMatrix();
 
-	//Ene3chango
+	//chango
 	glPushMatrix();
 		glTranslatef(chang.PosicionObj.x, chang.PosicionObj.y+2.4f, chang.PosicionObj.z);
 		glRotatef(chang.AngObj, 0.0f, 1.0f, 0.0f);
@@ -3954,9 +4081,56 @@ void DibujaEnemigos()
 		DibujaChango();
 	glPopMatrix();
 
+	//tarantulas tipo pelicula Moonwalker
+	glPushMatrix();   //1 (rocas inicio)
+		glTranslatef(205.7f, 2.0f, -88.0f);
+		glScalef(0.25,0.25,0.25);
+		DibujaTarantula();
+	glPopMatrix();
+	glPushMatrix();   //2 (plataforma inicio grande)
+		glTranslatef(230.0f, 2.5f, -35.0f);
+		glRotatef(200.0f,0,1,0);
+		glScalef(0.2,0.2,0.2);
+		DibujaTarantula();
+	glPopMatrix();
+	glPushMatrix();   //3 (plataforma inicio chica)
+		glTranslatef(229.0f, 5.5f, -32.0f);
+		glRotatef(240.0f,0,1,0);
+		glScalef(0.1,0.1,0.1);
+		DibujaTarantula();
+	glPopMatrix();
+	glPushMatrix();   //4 (pared plano 2)
+		glTranslatef(45.0f, 17.0f, -100.0f);
+		glRotatef(100.0f,0,0,1);
+		glRotatef(90.0f,1,0,0);
+		glScalef(0.1,0.1,0.1);
+		DibujaTarantula();
+	glPopMatrix();
+	glPopMatrix();
+		glPushMatrix();   //5 (esquina interior)
+		glTranslatef(-3.5f, 4.5f, -40.0f);
+		glRotatef(160.0f,0,1,0);
+		glScalef(0.11,0.11,0.11);
+		DibujaTarantula();
+	glPopMatrix();
+	glPopMatrix();
+		glPushMatrix();   //6 (rocas inicio plano 7)
+		glTranslatef(-87.0f, 5.27f, 16.0f);
+		glScalef(0.14,0.14,0.14);
+		DibujaTarantula();
+	glPopMatrix();
+	glPopMatrix();
+		glPushMatrix();   //7 (rocas final)
+		glTranslatef(-16.0f, 5.3f, 115.0f);
+		glRotatef(160.0f,0,1,0);
+		glScalef(0.15,0.15,0.15);
+		DibujaTarantula();
+	glPopMatrix();
+
+
 	cel_Shader.TurnOff();
 
-	//contorno
+	//contornos
 	glDisable(GL_LIGHTING);
 	glEnable(GL_CULL_FACE);
 	glCullFace(GL_FRONT);
@@ -4003,19 +4177,67 @@ void DibujaEnemigos()
 		DibujaEnemigo3bout();
 	glPopMatrix();
 
-	//Ene3chango
+	//chango
 	glPushMatrix();
 		glTranslatef(chang.PosicionObj.x, chang.PosicionObj.y+2.4f, chang.PosicionObj.z);
 		glRotatef(chang.AngObj, 0.0f, 1.0f, 0.0f);
 		glScalef(chang.escalaX,chang.escalaY,chang.escalaZ);
 		DibujaChangoout();
 	glPopMatrix();
+
+	//tarantulas tipo pelicula Moonwalker
 	glLineWidth(1.0f);
+	glPushMatrix();   //1 (rocas inicio)
+		glTranslatef(205.7f, 2.0f, -88.0f);
+		glScalef(0.25,0.25,0.25);
+		DibujaTarantulaout();
+	glPopMatrix();
+	glPushMatrix();   //2 (plataforma inicio grande)
+		glTranslatef(230.0f, 2.5f, -35.0f);
+		glRotatef(200.0f,0,1,0);
+		glScalef(0.2,0.2,0.2);
+		DibujaTarantulaout();
+	glPopMatrix();
+	glPushMatrix();   //3 (plataforma inicio chica)
+		glTranslatef(229.0f, 5.5f, -32.0f);
+		glRotatef(240.0f,0,1,0);
+		glScalef(0.1,0.1,0.1);
+		DibujaTarantulaout();
+	glPopMatrix();
+	glPushMatrix();   //4 (pared plano 2)
+		glTranslatef(45.0f, 17.0f, -100.0f);
+		glRotatef(100.0f,0,0,1);
+		glRotatef(90.0f,1,0,0);
+		glScalef(0.1,0.1,0.1);
+		DibujaTarantulaout();
+	glPopMatrix();
+	glPopMatrix();
+		glPushMatrix();   //5 (esquina interior)
+		glTranslatef(-3.5f, 4.5f, -40.0f);
+		glRotatef(160.0f,0,1,0);
+		glScalef(0.11,0.11,0.11);
+		DibujaTarantulaout();
+	glPopMatrix();
+	glPopMatrix();
+		glPushMatrix();   //6 (rocas inicio plano 7)
+		glTranslatef(-87.0f, 5.27f, 16.0f);
+		glScalef(0.14,0.14,0.14);
+		DibujaTarantulaout();
+	glPopMatrix();
+	glPopMatrix();
+		glPushMatrix();   //7 (rocas final)
+		glTranslatef(-16.0f, 5.3f, 115.0f);
+		glRotatef(160.0f,0,1,0);
+		glScalef(0.15,0.15,0.15);
+		DibujaTarantulaout();
+	glPopMatrix();
+
 	glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
 	glCullFace(GL_BACK);
 	glDisable(GL_CULL_FACE);
 	glEnable(GL_LIGHTING);
 }
+
 void DibujaEscena()
 {
 	// Mayralol
@@ -4571,7 +4793,7 @@ int WINAPI WinMain(	HINSTANCE	hInstance,			// Instancia
 					if(play)
 					{
 						if(tipoAnim == 1)
-							animacion(KeyFrame1, maxKF1 , 18);
+							animacion(KeyFrame1, maxKF1 , 18, &player1modelo );
 					}
 					SwapBuffers(hDC);				// Intercambia los Buffers (Double Buffering)
 				}
