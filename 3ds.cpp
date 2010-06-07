@@ -8,10 +8,6 @@ extern CShader g_Shader;
 extern GLuint mSkinLoc;
 extern GLuint mCelLoc;
 
-std::vector<float> m_vertices;
-std::vector<float> m_texcoords;
-std::vector<float> m_colors;
-
 // This file handles all of the code needed to load a .3DS file.
 // Basically, how it works is, you load a chunk, then you check
 // the chunk ID.  Depending on the chunk ID, you load the information
