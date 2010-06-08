@@ -2544,6 +2544,22 @@ void LiberaSonido(FMOD_SYSTEM *system, FMOD_RESULT result)
     ERRCHECK(result);
 }
 
+// creador de hoyos negros y revision de colisiones
+void LargeHadronCollider()
+{
+
+	// Colisiones
+	ColisionEsferaPlano(0, 2, player1 );
+	player1.PosAntObj = player1.PosicionObj;
+	for(int i = 1; i <= 30; i++)
+	{
+		ColisionEsferaEsfera(esfera[0], esfera[i], 1, player1 );
+		player1.PosAntObj = player1.PosicionObj;
+	}
+	player1.PosAntObj = player1.PosicionObj;
+
+}
+
 void ControlPersonaje(int funcion)
 {
 	if( funcion == 1 ) //Giro a la derecha
@@ -2558,8 +2574,16 @@ void ControlPersonaje(int funcion)
 			player1.AngObj += 360.0f;
 		*/
 
-		player1.AngDir = 0;
-		player1.AngObj = 90;
+		if( pisoId < 4 )
+		{
+			player1.AngDir = 0;
+			player1.AngObj = 90;
+		}
+		else
+		{
+			player1.AngDir = 270;
+			player1.AngObj = 180;
+		}
 
 		player1.Direccion.x = cosf( player1.AngDir * PI/180.0f);
 		player1.Direccion.y = 0.0f;
@@ -2574,15 +2598,15 @@ void ControlPersonaje(int funcion)
 		player1.ObjetivoCam.y = player1.CamaraObjAlt;
 
 		// Colisiones
-		ColisionEsferaPlano(0, 2, player1 );
-		player1.PosAntObj = player1.PosicionObj;
-		for(int i = 1; i <= 30; i++)
-		{
-			ColisionEsferaEsfera(esfera[0], esfera[i], 1, player1 );
-			player1.PosAntObj = player1.PosicionObj;
-		}
+		//ColisionEsferaPlano(0, 2, player1 );
+		//player1.PosAntObj = player1.PosicionObj;
+		//for(int i = 1; i <= 30; i++)
+		//{
+		//	ColisionEsferaEsfera(esfera[0], esfera[i], 1, player1 );
+		//	player1.PosAntObj = player1.PosicionObj;
+		//}
 
-		player1.PosAntObj = player1.PosicionObj;
+		//player1.PosAntObj = player1.PosicionObj;
 	}
 	else if(funcion == 2) //Giro a la izquierda
 	{
@@ -2596,8 +2620,16 @@ void ControlPersonaje(int funcion)
 			player1.AngObj-=360.0f;
 		*/
 
-		player1.AngDir = 180;
-		player1.AngObj = 270;
+		if( pisoId < 4 )
+		{
+			player1.AngDir = 180;
+			player1.AngObj = 270;
+		}
+		else
+		{
+			player1.AngDir = 90;
+			player1.AngObj = 0;
+		}
 
 		player1.Direccion.x = cosf(player1.AngDir*PI/180.0f);
 		player1.Direccion.y = 0.0f;
@@ -2626,8 +2658,16 @@ void ControlPersonaje(int funcion)
 	{
 		// Avanza como en MoonWalker
 		// ANNIE ARE YOU OK? ARE YOU OK, ANNIE?
-		player1.AngDir = 270;
-		player1.AngObj = 180;
+		if( pisoId < 4 )
+		{
+			player1.AngDir = 270;
+			player1.AngObj = 180;
+		}
+		else
+		{
+			player1.AngDir = 180;
+			player1.AngObj = 270;
+		}
 
 		//	WILL YOU TELL US, THAT YOU'RE OK?
 		player1.Direccion.x = cosf(player1.AngDir*PI/180.0f);
@@ -2642,14 +2682,14 @@ void ControlPersonaje(int funcion)
 		player1.ObjetivoCam.y = player1.CamaraObjAlt;
 
 		// Colisiones
-		ColisionEsferaPlano(0, 1, player1 );
-		player1.PosAntObj = player1.PosicionObj;
+		//ColisionEsferaPlano(0, 1, player1 );
+		//player1.PosAntObj = player1.PosicionObj;
 
-		for(int i = 1; i <= 30; i++)
-		{
-			ColisionEsferaEsfera(esfera[0], esfera[i], 1, player1 );
-			player1.PosAntObj = player1.PosicionObj;
-		}
+		//for(int i = 1; i <= 30; i++)
+		//{
+		//	ColisionEsferaEsfera(esfera[0], esfera[i], 1, player1 );
+		//	player1.PosAntObj = player1.PosicionObj;
+		//}
 
 	}
 	else if(funcion == 4) //Avanza hacia atrás
@@ -2657,8 +2697,16 @@ void ControlPersonaje(int funcion)
 
 		// Avanza como en MoonWalker
 		// I DON'T KNOW
-		player1.AngDir = 90;
-		player1.AngObj = 0;
+		if( pisoId < 4 )
+		{
+			player1.AngDir = 90;
+			player1.AngObj = 0;
+		}
+		else
+		{
+			player1.AngDir = 0;
+			player1.AngObj = 90;
+		}
 
 		// I DON'T KNOW
 		player1.Direccion.x = cosf(player1.AngDir*PI/180.0f);
@@ -2672,15 +2720,15 @@ void ControlPersonaje(int funcion)
 		player1.ObjetivoCam.y = player1.CamaraObjAlt;
 
 		// Colisiones
-		ColisionEsferaPlano(0, 2, player1 );
-		player1.PosAntObj = player1.PosicionObj;
-		for(int i = 1; i <= 30; i++)
-		{
-			ColisionEsferaEsfera(esfera[0], esfera[i], 1, player1 );
-			player1.PosAntObj = player1.PosicionObj;
-		}
+		//ColisionEsferaPlano(0, 2, player1 );
+		//player1.PosAntObj = player1.PosicionObj;
+		//for(int i = 1; i <= 30; i++)
+		//{
+		//	ColisionEsferaEsfera(esfera[0], esfera[i], 1, player1 );
+		//	player1.PosAntObj = player1.PosicionObj;
+		//}
 
-		player1.PosAntObj = player1.PosicionObj;
+		//player1.PosAntObj = player1.PosicionObj;
 
 	}
 	else if(funcion == 5) //Sube objetivo de la cámara
@@ -3884,7 +3932,7 @@ void DibujaTextos()
 		Font.glPrint( (1.0f/640.0f)*glWidth, glWidth * 0.42f, glHeight * 0.90f, "Round 1 Stage 1" );
 		Font.glPrint( (1.0f/640.0f)*glWidth, glWidth * 0.08f, glHeight * 0.15f, "1P" );
 		Font.glPrint( (1.0f/640.0f)*glWidth, glWidth * 0.20f, glHeight * 0.15f, "0" );
-		Font.glPrint( (1.0f/640.0f)*glWidth, glWidth * 0.1f, glHeight * 0.11f, "3" );
+		Font.glPrint( (1.0f/640.0f)*glWidth, glWidth * 0.1f, glHeight * 0.09f, "x3" );
 									
 		glDisable(GL_ALPHA_TEST);
 		glDisable(GL_TEXTURE_2D);
@@ -4671,6 +4719,7 @@ int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la
 	DibujaObjetosdeColision();
 	//DibujaEsferasColision();
 	ColisionesPiso();
+	LargeHadronCollider();
 
 	return TRUE;
 }
