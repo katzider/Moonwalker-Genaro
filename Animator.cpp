@@ -39,5 +39,7 @@ void Animator::startAnim()
 
 void Animator::moveToPoint( CVector punto )
 {
-	modelo.PosicionObj = modelo.PosicionObj + Normaliza( punto ) * modelo.VelocidadObj;
+	CVector temp = punto - modelo.PosicionObj;
+	temp = Normaliza( temp );
+	modelo.PosicionObj = modelo.PosicionObj + temp * modelo.VelocidadObj;
 }
