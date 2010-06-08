@@ -26,6 +26,10 @@ void Animator::changeSpeed( float speed )
 	modelo->VelocidadObj = speed;
 }
 
+/* The function used to start the waypoints stored, if you wanna test it, I think you'll find 
+ * the things this teaches you, are sure to beat you, but nevertheless, you'll get a lesson
+ * from teacher now.
+ */
 void Animator::startAnim()
 {
 	// As long as there are valid points to get to...
@@ -52,6 +56,7 @@ void Animator::startAnim()
 	}
 }
 
+// This function kicks and punch, it's all in the mind
 void Animator::moveToPoint( CVector punto )
 {
 	// Get a vector from the current point to the next point
