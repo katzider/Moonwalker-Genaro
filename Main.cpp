@@ -1716,6 +1716,7 @@ void InicializaParametrosdeAnimacion()
 	// Enemigo gordito azul
 	Enem1.setChar( &enem1 );
 	Enem1.addPoint( CVector( 200.0f, 9.0f, -40.0f ) );
+	Enem1.addPoint( CVector( 160.0f, 9.0f, -40.0f ) );
 }
 void AniMagic()
 {

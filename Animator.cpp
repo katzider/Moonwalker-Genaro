@@ -38,7 +38,7 @@ void Animator::startAnim()
 		}
 	}
 	else
-		i -= 2;
+		i = -1;
 }
 
 void Animator::moveToPoint( CVector punto )
