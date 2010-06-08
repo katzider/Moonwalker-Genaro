@@ -98,6 +98,7 @@ struct t3DObject
 	CVector3  *pNormals;		// The object's normals
 	CVector2  *pTexVerts;		// The texture's UV coordinates
 	tFace *pFaces;				// The faces information of the object
+	UINT      *pIndices;		// The straight face indices in a row, used for vertex arrays
 };
 
 // This holds our model information.  This should also turn into a robust class.
