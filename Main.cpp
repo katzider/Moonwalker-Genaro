@@ -92,8 +92,8 @@ CMateriales Material;
 #define FILE_NAME9d	 "Modelos/Ene1PierIzqB.3ds"
 #define FILE_NAME10d "Modelos/Ene1PieIzq.3ds"
 
-// Para el escenario de mayra
-#define FILE_NAME2e  "Modelos/escenario1.3ds"
+// Para el escenario 
+#define FILE_NAME1e  "Modelos/escenario1.3ds"
 
 //nombre y ubicación de modelo MJ6 (MJ Robot)
 #define FILE_NAME1f	 "Modelos/MJ6Torzo.3ds"
@@ -156,7 +156,7 @@ CTga textureModel4miku[20];
 CTga textureModel5miku[20];
 
 // Contenedores de texturas del escenario
-CTga textureModel2e[20];
+CTga textureModel1e[20];
 //Contenedor de texturas de enemigo3a
 CTga textureModel1h[20];
 CTga textureModel2h[20];
@@ -216,7 +216,7 @@ t3DModel g_3DModel4miku;
 t3DModel g_3DModel5miku;
 
 // Acceso a la estructura que almacena los datos del escenario
-t3DModel g_3DModel2e;
+t3DModel g_3DModel1e;
 
 //Acceso a la estructura que almacena a Ene1
 t3DModel g_3DModel1d;
@@ -658,7 +658,7 @@ int CargaModelos()
 		return 0;
 
 	// Mayra lol
-	if(!g_Load3ds.Load3DSFile(FILE_NAME2e, &g_3DModel2e, textureModel2e))
+	if(!g_Load3ds.Load3DSFile(FILE_NAME1e, &g_3DModel1e, textureModel1e))
 		return 0;
 
 	//agregar en CargaModelos() savage meh te la volaste XD
@@ -783,8 +783,8 @@ void DescargaModelos()
 	g_Load3ds.UnLoad3DSFile(&g_3DModel2g, textureModel2g);
 	g_Load3ds.UnLoad3DSFile(&g_3DModel3g, textureModel3g);
 
-	// Mayra lol
-	g_Load3ds.UnLoad3DSFile(&g_3DModel2e, textureModel2e);
+	// Escenario
+	g_Load3ds.UnLoad3DSFile(&g_3DModel1e, textureModel1e);
 
 	// Descarga los modelos de Aru
 	g_Load3ds.UnLoad3DSFile(&g_3DModel1aru, textureModel1aru);
@@ -1708,6 +1708,20 @@ void InicializaParametrosdeControl()
 	chang.CamaraObjAltE=0.0f;
 }
 
+/* Animacion/IA de cada uno de los monos en el escenario */
+// Declaracion de variables
+Animator Enem1;
+void InicializaParametrosdeAnimacion()
+{
+	// Enemigo gordito azul
+	Enem1.setChar( &enem1 );
+	Enem1.addPoint( CVector( 200.0f, 9.0f, -40.0f ) );
+	Enem1.addPoint( CVector( 160.0f, 9.0f, -40.0f ) );
+}
+void AniMagic()
+{
+	Enem1.startAnim();
+}
 void InicializaAnim( FRAME *KeyFrame, int maxKF, jerarquiaModelo* modelo )
 {
 	//Se inicializan las variables de la secuencia 1
@@ -2488,6 +2502,9 @@ int InitGL(GLvoid)										// Aqui se configuran los parametros iniciales de Op
 	InicializaAnim( KeyFrame7, maxKF7, &enem3bmodelo );
 	InicializaAnim( KeyFrame8, maxKF8, &changmodelo );
 	DatosAnimacion();
+
+	// Animator
+	InicializaParametrosdeAnimacion();
 
 	// Colisiones
 	InicializaObjetosdeColision();
@@ -3783,9 +3800,9 @@ void DibujaTextos()
 			glTranslatef( glWidth * 0.03f, glHeight * 0.05, 0.0f );
 			glBegin(GL_QUADS);
 				glTexCoord2f( 0.0f, 0.0f ); glVertex2i( 0, 0 );
-				glTexCoord2f( 1.0f, 0.0f ); glVertex2i( 100, 0 );
-				glTexCoord2f( 1.0f, 1.0f ); glVertex2i( 100, 100 );
-				glTexCoord2f( 0.0f, 1.0f ); glVertex2i( 0, 100 );
+				glTexCoord2f( 1.0f, 0.0f ); glVertex2i( 50, 0 );
+				glTexCoord2f( 1.0f, 1.0f ); glVertex2i( 50, 50 );
+				glTexCoord2f( 0.0f, 1.0f ); glVertex2i( 0, 50 );
 			glEnd();
 		glPopMatrix();
 
@@ -3795,22 +3812,22 @@ void DibujaTextos()
 		Font.glPrint((1.0f/640.0f)*glWidth, glWidth*0.05f,glHeight*0.80f,"PosObj %f", player1.PosicionObj.x);*/
 		Font.glPrint( (1.0f/640.0f)*glWidth, glWidth * 0.45f, glHeight * 0.95f, "High 50000" );
 		Font.glPrint( (1.0f/640.0f)*glWidth, glWidth * 0.42f, glHeight * 0.90f, "Round 1 Stage 1" );
-		Font.glPrint( (1.0f/640.0f)*glWidth, glWidth * 0.05f, glHeight * 0.15f, "1P" );
+		Font.glPrint( (1.0f/640.0f)*glWidth, glWidth * 0.08f, glHeight * 0.15f, "1P" );
 		Font.glPrint( (1.0f/640.0f)*glWidth, glWidth * 0.20f, glHeight * 0.15f, "0" );
-		Font.glPrint( (1.0f/640.0f)*glWidth, glWidth * 0.075f, glHeight * 0.1f, "3" );
+		Font.glPrint( (1.0f/640.0f)*glWidth, glWidth * 0.1f, glHeight * 0.11f, "3" );
 									
 		glDisable(GL_ALPHA_TEST);
 		glDisable(GL_TEXTURE_2D);
 
 		//Barra de energia
 		glPushMatrix();
-			glTranslatef( glWidth * 0.082f, glHeight * 0.05, 0.0f );
+			glTranslatef( glWidth * 0.11f, glHeight * 0.05, 0.0f );
 			glColor3ub( 250, 197, 0 );
 			glBegin(GL_QUADS);
 				glVertex2i( 0, 0 );
-				glVertex2i( 250, 0 );
-				glVertex2i( 250, 50 );
-				glVertex2i( 0, 50 );
+				glVertex2i( 70, 0 );
+				glVertex2i( 70, 25 );
+				glVertex2i( 0, 25 );
 			glEnd();
 		glPopMatrix();
 
@@ -4362,8 +4379,8 @@ void DibujaEnemigos()
 
 void DibujaEscena()
 {
-	// Mayralol
-	g_Load3ds.Render3DSFile(&g_3DModel2e, textureModel2e, 1);
+	// Escenario
+	g_Load3ds.Render3DSFile(&g_3DModel1e, textureModel1e, 1);
 	glDisable(GL_NORMALIZE);
 }
 void Camara()
@@ -4575,6 +4592,8 @@ int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la
 	}
 	
 
+	// IA de los enemigos
+	AniMagic();
 	CalculateFrameRate();
 
 	// Colisiones
@@ -4917,6 +4936,7 @@ int WINAPI WinMain(	HINSTANCE	hInstance,			// Instancia
 						if(tipoAnim == 1)
 							animacion(KeyFrame1, maxKF1 , 18, &player1modelo, playIndex );
 					}
+					//AniMagic();						// Animaciones
 					SwapBuffers(hDC);				// Intercambia los Buffers (Double Buffering)
 				}
 
