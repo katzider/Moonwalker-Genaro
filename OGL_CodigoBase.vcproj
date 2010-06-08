@@ -186,6 +186,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Animator.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\cargadorTGA.cpp"
 				>
 			</File>
@@ -225,6 +229,10 @@
 			>
 			<File
 				RelativePath=".\3ds.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Animator.h"
 				>
 			</File>
 			<File
