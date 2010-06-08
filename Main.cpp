@@ -624,11 +624,13 @@ GLvoid ReSizeGLScene(GLsizei width, GLsizei height)		// Redimensiona e inicializ
 void CargaTexturas()
 {
 	textura[0].LoadTGA("Texturas/t1.tga");
+	textura[1].LoadTGA("Texturas/MJi.tga");
 }
 
 void DescargaTexturas()
 {
 	textura[0].Elimina();
+	textura[1].Elimina();
 }
 
 int CargaModelos()
@@ -2452,7 +2454,7 @@ int InitGL(GLvoid)										// Aqui se configuran los parametros iniciales de Op
 	glEnable(GL_LIGHT0);								// Activa luz0
 	glEnable(GL_LIGHTING);								// Habilita la iluminación
 
-	//CargaTexturas();
+	CargaTexturas();
 
 	// para la Spline de la trayectoria automática
 	ptsXtramo = 20;
@@ -3756,35 +3758,68 @@ void DibujaTextos()
 	glDisable(GL_DEPTH_TEST);							// Desactiva la prueba de profundidad
 	glMatrixMode(GL_PROJECTION);						// Selecciona la matriz de proyección
 	glPushMatrix();										// Guarda la matriz de proyección
-	glLoadIdentity();									// Limpia la matriz de proyección
-	glOrtho(0,glWidth,0,glHeight,-1,1);					// Crea una proyección ortogonal
-	glMatrixMode(GL_MODELVIEW);							// Selecciona la matriz de modelo de vista
-	glPushMatrix();										// Guarda la matriz de modelo de vista
-	
-	glDisable(GL_LIGHTING);
-	glLoadIdentity();
+		glLoadIdentity();									// Limpia la matriz de proyección
+		glOrtho(0,glWidth,0,glHeight,-1,1);					// Crea una proyección ortogonal
+		glMatrixMode(GL_MODELVIEW);							// Selecciona la matriz de modelo de vista
+		glPushMatrix();										// Guarda la matriz de modelo de vista
+		
+		glDisable(GL_LIGHTING);
+		glLoadIdentity();
 
-	glColor3f(1.0f,1.0f,1.0f);
-	
-	glEnable(GL_TEXTURE_2D);
+		glColor3f(1.0f,1.0f,1.0f);
+		
+		glEnable(GL_TEXTURE_2D);
 
-	glAlphaFunc(GL_GREATER, 0.8f);
-	glEnable(GL_ALPHA_TEST);
+		glAlphaFunc(GL_GREATER, 0.8f);
+		glEnable(GL_ALPHA_TEST);
 
-	// Texto a mostrar en pantalla
-	Font.glPrint((1.0f/640.0f)*glWidth, glWidth*0.05f,glHeight*0.9f,"pisoId: %d", pisoId );
-	Font.glPrint((1.0f/640.0f)*glWidth, glWidth*0.05f,glHeight*0.85f,"PosCam %f", player1.PosicionCam.x );
-	Font.glPrint((1.0f/640.0f)*glWidth, glWidth*0.05f,glHeight*0.80f,"PosObj %f", player1.PosicionObj.x);
-								
-	glDisable(GL_ALPHA_TEST);
-	glDisable(GL_TEXTURE_2D);
+		//Dibujar el indicador de personaje
 
-	glColor3f(1.0f,1.0f,1.0f);
+		glColor3f( 1.0f, 1.0f, 1.0f );
 
-	glEnable(GL_LIGHTING);
-	glMatrixMode(GL_PROJECTION);						// Selecciona la matriz de proyección
-	glPopMatrix();										// Recupera la anterior matriz de proyección
-	glMatrixMode(GL_MODELVIEW);							// Selecciona la matriz de modelo de vista
+		glBindTexture(GL_TEXTURE_2D, textura[1].texID);
+
+		glPushMatrix();
+			glTranslatef( glWidth * 0.03f, glHeight * 0.05, 0.0f );
+			glBegin(GL_QUADS);
+				glTexCoord2f( 0.0f, 0.0f ); glVertex2i( 0, 0 );
+				glTexCoord2f( 1.0f, 0.0f ); glVertex2i( 100, 0 );
+				glTexCoord2f( 1.0f, 1.0f ); glVertex2i( 100, 100 );
+				glTexCoord2f( 0.0f, 1.0f ); glVertex2i( 0, 100 );
+			glEnd();
+		glPopMatrix();
+
+		// Texto a mostrar en pantalla
+		Font.glPrint((1.0f/640.0f)*glWidth, glWidth*0.05f,glHeight*0.9f,"pisoId: %d", pisoId );
+		/*Font.glPrint((1.0f/640.0f)*glWidth, glWidth*0.05f,glHeight*0.85f,"PosCam %f", player1.PosicionCam.x );
+		Font.glPrint((1.0f/640.0f)*glWidth, glWidth*0.05f,glHeight*0.80f,"PosObj %f", player1.PosicionObj.x);*/
+		Font.glPrint( (1.0f/640.0f)*glWidth, glWidth * 0.45f, glHeight * 0.95f, "High 50000" );
+		Font.glPrint( (1.0f/640.0f)*glWidth, glWidth * 0.42f, glHeight * 0.90f, "Round 1 Stage 1" );
+		Font.glPrint( (1.0f/640.0f)*glWidth, glWidth * 0.05f, glHeight * 0.15f, "1P" );
+		Font.glPrint( (1.0f/640.0f)*glWidth, glWidth * 0.20f, glHeight * 0.15f, "0" );
+		Font.glPrint( (1.0f/640.0f)*glWidth, glWidth * 0.075f, glHeight * 0.1f, "3" );
+									
+		glDisable(GL_ALPHA_TEST);
+		glDisable(GL_TEXTURE_2D);
+
+		//Barra de energia
+		glPushMatrix();
+			glTranslatef( glWidth * 0.082f, glHeight * 0.05, 0.0f );
+			glColor3ub( 250, 197, 0 );
+			glBegin(GL_QUADS);
+				glVertex2i( 0, 0 );
+				glVertex2i( 250, 0 );
+				glVertex2i( 250, 50 );
+				glVertex2i( 0, 50 );
+			glEnd();
+		glPopMatrix();
+
+		glColor3f(1.0f,1.0f,1.0f);
+
+		glEnable(GL_LIGHTING);
+		glMatrixMode(GL_PROJECTION);						// Selecciona la matriz de proyección
+		glPopMatrix();										// Recupera la anterior matriz de proyección
+		glMatrixMode(GL_MODELVIEW);							// Selecciona la matriz de modelo de vista
 	glPopMatrix();										// Recupera la anterior matriz de modelo de vista
 	glEnable(GL_DEPTH_TEST);							// Activa la prueba de profundidad
 		
@@ -4897,6 +4932,7 @@ int WINAPI WinMain(	HINSTANCE	hInstance,			// Instancia
 	// Finalización del programa
 	//DescargaTexturas();
 	DescargaModelos();
+	DescargaTexturas();
 	DestruyeListas();
 	Font.DestroyFont();
 	/*LiberaSonido(system, result);*/
