@@ -54,6 +54,9 @@ parametros chang;	 //Variable con la que tenemos acceso a la estructura de parám
 
 parametros enemigo8; // parametros savage
 
+/* Vidas del personaje */
+float health = 100;
+
 CMateriales Material;
 
 //Nombre y ubicación de los modelos
@@ -2428,11 +2431,11 @@ void ColisionEsferaEsfera( boundingsphere& a, boundingsphere& b, int dir, parame
 
 		if(dir == 1)
 		{
-			PosAux = player.PosAntObj - d * ( colision / 10.0f );
+			PosAux = player.PosAntObj - d * ( colision / 20.0f );
 		}
 		else if(dir == 2)
 		{
-			PosAux = player.PosAntObj - d * ( colision / 10.0f );
+			PosAux = player.PosAntObj - d * ( colision / 20.0f );
 		}
 
 		player.PosicionObj = PosAux;
@@ -2545,6 +2548,7 @@ void ControlPersonaje(int funcion)
 {
 	if( funcion == 1 ) //Giro a la derecha
 	{
+		/*
 		player1.AngDir+=1.0f;
 		if(player1.AngDir > 360.0f)
 			player1.AngDir -= 360.0f;
@@ -2552,18 +2556,37 @@ void ControlPersonaje(int funcion)
 		player1.AngObj-=1.0f;
 		if(player1.AngObj < 0.0f)
 			player1.AngObj += 360.0f;
+		*/
+
+		player1.AngDir = 0;
+		player1.AngObj = 90;
 
 		player1.Direccion.x = cosf( player1.AngDir * PI/180.0f);
 		player1.Direccion.y = 0.0f;
 		player1.Direccion.z = sinf( player1.AngDir * PI/180.0f);
 
+		// Avanza como en MoonWalker
+		player1.PosicionObj = player1.PosicionObj + player1.Direccion * player1.VelocidadObj;
+
 		player1.PosicionCam = player1.PosicionObj - player1.Direccion * player1.DistanciaCam;
 		player1.PosicionCam.y = player1.CamaraPosAlt;
 		player1.ObjetivoCam = player1.PosicionObj;
 		player1.ObjetivoCam.y = player1.CamaraObjAlt;
+
+		// Colisiones
+		ColisionEsferaPlano(0, 2, player1 );
+		player1.PosAntObj = player1.PosicionObj;
+		for(int i = 1; i <= 30; i++)
+		{
+			ColisionEsferaEsfera(esfera[0], esfera[i], 1, player1 );
+			player1.PosAntObj = player1.PosicionObj;
+		}
+
+		player1.PosAntObj = player1.PosicionObj;
 	}
 	else if(funcion == 2) //Giro a la izquierda
 	{
+		/*
 		player1.AngDir-=1.0f;
 		if(player1.AngDir < 0.0f)
 			player1.AngDir+=360.0f;
@@ -2571,19 +2594,48 @@ void ControlPersonaje(int funcion)
 		player1.AngObj+=1.0f;
 		if(player1.AngObj > 360.0f)
 			player1.AngObj-=360.0f;
+		*/
+
+		player1.AngDir = 180;
+		player1.AngObj = 270;
 
 		player1.Direccion.x = cosf(player1.AngDir*PI/180.0f);
 		player1.Direccion.y = 0.0f;
 		player1.Direccion.z = sinf(player1.AngDir*PI/180.0f);
 
+		// Avanza como en MoonWalker
+		player1.PosicionObj = player1.PosicionObj + player1.Direccion * player1.VelocidadObj;
+
 		player1.PosicionCam = player1.PosicionObj - player1.Direccion * player1.DistanciaCam;
 		player1.PosicionCam.y = player1.CamaraPosAlt;
 		player1.ObjetivoCam = player1.PosicionObj;
 		player1.ObjetivoCam.y = player1.CamaraObjAlt;
+
+		// Colisiones
+		ColisionEsferaPlano(0, 2, player1 );
+		player1.PosAntObj = player1.PosicionObj;
+		for(int i = 1; i <= 30; i++)
+		{
+			ColisionEsferaEsfera(esfera[0], esfera[i], 1, player1 );
+			player1.PosAntObj = player1.PosicionObj;
+		}
+
+		player1.PosAntObj = player1.PosicionObj;
 	}
 	else if(funcion == 3) //Avanza hacia adelante
 	{
+		// Avanza como en MoonWalker
+		// ANNIE ARE YOU OK? ARE YOU OK, ANNIE?
+		player1.AngDir = 270;
+		player1.AngObj = 180;
+
+		//	WILL YOU TELL US, THAT YOU'RE OK?
+		player1.Direccion.x = cosf(player1.AngDir*PI/180.0f);
+		player1.Direccion.y = 0.0f;
+		player1.Direccion.z = sinf(player1.AngDir*PI/180.0f);
+
 		player1.PosicionObj = player1.PosicionObj + player1.Direccion * player1.VelocidadObj;
+
 		player1.PosicionCam = player1.PosicionObj - player1.Direccion * player1.DistanciaCam;
 		player1.PosicionCam.y = player1.CamaraPosAlt;
 		player1.ObjetivoCam = player1.PosicionObj;
@@ -2602,7 +2654,18 @@ void ControlPersonaje(int funcion)
 	}
 	else if(funcion == 4) //Avanza hacia atrás
 	{
-		player1.PosicionObj = player1.PosicionObj - player1.Direccion * player1.VelocidadObj;
+
+		// Avanza como en MoonWalker
+		// I DON'T KNOW
+		player1.AngDir = 90;
+		player1.AngObj = 0;
+
+		// I DON'T KNOW
+		player1.Direccion.x = cosf(player1.AngDir*PI/180.0f);
+		player1.Direccion.y = 0.0f;
+		player1.Direccion.z = sinf(player1.AngDir*PI/180.0f);
+
+		player1.PosicionObj = player1.PosicionObj + player1.Direccion * player1.VelocidadObj;
 		player1.PosicionCam = player1.PosicionObj - player1.Direccion * player1.DistanciaCam;
 		player1.PosicionCam.y = player1.CamaraPosAlt;
 		player1.ObjetivoCam = player1.PosicionObj;
@@ -2613,7 +2676,7 @@ void ControlPersonaje(int funcion)
 		player1.PosAntObj = player1.PosicionObj;
 		for(int i = 1; i <= 30; i++)
 		{
-			ColisionEsferaEsfera(esfera[0], esfera[i], 2, player1 );
+			ColisionEsferaEsfera(esfera[0], esfera[i], 1, player1 );
 			player1.PosAntObj = player1.PosicionObj;
 		}
 
@@ -3802,18 +3865,19 @@ void DibujaTextos()
 
 		glBindTexture(GL_TEXTURE_2D, textura[1].texID);
 
+		// Indicar de vida
 		glPushMatrix();
 			glTranslatef( glWidth * 0.03f, glHeight * 0.05, 0.0f );
 			glBegin(GL_QUADS);
-				glTexCoord2f( 0.0f, 0.0f ); glVertex2i( 0, 0 );
-				glTexCoord2f( 1.0f, 0.0f ); glVertex2i( 50, 0 );
-				glTexCoord2f( 1.0f, 1.0f ); glVertex2i( 50, 50 );
-				glTexCoord2f( 0.0f, 1.0f ); glVertex2i( 0, 50 );
+				glTexCoord2f( 0.0f, 0.0f ); glVertex2f( 0.0f, 0.0f );
+				glTexCoord2f( 1.0f, 0.0f ); glVertex2f( 50.0f, 0.0f );
+				glTexCoord2f( 1.0f, 1.0f ); glVertex2f( 50.0f, 50.0f );
+				glTexCoord2f( 0.0f, 1.0f ); glVertex2f( 0.0f, 50.0f );
 			glEnd();
 		glPopMatrix();
 
 		// Texto a mostrar en pantalla
-		Font.glPrint((1.0f/640.0f)*glWidth, glWidth*0.05f,glHeight*0.9f,"pisoId: %d", pisoId );
+		Font.glPrint((1.0f/640.0f)*glWidth, glWidth*0.05f,glHeight*0.9f,"AngDir: %f", player1.AngDir );
 		/*Font.glPrint((1.0f/640.0f)*glWidth, glWidth*0.05f,glHeight*0.85f,"PosCam %f", player1.PosicionCam.x );
 		Font.glPrint((1.0f/640.0f)*glWidth, glWidth*0.05f,glHeight*0.80f,"PosObj %f", player1.PosicionObj.x);*/
 		Font.glPrint( (1.0f/640.0f)*glWidth, glWidth * 0.45f, glHeight * 0.95f, "High 50000" );
@@ -3825,15 +3889,15 @@ void DibujaTextos()
 		glDisable(GL_ALPHA_TEST);
 		glDisable(GL_TEXTURE_2D);
 
-		//Barra de energia
+		//Barra de energia / health
 		glPushMatrix();
 			glTranslatef( glWidth * 0.11f, glHeight * 0.05, 0.0f );
 			glColor3ub( 250, 197, 0 );
 			glBegin(GL_QUADS);
-				glVertex2i( 0, 0 );
-				glVertex2i( 70, 0 );
-				glVertex2i( 70, 25 );
-				glVertex2i( 0, 25 );
+				glVertex2f( 0.0f, 0.0f );
+				glVertex2f( health, 0.0f );
+				glVertex2f( health, 14.0f );
+				glVertex2f( 0.0f, 14.0f );
 			glEnd();
 		glPopMatrix();
 
