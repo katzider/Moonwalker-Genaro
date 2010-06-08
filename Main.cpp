@@ -92,8 +92,8 @@ CMateriales Material;
 #define FILE_NAME9d	 "Modelos/Ene1PierIzqB.3ds"
 #define FILE_NAME10d "Modelos/Ene1PieIzq.3ds"
 
-// Para el escenario de mayra
-#define FILE_NAME2e  "Modelos/escenario1.3ds"
+// Para el escenario 
+#define FILE_NAME1e  "Modelos/escenario1.3ds"
 
 //nombre y ubicación de modelo MJ6 (MJ Robot)
 #define FILE_NAME1f	 "Modelos/MJ6Torzo.3ds"
@@ -156,7 +156,7 @@ CTga textureModel4miku[20];
 CTga textureModel5miku[20];
 
 // Contenedores de texturas del escenario
-CTga textureModel2e[20];
+CTga textureModel1e[20];
 //Contenedor de texturas de enemigo3a
 CTga textureModel1h[20];
 CTga textureModel2h[20];
@@ -216,7 +216,7 @@ t3DModel g_3DModel4miku;
 t3DModel g_3DModel5miku;
 
 // Acceso a la estructura que almacena los datos del escenario
-t3DModel g_3DModel2e;
+t3DModel g_3DModel1e;
 
 //Acceso a la estructura que almacena a Ene1
 t3DModel g_3DModel1d;
@@ -658,7 +658,7 @@ int CargaModelos()
 		return 0;
 
 	// Mayra lol
-	if(!g_Load3ds.Load3DSFile(FILE_NAME2e, &g_3DModel2e, textureModel2e))
+	if(!g_Load3ds.Load3DSFile(FILE_NAME1e, &g_3DModel1e, textureModel1e))
 		return 0;
 
 	//agregar en CargaModelos() savage meh te la volaste XD
@@ -783,8 +783,8 @@ void DescargaModelos()
 	g_Load3ds.UnLoad3DSFile(&g_3DModel2g, textureModel2g);
 	g_Load3ds.UnLoad3DSFile(&g_3DModel3g, textureModel3g);
 
-	// Mayra lol
-	g_Load3ds.UnLoad3DSFile(&g_3DModel2e, textureModel2e);
+	// Escenario
+	g_Load3ds.UnLoad3DSFile(&g_3DModel1e, textureModel1e);
 
 	// Descarga los modelos de Aru
 	g_Load3ds.UnLoad3DSFile(&g_3DModel1aru, textureModel1aru);
@@ -4378,8 +4378,8 @@ void DibujaEnemigos()
 
 void DibujaEscena()
 {
-	// Mayralol
-	g_Load3ds.Render3DSFile(&g_3DModel2e, textureModel2e, 1);
+	// Escenario
+	g_Load3ds.Render3DSFile(&g_3DModel1e, textureModel1e, 1);
 	glDisable(GL_NORMALIZE);
 }
 void Camara()
