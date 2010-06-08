@@ -367,6 +367,28 @@ int AuxT;
 
 typedef GLfloat TPoint[3];
 
+//Se inicializa el objeto para el octree en el que se almacenaran todos los vértices
+COctree g_Octree;
+
+//Objeto para el frustrum
+CFrustum g_Frustum;
+
+//Objeto para el dibujo de las subdivisiones
+CDebug g_Debug;
+
+//Se inicializa la cantidad de nodos en el arbol con vertices almacenados en ellos
+int g_EndNodeCount = 0;
+
+//Se inicializa la cantidad de nodos que se encuentran en el frustrum
+int g_TotalNodesDrawn = 0;
+
+//La cantidad máxima de triángulos por nodo. Cuando un nodo tiene una cantidad menor o igual
+//que esta, se detiene la subdivision de nodos y se almacenan los indices de esas caras en el nodo
+int g_MaxTriangles = 500;
+
+//La cantidad máxima de subdivisiones permitida (Niveles de subdivision)
+int g_MaxSubdivisiones = 5;
+
 struct			 										// Create A Structure For The Timer Information
 {
   __int64       frequency;								// Timer Frequency
@@ -2438,6 +2460,13 @@ int InitGL(GLvoid)										// Aqui se configuran los parametros iniciales de Op
 	// Colisiones
 	InicializaObjetosdeColision();
 
+	//g_Load3ds.Load3DSFile(FILE_NAME2e,&g_3DModel2e, textureModel2e);
+	g_Octree.GetSceneDimensions(&g_3DModel2e);
+	int TotalTriangleCount = g_Octree.GetSceneTriangleCount(&g_3DModel2e);
+	g_Octree.CreateNode(&g_3DModel2e, TotalTriangleCount, g_Octree.GetCenter(), g_Octree.GetWidth());
+	g_Octree.SetDisplayListID(glGenLists(g_EndNodeCount));
+	g_Octree.CreateDisplayList(&g_Octree,&g_3DModel2e, g_Octree.GetDisplayListID(), textureModel2e);
+
 	if(InitGLSL())
 	{
 		cel_Shader.InitShaders("Shaders/celshader.vert","Shaders/celshader.frag");
@@ -4154,6 +4183,20 @@ int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la
 	glLightfv(GL_LIGHT0, GL_SPECULAR, LightSpc);		// Componente especular
 	
 	ActualizaLuz();
+
+	// Se calcula el frustrum cada vez que se mueve la cámara
+	g_Frustum.CalculateFrustum();
+
+	//Se inicializa el contador de nodos dibujados en total
+	g_TotalNodesDrawn = 0;
+
+	//Se crea un buffer para la información del octree que se mostrara en la barra de título
+	static char strBuffer[255] = {0};
+
+	sprintf(strBuffer, "Triangulos: %d        Subdivisiones: %d        Nodos Terminales: %d          Nodos Dibujados: %d",
+								g_MaxTriangles,		 g_MaxSubdivisiones,		 g_EndNodeCount,	   g_TotalNodesDrawn);
+
+	SetWindowText(hWnd, strBuffer);
 		
 	// Se dibuja el modelo con la iluminación desactivada
 	// Se renderizan todas las partes oscuras de la escena.
@@ -4163,7 +4206,8 @@ int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la
 	glPushMatrix();
 		glTranslatef(40.0f, 10.0f,-35.0f);
 		glScalef(1.4f,1.4f,1.4f);
-		DibujaEscena();
+		g_Octree.DrawOctree(&g_Octree, &g_3DModel2e);
+		g_Debug.RenderDebugLines();
 	glPopMatrix();
 
 	// Se desactiva la máscara de color para renderizar la escena en negro
@@ -4200,7 +4244,8 @@ int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la
 	glPushMatrix();
 		glTranslatef(40.0f, 10.0f,-35.0f);
 		glScalef(1.4f,1.4f,1.4f);
-		DibujaEscena();
+		g_Octree.DrawOctree(&g_Octree, &g_3DModel2e);
+		g_Debug.RenderDebugLines();
 	glPopMatrix();
 
 	// Se desactiva la prueba de profundidad y del buffer stencil ya que no se utilizarán mas.
