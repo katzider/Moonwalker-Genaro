@@ -762,9 +762,9 @@ int CargaModelos()
 	//Ene2
 	if(!g_Load3ds.Load3DSFile(FILE_NAME1k, &g_3DModel1k, textureModel1k))
 		return 0;
-	if(!g_Load3ds.Load3DSFile(FILE_NAME2k, &g_3DModel2k, textureModel1k))
+	if(!g_Load3ds.Load3DSFile(FILE_NAME2k, &g_3DModel2k, textureModel2k))
 		return 0;
-	if(!g_Load3ds.Load3DSFile(FILE_NAME3k, &g_3DModel3k, textureModel1k))
+	if(!g_Load3ds.Load3DSFile(FILE_NAME3k, &g_3DModel3k, textureModel3k))
 		return 0;
 
 	//tarantula
