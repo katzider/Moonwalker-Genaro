@@ -194,10 +194,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Frustum.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\Main.cpp"
 				>
 			</File>
@@ -207,10 +203,6 @@
 			</File>
 			<File
 				RelativePath=".\Multitexturas.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Octree.cpp"
 				>
 			</File>
 			<File
@@ -244,10 +236,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Frustum.h"
-				>
-			</File>
-			<File
 				RelativePath=".\Main.h"
 				>
 			</File>
@@ -257,10 +245,6 @@
 			</File>
 			<File
 				RelativePath=".\Multitexturas.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Octree.h"
 				>
 			</File>
 			<File
