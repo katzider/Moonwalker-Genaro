@@ -62,6 +62,8 @@ struct parametros
 	
 };
 
+#include "Animator.h"
+
 struct jerarquiaModelo
 {
 	float Angt1;

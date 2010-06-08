@@ -1708,6 +1708,19 @@ void InicializaParametrosdeControl()
 	chang.CamaraObjAltE=0.0f;
 }
 
+/* Animacion/IA de cada uno de los monos en el escenario */
+// Declaracion de variables
+Animator Enem1;
+void InicializaParametrosdeAnimacion()
+{
+	// Enemigo gordito azul
+	Enem1.setChar( &enem1 );
+	Enem1.addPoint( CVector( 200.0f, 9.0f, -40.0f ) );
+}
+void AniMagic()
+{
+	Enem1.startAnim();
+}
 void InicializaAnim( FRAME *KeyFrame, int maxKF, jerarquiaModelo* modelo )
 {
 	//Se inicializan las variables de la secuencia 1
@@ -2488,6 +2501,9 @@ int InitGL(GLvoid)										// Aqui se configuran los parametros iniciales de Op
 	InicializaAnim( KeyFrame7, maxKF7, &enem3bmodelo );
 	InicializaAnim( KeyFrame8, maxKF8, &changmodelo );
 	DatosAnimacion();
+
+	// Animator
+	InicializaParametrosdeAnimacion();
 
 	// Colisiones
 	InicializaObjetosdeColision();
@@ -4575,6 +4591,8 @@ int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la
 	}
 	
 
+	// IA de los enemigos
+	AniMagic();
 	CalculateFrameRate();
 
 	// Colisiones
@@ -4917,6 +4935,7 @@ int WINAPI WinMain(	HINSTANCE	hInstance,			// Instancia
 						if(tipoAnim == 1)
 							animacion(KeyFrame1, maxKF1 , 18, &player1modelo, playIndex );
 					}
+					//AniMagic();						// Animaciones
 					SwapBuffers(hDC);				// Intercambia los Buffers (Double Buffering)
 				}
 

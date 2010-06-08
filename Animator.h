@@ -9,20 +9,21 @@ class Animator
 {
 
 public: 
-	// Constructores y deconstructores
+
+	// Constructor
 	Animator();
-	~Animator();
 
 	// Agrega un punto a nuestra animacion
-	void setChar( parametros& personaje );
+	void setChar( parametros* personaje );
 	void addPoint( CVector punto );
 	void changeSpeed( float speed );
 	void startAnim();
 	void moveToPoint( CVector punto );
 
 private:
-	parametros& modelo;
+	parametros* modelo;
 	vector< CVector > points;
+	int i;
 
 };
 

@@ -1,11 +1,14 @@
 #include "Animator.h"
-#include "Main.h"
-#include <vector>
 
-void Animator::setChar( parametros &personaje )
+Animator::Animator()
+{
+	i = 0;
+}
+
+void Animator::setChar( parametros* personaje )
 {
 	modelo = personaje;
-	points.push_back( modelo.PosicionObj );
+	points.push_back( modelo->PosicionObj );
 }
 
 void Animator::addPoint( CVector punto )
@@ -15,31 +18,32 @@ void Animator::addPoint( CVector punto )
 
 void Animator::changeSpeed( float speed )
 {
-	modelo.VelocidadObj = speed;
+	modelo->VelocidadObj = speed;
 }
 
 void Animator::startAnim()
 {
-	// para cada punto al que se debe de mover este personaje
-	for( int i = 0; i < points.size(); i++ )
+
+	if( i + 1 < points.size() )
 	{
-		if( ( modelo.PosicionObj.x <= points[ i ].x + 1.0f && modelo.PosicionObj.x >= points[ i ].x - 1.0f ) &&
-			( modelo.PosicionObj.y <= points[ i ].y + 1.0f && modelo.PosicionObj.y >= points[ i ].y - 1.0f ) &&
-			( modelo.PosicionObj.z <= points[ i ].z + 1.0f && modelo.PosicionObj.z >= points[ i ].z - 1.0f ) )
+		if( ( modelo->PosicionObj.x <= points[ i + 1 ].x + 1.0f && modelo->PosicionObj.x >= points[ i + 1 ].x - 1.0f ) &&
+			( modelo->PosicionObj.y <= points[ i + 1 ].y + 1.0f && modelo->PosicionObj.y >= points[ i + 1 ].y - 1.0f ) &&
+			( modelo->PosicionObj.z <= points[ i + 1 ].z + 1.0f && modelo->PosicionObj.z >= points[ i + 1 ].z - 1.0f ) )
 		{
-			continue;
+				i++;
 		}
 		else
 		{
-			moveToPoint( points[ i ] );
-			i--;
+			moveToPoint( points[ i + 1 ] );
 		}
 	}
+	else
+		i -= 2;
 }
 
 void Animator::moveToPoint( CVector punto )
 {
-	CVector temp = punto - modelo.PosicionObj;
+	CVector temp = punto - modelo->PosicionObj;
 	temp = Normaliza( temp );
-	modelo.PosicionObj = modelo.PosicionObj + temp * modelo.VelocidadObj;
+	modelo->PosicionObj = modelo->PosicionObj + temp * modelo->VelocidadObj;
 }
