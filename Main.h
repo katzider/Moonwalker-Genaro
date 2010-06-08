@@ -22,12 +22,8 @@
 #include "fmod.h"
 #include "fmod_errors.h"
 #include "SombraVolumen.h" // Agregado segun las modificaciones del programa 2
-#include "Frustum.h"
-#include "Octree.h"
 
 extern HWND hWnd;
-extern class CDebug g_Debug;
-extern class CFrustum g_Frustum;
 
 void Camara(int funcion);
 int  ManejaTeclado();
