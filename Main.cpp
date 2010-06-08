@@ -2414,26 +2414,37 @@ void ColisionEsferaEsfera( boundingsphere& a, boundingsphere& b, int dir, parame
 	// Las esferas se intersectan si la distancia es menor a la suma cuadrada de sus radios
 	float radiusSum = a.radio + b.radio;
 	float colision = dist2 - radiusSum * radiusSum;
-	// Robado de arriba yeah XD
-	CVector PosAux;
-	float deltaV = player.VelocidadObj/10.0f;
 
-	if( dist2 <= radiusSum * radiusSum ) // si hay una colision
+	// Robado de arriba yeah XD
+
+	if( colision < 0.0f ) // si hay una colision
 	{
+			CVector PosAux;
+			float deltaV = player.VelocidadObj/10.0f;
+			float vel = 0.0f ;
+			int k = 0;
+
+		d = Normaliza( d );
+
 		if(dir == 1)
-			PosAux = player.PosAntObj + player.Direccion * ( deltaV + 0.0001f );
+		{
+			PosAux = player.PosAntObj - d * ( colision / 10.0f );
+			//player.PosicionObj = player.PosicionObj - player.Direccion * deltaV;
+		}
 		else if(dir == 2)
-			PosAux = player.PosAntObj - player.Direccion * ( deltaV + 0.0001f );
+		{
+			PosAux = player.PosAntObj - d * ( colision / 10.0f );
+			//player.PosicionObj = player.PosicionObj + player.Direccion * deltaV;
+		}
 
 		player.PosicionObj = PosAux;
 
-		if( colision < -2.0f )
-		{
+		/*
 		if(dir == 1)
-			player.PosicionObj = player.PosicionObj - player.Direccion * ( deltaV + 0.3f );
+			player.PosicionObj = player.PosicionObj - player.Direccion * deltaV;
 		else if(dir == 2)
-			player.PosicionObj = player.PosicionObj + player.Direccion * ( deltaV + 0.3f );
-		}
+			player.PosicionObj = player.PosicionObj + player.Direccion * deltaV;
+		*/
 	}
 }
 
@@ -2587,13 +2598,14 @@ void ControlPersonaje(int funcion)
 		player1.ObjetivoCam.y = player1.CamaraObjAlt;
 
 		// Colisiones
+		ColisionEsferaPlano(0, 1, player1 );
+		player1.PosAntObj = player1.PosicionObj;
+
 		for(int i = 1; i <= 30; i++)
 		{
 			ColisionEsferaEsfera(esfera[0], esfera[i], 1, player1 );
+			player1.PosAntObj = player1.PosicionObj;
 		}
-		ColisionEsferaPlano(0, 1, player1 );
-
-		player1.PosAntObj = player1.PosicionObj;
 
 	}
 	else if(funcion == 4) //Avanza hacia atrás
@@ -2605,11 +2617,13 @@ void ControlPersonaje(int funcion)
 		player1.ObjetivoCam.y = player1.CamaraObjAlt;
 
 		// Colisiones
+		ColisionEsferaPlano(0, 2, player1 );
+		player1.PosAntObj = player1.PosicionObj;
 		for(int i = 1; i <= 30; i++)
 		{
 			ColisionEsferaEsfera(esfera[0], esfera[i], 2, player1 );
+			player1.PosAntObj = player1.PosicionObj;
 		}
-		ColisionEsferaPlano(0, 2, player1 );
 
 		player1.PosAntObj = player1.PosicionObj;
 
