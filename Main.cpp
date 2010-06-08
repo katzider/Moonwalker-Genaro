@@ -2429,22 +2429,14 @@ void ColisionEsferaEsfera( boundingsphere& a, boundingsphere& b, int dir, parame
 		if(dir == 1)
 		{
 			PosAux = player.PosAntObj - d * ( colision / 10.0f );
-			//player.PosicionObj = player.PosicionObj - player.Direccion * deltaV;
 		}
 		else if(dir == 2)
 		{
 			PosAux = player.PosAntObj - d * ( colision / 10.0f );
-			//player.PosicionObj = player.PosicionObj + player.Direccion * deltaV;
 		}
 
 		player.PosicionObj = PosAux;
 
-		/*
-		if(dir == 1)
-			player.PosicionObj = player.PosicionObj - player.Direccion * deltaV;
-		else if(dir == 2)
-			player.PosicionObj = player.PosicionObj + player.Direccion * deltaV;
-		*/
 	}
 }
 
