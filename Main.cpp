@@ -352,11 +352,13 @@ int playIndex = 0;//Auxiliar para leer la información del contenedor de keyframe
 int tipoAnim = 1; //Indicador del tipo de animación
 
 // Banderas para iniciar las demas animaciones
-const int otros = 8;
+const int otros = 7;
 
-bool playOtros[ otros ] = { false };
-int playIndexOtros[ otros ] = { 0 };
-int tipoAnimOtros[ otros ] = { 1 };
+bool playOtros[ otros ] = { false, false, false, false, false, false, false };
+int playIndexOtros[ otros ] = { 0, 0, 0, 0, 0, 0, 0 };
+int tipoAnimOtros[ otros ] = { 1, 1, 1, 1, 1, 1, 1 };
+jerarquiaModelo* modelosOtros[ otros ] = { &mikumodelo, &enem1modelo, &enem2modelo, &MJ6modelo, &enem3amodelo, &enem3bmodelo, &changmodelo };
+FRAME KeyFrameOtros[ otros ][ 3 ];
 
 CMultitexturas Multitext;
 
@@ -5126,6 +5128,10 @@ int WINAPI WinMain(	HINSTANCE	hInstance,			// Instancia
 					{
 						if(tipoAnim == 1)
 							animacion(KeyFrame1, maxKF1 , 18, &player1modelo, playIndex );
+					}
+					if( playOtros[ 1 ] )
+					{
+						animacion( KeyFrame2, maxKF2, 18, &mikumodelo, playIndexOtros[ 1 ] );
 					}
 					SwapBuffers(hDC);				// Intercambia los Buffers (Double Buffering)
 				}
