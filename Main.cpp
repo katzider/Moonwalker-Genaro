@@ -22,22 +22,22 @@ int glHeight;
 
 GLUquadricObj	*e;
 
-//Variables para fmod (cambiar el tamaño de los arreglos según el número de archivos de audio a usar)
+//Variables para fmod (cambiar el tamaï¿½o de los arreglos segï¿½n el nï¿½mero de archivos de audio a usar)
 FMOD_SOUND       *sound[2] = { 0, 0 };
 FMOD_CHANNEL     *channel[2] = { 0, 0 };
 
-// Variables para la detección de colisiones
+// Variables para la detecciï¿½n de colisiones
 #define maxPlanos 30
 #define maxPersonajes 30
 
 boundingplane plano[maxPlanos];
 boundingsphere esfera[maxPersonajes];
 
-//Variables para el tamaño del cubo del ataque de fuego de MJ
+//Variables para el tamaï¿½o del cubo del ataque de fuego de MJ
 int l=4;	//largo
 int h=4;	//alto
 int w=10;	//ancho
-CVector pf; //punto origen del fuego (posición de las manos de MJ)
+CVector pf; //punto origen del fuego (posiciï¿½n de las manos de MJ)
 //pf = CVector( 0.0f, 0.0f, 0.0f);
 int MJAtaque=1; //0 no ataca, 1 si ataca
 
@@ -56,12 +56,12 @@ bool invuln = false;
 parametros player1;
 parametros miku;
 
-parametros enem1;	 //Variable con la que tenemos acceso a la estructura de parámetros de ene1
-parametros MJ6;		 //Variable con la que tenemos acceso a la estructura de parámetros de MJ6
-parametros enem2;	 //Variable con la que tenemos acceso a la estructura de parámetros de ene2
-parametros enem3a;	 //Variable con la que tenemos acceso a la estructura de parámetros de ene3a
-parametros enem3b;	 //Variable con la que tenemos acceso a la estructura de parámetros ene3b
-parametros chang;	 //Variable con la que tenemos acceso a la estructura de parámetros de chango
+parametros enem1;	 //Variable con la que tenemos acceso a la estructura de parï¿½metros de ene1
+parametros MJ6;		 //Variable con la que tenemos acceso a la estructura de parï¿½metros de MJ6
+parametros enem2;	 //Variable con la que tenemos acceso a la estructura de parï¿½metros de ene2
+parametros enem3a;	 //Variable con la que tenemos acceso a la estructura de parï¿½metros de ene3a
+parametros enem3b;	 //Variable con la que tenemos acceso a la estructura de parï¿½metros ene3b
+parametros chang;	 //Variable con la que tenemos acceso a la estructura de parï¿½metros de chango
 
 parametros enemigo8; // parametros robot
 
@@ -73,7 +73,7 @@ int green = 200;
 
 CMateriales Material;
 
-//Nombre y ubicación de los modelos
+//Nombre y ubicaciï¿½n de los modelos
 
 // Modelos robot
 #define FILE_NAME1g  "Modelos/enemigo8_cuerpo.3ds"
@@ -97,7 +97,7 @@ CMateriales Material;
 #define FILE_NAME4miku "Modelos/miku/miku_bder.3ds"
 #define FILE_NAME5miku "Modelos/miku/miku_bizq.3ds"
 
-//nombre y ubicación de modelo Enemigo1
+//nombre y ubicaciï¿½n de modelo Enemigo1
 #define FILE_NAME1d	 "Modelos/Ene1torso.3ds"
 #define FILE_NAME2d	 "Modelos/Ene1Cabeza.3ds"
 #define FILE_NAME3d	 "Modelos/Ene1BraDer.3ds"
@@ -110,9 +110,9 @@ CMateriales Material;
 #define FILE_NAME10d "Modelos/Ene1PieIzq.3ds"
 
 // Para el escenario 
-#define FILE_NAME1e  "Modelos/escenario.3ds"
+#define FILE_NAME1e  "Modelos/escenario1.3ds"
 
-//nombre y ubicación de modelo MJ6 (MJ Robot)
+//nombre y ubicaciï¿½n de modelo MJ6 (MJ Robot)
 #define FILE_NAME1f	 "Modelos/MJ6Torzo.3ds"
 #define FILE_NAME2f	 "Modelos/MJ6Cabeza.3ds"
 #define FILE_NAME3f	 "Modelos/MJ6BraDerA.3ds"
@@ -124,36 +124,36 @@ CMateriales Material;
 #define FILE_NAME9f	 "Modelos/MJ6PierIzqA.3ds"
 #define FILE_NAME10f "Modelos/MJ6PierIzqB.3ds"
 
-//nombre y ubicación de modelo Ene3a
+//nombre y ubicaciï¿½n de modelo Ene3a
 #define FILE_NAME1h	 "Modelos/torsoe3a.3ds"
 #define FILE_NAME2h	 "Modelos/bder3a.3ds"
 #define FILE_NAME3h	 "Modelos/bizq3a.3ds"
 #define FILE_NAME4h	 "Modelos/pder3a.3ds"
 #define FILE_NAME5h	 "Modelos/pizq3a.3ds"
 
-//nombre y ubicación de modelo ene3b
+//nombre y ubicaciï¿½n de modelo ene3b
 #define FILE_NAME1i	 "Modelos/torsoe3b.3ds"
 #define FILE_NAME2i	 "Modelos/bder3b.3ds"
 #define FILE_NAME3i	 "Modelos/bizq3b.3ds"
 #define FILE_NAME4i	 "Modelos/pder3b.3ds"
 #define FILE_NAME5i	 "Modelos/pizq3b.3ds"
 
-//nombre y ubicación de modelo chango
+//nombre y ubicaciï¿½n de modelo chango
 #define FILE_NAME1j	 "Modelos/torsoch.3ds"
 #define FILE_NAME2j	 "Modelos/bderch.3ds"
 #define FILE_NAME3j	 "Modelos/bizqch.3ds"
 #define FILE_NAME4j	 "Modelos/pderch.3ds"
 #define FILE_NAME5j	 "Modelos/pizqch.3ds"
 
-//nombre y ubicación de modelo Enemigo2
+//nombre y ubicaciï¿½n de modelo Enemigo2
 #define FILE_NAME1k	 "Modelos/Ene2nave.3ds"
 #define FILE_NAME2k	 "Modelos/Ene2bomb.3ds"
 #define FILE_NAME3k	 "Modelos/Ene2pers.3ds"
 
-//nombre y ubicación de modelo tarantula
+//nombre y ubicaciï¿½n de modelo tarantula
 #define FILE_NAME1t	 "Modelos/tarantula.3ds"
 
-//nombre y ubicación de modelo elevador
+//nombre y ubicaciï¿½n de modelo elevador
 #define FILE_NAME1el	 "Modelos/Elevador.3ds"
 
 //Contenedor de texturas de enemigo1
@@ -329,14 +329,14 @@ jerarquiaModelo mikumodelo;
 const int maxKF1=3;				//Num. total de KeyFrames para la secuencia 1 (caminar)
 FRAME KeyFrame1[maxKF1];		//Contenedor para almacenar cada keyframe de la secuencia 1
 
-bool play = false;//Bandera para iniciar la animación
-int playIndex = 0;//Auxiliar para leer la información del contenedor de keyframes
-int tipoAnim = 1; //Indicador del tipo de animación
+bool play = false;//Bandera para iniciar la animaciï¿½n
+int playIndex = 0;//Auxiliar para leer la informaciï¿½n del contenedor de keyframes
+int tipoAnim = 1; //Indicador del tipo de animaciï¿½n
 
 // Banderas para iniciar las demas animaciones
-const int otros = 7;
+const int otros = 7; // Este valor se incrementa para todos los enemigos que habra en pantalla
 
-bool playOtros[ otros ] = { false, false, false, false, false, false, false }; // Banderas para iniciar la animacion
+bool playOtros[ otros ] = { true, true, true, true, true, true, true }; // Banderas para iniciar la animacion
 int playIndexOtros[ otros ] = { 0, 0, 0, 0, 0, 0, 0 }; // Auxiliares para leer la informacion del contenedor de keyframes
 int tipoAnimOtros[ otros ] = { 1, 1, 1, 1, 1, 1, 1 }; // Indicador del tipo de animacion
 jerarquiaModelo* modelosOtros[ otros ] = { &mikumodelo, &enem1modelo, &enem2modelo, 
@@ -373,15 +373,15 @@ GLuint modelo1aruout;
 GLuint modelo1miku;
 GLuint modelo1mikuout;
 
-//Constantes de iluminación y materiales
-GLfloat LightPos[] = { 200.0f, 20.0f, 0.0f, 1.0f};		// Posición de la luz
+//Constantes de iluminaciï¿½n y materiales
+GLfloat LightPos[] = { 200.0f, 20.0f, 0.0f, 1.0f};		// Posiciï¿½n de la luz
 GLfloat LightAmb[] = { 0.9f,  0.9f, 0.9f, 1.0f};			// Valores de la componente ambiente
 GLfloat LightDif[] = { 0.9f,  0.9f, 0.9f, 1.0f};			// Valores de la componente difusa
 GLfloat LightSpc[] = { 0.5f,  0.5f, 0.5f, 1.0f};			// Valores de la componente especular
 
 CVector lightPosition;
 
-//Variables auxiliares para animación de texturas
+//Variables auxiliares para animaciï¿½n de texturas
 float aText1;
 float aText2;
 
@@ -393,7 +393,7 @@ bool displayVolume = false;
 //Acceso a la clase CShadow3DS
 CShadow3DS objSh;
 
-//Posición de la luz para el espacio de objeto del modelo1
+//Posiciï¿½n de la luz para el espacio de objeto del modelo1
 CVector objectSpaceLightPosition1;
 CVector objectSpaceLightPosition2;
 CVector objectSpaceLightPosition3;
@@ -404,7 +404,7 @@ CVector objectSpaceLightPosition7;
 CVector objectSpaceLightPosition8;
 CVector objectSpaceLightPosition9;
 
-//Variables para el cálculo de transformaciones inversas para las sombras
+//Variables para el cï¿½lculo de transformaciones inversas para las sombras
 typedef float GLvector4f[4];
 typedef float GLmatrix16f[16];
 
@@ -1458,24 +1458,24 @@ void InicializaParametrosdeControl()
 {
 
 	// Inicializa parametros de control para Aru
-	//Esta función establece los parámetros como velocidad del objeto y distancia de la cámara así como la posición y dirección iniciales
+	//Esta funciï¿½n establece los parï¿½metros como velocidad del objeto y distancia de la cï¿½mara asï¿½ como la posiciï¿½n y direcciï¿½n iniciales
 	player1.visible = true;
 	player1.VelocidadObj = 0.2f;
 	player1.DistanciaCam = 20.0f;
 
-	player1.CamaraPosAlt = 10.0f;	//Posición en y de la cámara (altura a la que se situa la cámara)
-	player1.CamaraObjAlt = 6.4f;	//Posición en y del objetivo de la cámara (altura a la que ve la cámara)
-	player1.AngDir = 90.0f;		//Este ángulo inicial hace que la dirección inicial sea paralela al eje Z y con sentido negativo
-	player1.AngObj = 0.0f;		//Este valor se elige dependiendo de la orientación con la que aparece el modelo en la escena al dibujarlo
-								//sin aplicarle ninguna transformación (hacia adonde está volteando). Se elige un ángulo tal que al aplicarle
-								//una rotación inicial con respecto al eje Y esté viendo hacia la misma dirección que la definida por AngDir
+	player1.CamaraPosAlt = 10.0f;	//Posiciï¿½n en y de la cï¿½mara (altura a la que se situa la cï¿½mara)
+	player1.CamaraObjAlt = 6.4f;	//Posiciï¿½n en y del objetivo de la cï¿½mara (altura a la que ve la cï¿½mara)
+	player1.AngDir = 90.0f;		//Este ï¿½ngulo inicial hace que la direcciï¿½n inicial sea paralela al eje Z y con sentido negativo
+	player1.AngObj = 0.0f;		//Este valor se elige dependiendo de la orientaciï¿½n con la que aparece el modelo en la escena al dibujarlo
+								//sin aplicarle ninguna transformaciï¿½n (hacia adonde estï¿½ volteando). Se elige un ï¿½ngulo tal que al aplicarle
+								//una rotaciï¿½n inicial con respecto al eje Y estï¿½ viendo hacia la misma direcciï¿½n que la definida por AngDir
 	
-	player1.PosicionObj = CVector( 220.0f, 4.0f, -45.0f); //Esta es la posición inicial del objeto en la escena
-	player1.Direccion.x = cosf( player1.AngDir * PI / 180.0f); //Dirección inicial definida por el ángulo inicial AngDir (x=cos(AngDir), y=0.0, z=sen(AngDir))
+	player1.PosicionObj = CVector( 220.0f, 4.0f, -45.0f); //Esta es la posiciï¿½n inicial del objeto en la escena
+	player1.Direccion.x = cosf( player1.AngDir * PI / 180.0f); //Direcciï¿½n inicial definida por el ï¿½ngulo inicial AngDir (x=cos(AngDir), y=0.0, z=sen(AngDir))
 	player1.Direccion.y = 0.0f;
 	player1.Direccion.z = sinf( player1.AngDir * PI / 180.0f);   
-	player1.PosicionCam = CVector( player1.PosicionObj.x, player1.PosicionObj.y + player1.CamaraPosAlt, player1.PosicionObj.z +player1.DistanciaCam ); //Posición inicial de la cámara a [DistanciaCam] unidades detrás del objeto
-	player1.ObjetivoCam = player1.PosicionObj;		//La cámara ve siempre al objeto
+	player1.PosicionCam = CVector( player1.PosicionObj.x, player1.PosicionObj.y + player1.CamaraPosAlt, player1.PosicionObj.z +player1.DistanciaCam ); //Posiciï¿½n inicial de la cï¿½mara a [DistanciaCam] unidades detrï¿½s del objeto
+	player1.ObjetivoCam = player1.PosicionObj;		//La cï¿½mara ve siempre al objeto
 	player1.ObjetivoCam.y = player1.CamaraObjAlt;		//Para que no vea a los "pies" del objeto (personaje)
 
 	player1.Dir=0;
@@ -1488,24 +1488,24 @@ void InicializaParametrosdeControl()
 	player1.CamaraObjAltE=0.0f;
 
 	// Miku
-	//Esta función establece los parámetros como velocidad del objeto y distancia de la cámara así como la posición y dirección iniciales
+	//Esta funciï¿½n establece los parï¿½metros como velocidad del objeto y distancia de la cï¿½mara asï¿½ como la posiciï¿½n y direcciï¿½n iniciales
 	miku.visible = true;
 	miku.VelocidadObj = 0.2f;
 	miku.DistanciaCam = 20.0f;
 
-	miku.CamaraPosAlt = 10.0f;	//Posición en y de la cámara (altura a la que se situa la cámara)
-	miku.CamaraObjAlt = 6.4f;	//Posición en y del objetivo de la cámara (altura a la que ve la cámara)
-	miku.AngDir = 90.0f;		//Este ángulo inicial hace que la dirección inicial sea paralela al eje Z y con sentido negativo
-	miku.AngObj = 0.0f;		//Este valor se elige dependiendo de la orientación con la que aparece el modelo en la escena al dibujarlo
-								//sin aplicarle ninguna transformación (hacia adonde está volteando). Se elige un ángulo tal que al aplicarle
-								//una rotación inicial con respecto al eje Y esté viendo hacia la misma dirección que la definida por AngDir
+	miku.CamaraPosAlt = 10.0f;	//Posiciï¿½n en y de la cï¿½mara (altura a la que se situa la cï¿½mara)
+	miku.CamaraObjAlt = 6.4f;	//Posiciï¿½n en y del objetivo de la cï¿½mara (altura a la que ve la cï¿½mara)
+	miku.AngDir = 90.0f;		//Este ï¿½ngulo inicial hace que la direcciï¿½n inicial sea paralela al eje Z y con sentido negativo
+	miku.AngObj = 0.0f;		//Este valor se elige dependiendo de la orientaciï¿½n con la que aparece el modelo en la escena al dibujarlo
+								//sin aplicarle ninguna transformaciï¿½n (hacia adonde estï¿½ volteando). Se elige un ï¿½ngulo tal que al aplicarle
+								//una rotaciï¿½n inicial con respecto al eje Y estï¿½ viendo hacia la misma direcciï¿½n que la definida por AngDir
 	
-	miku.PosicionObj = CVector( 35.0f, 7.7f, -90.0f); //Esta es la posición inicial del objeto en la escena
-	miku.Direccion.x = cosf( miku.AngDir * PI / 180.0f); //Dirección inicial definida por el ángulo inicial AngDir (x=cos(AngDir), y=0.0, z=sen(AngDir))
+	miku.PosicionObj = CVector( 35.0f, 7.7f, -90.0f); //Esta es la posiciï¿½n inicial del objeto en la escena
+	miku.Direccion.x = cosf( miku.AngDir * PI / 180.0f); //Direcciï¿½n inicial definida por el ï¿½ngulo inicial AngDir (x=cos(AngDir), y=0.0, z=sen(AngDir))
 	miku.Direccion.y = 0.0f;
 	miku.Direccion.z = sinf( miku.AngDir * PI / 180.0f);   
-	miku.PosicionCam = CVector( miku.PosicionObj.x, miku.PosicionObj.y + miku.CamaraPosAlt, miku.PosicionObj.z +miku.DistanciaCam ); //Posición inicial de la cámara a [DistanciaCam] unidades detrás del objeto
-	miku.ObjetivoCam = miku.PosicionObj;		//La cámara ve siempre al objeto
+	miku.PosicionCam = CVector( miku.PosicionObj.x, miku.PosicionObj.y + miku.CamaraPosAlt, miku.PosicionObj.z +miku.DistanciaCam ); //Posiciï¿½n inicial de la cï¿½mara a [DistanciaCam] unidades detrï¿½s del objeto
+	miku.ObjetivoCam = miku.PosicionObj;		//La cï¿½mara ve siempre al objeto
 	miku.ObjetivoCam.y = miku.CamaraObjAlt;		//Para que no vea a los "pies" del objeto (personaje)
 
 	miku.Dir=0;
@@ -1522,19 +1522,19 @@ void InicializaParametrosdeControl()
 	enemigo8.VelocidadObj=0.4f;
 	enemigo8.DistanciaCam=10.0f;
 
-	enemigo8.CamaraPosAlt=0.0f;	//Posición en y de la cámara (altura a la que se situa la cámara)
-	enemigo8.CamaraObjAlt=4.0f;	//Posición en y del objetivo de la cámara (altura a la que ve la cámara)
-	enemigo8.AngDir=-PI;		//Este ángulo inicial hace que la dirección inicial sea paralela al eje Z y con sentido negativo
-	enemigo8.AngObj=PI;		//Este valor se elige dependiendo de la orientación con la que aparece el modelo en la escena al dibujarlo
-								//sin aplicarle ninguna transformación (hacia adonde está volteando). Se elige un ángulo tal que al aplicarle
-								//una rotación inicial con respecto al eje Y esté viendo hacia la misma dirección que la definida por AngDir
+	enemigo8.CamaraPosAlt=0.0f;	//Posiciï¿½n en y de la cï¿½mara (altura a la que se situa la cï¿½mara)
+	enemigo8.CamaraObjAlt=4.0f;	//Posiciï¿½n en y del objetivo de la cï¿½mara (altura a la que ve la cï¿½mara)
+	enemigo8.AngDir=-PI;		//Este ï¿½ngulo inicial hace que la direcciï¿½n inicial sea paralela al eje Z y con sentido negativo
+	enemigo8.AngObj=PI;		//Este valor se elige dependiendo de la orientaciï¿½n con la que aparece el modelo en la escena al dibujarlo
+								//sin aplicarle ninguna transformaciï¿½n (hacia adonde estï¿½ volteando). Se elige un ï¿½ngulo tal que al aplicarle
+								//una rotaciï¿½n inicial con respecto al eje Y estï¿½ viendo hacia la misma direcciï¿½n que la definida por AngDir
 	
-	enemigo8.PosicionObj=CVector(-45.0f, 0.0f, 0.0f); //Esta es la posición inicial del objeto en la escena
-	enemigo8.Direccion.x=(float)cos(enemigo8.AngDir); //Dirección inicial definida por el ángulo inicial AngDir (x=cos(AngDir), y=0.0, z=sen(AngDir))
+	enemigo8.PosicionObj=CVector(-45.0f, 0.0f, 0.0f); //Esta es la posiciï¿½n inicial del objeto en la escena
+	enemigo8.Direccion.x=(float)cos(enemigo8.AngDir); //Direcciï¿½n inicial definida por el ï¿½ngulo inicial AngDir (x=cos(AngDir), y=0.0, z=sen(AngDir))
 	enemigo8.Direccion.y=0.0f;
 	enemigo8.Direccion.z=(float)sin(enemigo8.AngDir);   
-	enemigo8.PosicionCam=CVector(0.0f, enemigo8.CamaraPosAlt, 10.0f); //Posición inicial de la cámara a [DistanciaCam] unidades detrás del objeto
-	enemigo8.ObjetivoCam=enemigo8.PosicionObj;		//La cámara ve siempre al objeto
+	enemigo8.PosicionCam=CVector(0.0f, enemigo8.CamaraPosAlt, 10.0f); //Posiciï¿½n inicial de la cï¿½mara a [DistanciaCam] unidades detrï¿½s del objeto
+	enemigo8.ObjetivoCam=enemigo8.PosicionObj;		//La cï¿½mara ve siempre al objeto
 	enemigo8.ObjetivoCam.y=enemigo8.CamaraObjAlt;		//Para que no vea a los "pies" del objeto (personaje)
 
 	enemigo8.Dir=0;
@@ -1548,19 +1548,19 @@ void InicializaParametrosdeControl()
 	enem1.VelocidadObj=0.2f;
 	enem1.DistanciaCam=10.0f;
 
-	enem1.CamaraPosAlt=5.0f;	//Posición en y de la cámara (altura a la que se situa la cámara)
-	enem1.CamaraObjAlt=4.0f;	//Posición en y del objetivo de la cámara (altura a la que ve la cámara)
-	enem1.AngDir=90.0f;		//Este ángulo inicial hace que la dirección inicial sea paralela al eje Z y con sentido negativo
-	enem1.AngObj=0.0f;		//Este valor se elige dependiendo de la orientación con la que aparece el modelo en la escena al dibujarlo
-								//sin aplicarle ninguna transformación (hacia adonde está volteando). Se elige un ángulo tal que al aplicarle
-								//una rotación inicial con respecto al eje Y esté viendo hacia la misma dirección que la definida por AngDir
+	enem1.CamaraPosAlt=5.0f;	//Posiciï¿½n en y de la cï¿½mara (altura a la que se situa la cï¿½mara)
+	enem1.CamaraObjAlt=4.0f;	//Posiciï¿½n en y del objetivo de la cï¿½mara (altura a la que ve la cï¿½mara)
+	enem1.AngDir=90.0f;		//Este ï¿½ngulo inicial hace que la direcciï¿½n inicial sea paralela al eje Z y con sentido negativo
+	enem1.AngObj=0.0f;		//Este valor se elige dependiendo de la orientaciï¿½n con la que aparece el modelo en la escena al dibujarlo
+								//sin aplicarle ninguna transformaciï¿½n (hacia adonde estï¿½ volteando). Se elige un ï¿½ngulo tal que al aplicarle
+								//una rotaciï¿½n inicial con respecto al eje Y estï¿½ viendo hacia la misma direcciï¿½n que la definida por AngDir
 	
-	enem1.PosicionObj=CVector(180.0f, 9.0f, -60.0f); //Esta es la posición inicial del objeto en la escena
-	enem1.Direccion.x=(float)cos(player1.AngDir*PI/180.0f); //Dirección inicial definida por el ángulo inicial AngDir (x=cos(AngDir), y=0.0, z=sen(AngDir))
+	enem1.PosicionObj=CVector(180.0f, 9.0f, -60.0f); //Esta es la posiciï¿½n inicial del objeto en la escena
+	enem1.Direccion.x=(float)cos(player1.AngDir*PI/180.0f); //Direcciï¿½n inicial definida por el ï¿½ngulo inicial AngDir (x=cos(AngDir), y=0.0, z=sen(AngDir))
 	enem1.Direccion.y=0.0f;
 	enem1.Direccion.z=(float)sin(player1.AngDir*PI/180.0f);   
-	enem1.PosicionCam=CVector(0.0f, player1.CamaraPosAlt, 10.0f); //Posición inicial de la cámara a [DistanciaCam] unidades detrás del objeto
-	enem1.ObjetivoCam=player1.PosicionObj;		//La cámara ve siempre al objeto
+	enem1.PosicionCam=CVector(0.0f, player1.CamaraPosAlt, 10.0f); //Posiciï¿½n inicial de la cï¿½mara a [DistanciaCam] unidades detrï¿½s del objeto
+	enem1.ObjetivoCam=player1.PosicionObj;		//La cï¿½mara ve siempre al objeto
 	enem1.ObjetivoCam.y=player1.CamaraObjAlt;		//Para que no vea a los "pies" del objeto (personaje)
 
 	enem1.Dir=0;
@@ -1577,19 +1577,19 @@ void InicializaParametrosdeControl()
 	enem2.VelocidadObj=0.2f;
 	enem2.DistanciaCam=10.0f;
 
-	enem2.CamaraPosAlt=5.0f;	//Posición en y de la cámara (altura a la que se situa la cámara)
-	enem2.CamaraObjAlt=4.0f;	//Posición en y del objetivo de la cámara (altura a la que ve la cámara)
-	enem2.AngDir=90.0f;		//Este ángulo inicial hace que la dirección inicial sea paralela al eje Z y con sentido negativo
-	enem2.AngObj=0.0f;		//Este valor se elige dependiendo de la orientación con la que aparece el modelo en la escena al dibujarlo
-								//sin aplicarle ninguna transformación (hacia adonde está volteando). Se elige un ángulo tal que al aplicarle
-								//una rotación inicial con respecto al eje Y esté viendo hacia la misma dirección que la definida por AngDir
+	enem2.CamaraPosAlt=5.0f;	//Posiciï¿½n en y de la cï¿½mara (altura a la que se situa la cï¿½mara)
+	enem2.CamaraObjAlt=4.0f;	//Posiciï¿½n en y del objetivo de la cï¿½mara (altura a la que ve la cï¿½mara)
+	enem2.AngDir=90.0f;		//Este ï¿½ngulo inicial hace que la direcciï¿½n inicial sea paralela al eje Z y con sentido negativo
+	enem2.AngObj=0.0f;		//Este valor se elige dependiendo de la orientaciï¿½n con la que aparece el modelo en la escena al dibujarlo
+								//sin aplicarle ninguna transformaciï¿½n (hacia adonde estï¿½ volteando). Se elige un ï¿½ngulo tal que al aplicarle
+								//una rotaciï¿½n inicial con respecto al eje Y estï¿½ viendo hacia la misma direcciï¿½n que la definida por AngDir
 	
-	enem2.PosicionObj=CVector(120.0f, 10.0f, -80.0f); //Esta es la posición inicial del objeto en la escena
-	enem2.Direccion.x=(float)cos(player1.AngDir*PI/180.0f); //Dirección inicial definida por el ángulo inicial AngDir (x=cos(AngDir), y=0.0, z=sen(AngDir))
+	enem2.PosicionObj=CVector(120.0f, 10.0f, -80.0f); //Esta es la posiciï¿½n inicial del objeto en la escena
+	enem2.Direccion.x=(float)cos(player1.AngDir*PI/180.0f); //Direcciï¿½n inicial definida por el ï¿½ngulo inicial AngDir (x=cos(AngDir), y=0.0, z=sen(AngDir))
 	enem2.Direccion.y=0.0f;
 	enem2.Direccion.z=(float)sin(player1.AngDir*PI/180.0f);   
-	enem2.PosicionCam=CVector(0.0f, player1.CamaraPosAlt, 10.0f); //Posición inicial de la cámara a [DistanciaCam] unidades detrás del objeto
-	enem2.ObjetivoCam=player1.PosicionObj;		//La cámara ve siempre al objeto
+	enem2.PosicionCam=CVector(0.0f, player1.CamaraPosAlt, 10.0f); //Posiciï¿½n inicial de la cï¿½mara a [DistanciaCam] unidades detrï¿½s del objeto
+	enem2.ObjetivoCam=player1.PosicionObj;		//La cï¿½mara ve siempre al objeto
 	enem2.ObjetivoCam.y=player1.CamaraObjAlt;		//Para que no vea a los "pies" del objeto (personaje)
 
 	enem2.Dir=0;
@@ -1608,19 +1608,19 @@ void InicializaParametrosdeControl()
 	MJ6.VelocidadObj=0.2f;
 	MJ6.DistanciaCam=10.0f;
 
-	MJ6.CamaraPosAlt=5.0f;	//Posición en y de la cámara (altura a la que se situa la cámara)
-	MJ6.CamaraObjAlt=4.0f;	//Posición en y del objetivo de la cámara (altura a la que ve la cámara)
-	MJ6.AngDir=90.0f;		//Este ángulo inicial hace que la dirección inicial sea paralela al eje Z y con sentido negativo
-	MJ6.AngObj=0.0f;		//Este valor se elige dependiendo de la orientación con la que aparece el modelo en la escena al dibujarlo
-								//sin aplicarle ninguna transformación (hacia adonde está volteando). Se elige un ángulo tal que al aplicarle
-								//una rotación inicial con respecto al eje Y esté viendo hacia la misma dirección que la definida por AngDir
+	MJ6.CamaraPosAlt=5.0f;	//Posiciï¿½n en y de la cï¿½mara (altura a la que se situa la cï¿½mara)
+	MJ6.CamaraObjAlt=4.0f;	//Posiciï¿½n en y del objetivo de la cï¿½mara (altura a la que ve la cï¿½mara)
+	MJ6.AngDir=90.0f;		//Este ï¿½ngulo inicial hace que la direcciï¿½n inicial sea paralela al eje Z y con sentido negativo
+	MJ6.AngObj=0.0f;		//Este valor se elige dependiendo de la orientaciï¿½n con la que aparece el modelo en la escena al dibujarlo
+								//sin aplicarle ninguna transformaciï¿½n (hacia adonde estï¿½ volteando). Se elige un ï¿½ngulo tal que al aplicarle
+								//una rotaciï¿½n inicial con respecto al eje Y estï¿½ viendo hacia la misma direcciï¿½n que la definida por AngDir
 	
-	MJ6.PosicionObj=CVector(-15.0f, 8.5f, -65.0f); //Esta es la posición inicial del objeto en la escena
-	MJ6.Direccion.x=(float)cos(player1.AngDir*PI/180.0f); //Dirección inicial definida por el ángulo inicial AngDir (x=cos(AngDir), y=0.0, z=sen(AngDir))
+	MJ6.PosicionObj=CVector(-15.0f, 8.5f, -65.0f); //Esta es la posiciï¿½n inicial del objeto en la escena
+	MJ6.Direccion.x=(float)cos(player1.AngDir*PI/180.0f); //Direcciï¿½n inicial definida por el ï¿½ngulo inicial AngDir (x=cos(AngDir), y=0.0, z=sen(AngDir))
 	MJ6.Direccion.y=0.0f;
 	MJ6.Direccion.z=(float)sin(player1.AngDir*PI/180.0f);   
-	MJ6.PosicionCam=CVector(0.0f, player1.CamaraPosAlt, 10.0f); //Posición inicial de la cámara a [DistanciaCam] unidades detrás del objeto
-	MJ6.ObjetivoCam=player1.PosicionObj;		//La cámara ve siempre al objeto
+	MJ6.PosicionCam=CVector(0.0f, player1.CamaraPosAlt, 10.0f); //Posiciï¿½n inicial de la cï¿½mara a [DistanciaCam] unidades detrï¿½s del objeto
+	MJ6.ObjetivoCam=player1.PosicionObj;		//La cï¿½mara ve siempre al objeto
 	MJ6.ObjetivoCam.y=player1.CamaraObjAlt;		//Para que no vea a los "pies" del objeto (personaje)
 
 	MJ6.Dir=0;
@@ -1637,19 +1637,19 @@ void InicializaParametrosdeControl()
 	enem3a.VelocidadObj=0.2f;
 	enem3a.DistanciaCam=10.0f;
 
-	enem3a.CamaraPosAlt=5.0f;	//Posición en y de la cámara (altura a la que se situa la cámara)
-	enem3a.CamaraObjAlt=4.0f;	//Posición en y del objetivo de la cámara (altura a la que ve la cámara)
-	enem3a.AngDir=90.0f;		//Este ángulo inicial hace que la dirección inicial sea paralela al eje Z y con sentido negativo
-	enem3a.AngObj=0.0f;		//Este valor se elige dependiendo de la orientación con la que aparece el modelo en la escena al dibujarlo
-								//sin aplicarle ninguna transformación (hacia adonde está volteando). Se elige un ángulo tal que al aplicarle
-								//una rotación inicial con respecto al eje Y esté viendo hacia la misma dirección que la definida por AngDir
+	enem3a.CamaraPosAlt=5.0f;	//Posiciï¿½n en y de la cï¿½mara (altura a la que se situa la cï¿½mara)
+	enem3a.CamaraObjAlt=4.0f;	//Posiciï¿½n en y del objetivo de la cï¿½mara (altura a la que ve la cï¿½mara)
+	enem3a.AngDir=90.0f;		//Este ï¿½ngulo inicial hace que la direcciï¿½n inicial sea paralela al eje Z y con sentido negativo
+	enem3a.AngObj=0.0f;		//Este valor se elige dependiendo de la orientaciï¿½n con la que aparece el modelo en la escena al dibujarlo
+								//sin aplicarle ninguna transformaciï¿½n (hacia adonde estï¿½ volteando). Se elige un ï¿½ngulo tal que al aplicarle
+								//una rotaciï¿½n inicial con respecto al eje Y estï¿½ viendo hacia la misma direcciï¿½n que la definida por AngDir
 	
-	enem3a.PosicionObj=CVector(-15.0f, 8.0f, -5.0f); //Esta es la posición inicial del objeto en la escena
-	enem3a.Direccion.x=(float)cos(player1.AngDir*PI/180.0f); //Dirección inicial definida por el ángulo inicial AngDir (x=cos(AngDir), y=0.0, z=sen(AngDir))
+	enem3a.PosicionObj=CVector(-15.0f, 8.0f, -5.0f); //Esta es la posiciï¿½n inicial del objeto en la escena
+	enem3a.Direccion.x=(float)cos(player1.AngDir*PI/180.0f); //Direcciï¿½n inicial definida por el ï¿½ngulo inicial AngDir (x=cos(AngDir), y=0.0, z=sen(AngDir))
 	enem3a.Direccion.y=0.0f;
 	enem3a.Direccion.z=(float)sin(player1.AngDir*PI/180.0f);   
-	enem3a.PosicionCam=CVector(0.0f, player1.CamaraPosAlt, 10.0f); //Posición inicial de la cámara a [DistanciaCam] unidades detrás del objeto
-	enem3a.ObjetivoCam=player1.PosicionObj;		//La cámara ve siempre al objeto
+	enem3a.PosicionCam=CVector(0.0f, player1.CamaraPosAlt, 10.0f); //Posiciï¿½n inicial de la cï¿½mara a [DistanciaCam] unidades detrï¿½s del objeto
+	enem3a.ObjetivoCam=player1.PosicionObj;		//La cï¿½mara ve siempre al objeto
 	enem3a.ObjetivoCam.y=player1.CamaraObjAlt;		//Para que no vea a los "pies" del objeto (personaje)
 
 	enem3a.Dir=0;
@@ -1666,19 +1666,19 @@ void InicializaParametrosdeControl()
 	enem3b.VelocidadObj=0.2f;
 	enem3b.DistanciaCam=10.0f;
 
-	enem3b.CamaraPosAlt=5.0f;	//Posición en y de la cámara (altura a la que se situa la cámara)
-	enem3b.CamaraObjAlt=4.0f;	//Posición en y del objetivo de la cámara (altura a la que ve la cámara)
-	enem3b.AngDir=90.0f;		//Este ángulo inicial hace que la dirección inicial sea paralela al eje Z y con sentido negativo
-	enem3b.AngObj=270.0f;		//Este valor se elige dependiendo de la orientación con la que aparece el modelo en la escena al dibujarlo
-								//sin aplicarle ninguna transformación (hacia adonde está volteando). Se elige un ángulo tal que al aplicarle
-								//una rotación inicial con respecto al eje Y esté viendo hacia la misma dirección que la definida por AngDir
+	enem3b.CamaraPosAlt=5.0f;	//Posiciï¿½n en y de la cï¿½mara (altura a la que se situa la cï¿½mara)
+	enem3b.CamaraObjAlt=4.0f;	//Posiciï¿½n en y del objetivo de la cï¿½mara (altura a la que ve la cï¿½mara)
+	enem3b.AngDir=90.0f;		//Este ï¿½ngulo inicial hace que la direcciï¿½n inicial sea paralela al eje Z y con sentido negativo
+	enem3b.AngObj=270.0f;		//Este valor se elige dependiendo de la orientaciï¿½n con la que aparece el modelo en la escena al dibujarlo
+								//sin aplicarle ninguna transformaciï¿½n (hacia adonde estï¿½ volteando). Se elige un ï¿½ngulo tal que al aplicarle
+								//una rotaciï¿½n inicial con respecto al eje Y estï¿½ viendo hacia la misma direcciï¿½n que la definida por AngDir
 	
-	enem3b.PosicionObj=CVector(-19.0f, 8.0f, -10.0f); //Esta es la posición inicial del objeto en la escena
-	enem3b.Direccion.x=(float)cos(player1.AngDir*PI/180.0f); //Dirección inicial definida por el ángulo inicial AngDir (x=cos(AngDir), y=0.0, z=sen(AngDir))
+	enem3b.PosicionObj=CVector(-19.0f, 8.0f, -10.0f); //Esta es la posiciï¿½n inicial del objeto en la escena
+	enem3b.Direccion.x=(float)cos(player1.AngDir*PI/180.0f); //Direcciï¿½n inicial definida por el ï¿½ngulo inicial AngDir (x=cos(AngDir), y=0.0, z=sen(AngDir))
 	enem3b.Direccion.y=0.0f;
 	enem3b.Direccion.z=(float)sin(player1.AngDir*PI/180.0f);   
-	enem3b.PosicionCam=CVector(0.0f, player1.CamaraPosAlt, 10.0f); //Posición inicial de la cámara a [DistanciaCam] unidades detrás del objeto
-	enem3b.ObjetivoCam=player1.PosicionObj;		//La cámara ve siempre al objeto
+	enem3b.PosicionCam=CVector(0.0f, player1.CamaraPosAlt, 10.0f); //Posiciï¿½n inicial de la cï¿½mara a [DistanciaCam] unidades detrï¿½s del objeto
+	enem3b.ObjetivoCam=player1.PosicionObj;		//La cï¿½mara ve siempre al objeto
 	enem3b.ObjetivoCam.y=player1.CamaraObjAlt;		//Para que no vea a los "pies" del objeto (personaje)
 
 	enem3b.Dir=0;
@@ -1696,19 +1696,19 @@ void InicializaParametrosdeControl()
 	chang.VelocidadObj=0.2f;
 	chang.DistanciaCam=10.0f;
 
-	chang.CamaraPosAlt=5.0f;	//Posición en y de la cámara (altura a la que se situa la cámara)
-	chang.CamaraObjAlt=4.0f;	//Posición en y del objetivo de la cámara (altura a la que ve la cámara)
-	chang.AngDir=90.0f;		//Este ángulo inicial hace que la dirección inicial sea paralela al eje Z y con sentido negativo
-	chang.AngObj=0.0f;		//Este valor se elige dependiendo de la orientación con la que aparece el modelo en la escena al dibujarlo
-								//sin aplicarle ninguna transformación (hacia adonde está volteando). Se elige un ángulo tal que al aplicarle
-								//una rotación inicial con respecto al eje Y esté viendo hacia la misma dirección que la definida por AngDir
+	chang.CamaraPosAlt=5.0f;	//Posiciï¿½n en y de la cï¿½mara (altura a la que se situa la cï¿½mara)
+	chang.CamaraObjAlt=4.0f;	//Posiciï¿½n en y del objetivo de la cï¿½mara (altura a la que ve la cï¿½mara)
+	chang.AngDir=90.0f;		//Este ï¿½ngulo inicial hace que la direcciï¿½n inicial sea paralela al eje Z y con sentido negativo
+	chang.AngObj=0.0f;		//Este valor se elige dependiendo de la orientaciï¿½n con la que aparece el modelo en la escena al dibujarlo
+								//sin aplicarle ninguna transformaciï¿½n (hacia adonde estï¿½ volteando). Se elige un ï¿½ngulo tal que al aplicarle
+								//una rotaciï¿½n inicial con respecto al eje Y estï¿½ viendo hacia la misma direcciï¿½n que la definida por AngDir
 	
-	chang.PosicionObj=CVector(-30.0f, 7.0f, -5.0f); //Esta es la posición inicial del objeto en la escena
-	chang.Direccion.x=(float)cos(player1.AngDir*PI/180.0f); //Dirección inicial definida por el ángulo inicial AngDir (x=cos(AngDir), y=0.0, z=sen(AngDir))
+	chang.PosicionObj=CVector(-30.0f, 7.0f, -5.0f); //Esta es la posiciï¿½n inicial del objeto en la escena
+	chang.Direccion.x=(float)cos(player1.AngDir*PI/180.0f); //Direcciï¿½n inicial definida por el ï¿½ngulo inicial AngDir (x=cos(AngDir), y=0.0, z=sen(AngDir))
 	chang.Direccion.y=0.0f;
 	chang.Direccion.z=(float)sin(player1.AngDir*PI/180.0f);   
-	chang.PosicionCam=CVector(0.0f, player1.CamaraPosAlt, 10.0f); //Posición inicial de la cámara a [DistanciaCam] unidades detrás del objeto
-	chang.ObjetivoCam=player1.PosicionObj;		//La cámara ve siempre al objeto
+	chang.PosicionCam=CVector(0.0f, player1.CamaraPosAlt, 10.0f); //Posiciï¿½n inicial de la cï¿½mara a [DistanciaCam] unidades detrï¿½s del objeto
+	chang.ObjetivoCam=player1.PosicionObj;		//La cï¿½mara ve siempre al objeto
 	chang.ObjetivoCam.y=player1.CamaraObjAlt;		//Para que no vea a los "pies" del objeto (personaje)
 
 	chang.Dir=0;
@@ -1847,8 +1847,7 @@ void DatosAnimacion()
 	KeyFrame1[0].Ztor=	0.0f;		KeyFrame1[1].Ztor=0.0f;			KeyFrame1[2].Ztor=0.0f;
 	
 	// Pongan aqui las animaciones de sus personajes, si requieren mas de 3 keyframes...NI MODO XD
-	// Orden de frames: 0. mikumodelo, 1. enem1modelo, 2. enem2modelo, 
-	//					3. MJ6modelo, 4. enem3amodelo, 5. enem3bmodelo, 6. changmodelo
+	// Orden de frames: 0. mikumodelo, 1. enem1modelo, 2. MJ6modelo, 3. enem3amodelo, 4. enem3bmodelo, 5. changmodelo
 	// Miku       
 	KeyFrameOtros[ 0 ][ 0 ].Angt1 = 0.0f;	KeyFrameOtros[ 0 ][ 1 ].Angt1 =	0.0f;	KeyFrameOtros[ 0 ][ 2 ].Angt1 = 0.0f;
 	KeyFrameOtros[ 0 ][ 0 ].Angt2 =	0.0f;	KeyFrameOtros[ 0 ][ 1 ].Angt2 =	0.0f;	KeyFrameOtros[ 0 ][ 2 ].Angt2 =	0.0f;
@@ -1914,6 +1913,305 @@ void DatosAnimacion()
 
 	// El que sigue...
 
+	KeyFrameOtros[1][0].Angt1=-5.0f;
+	KeyFrameOtros[1][0].Angt2=0.0f;
+	KeyFrameOtros[1][0].Angc1=-25.0f;
+	KeyFrameOtros[1][0].Angc2=0.0f;
+	KeyFrameOtros[1][0].Angbi1=-5.0f;
+	KeyFrameOtros[1][0].Angbi2=0.0f;
+	KeyFrameOtros[1][0].Angbib=-15.0f;
+	KeyFrameOtros[1][0].Angbd1=5.0f;
+	KeyFrameOtros[1][0].Angbd2=0.0f;
+	KeyFrameOtros[1][0].Angbdb=-40.0f;
+	KeyFrameOtros[1][0].Angpizq=20.0f;
+	KeyFrameOtros[1][0].Angpder=-30.0f;
+	KeyFrameOtros[1][0].Angpizqb=15.0f;
+	KeyFrameOtros[1][0].Angpderb=10.0f;
+	KeyFrameOtros[1][0].Angpi=0.0f;
+	KeyFrameOtros[1][0].Angpd=0.0f;
+	KeyFrameOtros[1][0].Xtor=0.0f;
+	KeyFrameOtros[1][0].Ytor=0.0f;
+	KeyFrameOtros[1][0].Ztor=0.0f;
+
+	KeyFrameOtros[1][1].Angt1=-5.0f;
+	KeyFrameOtros[1][1].Angt2=0.0f;
+	KeyFrameOtros[1][1].Angc1=-25.0f;
+	KeyFrameOtros[1][1].Angc2=0.0f;
+	KeyFrameOtros[1][1].Angbi1=10.0f;
+	KeyFrameOtros[1][1].Angbi2=0.0f;
+	KeyFrameOtros[1][1].Angbib=-40.0f;
+	KeyFrameOtros[1][1].Angbd1=-10.0f;
+	KeyFrameOtros[1][1].Angbd2=0.0f;
+	KeyFrameOtros[1][1].Angbdb=-15.0f;
+	KeyFrameOtros[1][1].Angpizq=-30.0f;
+	KeyFrameOtros[1][1].Angpder=20.0f;
+	KeyFrameOtros[1][1].Angpizqb=20.0f;
+	KeyFrameOtros[1][1].Angpderb=15.0f;
+	KeyFrameOtros[1][1].Angpi=0.0f;
+	KeyFrameOtros[1][1].Angpd=0.0f;
+	KeyFrameOtros[1][1].Xtor=0.0f;
+	KeyFrameOtros[1][1].Ytor=0.0f;
+	KeyFrameOtros[1][1].Ztor=0.0f;
+
+	KeyFrameOtros[1][2].Angt1=-5.0f;
+	KeyFrameOtros[1][2].Angt2=0.0f;
+	KeyFrameOtros[1][2].Angc1=-25.0f;
+	KeyFrameOtros[1][2].Angc2=0.0f;
+	KeyFrameOtros[1][2].Angbi1=-5.0f;
+	KeyFrameOtros[1][2].Angbi2=0.0f;
+	KeyFrameOtros[1][2].Angbib=-15.0f;
+	KeyFrameOtros[1][2].Angbd1=5.0f;
+	KeyFrameOtros[1][2].Angbd2=0.0f;
+	KeyFrameOtros[1][2].Angbdb=-40.0f;
+	KeyFrameOtros[1][2].Angpizq=20.0f;
+	KeyFrameOtros[1][2].Angpder=-20.0f;
+	KeyFrameOtros[1][2].Angpizqb=15.0f;
+	KeyFrameOtros[1][2].Angpderb=10.0f;
+	KeyFrameOtros[1][2].Angpi=0.0f;
+	KeyFrameOtros[1][2].Angpd=0.0f;
+	KeyFrameOtros[1][2].Xtor=0.0f;
+	KeyFrameOtros[1][2].Ytor=0.0f;
+	KeyFrameOtros[1][2].Ztor=0.0f;
+
+	KeyFrameOtros[2][0].Angt1=-5.0f;
+	KeyFrameOtros[2][0].Angt2=0.0f;
+	KeyFrameOtros[2][0].Angc1=-25.0f;
+	KeyFrameOtros[2][0].Angc2=0.0f;
+	KeyFrameOtros[2][0].Angbi1=-5.0f;
+	KeyFrameOtros[2][0].Angbi2=0.0f;
+	KeyFrameOtros[2][0].Angbib=-15.0f;
+	KeyFrameOtros[2][0].Angbd1=5.0f;
+	KeyFrameOtros[2][0].Angbd2=0.0f;
+	KeyFrameOtros[2][0].Angbdb=-40.0f;
+	KeyFrameOtros[2][0].Angpizq=20.0f;
+	KeyFrameOtros[2][0].Angpder=-30.0f;
+	KeyFrameOtros[2][0].Angpizqb=15.0f;
+	KeyFrameOtros[2][0].Angpderb=10.0f;
+	KeyFrameOtros[2][0].Angpi=0.0f;
+	KeyFrameOtros[2][0].Angpd=0.0f;
+	KeyFrameOtros[2][0].Xtor=0.0f;
+	KeyFrameOtros[2][0].Ytor=0.0f;
+	KeyFrameOtros[2][0].Ztor=0.0f;
+
+	KeyFrameOtros[2][1].Angt1=-5.0f;
+	KeyFrameOtros[2][1].Angt2=0.0f;
+	KeyFrameOtros[2][1].Angc1=-25.0f;
+	KeyFrameOtros[2][1].Angc2=0.0f;
+	KeyFrameOtros[2][1].Angbi1=10.0f;
+	KeyFrameOtros[2][1].Angbi2=0.0f;
+	KeyFrameOtros[2][1].Angbib=-40.0f;
+	KeyFrameOtros[2][1].Angbd1=-10.0f;
+	KeyFrameOtros[2][1].Angbd2=0.0f;
+	KeyFrameOtros[2][1].Angbdb=-15.0f;
+	KeyFrameOtros[2][1].Angpizq=-30.0f;
+	KeyFrameOtros[2][1].Angpder=20.0f;
+	KeyFrameOtros[2][1].Angpizqb=20.0f;
+	KeyFrameOtros[2][1].Angpderb=15.0f;
+	KeyFrameOtros[2][1].Angpi=0.0f;
+	KeyFrameOtros[2][1].Angpd=0.0f;
+	KeyFrameOtros[2][1].Xtor=0.0f;
+	KeyFrameOtros[2][1].Ytor=0.0f;
+	KeyFrameOtros[2][1].Ztor=0.0f;
+
+	KeyFrameOtros[2][2].Angt1=-5.0f;
+	KeyFrameOtros[2][2].Angt2=0.0f;
+	KeyFrameOtros[2][2].Angc1=-25.0f;
+	KeyFrameOtros[2][2].Angc2=0.0f;
+	KeyFrameOtros[2][2].Angbi1=-5.0f;
+	KeyFrameOtros[2][2].Angbi2=0.0f;
+	KeyFrameOtros[2][2].Angbib=-15.0f;
+	KeyFrameOtros[2][2].Angbd1=5.0f;
+	KeyFrameOtros[2][2].Angbd2=0.0f;
+	KeyFrameOtros[2][2].Angbdb=-40.0f;
+	KeyFrameOtros[2][2].Angpizq=20.0f;
+	KeyFrameOtros[2][2].Angpder=-20.0f;
+	KeyFrameOtros[2][2].Angpizqb=15.0f;
+	KeyFrameOtros[2][2].Angpderb=10.0f;
+	KeyFrameOtros[2][2].Angpi=0.0f;
+	KeyFrameOtros[2][2].Angpd=0.0f;
+	KeyFrameOtros[2][2].Xtor=0.0f;
+	KeyFrameOtros[2][2].Ytor=0.0f;
+	KeyFrameOtros[2][2].Ztor=0.0f;
+
+	KeyFrameOtros[3][0].Angt1=-5.0f;
+	KeyFrameOtros[3][0].Angt2=0.0f;
+	KeyFrameOtros[3][0].Angc1=-25.0f;
+	KeyFrameOtros[3][0].Angc2=0.0f;
+	KeyFrameOtros[3][0].Angbi1=-5.0f;
+	KeyFrameOtros[3][0].Angbi2=0.0f;
+	KeyFrameOtros[3][0].Angbib=-15.0f;
+	KeyFrameOtros[3][0].Angbd1=5.0f;
+	KeyFrameOtros[3][0].Angbd2=0.0f;
+	KeyFrameOtros[3][0].Angbdb=-40.0f;
+	KeyFrameOtros[3][0].Angpizq=20.0f;
+	KeyFrameOtros[3][0].Angpder=-30.0f;
+	KeyFrameOtros[3][0].Angpizqb=15.0f;
+	KeyFrameOtros[3][0].Angpderb=10.0f;
+	KeyFrameOtros[3][0].Angpi=0.0f;
+	KeyFrameOtros[3][0].Angpd=0.0f;
+	KeyFrameOtros[3][0].Xtor=0.0f;
+	KeyFrameOtros[3][0].Ytor=0.0f;
+	KeyFrameOtros[3][0].Ztor=0.0f;
+
+	KeyFrameOtros[3][1].Angt1=-5.0f;
+	KeyFrameOtros[3][1].Angt2=0.0f;
+	KeyFrameOtros[3][1].Angc1=-25.0f;
+	KeyFrameOtros[3][1].Angc2=0.0f;
+	KeyFrameOtros[3][1].Angbi1=10.0f;
+	KeyFrameOtros[3][1].Angbi2=0.0f;
+	KeyFrameOtros[3][1].Angbib=-40.0f;
+	KeyFrameOtros[3][1].Angbd1=-10.0f;
+	KeyFrameOtros[3][1].Angbd2=0.0f;
+	KeyFrameOtros[3][1].Angbdb=-15.0f;
+	KeyFrameOtros[3][1].Angpizq=-30.0f;
+	KeyFrameOtros[3][1].Angpder=20.0f;
+	KeyFrameOtros[3][1].Angpizqb=20.0f;
+	KeyFrameOtros[3][1].Angpderb=15.0f;
+	KeyFrameOtros[3][1].Angpi=0.0f;
+	KeyFrameOtros[3][1].Angpd=0.0f;
+	KeyFrameOtros[3][1].Xtor=0.0f;
+	KeyFrameOtros[3][1].Ytor=0.0f;
+	KeyFrameOtros[3][1].Ztor=0.0f;
+
+	KeyFrameOtros[3][2].Angt1=-5.0f;
+	KeyFrameOtros[3][2].Angt2=0.0f;
+	KeyFrameOtros[3][2].Angc1=-25.0f;
+	KeyFrameOtros[3][2].Angc2=0.0f;
+	KeyFrameOtros[3][2].Angbi1=-5.0f;
+	KeyFrameOtros[3][2].Angbi2=0.0f;
+	KeyFrameOtros[3][2].Angbib=-15.0f;
+	KeyFrameOtros[3][2].Angbd1=5.0f;
+	KeyFrameOtros[3][2].Angbd2=0.0f;
+	KeyFrameOtros[3][2].Angbdb=-40.0f;
+	KeyFrameOtros[3][2].Angpizq=20.0f;
+	KeyFrameOtros[3][2].Angpder=-20.0f;
+	KeyFrameOtros[3][2].Angpizqb=15.0f;
+	KeyFrameOtros[3][2].Angpderb=10.0f;
+	KeyFrameOtros[3][2].Angpi=0.0f;
+	KeyFrameOtros[3][2].Angpd=0.0f;
+	KeyFrameOtros[3][2].Xtor=0.0f;
+	KeyFrameOtros[3][2].Ytor=0.0f;
+	KeyFrameOtros[3][2].Ztor=0.0f;
+
+	KeyFrameOtros[4][0].Angt1=-5.0f;
+	KeyFrameOtros[4][0].Angt2=0.0f;
+	KeyFrameOtros[4][0].Angc1=-25.0f;
+	KeyFrameOtros[4][0].Angc2=0.0f;
+	KeyFrameOtros[4][0].Angbi1=-5.0f;
+	KeyFrameOtros[4][0].Angbi2=0.0f;
+	KeyFrameOtros[4][0].Angbib=-15.0f;
+	KeyFrameOtros[4][0].Angbd1=5.0f;
+	KeyFrameOtros[4][0].Angbd2=0.0f;
+	KeyFrameOtros[4][0].Angbdb=-40.0f;
+	KeyFrameOtros[4][0].Angpizq=20.0f;
+	KeyFrameOtros[4][0].Angpder=-30.0f;
+	KeyFrameOtros[4][0].Angpizqb=15.0f;
+	KeyFrameOtros[4][0].Angpderb=10.0f;
+	KeyFrameOtros[4][0].Angpi=0.0f;
+	KeyFrameOtros[4][0].Angpd=0.0f;
+	KeyFrameOtros[4][0].Xtor=0.0f;
+	KeyFrameOtros[4][0].Ytor=0.0f;
+	KeyFrameOtros[4][0].Ztor=0.0f;
+
+	KeyFrameOtros[4][1].Angt1=-5.0f;
+	KeyFrameOtros[4][1].Angt2=0.0f;
+	KeyFrameOtros[4][1].Angc1=-25.0f;
+	KeyFrameOtros[4][1].Angc2=0.0f;
+	KeyFrameOtros[4][1].Angbi1=10.0f;
+	KeyFrameOtros[4][1].Angbi2=0.0f;
+	KeyFrameOtros[4][1].Angbib=-40.0f;
+	KeyFrameOtros[4][1].Angbd1=-10.0f;
+	KeyFrameOtros[4][1].Angbd2=0.0f;
+	KeyFrameOtros[4][1].Angbdb=-15.0f;
+	KeyFrameOtros[4][1].Angpizq=-30.0f;
+	KeyFrameOtros[4][1].Angpder=20.0f;
+	KeyFrameOtros[4][1].Angpizqb=20.0f;
+	KeyFrameOtros[4][1].Angpderb=15.0f;
+	KeyFrameOtros[4][1].Angpi=0.0f;
+	KeyFrameOtros[4][1].Angpd=0.0f;
+	KeyFrameOtros[4][1].Xtor=0.0f;
+	KeyFrameOtros[4][1].Ytor=0.0f;
+	KeyFrameOtros[4][1].Ztor=0.0f;
+
+	KeyFrameOtros[4][2].Angt1=-5.0f;
+	KeyFrameOtros[4][2].Angt2=0.0f;
+	KeyFrameOtros[4][2].Angc1=-25.0f;
+	KeyFrameOtros[4][2].Angc2=0.0f;
+	KeyFrameOtros[4][2].Angbi1=-5.0f;
+	KeyFrameOtros[4][2].Angbi2=0.0f;
+	KeyFrameOtros[4][2].Angbib=-15.0f;
+	KeyFrameOtros[4][2].Angbd1=5.0f;
+	KeyFrameOtros[4][2].Angbd2=0.0f;
+	KeyFrameOtros[4][2].Angbdb=-40.0f;
+	KeyFrameOtros[4][2].Angpizq=20.0f;
+	KeyFrameOtros[4][2].Angpder=-20.0f;
+	KeyFrameOtros[4][2].Angpizqb=15.0f;
+	KeyFrameOtros[4][2].Angpderb=10.0f;
+	KeyFrameOtros[4][2].Angpi=0.0f;
+	KeyFrameOtros[4][2].Angpd=0.0f;
+	KeyFrameOtros[4][2].Xtor=0.0f;
+	KeyFrameOtros[4][2].Ytor=0.0f;
+	KeyFrameOtros[4][2].Ztor=0.0f;
+
+	KeyFrameOtros[5][0].Angt1=-5.0f;
+	KeyFrameOtros[5][0].Angt2=0.0f;
+	KeyFrameOtros[5][0].Angc1=-25.0f;
+	KeyFrameOtros[5][0].Angc2=0.0f;
+	KeyFrameOtros[5][0].Angbi1=-5.0f;
+	KeyFrameOtros[5][0].Angbi2=0.0f;
+	KeyFrameOtros[5][0].Angbib=-15.0f;
+	KeyFrameOtros[5][0].Angbd1=5.0f;
+	KeyFrameOtros[5][0].Angbd2=0.0f;
+	KeyFrameOtros[5][0].Angbdb=-40.0f;
+	KeyFrameOtros[5][0].Angpizq=20.0f;
+	KeyFrameOtros[5][0].Angpder=-30.0f;
+	KeyFrameOtros[5][0].Angpizqb=15.0f;
+	KeyFrameOtros[5][0].Angpderb=10.0f;
+	KeyFrameOtros[5][0].Angpi=0.0f;
+	KeyFrameOtros[5][0].Angpd=0.0f;
+	KeyFrameOtros[5][0].Xtor=0.0f;
+	KeyFrameOtros[5][0].Ytor=0.0f;
+	KeyFrameOtros[5][0].Ztor=0.0f;
+
+	KeyFrameOtros[5][1].Angt1=-5.0f;
+	KeyFrameOtros[5][1].Angt2=0.0f;
+	KeyFrameOtros[5][1].Angc1=-25.0f;
+	KeyFrameOtros[5][1].Angc2=0.0f;
+	KeyFrameOtros[5][1].Angbi1=10.0f;
+	KeyFrameOtros[5][1].Angbi2=0.0f;
+	KeyFrameOtros[5][1].Angbib=-40.0f;
+	KeyFrameOtros[5][1].Angbd1=-10.0f;
+	KeyFrameOtros[5][1].Angbd2=0.0f;
+	KeyFrameOtros[5][1].Angbdb=-15.0f;
+	KeyFrameOtros[5][1].Angpizq=-30.0f;
+	KeyFrameOtros[5][1].Angpder=20.0f;
+	KeyFrameOtros[5][1].Angpizqb=20.0f;
+	KeyFrameOtros[5][1].Angpderb=15.0f;
+	KeyFrameOtros[5][1].Angpi=0.0f;
+	KeyFrameOtros[5][1].Angpd=0.0f;
+	KeyFrameOtros[5][1].Xtor=0.0f;
+	KeyFrameOtros[5][1].Ytor=0.0f;
+	KeyFrameOtros[5][1].Ztor=0.0f;
+
+	KeyFrameOtros[5][2].Angt1=-5.0f;
+	KeyFrameOtros[5][2].Angt2=0.0f;
+	KeyFrameOtros[5][2].Angc1=-25.0f;
+	KeyFrameOtros[5][2].Angc2=0.0f;
+	KeyFrameOtros[5][2].Angbi1=-5.0f;
+	KeyFrameOtros[5][2].Angbi2=0.0f;
+	KeyFrameOtros[5][2].Angbib=-15.0f;
+	KeyFrameOtros[5][2].Angbd1=5.0f;
+	KeyFrameOtros[5][2].Angbd2=0.0f;
+	KeyFrameOtros[5][2].Angbdb=-40.0f;
+	KeyFrameOtros[5][2].Angpizq=20.0f;
+	KeyFrameOtros[5][2].Angpder=-20.0f;
+	KeyFrameOtros[5][2].Angpizqb=15.0f;
+	KeyFrameOtros[5][2].Angpderb=10.0f;
+	KeyFrameOtros[5][2].Angpi=0.0f;
+	KeyFrameOtros[5][2].Angpd=0.0f;
+	KeyFrameOtros[5][2].Xtor=0.0f;
+	KeyFrameOtros[5][2].Ytor=0.0f;
+	KeyFrameOtros[5][2].Ztor=0.0f;
 }
 
 // Colisiones, todo lo referente a colisiones ira aqui
@@ -1921,7 +2219,7 @@ void InicializaObjetosdeColision()
 {
 	CVector v1, v2, a, b, c, d, va, vb, vd, Normal;
 	
-	//Inicia planos de colisión del piso
+	//Inicia planos de colisiï¿½n del piso
 	plano[0].A=CVector(238.6f, 6.5f,-32.0f);
 	plano[0].B=CVector(238.6f, 6.5f,-96.7f);
 	plano[0].C=CVector(125.0f, 6.5f,-96.7f);
@@ -1982,7 +2280,7 @@ void InicializaObjetosdeColision()
 	plano[3].b4Normal=Cruz(plano[3].b4, plano[3].Normal);
 	plano[3].tipo=1;
 
-	//Inicia planos de colisión de los muros
+	//Inicia planos de colisiï¿½n de los muros
 	plano[4].A=CVector(237.0f,  0.0f,-99.0f);
 	plano[4].B=CVector(237.0f,  50.0f, -99.0f);
 	plano[4].C=CVector(-97.0f, 50.0f, -99.0f);
@@ -2013,7 +2311,7 @@ void InicializaObjetosdeColision()
 	plano[5].b4Normal=Cruz(plano[5].b4, plano[5].Normal);
 	plano[5].tipo=2;
 
-	//Continuan los planos de colisión de piso
+	//Continuan los planos de colisiï¿½n de piso
 	plano[6].A=CVector(-10.5f, 6.5f,-96.7f);
 	plano[6].B=CVector(-95.0f, 6.5f,-96.7f);
 	plano[6].C=CVector(-95.0f, 6.5f,5.0f);
@@ -2316,7 +2614,7 @@ void ColisionEsferaPlano(int id, int dir, parametros& player )
 			float param=Punto(plano[j].Normal,PMVect);
 			if(param <= 0.0001f && param > -0.4f)
 			{
-				//Ahora se comprueba que el punto de prueba se encuentre dentro de los límites del plano
+				//Ahora se comprueba que el punto de prueba se encuentre dentro de los lï¿½mites del plano
 				dp=TestPoint-plano[j].A;
 				Determinante=Punto(plano[j].b1Normal, dp);
 				if(Determinante > 0.001f) continue;
@@ -2523,12 +2821,12 @@ int InitGL(GLvoid)										// Aqui se configuran los parametros iniciales de Op
 	glClearStencil(0);
 	glEnable(GL_DEPTH_TEST);							// Activa Depth Testing
 	glDepthFunc(GL_LEQUAL);								// Tipo de Depth Testing a usar
-	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);	// Correccion de cálculos de perspectiva
+	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);	// Correccion de cï¿½lculos de perspectiva
 
 	glCullFace(GL_BACK);								// Set Culling Face To Back Face
 	glEnable(GL_CULL_FACE);								// Enable Culling
 
-	//Iluminación
+	//Iluminaciï¿½n
 	//Inicializa la luz
 	glLightfv(GL_LIGHT0, GL_POSITION, LightPos);		// Posicion de la luz1
 	glLightfv(GL_LIGHT0, GL_AMBIENT,  LightAmb);		// Componente ambiente
@@ -2542,11 +2840,11 @@ int InitGL(GLvoid)										// Aqui se configuran los parametros iniciales de Op
 	*/
 	
 	glEnable(GL_LIGHT0);								// Activa luz0
-	glEnable(GL_LIGHTING);								// Habilita la iluminación
+	glEnable(GL_LIGHTING);								// Habilita la iluminaciï¿½n
 
 	CargaTexturas();
 
-	// para la Spline de la trayectoria automática
+	// para la Spline de la trayectoria automï¿½tica
 	ptsXtramo = 20;
 	running = 1;
 	trayectoria = 1;
@@ -2772,7 +3070,7 @@ void ControlPersonaje(int funcion)
 		//}
 
 	}
-	else if(funcion == 4) //Avanza hacia atrás
+	else if(funcion == 4) //Avanza hacia atrï¿½s
 	{
 
 		// Avanza como en MoonWalker
@@ -2811,14 +3109,14 @@ void ControlPersonaje(int funcion)
 		//player1.PosAntObj = player1.PosicionObj;
 
 	}
-	else if(funcion == 5) //Sube objetivo de la cámara
+	else if(funcion == 5) //Sube objetivo de la cï¿½mara
 	{
 		player1.ObjetivoCam.y += 1.0f;
 		player1.CamaraObjAlt += 1.0f;
 		player1.CamaraObjAltE += 1.0f;
 		
 	}
-	else if(funcion == 6) //Baja objetivo de la cámara
+	else if(funcion == 6) //Baja objetivo de la cï¿½mara
 	{
 		player1.ObjetivoCam.y -= 1.0f;
 		player1.CamaraObjAlt -= 1.0f;
@@ -2827,82 +3125,112 @@ void ControlPersonaje(int funcion)
 	}
 }
 
+void recargaAnim( FRAME *KeyFrame, jerarquiaModelo* modelo, bool &p, int& tipoA, int& pIdx )
+{
+	if( p == false )
+	{
+
+		modelo->Angt1    = KeyFrame[0].Angt1;
+		modelo->Angt2    = KeyFrame[0].Angt2;
+		modelo->Angc1    = KeyFrame[0].Angc1;
+		modelo->Angc2    = KeyFrame[0].Angc2;
+		modelo->Angbi1   = KeyFrame[0].Angbi1;
+		modelo->Angbi2   = KeyFrame[0].Angbi2;
+		modelo->Angbib   = KeyFrame[0].Angbib;
+		modelo->Angbd1   = KeyFrame[0].Angbd1;
+		modelo->Angbd2   = KeyFrame[0].Angbd2;
+		modelo->Angbdb   = KeyFrame[0].Angbdb;
+		modelo->Angpizq  = KeyFrame[0].Angpizq;
+		modelo->Angpder  = KeyFrame[0].Angpder;
+		modelo->Angpizqb = KeyFrame[0].Angpizqb;
+		modelo->Angpderb = KeyFrame[0].Angpderb;
+		modelo->Angpi    = KeyFrame[0].Angpi;
+		modelo->Angpd    = KeyFrame[0].Angpd;
+		modelo->Xtor     = KeyFrame[0].Xtor;
+		modelo->Ytor     = KeyFrame[0].Ytor;
+		modelo->Ztor     = KeyFrame[0].Ztor;
+
+		p = true;
+		pIdx = 0;
+		tipoA = 1;
+			
+	}
+}
 /* animacion() ahora recibe un apuntador hacia el modelo que quieran usar, ej. &mikumodelo
  * tambien recibe el playIndex de su personaje a animar, ese nada mas lo pasan como argumento
  */
-void animacion(FRAME *KeyFrame, int maxKF , int frames, jerarquiaModelo* modelo, int& pIndex)
+void animacion( FRAME *KeyFrame, int maxKF , int frames, jerarquiaModelo* modelo, int& pIdx, bool& p)
 {
-	if(play)
+	if( p )
 	{		
-		if((abs(KeyFrame[ pIndex+1].Angt1-modelo->Angt1))<0.1 &&
-		   (abs(KeyFrame[ pIndex+1].Angt2-modelo->Angt2))<0.1 &&
-		   (abs(KeyFrame[ pIndex+1].Angc1-modelo->Angc1))<0.1 &&
-		   (abs(KeyFrame[ pIndex+1].Angc2-modelo->Angc2))<0.1 &&
-		   (abs(KeyFrame[ pIndex+1].Angbi1-modelo->Angbi1))<0.1 &&
-		   (abs(KeyFrame[ pIndex+1].Angbi2-modelo->Angbi2))<0.1 &&
-		   (abs(KeyFrame[ pIndex+1].Angbib-modelo->Angbib))<0.1 &&
-		   (abs(KeyFrame[ pIndex+1].Angbd1-modelo->Angbd1))<0.1 &&
-		   (abs(KeyFrame[ pIndex+1].Angbd2-modelo->Angbd2))<0.1 &&
-		   (abs(KeyFrame[ pIndex+1].Angbdb-modelo->Angbdb))<0.1 &&
-		   (abs(KeyFrame[ pIndex+1].Angpizq-modelo->Angpizq))<0.1 &&
-		   (abs(KeyFrame[ pIndex+1].Angpizqb-modelo->Angpizqb))<0.1 &&
-		   (abs(KeyFrame[ pIndex+1].Angpder-modelo->Angpder))<0.1 &&
-		   (abs(KeyFrame[ pIndex+1].Angpderb-modelo->Angpderb))<0.1 &&
-		   (abs(KeyFrame[ pIndex+1].Angpi-modelo->Angpi))<0.1 &&
-		   (abs(KeyFrame[ pIndex+1].Angpd-modelo->Angpd))<0.1 &&
-		   (abs(KeyFrame[ pIndex+1].Xtor-modelo->Xtor))<0.1 &&
-		   (abs(KeyFrame[pIndex+1].Ytor-modelo->Ytor))<0.1 &&
-		   (abs(KeyFrame[pIndex+1].Ztor-modelo->Ztor))<0.1)
+		if(( abs( KeyFrame[ pIdx+1 ].Angt1 - modelo->Angt1 ))<0.1 &&
+		   ( abs( KeyFrame[ pIdx+1 ].Angt2 - modelo->Angt2 ))<0.1 &&
+		   ( abs( KeyFrame[ pIdx+1 ].Angc1 - modelo->Angc1 ))<0.1 &&
+		   ( abs( KeyFrame[ pIdx+1 ].Angc2 - modelo->Angc2 ))<0.1 &&
+		   ( abs( KeyFrame[ pIdx+1 ].Angbi1 - modelo->Angbi1 ))<0.1 &&
+		   ( abs( KeyFrame[ pIdx+1 ].Angbi2 - modelo->Angbi2 ))<0.1 &&
+		   ( abs( KeyFrame[ pIdx+1 ].Angbib - modelo->Angbib ))<0.1 &&
+		   ( abs( KeyFrame[ pIdx+1 ].Angbd1 - modelo->Angbd1 ))<0.1 &&
+		   ( abs( KeyFrame[ pIdx+1 ].Angbd2 - modelo->Angbd2 ))<0.1 &&
+		   ( abs( KeyFrame[ pIdx+1 ].Angbdb - modelo->Angbdb ))<0.1 &&
+		   ( abs( KeyFrame[ pIdx+1 ].Angpizq - modelo->Angpizq ))<0.1 &&
+		   ( abs( KeyFrame[ pIdx+1 ].Angpizqb - modelo->Angpizqb ))<0.1 &&
+		   ( abs( KeyFrame[ pIdx+1 ].Angpder - modelo->Angpder ))<0.1 &&
+		   ( abs( KeyFrame[ pIdx+1 ].Angpderb - modelo->Angpderb ))<0.1 &&
+		   ( abs( KeyFrame[ pIdx+1 ].Angpi - modelo->Angpi ))<0.1 &&
+		   ( abs( KeyFrame[ pIdx+1 ].Angpd - modelo->Angpd ))<0.1 &&
+		   ( abs( KeyFrame[ pIdx+1 ].Xtor - modelo->Xtor ))<0.1 &&
+		   ( abs( KeyFrame[ pIdx+1 ].Ytor - modelo->Ytor ))<0.1 &&
+		   ( abs( KeyFrame[ pIdx+1 ].Ztor - modelo->Ztor ))<0.1)
 		{			
-			pIndex++;			
-			if(pIndex>maxKF-2)
+			pIdx++;			
+			if( pIdx > maxKF-2 )
 			{
-				pIndex=0;
-				play=false;
-								
+				pIdx = 0;
+				p = false;								
 			}
 		}
 		else
 		{
-			KeyFrame[pIndex].incAngt1    = (KeyFrame[pIndex+1].Angt1-KeyFrame[pIndex].Angt1)/frames;
-			KeyFrame[pIndex].incAngt2    = (KeyFrame[pIndex+1].Angt2-KeyFrame[pIndex].Angt2)/frames;
-			KeyFrame[pIndex].incAngc1    = (KeyFrame[pIndex+1].Angc1-KeyFrame[pIndex].Angc1)/frames;
-			KeyFrame[pIndex].incAngc2    = (KeyFrame[pIndex+1].Angc2-KeyFrame[pIndex].Angc2)/frames;
-			KeyFrame[pIndex].incAngbi1   = (KeyFrame[pIndex+1].Angbi1-KeyFrame[pIndex].Angbi1)/frames;
-			KeyFrame[pIndex].incAngbi2   = (KeyFrame[pIndex+1].Angbi2-KeyFrame[pIndex].Angbi2)/frames;
-			KeyFrame[pIndex].incAngbib   = (KeyFrame[pIndex+1].Angbib-KeyFrame[pIndex].Angbib)/frames;
-			KeyFrame[pIndex].incAngbd1   = (KeyFrame[pIndex+1].Angbd1-KeyFrame[pIndex].Angbd1)/frames;
-			KeyFrame[pIndex].incAngbd2   = (KeyFrame[pIndex+1].Angbd2-KeyFrame[pIndex].Angbd2)/frames;
-			KeyFrame[pIndex].incAngbdb   = (KeyFrame[pIndex+1].Angbdb-KeyFrame[pIndex].Angbdb)/frames;
-			KeyFrame[pIndex].incAngpizq  = (KeyFrame[pIndex+1].Angpizq-KeyFrame[pIndex].Angpizq)/frames;
-			KeyFrame[pIndex].incAngpizqb = (KeyFrame[pIndex+1].Angpizqb-KeyFrame[pIndex].Angpizqb)/frames;
-			KeyFrame[pIndex].incAngpder  = (KeyFrame[pIndex+1].Angpder-KeyFrame[pIndex].Angpder)/frames;
-			KeyFrame[pIndex].incAngpderb = (KeyFrame[pIndex+1].Angpderb-KeyFrame[pIndex].Angpderb)/frames;
-			KeyFrame[pIndex].incAngpi    = (KeyFrame[pIndex+1].Angpi-KeyFrame[pIndex].Angpi)/frames;
-			KeyFrame[pIndex].incAngpd    = (KeyFrame[pIndex+1].Angpd-KeyFrame[pIndex].Angpd)/frames;
-			KeyFrame[pIndex].incXtor     = (KeyFrame[pIndex+1].Xtor-KeyFrame[pIndex].Xtor)/frames;
-			KeyFrame[pIndex].incYtor     = (KeyFrame[pIndex+1].Ytor-KeyFrame[pIndex].Ytor)/frames;
-			KeyFrame[pIndex].incZtor     = (KeyFrame[pIndex+1].Ztor-KeyFrame[pIndex].Ztor)/frames;
+			KeyFrame[pIdx].incAngt1    = (KeyFrame[pIdx+1].Angt1-KeyFrame[pIdx].Angt1)/frames;
+			KeyFrame[pIdx].incAngt2    = (KeyFrame[pIdx+1].Angt2-KeyFrame[pIdx].Angt2)/frames;
+			KeyFrame[pIdx].incAngc1    = (KeyFrame[pIdx+1].Angc1-KeyFrame[pIdx].Angc1)/frames;
+			KeyFrame[pIdx].incAngc2    = (KeyFrame[pIdx+1].Angc2-KeyFrame[pIdx].Angc2)/frames;
+			KeyFrame[pIdx].incAngbi1   = (KeyFrame[pIdx+1].Angbi1-KeyFrame[pIdx].Angbi1)/frames;
+			KeyFrame[pIdx].incAngbi2   = (KeyFrame[pIdx+1].Angbi2-KeyFrame[pIdx].Angbi2)/frames;
+			KeyFrame[pIdx].incAngbib   = (KeyFrame[pIdx+1].Angbib-KeyFrame[pIdx].Angbib)/frames;
+			KeyFrame[pIdx].incAngbd1   = (KeyFrame[pIdx+1].Angbd1-KeyFrame[pIdx].Angbd1)/frames;
+			KeyFrame[pIdx].incAngbd2   = (KeyFrame[pIdx+1].Angbd2-KeyFrame[pIdx].Angbd2)/frames;
+			KeyFrame[pIdx].incAngbdb   = (KeyFrame[pIdx+1].Angbdb-KeyFrame[pIdx].Angbdb)/frames;
+			KeyFrame[pIdx].incAngpizq  = (KeyFrame[pIdx+1].Angpizq-KeyFrame[pIdx].Angpizq)/frames;
+			KeyFrame[pIdx].incAngpizqb = (KeyFrame[pIdx+1].Angpizqb-KeyFrame[pIdx].Angpizqb)/frames;
+			KeyFrame[pIdx].incAngpder  = (KeyFrame[pIdx+1].Angpder-KeyFrame[pIdx].Angpder)/frames;
+			KeyFrame[pIdx].incAngpderb = (KeyFrame[pIdx+1].Angpderb-KeyFrame[pIdx].Angpderb)/frames;
+			KeyFrame[pIdx].incAngpi    = (KeyFrame[pIdx+1].Angpi-KeyFrame[pIdx].Angpi)/frames;
+			KeyFrame[pIdx].incAngpd    = (KeyFrame[pIdx+1].Angpd-KeyFrame[pIdx].Angpd)/frames;
+			KeyFrame[pIdx].incXtor     = (KeyFrame[pIdx+1].Xtor-KeyFrame[pIdx].Xtor)/frames;
+			KeyFrame[pIdx].incYtor     = (KeyFrame[pIdx+1].Ytor-KeyFrame[pIdx].Ytor)/frames;
+			KeyFrame[pIdx].incZtor     = (KeyFrame[pIdx+1].Ztor-KeyFrame[pIdx].Ztor)/frames;
 			
-			modelo->Angt1    += KeyFrame[pIndex].incAngt1;
-			modelo->Angt2    += KeyFrame[pIndex].incAngt2;
-			modelo->Angc1    += KeyFrame[pIndex].incAngc1;
-			modelo->Angc2    += KeyFrame[pIndex].incAngc2;
-			modelo->Angbi1   += KeyFrame[pIndex].incAngbi1;
-			modelo->Angbi2   += KeyFrame[pIndex].incAngbi2;
-			modelo->Angbib   += KeyFrame[pIndex].incAngbib;
-			modelo->Angbd1   += KeyFrame[pIndex].incAngbd1;
-			modelo->Angbd2   += KeyFrame[pIndex].incAngbd2;
-			modelo->Angbdb   += KeyFrame[pIndex].incAngbdb;
-			modelo->Angpizq  += KeyFrame[pIndex].incAngpizq;
-			modelo->Angpizqb += KeyFrame[pIndex].incAngpizqb;
-			modelo->Angpder  += KeyFrame[pIndex].incAngpder;
-			modelo->Angpderb += KeyFrame[pIndex].incAngpderb;
-			modelo->Angpi    += KeyFrame[pIndex].incAngpi;
-			modelo->Angpd    += KeyFrame[pIndex].incAngpd;
-			modelo->Xtor     += KeyFrame[pIndex].incXtor;
-			modelo->Ytor     += KeyFrame[pIndex].incYtor;
-			modelo->Ztor     += KeyFrame[pIndex].incZtor;
+			modelo->Angt1    += KeyFrame[pIdx].incAngt1;
+			modelo->Angt2    += KeyFrame[pIdx].incAngt2;
+			modelo->Angc1    += KeyFrame[pIdx].incAngc1;
+			modelo->Angc2    += KeyFrame[pIdx].incAngc2;
+			modelo->Angbi1   += KeyFrame[pIdx].incAngbi1;
+			modelo->Angbi2   += KeyFrame[pIdx].incAngbi2;
+			modelo->Angbib   += KeyFrame[pIdx].incAngbib;
+			modelo->Angbd1   += KeyFrame[pIdx].incAngbd1;
+			modelo->Angbd2   += KeyFrame[pIdx].incAngbd2;
+			modelo->Angbdb   += KeyFrame[pIdx].incAngbdb;
+			modelo->Angpizq  += KeyFrame[pIdx].incAngpizq;
+			modelo->Angpizqb += KeyFrame[pIdx].incAngpizqb;
+			modelo->Angpder  += KeyFrame[pIdx].incAngpder;
+			modelo->Angpderb += KeyFrame[pIdx].incAngpderb;
+			modelo->Angpi    += KeyFrame[pIdx].incAngpi;
+			modelo->Angpd    += KeyFrame[pIdx].incAngpd;
+			modelo->Xtor     += KeyFrame[pIdx].incXtor;
+			modelo->Ytor     += KeyFrame[pIdx].incYtor;
+			modelo->Ztor     += KeyFrame[pIdx].incZtor;
 			
 		}
 	}
@@ -3970,13 +4298,13 @@ void DibujaLuz(CVector l)
 	lightPosition.z=LightPos[2];
 
 	//Dibuja una esfera que representa la fuente luminosa
-	glDisable(GL_LIGHTING);									// Deshabilita iluminación
+	glDisable(GL_LIGHTING);									// Deshabilita iluminaciï¿½n
 	glPushMatrix();
 		glTranslatef(l.x, l.y, l.z);// Traslada a la posicion de la luz
 		glColor4f(1.0f, 0.9f, 0.0f, 1.0f);					// Color amarillo
 		gluSphere(e, 1.0f, 16, 8);							// Dibuja la esfera
 	glPopMatrix();
-	glEnable(GL_LIGHTING);									// Habilita Iluminación
+	glEnable(GL_LIGHTING);									// Habilita Iluminaciï¿½n
 
 	glColor3f(1.0f, 1.0f, 1.0f);
 }
@@ -3997,10 +4325,10 @@ void ActualizaAnimText()
 void DibujaTextos()
 {
 	glDisable(GL_DEPTH_TEST);							// Desactiva la prueba de profundidad
-	glMatrixMode(GL_PROJECTION);						// Selecciona la matriz de proyección
-	glPushMatrix();										// Guarda la matriz de proyección
-		glLoadIdentity();									// Limpia la matriz de proyección
-		glOrtho(0,glWidth,0,glHeight,-1,1);					// Crea una proyección ortogonal
+	glMatrixMode(GL_PROJECTION);						// Selecciona la matriz de proyecciï¿½n
+	glPushMatrix();										// Guarda la matriz de proyecciï¿½n
+		glLoadIdentity();									// Limpia la matriz de proyecciï¿½n
+		glOrtho(0,glWidth,0,glHeight,-1,1);					// Crea una proyecciï¿½n ortogonal
 		glMatrixMode(GL_MODELVIEW);							// Selecciona la matriz de modelo de vista
 		glPushMatrix();										// Guarda la matriz de modelo de vista
 		
@@ -4088,8 +4416,8 @@ void DibujaTextos()
 		glColor3f(1.0f,1.0f,1.0f);
 
 		glEnable(GL_LIGHTING);
-		glMatrixMode(GL_PROJECTION);						// Selecciona la matriz de proyección
-		glPopMatrix();										// Recupera la anterior matriz de proyección
+		glMatrixMode(GL_PROJECTION);						// Selecciona la matriz de proyecciï¿½n
+		glPopMatrix();										// Recupera la anterior matriz de proyecciï¿½n
 		glMatrixMode(GL_MODELVIEW);							// Selecciona la matriz de modelo de vista
 	glPopMatrix();										// Recupera la anterior matriz de modelo de vista
 	glEnable(GL_DEPTH_TEST);							// Activa la prueba de profundidad
@@ -4190,13 +4518,13 @@ void ActualizaLuz()
 	
 	//Modelo 1 (Torso)
 
-	//Aquí se determina a partir de la inversa de la matriz de modelo de vista el espacio de objeto para la luz
+	//Aquï¿½ se determina a partir de la inversa de la matriz de modelo de vista el espacio de objeto para la luz
 	lightposition[0]=lightPosition.x;
 	lightposition[1]=lightPosition.y;
 	lightposition[2]=lightPosition.z;
 
 	//Se obtiene la matriz inversa de modelo de vista para el modelo 1 aplicando sus transformaciones en orden inverso 
-	//y signos opuestos para los parámetros
+	//y signos opuestos para los parï¿½metros
 	glPushMatrix();
 		glLoadIdentity();
 		glRotatef(-player1modelo.Angt1, 1.0f, 0.0f, 0.0f);
@@ -4214,13 +4542,13 @@ void ActualizaLuz()
 
 	//Modelo 2 (Pierna derecha)
 
-	//Aquí se determina a partir de la inversa de la matriz de modelo de vista el espacio de objeto para la luz
+	//Aquï¿½ se determina a partir de la inversa de la matriz de modelo de vista el espacio de objeto para la luz
 	lightposition2[0]=lightPosition.x;
 	lightposition2[1]=lightPosition.y;
 	lightposition2[2]=lightPosition.z;
 
 	//Se obtiene la matriz inversa de modelo de vista para el modelo 2 aplicando sus transformaciones en orden inverso 
-	//y signos opuestos para los parámetros
+	//y signos opuestos para los parï¿½metros
 	glPushMatrix();
 		glLoadIdentity();
 		glRotatef(-player1modelo.Angpder, 1.0f, 0.0f, 0.0f);
@@ -4238,13 +4566,13 @@ void ActualizaLuz()
 	objectSpaceLightPosition2.z=lightposition2[2];
 	
 
-	//Aquí se determina a partir de la inversa de la matriz de modelo de vista el espacio de objeto para la luz
+	//Aquï¿½ se determina a partir de la inversa de la matriz de modelo de vista el espacio de objeto para la luz
 	lightposition3[0]=lightPosition.x;
 	lightposition3[1]=lightPosition.y;
 	lightposition3[2]=lightPosition.z;
 
 	//Se obtiene la matriz inversa de modelo de vista para el modelo 3 aplicando sus transformaciones en orden inverso 
-	//y signos opuestos para los parámetros
+	//y signos opuestos para los parï¿½metros
 	glPushMatrix();
 		glLoadIdentity();
 		glRotatef(-player1modelo.Angpderb, 1.0f, 0.0f, 0.0f);
@@ -4265,13 +4593,13 @@ void ActualizaLuz()
 
 	//Modelo 4 (Pierna izquierda)
 
-	//Aquí se determina a partir de la inversa de la matriz de modelo de vista el espacio de objeto para la luz
+	//Aquï¿½ se determina a partir de la inversa de la matriz de modelo de vista el espacio de objeto para la luz
 	lightposition4[0]=lightPosition.x;
 	lightposition4[1]=lightPosition.y;
 	lightposition4[2]=lightPosition.z;
 
 	//Se obtiene la matriz inversa de modelo de vista para el modelo 4 aplicando sus transformaciones en orden inverso 
-	//y signos opuestos para los parámetros
+	//y signos opuestos para los parï¿½metros
 	glPushMatrix();
 		glLoadIdentity();
 		glRotatef(-player1modelo.Angpizq, 1.0f, 0.0f, 0.0f);
@@ -4290,13 +4618,13 @@ void ActualizaLuz()
 
 	//Modelo 5 (Pierna izquierda_b)
 
-	//Aquí se determina a partir de la inversa de la matriz de modelo de vista el espacio de objeto para la luz
+	//Aquï¿½ se determina a partir de la inversa de la matriz de modelo de vista el espacio de objeto para la luz
 	lightposition5[0]=lightPosition.x;
 	lightposition5[1]=lightPosition.y;
 	lightposition5[2]=lightPosition.z;
 
 	//Se obtiene la matriz inversa de modelo de vista para el modelo 5 aplicando sus transformaciones en orden inverso 
-	//y signos opuestos para los parámetros
+	//y signos opuestos para los parï¿½metros
 	glPushMatrix();
 		glLoadIdentity();
 		glRotatef(-player1modelo.Angpizqb, 1.0f, 0.0f, 0.0f);
@@ -4316,13 +4644,13 @@ void ActualizaLuz()
 
 	//Modelo 6 (Brazo derecho_a)
 
-	//Aquí se determina a partir de la inversa de la matriz de modelo de vista el espacio de objeto para la luz
+	//Aquï¿½ se determina a partir de la inversa de la matriz de modelo de vista el espacio de objeto para la luz
 	lightposition6[0]=lightPosition.x;
 	lightposition6[1]=lightPosition.y;
 	lightposition6[2]=lightPosition.z;
 
 	//Se obtiene la matriz inversa de modelo de vista para el modelo 6 aplicando sus transformaciones en orden inverso 
-	//y signos opuestos para los parámetros
+	//y signos opuestos para los parï¿½metros
 	glPushMatrix();
 		glLoadIdentity();
 		glRotatef(-player1modelo.Angbd1, 1.0f, 0.0f, 0.0f);
@@ -4342,13 +4670,13 @@ void ActualizaLuz()
 
 	//Modelo 7 (Brazo derecho_b)
 
-	//Aquí se determina a partir de la inversa de la matriz de modelo de vista el espacio de objeto para la luz
+	//Aquï¿½ se determina a partir de la inversa de la matriz de modelo de vista el espacio de objeto para la luz
 	lightposition7[0]=lightPosition.x;
 	lightposition7[1]=lightPosition.y;
 	lightposition7[2]=lightPosition.z;
 
 	//Se obtiene la matriz inversa de modelo de vista para el modelo 7 aplicando sus transformaciones en orden inverso 
-	//y signos opuestos para los parámetros
+	//y signos opuestos para los parï¿½metros
 	glPushMatrix();
 		glLoadIdentity();
 		glRotatef(-player1modelo.Angbdb, 1.0f, 0.0f, 0.0f);
@@ -4369,13 +4697,13 @@ void ActualizaLuz()
 
 	//Modelo 8 (Brazo izquierdo_a)
 
-	//Aquí se determina a partir de la inversa de la matriz de modelo de vista el espacio de objeto para la luz
+	//Aquï¿½ se determina a partir de la inversa de la matriz de modelo de vista el espacio de objeto para la luz
 	lightposition8[0]=lightPosition.x;
 	lightposition8[1]=lightPosition.y;
 	lightposition8[2]=lightPosition.z;
 
 	//Se obtiene la matriz inversa de modelo de vista para el modelo 8 aplicando sus transformaciones en orden inverso 
-	//y signos opuestos para los parámetros
+	//y signos opuestos para los parï¿½metros
 	glPushMatrix();
 		glLoadIdentity();
 		glRotatef(-player1modelo.Angbi1, 1.0f, 0.0f, 0.0f);
@@ -4395,13 +4723,13 @@ void ActualizaLuz()
 	
 	//Modelo 9 (Brazo izquierdo_b)
 
-	//Aquí se determina a partir de la inversa de la matriz de modelo de vista el espacio de objeto para la luz
+	//Aquï¿½ se determina a partir de la inversa de la matriz de modelo de vista el espacio de objeto para la luz
 	lightposition9[0]=lightPosition.x;
 	lightposition9[1]=lightPosition.y;
 	lightposition9[2]=lightPosition.z;
 
 	//Se obtiene la matriz inversa de modelo de vista para el modelo 9 aplicando sus transformaciones en orden inverso 
-	//y signos opuestos para los parámetros
+	//y signos opuestos para los parï¿½metros
 	glPushMatrix();
 		glLoadIdentity();
 		glRotatef(-player1modelo.Angbib, 1.0f, 0.0f, 0.0f);
@@ -4633,9 +4961,9 @@ void DibujaEnemigos()
 
 void DibujaElevador()
 {
-	if ( ( abajo == true ) && ( elev  == -9.0f ) )
+	if ( ( abajo == true ) && ( elev  <= -50.0f ) )
 		abajo = false;
-	else if ( ( abajo == false ) && ( elev == 28.0f ) )
+	else if ( ( abajo == false ) && ( elev >= 28.0f ) )
 		abajo = true;
 
 	//Elevador
@@ -4647,9 +4975,9 @@ void DibujaElevador()
 	glPopMatrix();
 
 	if( abajo == true )
-		elev -= 0.5f;
+		elev -= 0.2f;
 	else if( abajo == false )
-		elev += 0.5f;
+		elev += 0.2f;
 }
 void DibujaEscena()
 {
@@ -4714,7 +5042,7 @@ int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la
 			  0.0f, 1.0f, 0.0f);
 	*/
 
-	//Se actualizan los parámetros de iluminación
+	//Se actualizan los parï¿½metros de iluminaciï¿½n
 	glLightfv(GL_LIGHT0, GL_POSITION, LightPos);		// Posicion de la luz1
 	glLightfv(GL_LIGHT0, GL_AMBIENT,  LightAmb);		// Componente ambiente
 	glLightfv(GL_LIGHT0, GL_DIFFUSE,  LightDif);		// Componente difusa
@@ -4722,7 +5050,7 @@ int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la
 	
 	ActualizaLuz();
 		
-	// Se dibuja el modelo con la iluminación desactivada
+	// Se dibuja el modelo con la iluminaciï¿½n desactivada
 	// Se renderizan todas las partes oscuras de la escena.
 	glDisable(GL_LIGHT0);
 
@@ -4733,7 +5061,7 @@ int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la
 		DibujaEscena();
 	glPopMatrix();
 
-	// Se desactiva la máscara de color para renderizar la escena en negro
+	// Se desactiva la mï¿½scara de color para renderizar la escena en negro
 	glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);
 	//Se desactiva la escritura en el buffer de profundidad
 	glDepthMask(GL_FALSE);
@@ -4742,7 +5070,7 @@ int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la
 	// Se habilita la prueba del buffer stencil
 	glEnable(GL_STENCIL_TEST);
 	
-	//Se inicializa el buffer stencil con una máscara de ceros.
+	//Se inicializa el buffer stencil con una mï¿½scara de ceros.
 	glStencilFunc(GL_ALWAYS, 0, 0);
 
 	//En este punto se aplica el depth pass (z-pass) o depth fail (z-fail)
@@ -4757,7 +5085,7 @@ int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la
 	glCullFace(GL_BACK);
 	glDisable(GL_CULL_FACE);
 
-	// Finalmente se dibuja todo lo que está en las áreas iluminadas de la escena. Para eso ahora
+	// Finalmente se dibuja todo lo que estï¿½ en las ï¿½reas iluminadas de la escena. Para eso ahora
 	// Los puntos que se dibujan son todos aquellos en donde el buffer stencil es cero, es decir, las
 	// partes de la escena que no estan en el volumen de sombra.
 	glEnable(GL_LIGHT0);
@@ -4770,7 +5098,7 @@ int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la
 		DibujaEscena();
 	glPopMatrix();
 
-	// Se desactiva la prueba de profundidad y del buffer stencil ya que no se utilizarán mas.
+	// Se desactiva la prueba de profundidad y del buffer stencil ya que no se utilizarï¿½n mas.
 	glDisable(GL_STENCIL_TEST);
 
 	// Dibujo de MJs
@@ -4790,7 +5118,7 @@ int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la
 	{
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);     //Para que muestre el volumen en alambrado
 		DibujaVolumendeSombra();
-		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);     //Volvemos al modo sólido de nuevo
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);     //Volvemos al modo sï¿½lido de nuevo
 	}
 
 	//splines
@@ -4799,14 +5127,14 @@ int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la
 		idxtp += dtidx;
 		if( idxtp >= helspline.drawp - 5 || idxtp < 2 )
 		{ 
-			// ¿final o principio?
+			// ï¿½final o principio?
   			dtidx = -dtidx; // cambia el sentido de la camara
 			//esperar = 50;
 		}
 		spline_point(helspline, idxtp, target);
 	}
 
-	//spline helicòptero
+	//spline helicï¿½ptero
 	glDisable(GL_TEXTURE_2D);
 	glDisable(GL_LIGHTING);
 	glDisable(GL_COLOR_MATERIAL);
@@ -4889,40 +5217,40 @@ GLvoid KillGLWindow(GLvoid)								// Elimina la ventana apropiadamente
 	{
 		if (!wglMakeCurrent(NULL,NULL))					// Si no se pueden liberar los contextos DC y RC...
 		{
-			MessageBox(NULL,"Falla al liberar DC y RC.","Error de finalización",MB_OK | MB_ICONINFORMATION);
+			MessageBox(NULL,"Falla al liberar DC y RC.","Error de finalizaciï¿½n",MB_OK | MB_ICONINFORMATION);
 		}
 
 		if (!wglDeleteContext(hRC))						// Si no se puede eliminar el RC?
 		{
-			MessageBox(NULL,"Falla al liberar el contexto de renderizado.","Error de finalización",MB_OK | MB_ICONINFORMATION);
+			MessageBox(NULL,"Falla al liberar el contexto de renderizado.","Error de finalizaciï¿½n",MB_OK | MB_ICONINFORMATION);
 		}
 		hRC=NULL;										// Se pone RC en NULL
 	}
 
 	if (hDC && !ReleaseDC(hWnd,hDC))					// Si no se puede eliminar el DC
 	{
-		MessageBox(NULL,"Falla al liberar el contexto de renderizado.","Error de finalización",MB_OK | MB_ICONINFORMATION);
+		MessageBox(NULL,"Falla al liberar el contexto de renderizado.","Error de finalizaciï¿½n",MB_OK | MB_ICONINFORMATION);
 		hDC=NULL;										// Se pone DC en NULL
 	}
 
 	if (hWnd && !DestroyWindow(hWnd))					// Si no se puede destruir la ventana
 	{
-		MessageBox(NULL,"No se pudo liberar hWnd.","Error de finalización",MB_OK | MB_ICONINFORMATION);
+		MessageBox(NULL,"No se pudo liberar hWnd.","Error de finalizaciï¿½n",MB_OK | MB_ICONINFORMATION);
 		hWnd=NULL;										// Se pone hWnd en NULL
 	}
 
 	if (!UnregisterClass("OpenGL",hInstance))			// Si no se puede eliminar el registro de la clase
 	{
-		MessageBox(NULL,"No se pudo eliminar el registro de la clase.","Error de finalización",MB_OK | MB_ICONINFORMATION);
+		MessageBox(NULL,"No se pudo eliminar el registro de la clase.","Error de finalizaciï¿½n",MB_OK | MB_ICONINFORMATION);
 		hInstance=NULL;									// Se pone hInstance en NULL
 	}
 }
 
-//	Este código crea la ventana de OpenGL.  Parámetros:					
+//	Este cï¿½digo crea la ventana de OpenGL.  Parï¿½metros:					
 //	title			- Titulo en la parte superior de la ventana			
 //	width			- Ancho de la ventana								
 //	height			- Alto de la ventana								
-//	bits			- Número de bits a usar para el color (8/16/24/32)	
+//	bits			- Nï¿½mero de bits a usar para el color (8/16/24/32)	
   
 BOOL CreateGLWindow(char* title, int width, int height, int bits)
 {
@@ -4930,7 +5258,7 @@ BOOL CreateGLWindow(char* title, int width, int height, int bits)
 	WNDCLASS	wc;						// Estructura de la clase ventana
 	DWORD		dwExStyle;				// Estilo extendido de ventana
 	DWORD		dwStyle;				// Estilo de ventana
-	RECT		WindowRect;				// Guarda los valores Superior Izquierdo / Inferior Derecho del rectángulo
+	RECT		WindowRect;				// Guarda los valores Superior Izquierdo / Inferior Derecho del rectï¿½ngulo
 	WindowRect.left=(long)0;			// Inicia el valor Izquierdo a 0
 	WindowRect.right=(long)width;		// Inicia el valor Derecho al ancho especificado
 	WindowRect.top=(long)0;				// Inicia el valor Superior a 0
@@ -4942,10 +5270,10 @@ BOOL CreateGLWindow(char* title, int width, int height, int bits)
 	wc.cbClsExtra		= 0;									// Ningun dato extra para la clase
 	wc.cbWndExtra		= 0;									// Ningun dato extra para la ventana
 	wc.hInstance		= hInstance;							// Inicia la instancia
-	wc.hIcon			= LoadIcon(NULL, IDI_WINLOGO);			// Carga el ícono por defecto
+	wc.hIcon			= LoadIcon(NULL, IDI_WINLOGO);			// Carga el ï¿½cono por defecto
 	wc.hCursor			= LoadCursor(NULL, IDC_ARROW);			// Carga el puntero de flecha
 	wc.hbrBackground	= NULL;									// No se requiere ningun fondo
-	wc.lpszMenuName		= NULL;									// No hay menú en la ventana
+	wc.lpszMenuName		= NULL;									// No hay menï¿½ en la ventana
 	wc.lpszClassName	= "OpenGL";								// Fija el nombre de la clase.
 
 	if (!RegisterClass(&wc))									// Intenta registrar la clase de ventana
@@ -4957,20 +5285,20 @@ BOOL CreateGLWindow(char* title, int width, int height, int bits)
 	dwExStyle=WS_EX_APPWINDOW | WS_EX_WINDOWEDGE;					// Estilo extendido de ventana
 	dwStyle=WS_OVERLAPPEDWINDOW;									// Estilo de ventana
 
-	AdjustWindowRectEx(&WindowRect, dwStyle, FALSE, dwExStyle);		// Ajusta la ventana al tamaño especificado
+	AdjustWindowRectEx(&WindowRect, dwStyle, FALSE, dwExStyle);		// Ajusta la ventana al tamaï¿½o especificado
 
 	// Crea la ventana
 	if (!(hWnd=CreateWindowEx(	dwExStyle,							// Estilo extendido para la ventana
 								"OpenGL",							// Nombre de la clase
-								title,								// Título de la ventana
-								dwStyle |							// Definición del estilo de la ventana
+								title,								// Tï¿½tulo de la ventana
+								dwStyle |							// Definiciï¿½n del estilo de la ventana
 								WS_CLIPSIBLINGS |					// Estilo requerido de la ventana
 								WS_CLIPCHILDREN,					// Estilo requerido de la ventana
-								0, 0,								// Posición de la ventana
+								0, 0,								// Posiciï¿½n de la ventana
 								WindowRect.right-WindowRect.left,	// Calcula el ancho de la ventana
 								WindowRect.bottom-WindowRect.top,	// Calcula el alto de la ventana
 								NULL,								// No hay ventana superior
-								NULL,								// No hay menú
+								NULL,								// No hay menï¿½
 								hInstance,							// Instancia
 								NULL)))								// No se pasa nada a WM_CREATE
 	{
@@ -5008,7 +5336,7 @@ BOOL CreateGLWindow(char* title, int width, int height, int bits)
 		return FALSE;								
 	}
 
-	if (!(PixelFormat=ChoosePixelFormat(hDC,&pfd)))	// Si Windows no encontró un formato de pixel compatible
+	if (!(PixelFormat=ChoosePixelFormat(hDC,&pfd)))	// Si Windows no encontrï¿½ un formato de pixel compatible
 	{
 		KillGLWindow();								// Resetea el despliegue
 		MessageBox(NULL,"No se puede encontrar un formato de pixel compatible.","ERROR",MB_OK|MB_ICONEXCLAMATION);
@@ -5044,7 +5372,7 @@ BOOL CreateGLWindow(char* title, int width, int height, int bits)
 	if (!InitGL())							// Si no se inicializa la ventana creada
 	{
 		KillGLWindow();						// Resetea el despliegue
-		MessageBox(NULL,"Falla en la inicialización.","ERROR",MB_OK|MB_ICONEXCLAMATION);
+		MessageBox(NULL,"Falla en la inicializaciï¿½n.","ERROR",MB_OK|MB_ICONEXCLAMATION);
 		return FALSE;								
 	}
 
@@ -5053,20 +5381,20 @@ BOOL CreateGLWindow(char* title, int width, int height, int bits)
 
 LRESULT CALLBACK WndProc(	HWND	hWnd,	// Manejador para esta ventana
 							UINT	uMsg,	// Mensaje para esta ventana
-							WPARAM	wParam,	// Información adicional del mensaje
-							LPARAM	lParam)	// Información adicional del mensaje
+							WPARAM	wParam,	// Informaciï¿½n adicional del mensaje
+							LPARAM	lParam)	// Informaciï¿½n adicional del mensaje
 {
 	switch (uMsg)							// Revisa los mensajes de la ventana
 	{
-		case WM_ACTIVATE:					// Revisa el mensaje de activación de ventana
+		case WM_ACTIVATE:					// Revisa el mensaje de activaciï¿½n de ventana
 		{
-			if (!HIWORD(wParam))			// Revisa el estado de minimización
+			if (!HIWORD(wParam))			// Revisa el estado de minimizaciï¿½n
 			{
-				active=TRUE;				// El programa está activo
+				active=TRUE;				// El programa estï¿½ activo
 			}
 			else
 			{
-				active=FALSE;				// El programa no está activo
+				active=FALSE;				// El programa no estï¿½ activo
 			}
 
 			return 0;						// Regresa al ciclo de mensajes
@@ -5076,8 +5404,8 @@ LRESULT CALLBACK WndProc(	HWND	hWnd,	// Manejador para esta ventana
 		{
 			switch (wParam)					// Revisa llamadas del sistema
 			{
-				case SC_SCREENSAVE:			// ¿Screensaver tratando de iniciar?
-				case SC_MONITORPOWER:		// ¿Monitor tratando de entrar a modo de ahorro de energía?
+				case SC_SCREENSAVE:			// ï¿½Screensaver tratando de iniciar?
+				case SC_MONITORPOWER:		// ï¿½Monitor tratando de entrar a modo de ahorro de energï¿½a?
 				return 0;					// Evita que suceda
 			}
 			break;							// Sale del caso
@@ -5089,15 +5417,15 @@ LRESULT CALLBACK WndProc(	HWND	hWnd,	// Manejador para esta ventana
 			return 0;						// y se regresa al ciclo
 		}
 
-		case WM_KEYDOWN:					// Si se está presionando una tecla...
+		case WM_KEYDOWN:					// Si se estï¿½ presionando una tecla...
 		{
-			keys[wParam] = TRUE;			// Si es así, se marca como TRUE
+			keys[wParam] = TRUE;			// Si es asï¿½, se marca como TRUE
 			return 0;						// y se regresa al ciclo
 		}
 
-		case WM_KEYUP:						// ¿Se ha soltado una tecla?
+		case WM_KEYUP:						// ï¿½Se ha soltado una tecla?
 		{
-			keys[wParam] = FALSE;			// Si es así, se marca como FALSE
+			keys[wParam] = FALSE;			// Si es asï¿½, se marca como FALSE
 			return 0;						// y se regresa al ciclo
 		}
 
@@ -5112,7 +5440,7 @@ LRESULT CALLBACK WndProc(	HWND	hWnd,	// Manejador para esta ventana
 	return DefWindowProc(hWnd,uMsg,wParam,lParam);
 }
 
-// Este es el punto de entrada al programa; la función principal 
+// Este es el punto de entrada al programa; la funciï¿½n principal 
 int WINAPI WinMain(	HINSTANCE	hInstance,			// Instancia
 					HINSTANCE	hPrevInstance,		// Instancia previa
 					LPSTR		lpCmdLine,			// Parametros de la linea de comandos
@@ -5133,7 +5461,7 @@ int WINAPI WinMain(	HINSTANCE	hInstance,			// Instancia
     int          channelsplaying = 0;
 
 	// Crea la ventana OpenGL
-	if (!CreateGLWindow("Computación Gráfica",640,480,32))
+	if (!CreateGLWindow("Computaciï¿½n Grï¿½fica",640,480,32))
 	{
 		return 0;									// Salir del programa si la ventana no fue creada
 	}
@@ -5155,22 +5483,22 @@ int WINAPI WinMain(	HINSTANCE	hInstance,			// Instancia
     ERRCHECK(result);
 
 	////Carga de los archivos de audio
- //   result = FMOD_System_CreateSound(system, "Audio/iteza.mp3", FMOD_HARDWARE, 0, &sound[0]);
- //   ERRCHECK(result);
- //   result = FMOD_Sound_SetMode(sound[0], FMOD_LOOP_NORMAL); //Se repetira en un loop
- //   ERRCHECK(result);										
+      result = FMOD_System_CreateSound(system, "Audio/smoothcriminal.mp3", FMOD_HARDWARE, 0, &sound[0]);
+      ERRCHECK(result);
+     result = FMOD_Sound_SetMode(sound[0], FMOD_LOOP_NORMAL); //Se repetira en un loop
+     ERRCHECK(result);										
 
  //   result = FMOD_System_CreateSound(system, "Audio/explode.wav", FMOD_SOFTWARE, 0, &sound[1]);
  //   ERRCHECK(result);
 
-	////Asignación a canales y configuración
-	////Música de fondo
-	//result = FMOD_System_PlaySound(system, FMOD_CHANNEL_FREE, sound[0], 0, &channel[0]);
- //   ERRCHECK(result);
-	//result = FMOD_Channel_SetPaused(channel[0], FALSE); //Inicialmente activo
-	//ERRCHECK(result);
-	//result = FMOD_Channel_SetVolume(channel[0], 0.3f);
-	//ERRCHECK(result);
+	////Asignaciï¿½n a canales y configuraciï¿½n
+	////Mï¿½sica de fondo
+	result = FMOD_System_PlaySound(system, FMOD_CHANNEL_FREE, sound[0], 0, &channel[0]);
+       ERRCHECK(result);
+	result = FMOD_Channel_SetPaused(channel[0], FALSE); //Inicialmente activo
+	ERRCHECK(result);
+	result = FMOD_Channel_SetVolume(channel[0], 0.3f);
+	ERRCHECK(result);
 
 	//result = FMOD_System_PlaySound(system, FMOD_CHANNEL_FREE, sound[1], 0, &channel[1]);
  //   ERRCHECK(result);
@@ -5195,10 +5523,10 @@ int WINAPI WinMain(	HINSTANCE	hInstance,			// Instancia
 		}
 		else										// Si no hay mensajes...
 		{
-			//FMOD_System_Update(system);
+			FMOD_System_Update(system);
 
 			// Dibuja la escena. 
-			if (active)								// Si está activo el programa...
+			if (active)								// Si estï¿½ activo el programa...
 			{
 				float start=TimerGetTime();
 
@@ -5212,14 +5540,15 @@ int WINAPI WinMain(	HINSTANCE	hInstance,			// Instancia
 					if(play)
 					{
 						if(tipoAnim == 1)
-							animacion(KeyFrame1, maxKF1 , 18, &player1modelo, playIndex );
+							animacion(KeyFrame1, maxKF1 , 18, &player1modelo, playIndex, play );
 					}
 					for( int i = 0; i < otros; i++ )
 					{
 						if( playOtros[ i ] )
 						{
-							animacion( KeyFrameOtros[ i ], 3, 18, modelosOtros[ i ], playIndexOtros[ i ] );
+							animacion( KeyFrameOtros[ i ], 3, 18, modelosOtros[ i ], playIndexOtros[ i ], playOtros[ i ] );
 						}
+						recargaAnim( KeyFrameOtros[ i ], modelosOtros[ i ], playOtros[ i ], tipoAnimOtros[ i ], playIndexOtros[ i ] );
 					}
 					SwapBuffers(hDC);				// Intercambia los Buffers (Double Buffering)
 				}
@@ -5227,19 +5556,19 @@ int WINAPI WinMain(	HINSTANCE	hInstance,			// Instancia
 				if(!ManejaTeclado()) return 0;
 				/*ManejaTeclado(system, result);*/
 
-				while(TimerGetTime()<start+float(steps[adjust]*2.0f)) {}	// Desperdicia ciclos si es demasiado rápido
+				while(TimerGetTime()<start+float(steps[adjust]*2.0f)) {}	// Desperdicia ciclos si es demasiado rï¿½pido
 			}
 			
 		}
 	}
 
-	// Finalización del programa
+	// Finalizaciï¿½n del programa
 	//DescargaTexturas();
 	DescargaModelos();
 	DescargaTexturas();
 	DestruyeListas();
 	Font.DestroyFont();
-	/*LiberaSonido(system, result);*/
+	LiberaSonido(system, result);
 	KillGLWindow();									// Destruye la ventana
 	return (msg.wParam);							// Sale del programa
 }
@@ -5449,7 +5778,7 @@ int ManejaTeclado()
 		ControlPersonaje(6);
 	}
 
-	//Controles de la iluminación
+	//Controles de la iluminaciï¿½n
 	if (keys['Z'])
 		LightPos[0] += 1.0f; //Hacia la derecha
 
@@ -5466,7 +5795,7 @@ int ManejaTeclado()
 		LightPos[2] += 1.0f; //Hacia adelante
 
 	if (keys['N'])
-		LightPos[2] -= 1.0f; //Hacia atrás
+		LightPos[2] -= 1.0f; //Hacia atrï¿½s
 
 	if (keys['P'])
 	{
