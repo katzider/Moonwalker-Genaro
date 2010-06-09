@@ -3493,13 +3493,11 @@ void DibujaPersonajeAru()
 	
 	//Pierna derecha
 	glPushMatrix();
-		glTranslatef(1.0f, 0.0f, 0.0f);
 		glRotatef(player1modelo.Angpder, 1.0f, 0.0f, 0.0f);
 		glCallList(modelo1aru+1);
 		
 		//Pierna derecha_b
 		glPushMatrix();
-			glTranslatef(-5.2f, 0.7f , 0.0f);
 			glRotatef(player1modelo.Angpderb, 1.0f, 0.0f, 0.0f);
 			glCallList(modelo1aru+2);
 		glPopMatrix();
@@ -3508,13 +3506,11 @@ void DibujaPersonajeAru()
 
 	//Pierna izquierda
 	glPushMatrix();
-		glTranslatef(0.0f, 0.0f ,0.0f);
 		glRotatef(player1modelo.Angpizq, 1.0f, 0.0f, 0.0f);
 		glCallList(modelo1aru+3);
 
 		//Pierna izquierda_b
 		glPushMatrix();
-			glTranslatef(-6.5f, 0.8f , 0.0f);
 			glRotatef(player1modelo.Angpizqb, 1.0f, 0.0f, 0.0f);
 			glCallList(modelo1aru+4);
 		glPopMatrix();
@@ -3523,14 +3519,12 @@ void DibujaPersonajeAru()
 
 	//Brazo derecho_a
 	glPushMatrix();
-		glTranslatef(5.65f, 0.2f, 0.2f);
 		glRotatef(player1modelo.Angbd2, 0.0f, 1.0f, 0.0f);
 		glRotatef(player1modelo.Angbd1, 1.0f, 0.0f, 0.0f);
 		glCallList(modelo1aru+5);
 
 		//Brazo derecho_b
 		glPushMatrix();
-			glTranslatef(-4.6f, 2.0f, 0.0f);
 			glRotatef(player1modelo.Angbdb, 1.0f, 0.0f, 0.0f);
 			glCallList(modelo1aru+7);
 		glPopMatrix();
@@ -3539,14 +3533,12 @@ void DibujaPersonajeAru()
 
 	//Brazo izquierdo
 	glPushMatrix();
-		glTranslatef(-1.0f, 1.5f, 0.0f);
 		glRotatef(player1modelo.Angbi2, 0.0f, 1.0f, 0.0f);
 		glRotatef(player1modelo.Angbi1, 1.0f, 0.0f, 0.0f);
 		glCallList(modelo1aru+6);
 
 		//Brazo izquierdo_b
 		glPushMatrix();
-			glTranslatef(-0.7f, 0.5f, 0.0f);
 			glRotatef(player1modelo.Angbib, 1.0f, 0.0f, 0.0f);
 			glCallList(modelo1aru+8);
 		glPopMatrix();
@@ -3730,13 +3722,11 @@ void DibujaPersonajeAruout()
 	
 	//Pierna derecha
 	glPushMatrix();
-		glTranslatef(1.0f, 0.0f, 0.0f);
 		glRotatef(player1modelo.Angpder, 1.0f, 0.0f, 0.0f);
 		glCallList(modelo1aruout+1);
 		
 		//Pierna derecha_b
 		glPushMatrix();
-			glTranslatef(-5.2f, 0.7f , 0.0f);
 			glRotatef(player1modelo.Angpderb, 1.0f, 0.0f, 0.0f);
 			glCallList(modelo1aruout+2);
 		glPopMatrix();
@@ -3745,13 +3735,11 @@ void DibujaPersonajeAruout()
 
 	//Pierna izquierda
 	glPushMatrix();
-		glTranslatef(0.0f, 0.0f ,0.0f);
 		glRotatef(player1modelo.Angpizq, 1.0f, 0.0f, 0.0f);
 		glCallList(modelo1aruout+3);
 
 		//Pierna izquierda_b
 		glPushMatrix();
-			glTranslatef(-6.5f, 0.8f , 0.0f);
 			glRotatef(player1modelo.Angpizqb, 1.0f, 0.0f, 0.0f);
 			glCallList(modelo1aruout+4);
 		glPopMatrix();
@@ -3760,14 +3748,12 @@ void DibujaPersonajeAruout()
 
 	//Brazo derecho_a
 	glPushMatrix();
-		glTranslatef(5.65f, 0.2f, 0.2f);
 		glRotatef(player1modelo.Angbd2, 0.0f, 1.0f, 0.0f);
 		glRotatef(player1modelo.Angbd1, 1.0f, 0.0f, 0.0f);
 		glCallList(modelo1aruout+5);
 
 		//Brazo derecho_b
 		glPushMatrix();
-			glTranslatef(-4.6f, 2.0f, 0.0f);
 			glRotatef(player1modelo.Angbdb, 1.0f, 0.0f, 0.0f);
 			glCallList(modelo1aruout+7);
 		glPopMatrix();
@@ -3776,14 +3762,12 @@ void DibujaPersonajeAruout()
 
 	//Brazo izquierdo
 	glPushMatrix();
-		glTranslatef(-1.0f, 1.5f, 0.0f);
 		glRotatef(player1modelo.Angbi2, 0.0f, 1.0f, 0.0f);
 		glRotatef(player1modelo.Angbi1, 1.0f, 0.0f, 0.0f);
 		glCallList(modelo1aruout+6);
 
 		//Brazo izquierdo_b
 		glPushMatrix();
-			glTranslatef(-0.7f, 0.5f, 0.0f);
 			glRotatef(player1modelo.Angbib, 1.0f, 0.0f, 0.0f);
 			glCallList(modelo1aruout+8);
 		glPopMatrix();
