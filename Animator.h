@@ -22,7 +22,9 @@ public:
 	void moveToPoint( CVector punto );
 	void setTarget( CVector destino );
 	void drawRay();
-	CVector* attack();
+	int Reload();
+	CVector attack();
+	int getDelay();
 
 private:
 	parametros* modelo;

@@ -1,6 +1,8 @@
 #include "Main.h"
 #include "3ds.h"
 
+using namespace std;
+
 /* Quitados los comentarios de prueba, deberiamos hacer un listado en el README.txt de las cosas que cambian y donde hallarlas, 
 aunque tambien sale en el historial de git, a veces me da flojera ver xp */
 
@@ -884,31 +886,31 @@ void DescargaModelos()
 void IniSombraVolumen()
 {
 	//Establece la conectividad entre caras
-	objSh.EstableceConectividad(&g_3DModel1c);
+	objSh.EstableceConectividad(&g_3DModel1aru);
 	objSh.calculaPlano(&g_3DModel1aru);
 
-	objSh.EstableceConectividad(&g_3DModel2c);
+	objSh.EstableceConectividad(&g_3DModel1aru);
 	objSh.calculaPlano(&g_3DModel2aru);
 
-	objSh.EstableceConectividad(&g_3DModel3c);
+	objSh.EstableceConectividad(&g_3DModel1aru);
 	objSh.calculaPlano(&g_3DModel3aru);
 
-	objSh.EstableceConectividad(&g_3DModel4c);
+	objSh.EstableceConectividad(&g_3DModel1aru);
 	objSh.calculaPlano(&g_3DModel4aru);
 
-	objSh.EstableceConectividad(&g_3DModel5c);
+	objSh.EstableceConectividad(&g_3DModel1aru);
 	objSh.calculaPlano(&g_3DModel5aru);
 
-	objSh.EstableceConectividad(&g_3DModel6c);
+	objSh.EstableceConectividad(&g_3DModel1aru);
 	objSh.calculaPlano(&g_3DModel6aru);
 
-	objSh.EstableceConectividad(&g_3DModel7c);
+	objSh.EstableceConectividad(&g_3DModel1aru);
 	objSh.calculaPlano(&g_3DModel7aru);
 
-	objSh.EstableceConectividad(&g_3DModel8c);
+	objSh.EstableceConectividad(&g_3DModel1aru);
 	objSh.calculaPlano(&g_3DModel8aru);
 
-	objSh.EstableceConectividad(&g_3DModel9c);
+	objSh.EstableceConectividad(&g_3DModel1aru);
 	objSh.calculaPlano(&g_3DModel9aru);
 			
 }
@@ -1734,23 +1736,37 @@ void InicializaParametrosdeControl()
 
 /* Animacion/IA de cada uno de los monos en el escenario */
 // Declaracion de variables
-Animator Enem1;
-Bullet bala1;
+vector<Animator> Enemigos;
+Bullet* bill = 0;
 
 void InicializaParametrosdeAnimacion()
 {
+	Enemigos.resize( 30 );
 	// Enemigo gordito azul
-	Enem1.setChar( &enem1 );
-	Enem1.addPoint( CVector( 200.0f, 9.0f, -40.0f ) );
-	Enem1.addPoint( CVector( 160.0f, 9.0f, -40.0f ) );
-	Enem1.setTarget( CVector( 220, 4.0f, -45.0f ) );
+	Enemigos[1].setChar( &enem1 );
+	Enemigos[1].addPoint( CVector( 200.0f, 9.0f, -40.0f ) );
+	Enemigos[1].addPoint( CVector( 160.0f, 9.0f, -40.0f ) );
+	Enemigos[1].setTarget( CVector( 220, 4.0f, -45.0f ) );
 }
 void AniMagic()
 {
-	Enem1.startAnim();
-
+	Enemigos[1].startAnim();
+	
 	// Dibuja rayos
-	Enem1.drawRay();
+	Enemigos[1].drawRay();
+
+	if( Enemigos[1].Reload() <= 0 )
+	{
+		CVector disparo;
+		disparo = Enemigos[1].attack();
+		bill = new Bullet( disparo );
+		bill->changePara( 0.2f, 3.0f, player1.PosicionObj );
+	}
+	if( bill != 0 )
+	{
+		bill->drawBullet();
+		bill->moveToTarget();
+	}
 }
 void InicializaAnim( FRAME *KeyFrame, int maxKF, jerarquiaModelo* modelo )
 {
@@ -3491,13 +3507,11 @@ void DibujaPersonajeAru()
 	
 	//Pierna derecha
 	glPushMatrix();
-		glTranslatef(1.0f, 0.0f, 0.0f);
 		glRotatef(player1modelo.Angpder, 1.0f, 0.0f, 0.0f);
 		glCallList(modelo1aru+1);
 		
 		//Pierna derecha_b
 		glPushMatrix();
-			glTranslatef(-5.2f, 0.7f , 0.0f);
 			glRotatef(player1modelo.Angpderb, 1.0f, 0.0f, 0.0f);
 			glCallList(modelo1aru+2);
 		glPopMatrix();
@@ -3506,13 +3520,11 @@ void DibujaPersonajeAru()
 
 	//Pierna izquierda
 	glPushMatrix();
-		glTranslatef(0.0f, 0.0f ,0.0f);
 		glRotatef(player1modelo.Angpizq, 1.0f, 0.0f, 0.0f);
 		glCallList(modelo1aru+3);
 
 		//Pierna izquierda_b
 		glPushMatrix();
-			glTranslatef(-6.5f, 0.8f , 0.0f);
 			glRotatef(player1modelo.Angpizqb, 1.0f, 0.0f, 0.0f);
 			glCallList(modelo1aru+4);
 		glPopMatrix();
@@ -3521,14 +3533,12 @@ void DibujaPersonajeAru()
 
 	//Brazo derecho_a
 	glPushMatrix();
-		glTranslatef(5.65f, 0.2f, 0.2f);
 		glRotatef(player1modelo.Angbd2, 0.0f, 1.0f, 0.0f);
 		glRotatef(player1modelo.Angbd1, 1.0f, 0.0f, 0.0f);
 		glCallList(modelo1aru+5);
 
 		//Brazo derecho_b
 		glPushMatrix();
-			glTranslatef(-4.6f, 2.0f, 0.0f);
 			glRotatef(player1modelo.Angbdb, 1.0f, 0.0f, 0.0f);
 			glCallList(modelo1aru+7);
 		glPopMatrix();
@@ -3537,14 +3547,12 @@ void DibujaPersonajeAru()
 
 	//Brazo izquierdo
 	glPushMatrix();
-		glTranslatef(-1.0f, 1.5f, 0.0f);
 		glRotatef(player1modelo.Angbi2, 0.0f, 1.0f, 0.0f);
 		glRotatef(player1modelo.Angbi1, 1.0f, 0.0f, 0.0f);
 		glCallList(modelo1aru+6);
 
 		//Brazo izquierdo_b
 		glPushMatrix();
-			glTranslatef(-0.7f, 0.5f, 0.0f);
 			glRotatef(player1modelo.Angbib, 1.0f, 0.0f, 0.0f);
 			glCallList(modelo1aru+8);
 		glPopMatrix();
@@ -3728,13 +3736,11 @@ void DibujaPersonajeAruout()
 	
 	//Pierna derecha
 	glPushMatrix();
-		glTranslatef(1.0f, 0.0f, 0.0f);
 		glRotatef(player1modelo.Angpder, 1.0f, 0.0f, 0.0f);
 		glCallList(modelo1aruout+1);
 		
 		//Pierna derecha_b
 		glPushMatrix();
-			glTranslatef(-5.2f, 0.7f , 0.0f);
 			glRotatef(player1modelo.Angpderb, 1.0f, 0.0f, 0.0f);
 			glCallList(modelo1aruout+2);
 		glPopMatrix();
@@ -3743,13 +3749,11 @@ void DibujaPersonajeAruout()
 
 	//Pierna izquierda
 	glPushMatrix();
-		glTranslatef(0.0f, 0.0f ,0.0f);
 		glRotatef(player1modelo.Angpizq, 1.0f, 0.0f, 0.0f);
 		glCallList(modelo1aruout+3);
 
 		//Pierna izquierda_b
 		glPushMatrix();
-			glTranslatef(-6.5f, 0.8f , 0.0f);
 			glRotatef(player1modelo.Angpizqb, 1.0f, 0.0f, 0.0f);
 			glCallList(modelo1aruout+4);
 		glPopMatrix();
@@ -3758,14 +3762,12 @@ void DibujaPersonajeAruout()
 
 	//Brazo derecho_a
 	glPushMatrix();
-		glTranslatef(5.65f, 0.2f, 0.2f);
 		glRotatef(player1modelo.Angbd2, 0.0f, 1.0f, 0.0f);
 		glRotatef(player1modelo.Angbd1, 1.0f, 0.0f, 0.0f);
 		glCallList(modelo1aruout+5);
 
 		//Brazo derecho_b
 		glPushMatrix();
-			glTranslatef(-4.6f, 2.0f, 0.0f);
 			glRotatef(player1modelo.Angbdb, 1.0f, 0.0f, 0.0f);
 			glCallList(modelo1aruout+7);
 		glPopMatrix();
@@ -3774,14 +3776,12 @@ void DibujaPersonajeAruout()
 
 	//Brazo izquierdo
 	glPushMatrix();
-		glTranslatef(-1.0f, 1.5f, 0.0f);
 		glRotatef(player1modelo.Angbi2, 0.0f, 1.0f, 0.0f);
 		glRotatef(player1modelo.Angbi1, 1.0f, 0.0f, 0.0f);
 		glCallList(modelo1aruout+6);
 
 		//Brazo izquierdo_b
 		glPushMatrix();
-			glTranslatef(-0.7f, 0.5f, 0.0f);
 			glRotatef(player1modelo.Angbib, 1.0f, 0.0f, 0.0f);
 			glCallList(modelo1aruout+8);
 		glPopMatrix();
@@ -3959,7 +3959,7 @@ void DibujaTextos()
 		glPopMatrix();
 
 		// Texto a mostrar en pantalla
-		Font.glPrint((1.0f/640.0f)*glWidth, glWidth*0.05f,glHeight*0.9f,"AngDir: %f", player1.AngDir );
+		Font.glPrint((1.0f/640.0f)*glWidth, glWidth*0.05f,glHeight*0.9f,"Delay: %d", Enemigos[1].getDelay() );
 		/*Font.glPrint((1.0f/640.0f)*glWidth, glWidth*0.05f,glHeight*0.85f,"PosCam %f", player1.PosicionCam.x );
 		Font.glPrint((1.0f/640.0f)*glWidth, glWidth*0.05f,glHeight*0.80f,"PosObj %f", player1.PosicionObj.x);*/
 		Font.glPrint( (1.0f/640.0f)*glWidth, glWidth * 0.45f, glHeight * 0.95f, "High 50000" );
@@ -3974,10 +3974,10 @@ void DibujaTextos()
 		//Barra de energia / health
 		// Primero dibuja el contorno de la barra
 		glPushMatrix();
-			glTranslatef( glWidth * 0.11f, glHeight * 0.05, 0.0f );
-			glColor3ub( 0, 0, 0 );
-			glLineWidth( 2.0f );
-			glBegin(GL_LINE_STRIP);
+			glTranslatef( glWidth * 0.115f, glHeight * 0.05, 0.0f );
+			glColor3ub( 128, 128, 128 );
+			glLineWidth( 5.0f );
+			glBegin( GL_LINE_STRIP );
 				glVertex2f( 0.0f, 0.0f );
 				glVertex2f( 150.0f, 0.0f );
 				glVertex2f( 150.0f, 14.0f );
@@ -3987,7 +3987,7 @@ void DibujaTextos()
 		glPopMatrix();
 
 		glPushMatrix();
-			glTranslatef( glWidth * 0.11f, glHeight * 0.05, 0.0f );
+			glTranslatef( glWidth * 0.115f, glHeight * 0.05, 0.0f );
 			glColor3ub( 250, 197, 0 );
 			glBegin(GL_QUADS);
 				glVertex2f( 0.0f, 0.0f );
@@ -5126,7 +5126,6 @@ int WINAPI WinMain(	HINSTANCE	hInstance,			// Instancia
 						if(tipoAnim == 1)
 							animacion(KeyFrame1, maxKF1 , 18, &player1modelo, playIndex );
 					}
-					//AniMagic();						// Animaciones
 					SwapBuffers(hDC);				// Intercambia los Buffers (Double Buffering)
 				}
 

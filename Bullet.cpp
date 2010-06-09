@@ -1,5 +1,10 @@
 #include "Bullet.h"
 
+Bullet::Bullet( CVector origen )
+{
+	bala.Pos = origen;
+}
+
 void Bullet::changePara( float vel, float radius, CVector destino )
 {
 	speed = vel;
@@ -28,11 +33,16 @@ void Bullet::drawBullet()
 
 }
 
-void Bullet::moveToTarget()
+bool Bullet::moveToTarget()
 {
 	if( ( bala.Pos.x <= sTarget.x + 1.0f && bala.Pos.x >= sTarget.x - 1.0f ) &&
 		( bala.Pos.x <= sTarget.y + 1.0f && bala.Pos.y >= sTarget.y - 1.0f ) &&
 		( bala.Pos.x <= sTarget.z + 1.0f && bala.Pos.z >= sTarget.z - 1.0f ) )
+	{
+		bala.radio = 0.0f;
+		return true;
+	}
+	else
 	{
 		// Get a vector from the current point to the next point
 		CVector temp = sTarget - bala.Pos;
@@ -40,9 +50,5 @@ void Bullet::moveToTarget()
 		temp = Normaliza( temp );
 		// Move towards the next point according to our speed
 		bala.Pos = bala.Pos + temp * speed;
-	}
-	else
-	{
-		bala.radio = 0.0f;
 	}
 }
