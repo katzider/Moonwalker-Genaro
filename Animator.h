@@ -22,6 +22,7 @@ public:
 	void moveToPoint( CVector punto );
 	void setTarget( CVector destino );
 	void drawRay();
+	int Reload();
 	CVector* attack();
 
 private:

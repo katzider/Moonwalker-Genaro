@@ -3976,10 +3976,10 @@ void DibujaTextos()
 		//Barra de energia / health
 		// Primero dibuja el contorno de la barra
 		glPushMatrix();
-			glTranslatef( glWidth * 0.11f, glHeight * 0.05, 0.0f );
-			glColor3ub( 0, 0, 0 );
-			glLineWidth( 2.0f );
-			glBegin(GL_LINE_STRIP);
+			glTranslatef( glWidth * 0.115f, glHeight * 0.05, 0.0f );
+			glColor3ub( 128, 128, 128 );
+			glLineWidth( 5.0f );
+			glBegin( GL_LINE_STRIP );
 				glVertex2f( 0.0f, 0.0f );
 				glVertex2f( 150.0f, 0.0f );
 				glVertex2f( 150.0f, 14.0f );
@@ -3989,7 +3989,7 @@ void DibujaTextos()
 		glPopMatrix();
 
 		glPushMatrix();
-			glTranslatef( glWidth * 0.11f, glHeight * 0.05, 0.0f );
+			glTranslatef( glWidth * 0.115f, glHeight * 0.05, 0.0f );
 			glColor3ub( 250, 197, 0 );
 			glBegin(GL_QUADS);
 				glVertex2f( 0.0f, 0.0f );
