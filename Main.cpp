@@ -67,6 +67,9 @@ parametros enemigo8; // parametros robot
 
 /* Vidas del personaje */
 float health = 150;
+int vidas = 3;
+//int red = 250;
+int green = 200;
 
 CMateriales Material;
 
@@ -314,6 +317,8 @@ jerarquiaModelo changmodelo;
 jerarquiaModelo enem1modelo;
 jerarquiaModelo enem2modelo;
 jerarquiaModelo MJ6modelo;
+// Miku
+jerarquiaModelo mikumodelo;
 
 /* Declaracion de keyframes, aqui puse todos los keyframes que chance usaran
  * ya le puse un comentario a quien le pertenece cada frame, si requieren mas,
@@ -324,47 +329,19 @@ jerarquiaModelo MJ6modelo;
 const int maxKF1=3;				//Num. total de KeyFrames para la secuencia 1 (caminar)
 FRAME KeyFrame1[maxKF1];		//Contenedor para almacenar cada keyframe de la secuencia 1
 
-// Animacion Miku
-const int maxKF2 = 3;
-FRAME KeyFrame2[maxKF2];
-
-// Animacion enem1
-const int maxKF3 = 3;
-FRAME KeyFrame3[maxKF3];
-
-// Animacion enem2
-const int maxKF4 = 3;
-FRAME KeyFrame4[maxKF4];
-
-// Animacion MJ6modelo
-const int maxKF5 = 3;
-FRAME KeyFrame5[maxKF5];
-
-// Animacion enem3A
-const int maxKF6 = 3;
-FRAME KeyFrame6[maxKF6];
-
-// Animacion enem3B
-const int maxKF7 = 3;
-FRAME KeyFrame7[maxKF7];
-
-// Animacion changmodelo
-const int maxKF8 = 3;
-FRAME KeyFrame8[maxKF8];
-
-// Miku
-jerarquiaModelo mikumodelo;
-
-bool play=false;//Bandera para iniciar la animación
+bool play = false;//Bandera para iniciar la animación
 int playIndex = 0;//Auxiliar para leer la información del contenedor de keyframes
 int tipoAnim = 1; //Indicador del tipo de animación
 
 // Banderas para iniciar las demas animaciones
-const int otros = 8;
+const int otros = 7;
 
-bool playOtros[ otros ] = { false };
-int playIndexOtros[ otros ] = { 0 };
-int tipoAnimOtros[ otros ] = { 1 };
+bool playOtros[ otros ] = { false, false, false, false, false, false, false }; // Banderas para iniciar la animacion
+int playIndexOtros[ otros ] = { 0, 0, 0, 0, 0, 0, 0 }; // Auxiliares para leer la informacion del contenedor de keyframes
+int tipoAnimOtros[ otros ] = { 1, 1, 1, 1, 1, 1, 1 }; // Indicador del tipo de animacion
+jerarquiaModelo* modelosOtros[ otros ] = { &mikumodelo, &enem1modelo, &enem2modelo, 
+											&MJ6modelo, &enem3amodelo, &enem3bmodelo, &changmodelo }; // apuntadores a los modelos
+FRAME KeyFrameOtros[ otros ][ 3 ]; // Contenedor para almacenar cada keyframe de las secuencias
 
 CMultitexturas Multitext;
 
@@ -455,7 +432,7 @@ int AuxT;
 typedef GLfloat TPoint[3];
 
 //Variables para el movimiento del elevador
-float elev = 0.0f;
+float elev = -9.0f;
 bool abajo = true;
 
 struct			 										// Create A Structure For The Timer Information
@@ -1751,7 +1728,7 @@ Bullet* bill = 0;
 
 void InicializaParametrosdeAnimacion()
 {
-	Enemigos.resize( 30 );
+	Enemigos.resize( 3 );
 	// Enemigo gordito azul
 	Enemigos[1].setChar( &enem1 );
 	Enemigos[1].addPoint( CVector( 200.0f, 9.0f, -40.0f ) );
@@ -1777,6 +1754,7 @@ void AniMagic()
 		bill->drawBullet();
 		bill->moveToTarget();
 	}
+
 }
 void InicializaAnim( FRAME *KeyFrame, int maxKF, jerarquiaModelo* modelo )
 {
@@ -1907,7 +1885,73 @@ void DatosAnimacion()
 	KeyFrame1[2].Xtor=0.0f;
 	KeyFrame1[2].Ytor=0.0f;
 	KeyFrame1[2].Ztor=0.0f;
-			
+	
+	// Pongan aqui las animaciones de sus personajes, si requieren mas de 3 keyframes...NI MODO XD
+	// Orden de frames: 0. mikumodelo, 1. enem1modelo, 2. enem2modelo, 
+	//					3. MJ6modelo, 4. enem3amodelo, 5. enem3bmodelo, 6. changmodelo
+	// Miku       
+	KeyFrameOtros[ 0 ][ 0 ].Angt1 = 0.0f;
+	KeyFrameOtros[ 0 ][ 0 ].Angt2=0.0f;
+	KeyFrameOtros[ 0 ][ 0 ].Angc1=-25.0f;
+	KeyFrameOtros[ 0 ][ 0 ].Angc2=0.0f;
+	KeyFrameOtros[ 0 ][ 0 ].Angbi1=-5.0f;
+	KeyFrameOtros[ 0 ][ 0 ].Angbi2=0.0f;
+	KeyFrameOtros[ 0 ][ 0 ].Angbib=-15.0f;
+	KeyFrameOtros[ 0 ][ 0 ].Angbd1=5.0f;
+	KeyFrameOtros[ 0 ][ 0 ].Angbd2=0.0f;
+	KeyFrameOtros[ 0 ][ 0 ].Angbdb=-40.0f;
+	KeyFrameOtros[ 0 ][ 0 ].Angpizq=20.0f;
+	KeyFrameOtros[ 0 ][ 0 ].Angpder=-20.0f;
+	KeyFrameOtros[ 0 ][ 0 ].Angpizqb=15.0f;
+	KeyFrameOtros[ 0 ][ 0 ].Angpderb=10.0f;
+	KeyFrameOtros[ 0 ][ 0 ].Angpi=0.0f;
+	KeyFrameOtros[ 0 ][ 0 ].Angpd=0.0f;
+	KeyFrameOtros[ 0 ][ 0 ].Xtor=0.0f;
+	KeyFrameOtros[ 0 ][ 0 ].Ytor=0.0f;
+	KeyFrameOtros[ 0 ][ 0 ].Ztor=0.0f;
+
+	KeyFrameOtros[ 0 ][ 1 ].Angt1 = 0.0f;
+	KeyFrameOtros[ 0 ][ 1 ].Angt2=0.0f;
+	KeyFrameOtros[ 0 ][ 1 ].Angc1=-25.0f;
+	KeyFrameOtros[ 0 ][ 1 ].Angc2=0.0f;
+	KeyFrameOtros[ 0 ][ 1 ].Angbi1=-5.0f;
+	KeyFrameOtros[ 0 ][ 1 ].Angbi2=0.0f;
+	KeyFrameOtros[ 0 ][ 1 ].Angbib=-15.0f;
+	KeyFrameOtros[ 0 ][ 1 ].Angbd1=5.0f;
+	KeyFrameOtros[ 0 ][ 1 ].Angbd2=0.0f;
+	KeyFrameOtros[ 0 ][ 1 ].Angbdb=-40.0f;
+	KeyFrameOtros[ 0 ][ 1 ].Angpizq=20.0f;
+	KeyFrameOtros[ 0 ][ 1 ].Angpder=-20.0f;
+	KeyFrameOtros[ 0 ][ 1 ].Angpizqb=15.0f;
+	KeyFrameOtros[ 0 ][ 1 ].Angpderb=10.0f;
+	KeyFrameOtros[ 0 ][ 1 ].Angpi=0.0f;
+	KeyFrameOtros[ 0 ][ 1 ].Angpd=0.0f;
+	KeyFrameOtros[ 0 ][ 1 ].Xtor=0.0f;
+	KeyFrameOtros[ 0 ][ 1 ].Ytor=0.0f;
+	KeyFrameOtros[ 0 ][ 1 ].Ztor=0.0f;
+
+	KeyFrameOtros[ 0 ][ 2 ].Angt1 = 0.0f;
+	KeyFrameOtros[ 0 ][ 2 ].Angt2=0.0f;
+	KeyFrameOtros[ 0 ][ 2 ].Angc1=-25.0f;
+	KeyFrameOtros[ 0 ][ 2 ].Angc2=0.0f;
+	KeyFrameOtros[ 0 ][ 2 ].Angbi1=-5.0f;
+	KeyFrameOtros[ 0 ][ 2 ].Angbi2=0.0f;
+	KeyFrameOtros[ 0 ][ 2 ].Angbib=-15.0f;
+	KeyFrameOtros[ 0 ][ 2 ].Angbd1=5.0f;
+	KeyFrameOtros[ 0 ][ 2 ].Angbd2=0.0f;
+	KeyFrameOtros[ 0 ][ 2 ].Angbdb=-40.0f;
+	KeyFrameOtros[ 0 ][ 2 ].Angpizq=20.0f;
+	KeyFrameOtros[ 0 ][ 2 ].Angpder=-20.0f;
+	KeyFrameOtros[ 0 ][ 2 ].Angpizqb=15.0f;
+	KeyFrameOtros[ 0 ][ 2 ].Angpderb=10.0f;
+	KeyFrameOtros[ 0 ][ 2 ].Angpi=0.0f;
+	KeyFrameOtros[ 0 ][ 2 ].Angpd=0.0f;
+	KeyFrameOtros[ 0 ][ 2 ].Xtor=0.0f;
+	KeyFrameOtros[ 0 ][ 2 ].Ytor=0.0f;
+	KeyFrameOtros[ 0 ][ 2 ].Ztor=0.0f;
+
+	// El que sigue...
+
 }
 
 // Colisiones, todo lo referente a colisiones ira aqui
@@ -2462,7 +2506,7 @@ void ColisionesPiso()
 
 }
 
-void ColisionEsferaEsfera( boundingsphere& a, boundingsphere& b, parametros& player )
+bool ColisionEsferaEsfera( boundingsphere& a, boundingsphere& b, parametros& player )
 {
 	// Calcula la distancia cuadrada entre los centros
 	CVector d = a.Pos - b.Pos;
@@ -2484,7 +2528,11 @@ void ColisionEsferaEsfera( boundingsphere& a, boundingsphere& b, parametros& pla
 		//	PosAux = player.PosAntObj - d * ( colision / 20.0f );
 		//}
 		player.PosicionObj = PosAux;
+
+		return true;
 	}
+
+	return false;
 }
 
 int ColisionRayoEsfera( ray& r, boundingsphere& s)
@@ -2559,14 +2607,10 @@ int InitGL(GLvoid)										// Aqui se configuran los parametros iniciales de Op
 	e=gluNewQuadric();
 
 	InicializaParametrosdeControl();
-	InicializaAnim( KeyFrame1, maxKF1, &player1modelo );
-	InicializaAnim( KeyFrame2, maxKF2, &mikumodelo );
-	InicializaAnim( KeyFrame3, maxKF3, &enem1modelo );
-	InicializaAnim( KeyFrame4, maxKF4, &enem2modelo );
-	InicializaAnim( KeyFrame5, maxKF5, &MJ6modelo );
-	InicializaAnim( KeyFrame6, maxKF6, &enem3amodelo );
-	InicializaAnim( KeyFrame7, maxKF7, &enem3bmodelo );
-	InicializaAnim( KeyFrame8, maxKF8, &changmodelo );
+	for( int i = 0; i < otros; i++ )
+	{
+		InicializaAnim( KeyFrameOtros[ i ], 3, modelosOtros[ i ] );
+	}
 	DatosAnimacion();
 
 	// Animator
@@ -2607,14 +2651,27 @@ void LiberaSonido(FMOD_SYSTEM *system, FMOD_RESULT result)
 // creador de hoyos negros y revision de colisiones
 void LargeHadronCollider()
 {
-
+	bool col;
 	// Colisiones
 	ColisionEsferaPlano(0, 2, player1 );
 	player1.PosAntObj = player1.PosicionObj;
 	for(int i = 1; i <= 30; i++)
 	{
-		ColisionEsferaEsfera(esfera[0], esfera[i], player1 );
+		col = ColisionEsferaEsfera(esfera[0], esfera[i], player1 );
 		player1.PosAntObj = player1.PosicionObj;
+		if( ( i == 1 || i == 2 || i == 7 || i == 8 ) && col == true )
+		{
+			health -= 1.0f;
+			//red -= 1;
+			green -= 1;
+			if( health <= 0.0f )
+			{
+				health = 150.0f;
+				vidas = vidas - 1;
+				//red = 250;
+				green = 200;
+			}
+		}
 	}
 	player1.PosAntObj = player1.PosicionObj;
 
@@ -4019,16 +4076,29 @@ void DibujaTextos()
 		Font.glPrint( (1.0f/640.0f)*glWidth, glWidth * 0.42f, glHeight * 0.90f, "Round 1 Stage 1" );
 		Font.glPrint( (1.0f/640.0f)*glWidth, glWidth * 0.08f, glHeight * 0.15f, "1P" );
 		Font.glPrint( (1.0f/640.0f)*glWidth, glWidth * 0.20f, glHeight * 0.15f, "0" );
-		Font.glPrint( (1.0f/640.0f)*glWidth, glWidth * 0.1f, glHeight * 0.09f, "x3" );
+		Font.glPrint( (1.0f/640.0f)*glWidth, glWidth * 0.1f, glHeight * 0.09f, "x%d", vidas );
 									
 		glDisable(GL_ALPHA_TEST);
 		glDisable(GL_TEXTURE_2D);
 
 		//Barra de energia / health
-		// Primero dibuja el contorno de la barra
+		// Dibujale un contorno al contorno
 		glPushMatrix();
 			glTranslatef( glWidth * 0.115f, glHeight * 0.05, 0.0f );
-			glColor3ub( 128, 128, 128 );
+			glColor3ub( 255, 255, 255 );
+			glLineWidth( 2.0f );
+			glBegin( GL_LINE_STRIP );
+				glVertex2f( -3.0f, -3.0f );
+				glVertex2f( 152.5f, -4.0f );
+				glVertex2f( 152.5f, 17.0f );
+				glVertex2f( -3.0f, 17.0f );
+			glEnd();
+		glPopMatrix();
+
+		// Luego dibuja el contorno de la barra
+		glPushMatrix();
+			glTranslatef( glWidth * 0.115f, glHeight * 0.05, 0.0f );
+			glColor3ub( 10, 10, 10 );
 			glLineWidth( 5.0f );
 			glBegin( GL_LINE_STRIP );
 				glVertex2f( 0.0f, 0.0f );
@@ -4039,9 +4109,11 @@ void DibujaTextos()
 			glLineWidth( 1.0f );
 		glPopMatrix();
 
+		// Dibuja el relleno de la barra
 		glPushMatrix();
-			glTranslatef( glWidth * 0.115f, glHeight * 0.05, 0.0f );
-			glColor3ub( 250, 197, 0 );
+			glTranslatef( glWidth * 0.115f, glHeight * 0.052, 0.0f );
+			glScalef( 1.0f, 0.9f, 0.9f );
+			glColor3ub( 250, green, 0 );
 			glBegin(GL_QUADS);
 				glVertex2f( 0.0f, 0.0f );
 				glVertex2f( health, 0.0f );
@@ -4598,15 +4670,15 @@ void DibujaEnemigos()
 
 void DibujaElevador()
 {
-	if ( ( abajo == true ) && ( elev  == 0.0f ) )
+	if ( ( abajo == true ) && ( elev  == -9.0f ) )
 		abajo = false;
 	else if ( ( abajo == false ) && ( elev == 28.0f ) )
 		abajo = true;
 
 	//Elevador
 	glPushMatrix();
-		glTranslatef( 228.0f, elev, -64.0f);
-		glRotatef( -90.0f, 0.0f, 1.0f, 0.0f );
+		glTranslatef( -113.0f, elev, 150.0f);
+		glRotatef( 180.0f, 0.0f, 1.0f, 0.0f );
 		glScalef( 0.5f, 0.5f, 0.5f );
 		g_Load3ds.Render3DSFile(&g_3DModel1el, textureModel1el, 1);
 	glPopMatrix();
@@ -5178,6 +5250,13 @@ int WINAPI WinMain(	HINSTANCE	hInstance,			// Instancia
 					{
 						if(tipoAnim == 1)
 							animacion(KeyFrame1, maxKF1 , 18, &player1modelo, playIndex );
+					}
+					for( int i = 0; i < otros; i++ )
+					{
+						if( playOtros[ i ] )
+						{
+							animacion( KeyFrameOtros[ i ], 3, 18, modelosOtros[ i ], playIndexOtros[ i ] );
+						}
 					}
 					SwapBuffers(hDC);				// Intercambia los Buffers (Double Buffering)
 				}
