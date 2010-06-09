@@ -1,9 +1,12 @@
 #include "Animator.h"
+#include "Bullet.h"
 
 Animator::Animator()
 {
 	// Just set the index to zero
 	i = 0;
+	// Set the shooting timer to its default value
+	delay = 5000;
 }
 
 void Animator::setChar( parametros* personaje )
@@ -12,6 +15,8 @@ void Animator::setChar( parametros* personaje )
 	modelo = personaje;
 	// Add the first point as the current position of this object
 	points.push_back( modelo->PosicionObj );
+	// Set the origin of the ray as this model's position
+	rayo.origen = modelo->PosicionObj;
 }
 
 void Animator::addPoint( CVector punto )
@@ -54,6 +59,8 @@ void Animator::startAnim()
 		// Duck and turn, and also start from the first point
 		i = -1;
 	}
+	// Update the ray's origin point with the current model's point
+	rayo.origen = modelo->PosicionObj;
 }
 
 // This function kicks and punch, it's all in the mind
@@ -65,4 +72,30 @@ void Animator::moveToPoint( CVector punto )
 	temp = Normaliza( temp );
 	// Move towards the next point according to our speed
 	modelo->PosicionObj = modelo->PosicionObj + temp * modelo->VelocidadObj;
+}
+// This function sets where the enemy should be facing and waiting for MJ
+void Animator::setTarget( CVector destino )
+{
+	rayo.dir = destino;
+}
+// This function draws the enemies vision rays
+void Animator::drawRay()
+{
+	glDisable( GL_LIGHTING );
+	glBegin( GL_LINES );
+		glColor3f( 0.0f, 1.0f, 0.0f );
+		glVertex3f( rayo.origen.x, rayo.origen.y, rayo.origen.z );
+		glVertex3f( rayo.dir.x, rayo.dir.y, rayo.dir.z );
+		glColor3f( 0.0f, 0.0f, 0.0f );
+	glEnd();
+	glEnable( GL_LIGHTING );
+}
+// Fire one bullet
+CVector* Animator::attack()
+{
+	// create one bullet
+	CVector bull = modelo->PosicionObj;
+	// reset the current delay 
+	delay = 5000;
+	return &bull;
 }

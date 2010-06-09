@@ -190,6 +190,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Bullet.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\cargadorTGA.cpp"
 				>
 			</File>
@@ -233,6 +237,10 @@
 			</File>
 			<File
 				RelativePath=".\Animator.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Bullet.h"
 				>
 			</File>
 			<File

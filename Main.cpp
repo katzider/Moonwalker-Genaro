@@ -40,6 +40,7 @@ float CamPos[4][6] = {
 };
 
 int pisoId = 0;
+bool invuln = false;
 
 // Variable de acceso a la estructura de parametros
 parametros player1;
@@ -52,13 +53,16 @@ parametros enem3a;	 //Variable con la que tenemos acceso a la estructura de pará
 parametros enem3b;	 //Variable con la que tenemos acceso a la estructura de parámetros ene3b
 parametros chang;	 //Variable con la que tenemos acceso a la estructura de parámetros de chango
 
-parametros enemigo8; // parametros savage
+parametros enemigo8; // parametros robot
+
+/* Vidas del personaje */
+float health = 150;
 
 CMateriales Material;
 
 //Nombre y ubicación de los modelos
 
-// Modelos Savage
+// Modelos robot
 #define FILE_NAME1g  "Modelos/enemigo8_cuerpo.3ds"
 #define FILE_NAME2g  "Modelos/enemigo8_heliceabajo.3ds"
 #define FILE_NAME3g  "Modelos/enemigo8_heliceatras.3ds"
@@ -136,6 +140,9 @@ CMateriales Material;
 //nombre y ubicación de modelo tarantula
 #define FILE_NAME1t	 "Modelos/tarantula.3ds"
 
+//nombre y ubicación de modelo elevador
+#define FILE_NAME1el	 "Modelos/Elevador.3ds"
+
 //Contenedor de texturas de enemigo1
 CTga textureModel1d[20];
 //Contenedor de texturas de MJ6 (MJ Robot)
@@ -183,6 +190,9 @@ CTga textureModel3k[20];
 
 //Contenedor de texturas de tarantula
 CTga textureModel1t[20];
+
+//Contenedor de texturas de elevador
+CTga textureModel1el[20];
 
 CLoad3DS g_Load3ds;
 CShader cel_Shader;
@@ -242,7 +252,7 @@ t3DModel g_3DModel8f;
 t3DModel g_3DModel9f;
 t3DModel g_3DModel10f;
 
-// los modelos savage
+// los modelos robot
 
 t3DModel g_3DModel1g;
 t3DModel g_3DModel2g;
@@ -280,6 +290,9 @@ t3DModel g_3DModel3k;
 
 //Acceso a la estructura que almacena a tarantula
 t3DModel g_3DModel1t;
+
+//Acceso a la estructura que almacena a elevador
+t3DModel g_3DModel1el;
 
 //Contenedor de texturas adicionales
 CTga textura[30];
@@ -363,7 +376,7 @@ GLuint chaout;
 GLuint taran;
 GLuint taranout; 
 
-// las listas savage
+// las listas robot
 GLuint enemigo8L;
 GLuint enemigo8Lout;
 
@@ -375,7 +388,7 @@ GLuint modelo1mikuout;
 
 //Constantes de iluminación y materiales
 GLfloat LightPos[] = { 200.0f, 20.0f, 0.0f, 1.0f};		// Posición de la luz
-GLfloat LightAmb[] = { 0.8f,  0.8f, 0.8f, 1.0f};			// Valores de la componente ambiente
+GLfloat LightAmb[] = { 0.9f,  0.9f, 0.9f, 1.0f};			// Valores de la componente ambiente
 GLfloat LightDif[] = { 0.9f,  0.9f, 0.9f, 1.0f};			// Valores de la componente difusa
 GLfloat LightSpc[] = { 0.5f,  0.5f, 0.5f, 1.0f};			// Valores de la componente especular
 
@@ -430,6 +443,10 @@ int aw, ah;
 int AuxT;
 
 typedef GLfloat TPoint[3];
+
+//Variables para el movimiento del elevador
+float elev = 0.0f;
+bool abajo = true;
 
 struct			 										// Create A Structure For The Timer Information
 {
@@ -657,11 +674,11 @@ int CargaModelos()
 	if(!g_Load3ds.Load3DSFile(FILE_NAME10d, &g_3DModel10d, textureModel1d))
 		return 0;
 
-	// Mayra lol
+	// escenario lol
 	if(!g_Load3ds.Load3DSFile(FILE_NAME1e, &g_3DModel1e, textureModel1e))
 		return 0;
 
-	//agregar en CargaModelos() savage meh te la volaste XD
+	//agregar en CargaModelos() robot
 	if(!g_Load3ds.Load3DSFile(FILE_NAME1g, &g_3DModel1g, textureModel1g))
 		return 0;
 	if(!g_Load3ds.Load3DSFile(FILE_NAME2g, &g_3DModel2g, textureModel2g))
@@ -762,13 +779,17 @@ int CargaModelos()
 	//Ene2
 	if(!g_Load3ds.Load3DSFile(FILE_NAME1k, &g_3DModel1k, textureModel1k))
 		return 0;
-	if(!g_Load3ds.Load3DSFile(FILE_NAME2k, &g_3DModel2k, textureModel1k))
+	if(!g_Load3ds.Load3DSFile(FILE_NAME2k, &g_3DModel2k, textureModel2k))
 		return 0;
-	if(!g_Load3ds.Load3DSFile(FILE_NAME3k, &g_3DModel3k, textureModel1k))
+	if(!g_Load3ds.Load3DSFile(FILE_NAME3k, &g_3DModel3k, textureModel3k))
 		return 0;
 
 	//tarantula
 	if(!g_Load3ds.Load3DSFile(FILE_NAME1t, &g_3DModel1t, textureModel1t))
+		return 0;
+
+	//elevador
+	if(!g_Load3ds.Load3DSFile(FILE_NAME1el, &g_3DModel1el, textureModel1el))
 		return 0;
 
 	return TRUE;
@@ -777,7 +798,7 @@ int CargaModelos()
 void DescargaModelos()
 {
 	
-	// descargamodelos savage
+	// descargamodelos robot
 			
 	g_Load3ds.UnLoad3DSFile(&g_3DModel1g, textureModel1g);
 	g_Load3ds.UnLoad3DSFile(&g_3DModel2g, textureModel2g);
@@ -855,6 +876,9 @@ void DescargaModelos()
 
 	//tarantula
 	g_Load3ds.UnLoad3DSFile(&g_3DModel1t, textureModel1t);
+
+	//elevador
+	g_Load3ds.UnLoad3DSFile(&g_3DModel1el, textureModel1el);
 }
 
 void IniSombraVolumen()
@@ -903,7 +927,7 @@ void CreaListas()
 	ene3b=glGenLists(5);
 	//chango
 	cha=glGenLists(5);
-	// en crea listas savage
+	// en crea listas robot
 	enemigo8L=glGenLists(3);
 	//tarantula
 	taran=glGenLists(1);
@@ -920,7 +944,7 @@ void CreaListas()
 	ene3bout=glGenLists(5);
 	//chango contorno
 	chaout=glGenLists(5);
-	// en crea listas savage contorno
+	// en crea listas robot contorno
 	enemigo8Lout=glGenLists(3);
 	//tarantula contorno
 	taranout=glGenLists(1);
@@ -1504,7 +1528,7 @@ void InicializaParametrosdeControl()
 	
 	miku.CamaraObjAltE=0.0f;
 
-	// en inicializa parametro de control savage
+	// en inicializa parametro de control robot
 	enemigo8.visible=true;
 	enemigo8.VelocidadObj=0.4f;
 	enemigo8.DistanciaCam=10.0f;
@@ -1711,16 +1735,22 @@ void InicializaParametrosdeControl()
 /* Animacion/IA de cada uno de los monos en el escenario */
 // Declaracion de variables
 Animator Enem1;
+Bullet bala1;
+
 void InicializaParametrosdeAnimacion()
 {
 	// Enemigo gordito azul
 	Enem1.setChar( &enem1 );
 	Enem1.addPoint( CVector( 200.0f, 9.0f, -40.0f ) );
 	Enem1.addPoint( CVector( 160.0f, 9.0f, -40.0f ) );
+	Enem1.setTarget( CVector( 220, 4.0f, -45.0f ) );
 }
 void AniMagic()
 {
 	Enem1.startAnim();
+
+	// Dibuja rayos
+	Enem1.drawRay();
 }
 void InicializaAnim( FRAME *KeyFrame, int maxKF, jerarquiaModelo* modelo )
 {
@@ -2202,23 +2232,23 @@ void DibujaEsferasColision()
 		glPopMatrix();
 	}
 
-	glPushMatrix();
-		glTranslatef(esfera[1].Pos.x, esfera[1].Pos.y, esfera[1].Pos.z);
-		glRotatef(90.0f,1.0f,0.0f,0.0f);
-		gluSphere(q, esfera[1].radio, 16, 8);
-	glPopMatrix();
+	//glPushMatrix();
+	//	glTranslatef(esfera[1].Pos.x, esfera[1].Pos.y, esfera[1].Pos.z);
+	//	glRotatef(90.0f,1.0f,0.0f,0.0f);
+	//	gluSphere(q, esfera[1].radio, 16, 8);
+	//glPopMatrix();
 
-		glPushMatrix();
-		glTranslatef(esfera[2].Pos.x, esfera[2].Pos.y, esfera[2].Pos.z);
-		glRotatef(90.0f,1.0f,0.0f,0.0f);
-		gluSphere(q, esfera[2].radio, 16, 8);
-	glPopMatrix();
+	//	glPushMatrix();
+	//	glTranslatef(esfera[2].Pos.x, esfera[2].Pos.y, esfera[2].Pos.z);
+	//	glRotatef(90.0f,1.0f,0.0f,0.0f);
+	//	gluSphere(q, esfera[2].radio, 16, 8);
+	//glPopMatrix();
 
-		glPushMatrix();
-		glTranslatef(esfera[6].Pos.x, esfera[6].Pos.y, esfera[6].Pos.z);
-		glRotatef(90.0f,1.0f,0.0f,0.0f);
-		gluSphere(q, esfera[6].radio, 16, 8);
-	glPopMatrix();
+	//	glPushMatrix();
+	//	glTranslatef(esfera[6].Pos.x, esfera[6].Pos.y, esfera[6].Pos.z);
+	//	glRotatef(90.0f,1.0f,0.0f,0.0f);
+	//	gluSphere(q, esfera[6].radio, 16, 8);
+	//glPopMatrix();
 
 	glEnable(GL_LIGHTING);
 
@@ -2406,7 +2436,7 @@ void ColisionesPiso()
 
 }
 
-void ColisionEsferaEsfera( boundingsphere& a, boundingsphere& b, int dir, parametros& player )
+void ColisionEsferaEsfera( boundingsphere& a, boundingsphere& b, parametros& player )
 {
 	// Calcula la distancia cuadrada entre los centros
 	CVector d = a.Pos - b.Pos;
@@ -2414,29 +2444,39 @@ void ColisionEsferaEsfera( boundingsphere& a, boundingsphere& b, int dir, parame
 	// Las esferas se intersectan si la distancia es menor a la suma cuadrada de sus radios
 	float radiusSum = a.radio + b.radio;
 	float colision = dist2 - radiusSum * radiusSum;
-	// Robado de arriba yeah XD
-	CVector PosAux;
-	float deltaV = player.VelocidadObj/10.0f;
 
-	if( dist2 <= radiusSum * radiusSum ) // si hay una colision
+	if( colision < 0.0f ) // si hay una colision
 	{
-		if(dir == 1)
-			PosAux = player.PosAntObj + player.Direccion * ( deltaV + 0.0001f );
-		else if(dir == 2)
-			PosAux = player.PosAntObj - player.Direccion * ( deltaV + 0.0001f );
-
+		CVector PosAux;
+		d = Normaliza( d );
+		//if(dir == 1)
+		//{
+		PosAux = player.PosAntObj - d * ( colision / 20.0f );
+		//}
+		//else if(dir == 2)
+		//{
+		//	PosAux = player.PosAntObj - d * ( colision / 20.0f );
+		//}
 		player.PosicionObj = PosAux;
-
-		if( colision < -2.0f )
-		{
-		if(dir == 1)
-			player.PosicionObj = player.PosicionObj - player.Direccion * ( deltaV + 0.3f );
-		else if(dir == 2)
-			player.PosicionObj = player.PosicionObj + player.Direccion * ( deltaV + 0.3f );
-		}
 	}
 }
 
+int ColisionRayoEsfera( ray& r, boundingsphere& s)
+{
+	CVector m = r.origen - s.Pos;
+	float c = Punto(m, m) - s.radio * s.radio;
+	// Si hay al menos una raiz real, entonces hay interseccion
+	if (c <= 0.0f) return 1;
+	CVector d = Normaliza( r.dir - r.origen );
+	float b = Punto(m, d);
+	// Salida rapida si el origen del rayo esta fuera de la esfera y el rayo no apunta hacia ella
+	if (b > 0.0f) return 0;
+	float disc = b * b - c;
+	// Un discriminante negativo quiere decir que el rayo no toca la esfera
+	if (disc < 0.0f) return 0;
+	// El rayo golpea la esfera irremediablemente
+	return 1;
+}
 int InitGL(GLvoid)										// Aqui se configuran los parametros iniciales de OpenGL
 {
 	Multitext.InitMultitext(hWnd);
@@ -2538,10 +2578,27 @@ void LiberaSonido(FMOD_SYSTEM *system, FMOD_RESULT result)
     ERRCHECK(result);
 }
 
+// creador de hoyos negros y revision de colisiones
+void LargeHadronCollider()
+{
+
+	// Colisiones
+	ColisionEsferaPlano(0, 2, player1 );
+	player1.PosAntObj = player1.PosicionObj;
+	for(int i = 1; i <= 30; i++)
+	{
+		ColisionEsferaEsfera(esfera[0], esfera[i], player1 );
+		player1.PosAntObj = player1.PosicionObj;
+	}
+	player1.PosAntObj = player1.PosicionObj;
+
+}
+
 void ControlPersonaje(int funcion)
 {
 	if( funcion == 1 ) //Giro a la derecha
 	{
+		/*
 		player1.AngDir+=1.0f;
 		if(player1.AngDir > 360.0f)
 			player1.AngDir -= 360.0f;
@@ -2549,18 +2606,45 @@ void ControlPersonaje(int funcion)
 		player1.AngObj-=1.0f;
 		if(player1.AngObj < 0.0f)
 			player1.AngObj += 360.0f;
+		*/
+
+		if( pisoId < 4 )
+		{
+			player1.AngDir = 0;
+			player1.AngObj = 90;
+		}
+		else
+		{
+			player1.AngDir = 270;
+			player1.AngObj = 180;
+		}
 
 		player1.Direccion.x = cosf( player1.AngDir * PI/180.0f);
 		player1.Direccion.y = 0.0f;
 		player1.Direccion.z = sinf( player1.AngDir * PI/180.0f);
 
+		// Avanza como en MoonWalker
+		player1.PosicionObj = player1.PosicionObj + player1.Direccion * player1.VelocidadObj;
+
 		player1.PosicionCam = player1.PosicionObj - player1.Direccion * player1.DistanciaCam;
 		player1.PosicionCam.y = player1.CamaraPosAlt;
 		player1.ObjetivoCam = player1.PosicionObj;
 		player1.ObjetivoCam.y = player1.CamaraObjAlt;
+
+		// Colisiones
+		//ColisionEsferaPlano(0, 2, player1 );
+		//player1.PosAntObj = player1.PosicionObj;
+		//for(int i = 1; i <= 30; i++)
+		//{
+		//	ColisionEsferaEsfera(esfera[0], esfera[i], 1, player1 );
+		//	player1.PosAntObj = player1.PosicionObj;
+		//}
+
+		//player1.PosAntObj = player1.PosicionObj;
 	}
 	else if(funcion == 2) //Giro a la izquierda
 	{
+		/*
 		player1.AngDir-=1.0f;
 		if(player1.AngDir < 0.0f)
 			player1.AngDir+=360.0f;
@@ -2568,18 +2652,101 @@ void ControlPersonaje(int funcion)
 		player1.AngObj+=1.0f;
 		if(player1.AngObj > 360.0f)
 			player1.AngObj-=360.0f;
+		*/
+
+		if( pisoId < 4 )
+		{
+			player1.AngDir = 180;
+			player1.AngObj = 270;
+		}
+		else
+		{
+			player1.AngDir = 90;
+			player1.AngObj = 0;
+		}
 
 		player1.Direccion.x = cosf(player1.AngDir*PI/180.0f);
 		player1.Direccion.y = 0.0f;
 		player1.Direccion.z = sinf(player1.AngDir*PI/180.0f);
 
+		// Avanza como en MoonWalker
+		player1.PosicionObj = player1.PosicionObj + player1.Direccion * player1.VelocidadObj;
+
 		player1.PosicionCam = player1.PosicionObj - player1.Direccion * player1.DistanciaCam;
 		player1.PosicionCam.y = player1.CamaraPosAlt;
 		player1.ObjetivoCam = player1.PosicionObj;
 		player1.ObjetivoCam.y = player1.CamaraObjAlt;
+
+		// Colisiones
+		//ColisionEsferaPlano(0, 2, player1 );
+		//player1.PosAntObj = player1.PosicionObj;
+		//for(int i = 1; i <= 30; i++)
+		//{
+		//	ColisionEsferaEsfera(esfera[0], esfera[i], 1, player1 );
+		//	player1.PosAntObj = player1.PosicionObj;
+		//}
+
+		//player1.PosAntObj = player1.PosicionObj;
 	}
 	else if(funcion == 3) //Avanza hacia adelante
 	{
+		// Avanza como en MoonWalker
+		// ANNIE ARE YOU OK? ARE YOU OK, ANNIE?
+		if( pisoId < 4 )
+		{
+			player1.AngDir = 270;
+			player1.AngObj = 180;
+		}
+		else
+		{
+			player1.AngDir = 180;
+			player1.AngObj = 270;
+		}
+
+		//	WILL YOU TELL US, THAT YOU'RE OK?
+		player1.Direccion.x = cosf(player1.AngDir*PI/180.0f);
+		player1.Direccion.y = 0.0f;
+		player1.Direccion.z = sinf(player1.AngDir*PI/180.0f);
+
+		player1.PosicionObj = player1.PosicionObj + player1.Direccion * player1.VelocidadObj;
+
+		player1.PosicionCam = player1.PosicionObj - player1.Direccion * player1.DistanciaCam;
+		player1.PosicionCam.y = player1.CamaraPosAlt;
+		player1.ObjetivoCam = player1.PosicionObj;
+		player1.ObjetivoCam.y = player1.CamaraObjAlt;
+
+		// Colisiones
+		//ColisionEsferaPlano(0, 1, player1 );
+		//player1.PosAntObj = player1.PosicionObj;
+
+		//for(int i = 1; i <= 30; i++)
+		//{
+		//	ColisionEsferaEsfera(esfera[0], esfera[i], 1, player1 );
+		//	player1.PosAntObj = player1.PosicionObj;
+		//}
+
+	}
+	else if(funcion == 4) //Avanza hacia atrás
+	{
+
+		// Avanza como en MoonWalker
+		// I DON'T KNOW
+		if( pisoId < 4 )
+		{
+			player1.AngDir = 90;
+			player1.AngObj = 0;
+		}
+		else
+		{
+			player1.AngDir = 0;
+			player1.AngObj = 90;
+		}
+
+		// I DON'T KNOW
+		player1.Direccion.x = cosf(player1.AngDir*PI/180.0f);
+		player1.Direccion.y = 0.0f;
+		player1.Direccion.z = sinf(player1.AngDir*PI/180.0f);
+
 		player1.PosicionObj = player1.PosicionObj + player1.Direccion * player1.VelocidadObj;
 		player1.PosicionCam = player1.PosicionObj - player1.Direccion * player1.DistanciaCam;
 		player1.PosicionCam.y = player1.CamaraPosAlt;
@@ -2587,31 +2754,15 @@ void ControlPersonaje(int funcion)
 		player1.ObjetivoCam.y = player1.CamaraObjAlt;
 
 		// Colisiones
-		for(int i = 1; i <= 30; i++)
-		{
-			ColisionEsferaEsfera(esfera[0], esfera[i], 1, player1 );
-		}
-		ColisionEsferaPlano(0, 1, player1 );
+		//ColisionEsferaPlano(0, 2, player1 );
+		//player1.PosAntObj = player1.PosicionObj;
+		//for(int i = 1; i <= 30; i++)
+		//{
+		//	ColisionEsferaEsfera(esfera[0], esfera[i], 1, player1 );
+		//	player1.PosAntObj = player1.PosicionObj;
+		//}
 
-		player1.PosAntObj = player1.PosicionObj;
-
-	}
-	else if(funcion == 4) //Avanza hacia atrás
-	{
-		player1.PosicionObj = player1.PosicionObj - player1.Direccion * player1.VelocidadObj;
-		player1.PosicionCam = player1.PosicionObj - player1.Direccion * player1.DistanciaCam;
-		player1.PosicionCam.y = player1.CamaraPosAlt;
-		player1.ObjetivoCam = player1.PosicionObj;
-		player1.ObjetivoCam.y = player1.CamaraObjAlt;
-
-		// Colisiones
-		for(int i = 1; i <= 30; i++)
-		{
-			ColisionEsferaEsfera(esfera[0], esfera[i], 2, player1 );
-		}
-		ColisionEsferaPlano(0, 2, player1 );
-
-		player1.PosAntObj = player1.PosicionObj;
+		//player1.PosAntObj = player1.PosicionObj;
 
 	}
 	else if(funcion == 5) //Sube objetivo de la cámara
@@ -2711,7 +2862,7 @@ void animacion(FRAME *KeyFrame, int maxKF , int frames, jerarquiaModelo* modelo,
 	}
 }
 
-//savage
+//robot
 void dibujaEnemigo8()
 {
 	static float anglef=0.0f;
@@ -3796,38 +3947,53 @@ void DibujaTextos()
 
 		glBindTexture(GL_TEXTURE_2D, textura[1].texID);
 
+		// Indicar de vida
 		glPushMatrix();
 			glTranslatef( glWidth * 0.03f, glHeight * 0.05, 0.0f );
 			glBegin(GL_QUADS);
-				glTexCoord2f( 0.0f, 0.0f ); glVertex2i( 0, 0 );
-				glTexCoord2f( 1.0f, 0.0f ); glVertex2i( 50, 0 );
-				glTexCoord2f( 1.0f, 1.0f ); glVertex2i( 50, 50 );
-				glTexCoord2f( 0.0f, 1.0f ); glVertex2i( 0, 50 );
+				glTexCoord2f( 0.0f, 0.0f ); glVertex2f( 0.0f, 0.0f );
+				glTexCoord2f( 1.0f, 0.0f ); glVertex2f( 50.0f, 0.0f );
+				glTexCoord2f( 1.0f, 1.0f ); glVertex2f( 50.0f, 50.0f );
+				glTexCoord2f( 0.0f, 1.0f ); glVertex2f( 0.0f, 50.0f );
 			glEnd();
 		glPopMatrix();
 
 		// Texto a mostrar en pantalla
-		Font.glPrint((1.0f/640.0f)*glWidth, glWidth*0.05f,glHeight*0.9f,"pisoId: %d", pisoId );
+		Font.glPrint((1.0f/640.0f)*glWidth, glWidth*0.05f,glHeight*0.9f,"AngDir: %f", player1.AngDir );
 		/*Font.glPrint((1.0f/640.0f)*glWidth, glWidth*0.05f,glHeight*0.85f,"PosCam %f", player1.PosicionCam.x );
 		Font.glPrint((1.0f/640.0f)*glWidth, glWidth*0.05f,glHeight*0.80f,"PosObj %f", player1.PosicionObj.x);*/
 		Font.glPrint( (1.0f/640.0f)*glWidth, glWidth * 0.45f, glHeight * 0.95f, "High 50000" );
 		Font.glPrint( (1.0f/640.0f)*glWidth, glWidth * 0.42f, glHeight * 0.90f, "Round 1 Stage 1" );
 		Font.glPrint( (1.0f/640.0f)*glWidth, glWidth * 0.08f, glHeight * 0.15f, "1P" );
 		Font.glPrint( (1.0f/640.0f)*glWidth, glWidth * 0.20f, glHeight * 0.15f, "0" );
-		Font.glPrint( (1.0f/640.0f)*glWidth, glWidth * 0.1f, glHeight * 0.11f, "3" );
+		Font.glPrint( (1.0f/640.0f)*glWidth, glWidth * 0.1f, glHeight * 0.09f, "x3" );
 									
 		glDisable(GL_ALPHA_TEST);
 		glDisable(GL_TEXTURE_2D);
 
-		//Barra de energia
+		//Barra de energia / health
+		// Primero dibuja el contorno de la barra
+		glPushMatrix();
+			glTranslatef( glWidth * 0.11f, glHeight * 0.05, 0.0f );
+			glColor3ub( 0, 0, 0 );
+			glLineWidth( 2.0f );
+			glBegin(GL_LINE_STRIP);
+				glVertex2f( 0.0f, 0.0f );
+				glVertex2f( 150.0f, 0.0f );
+				glVertex2f( 150.0f, 14.0f );
+				glVertex2f( 0.0f, 14.0f );
+			glEnd();
+			glLineWidth( 1.0f );
+		glPopMatrix();
+
 		glPushMatrix();
 			glTranslatef( glWidth * 0.11f, glHeight * 0.05, 0.0f );
 			glColor3ub( 250, 197, 0 );
 			glBegin(GL_QUADS);
-				glVertex2i( 0, 0 );
-				glVertex2i( 70, 0 );
-				glVertex2i( 70, 25 );
-				glVertex2i( 0, 25 );
+				glVertex2f( 0.0f, 0.0f );
+				glVertex2f( health, 0.0f );
+				glVertex2f( health, 14.0f );
+				glVertex2f( 0.0f, 14.0f );
 			glEnd();
 		glPopMatrix();
 
@@ -4171,7 +4337,7 @@ void ActualizaLuz()
 void DibujaEnemigos()
 {
 	cel_Shader.TurnOn();
-	// savage
+	// robot
 	glPushMatrix();
 			glTranslatef(enemigo8.PosicionObj.x, enemigo8.PosicionObj.y+2.4f, enemigo8.PosicionObj.z);
 			glRotatef(enemigo8.AngObj, 0.0f, 1.0f, 0.0f);
@@ -4276,7 +4442,7 @@ void DibujaEnemigos()
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	glLineWidth(2.5f);
 
-	// savage
+	// robot
 	glPushMatrix();
 			glTranslatef(enemigo8.PosicionObj.x, enemigo8.PosicionObj.y+2.4f, enemigo8.PosicionObj.z);
 			glRotatef(enemigo8.AngObj, 0.0f, 1.0f, 0.0f);
@@ -4377,10 +4543,31 @@ void DibujaEnemigos()
 	glEnable(GL_LIGHTING);
 }
 
+void DibujaElevador()
+{
+	if ( ( abajo == true ) && ( elev  == 0.0f ) )
+		abajo = false;
+	else if ( ( abajo == false ) && ( elev == 28.0f ) )
+		abajo = true;
+
+	//Elevador
+	glPushMatrix();
+		glTranslatef( 228.0f, elev, -64.0f);
+		glRotatef( -90.0f, 0.0f, 1.0f, 0.0f );
+		glScalef( 0.5f, 0.5f, 0.5f );
+		g_Load3ds.Render3DSFile(&g_3DModel1el, textureModel1el, 1);
+	glPopMatrix();
+
+	if( abajo == true )
+		elev -= 0.5f;
+	else if( abajo == false )
+		elev += 0.5f;
+}
 void DibujaEscena()
 {
 	// Escenario
 	g_Load3ds.Render3DSFile(&g_3DModel1e, textureModel1e, 1);
+
 	glDisable(GL_NORMALIZE);
 }
 void Camara()
@@ -4451,7 +4638,7 @@ int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la
 	// Se renderizan todas las partes oscuras de la escena.
 	glDisable(GL_LIGHT0);
 
-	// Mayralol
+	// escenariolol
 	glPushMatrix();
 		glTranslatef(40.0f, 10.0f,-35.0f);
 		glScalef(1.4f,1.4f,1.4f);
@@ -4488,7 +4675,7 @@ int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la
 	glEnable(GL_LIGHT0);
 	glStencilFunc(GL_EQUAL, 0, ~0);
 
-	// Mayralol
+	// escenariolol
 	glPushMatrix();
 		glTranslatef(40.0f, 10.0f,-35.0f);
 		glScalef(1.4f,1.4f,1.4f);
@@ -4504,6 +4691,8 @@ int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la
 		//glTranslatef(40.0f, 10.0f,-35.0f);
 		DibujaEnemigos();
 	glPopMatrix();
+
+	DibujaElevador();
 		
 	DibujaLuz(lightPosition);
 	DibujaTextos();
@@ -4598,9 +4787,10 @@ int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la
 
 	// Colisiones
 	ActualizaObjetosDinamicosColision();
-	DibujaObjetosdeColision();
-	//DibujaEsferasColision();
+	//DibujaObjetosdeColision();
+	DibujaEsferasColision();
 	ColisionesPiso();
+	LargeHadronCollider();
 
 	return TRUE;
 }
