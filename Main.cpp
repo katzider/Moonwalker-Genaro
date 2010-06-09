@@ -57,10 +57,13 @@ parametros player1;
 parametros miku;
 
 parametros enem1;	 //Variable con la que tenemos acceso a la estructura de par�metros de ene1
+parametros enem1a;
 parametros MJ6;		 //Variable con la que tenemos acceso a la estructura de par�metros de MJ6
 parametros enem2;	 //Variable con la que tenemos acceso a la estructura de par�metros de ene2
 parametros enem3a;	 //Variable con la que tenemos acceso a la estructura de par�metros de ene3a
 parametros enem3b;	 //Variable con la que tenemos acceso a la estructura de par�metros ene3b
+parametros enem3c;	 //Variable con la que tenemos acceso a la estructura de par�metros de ene3c
+parametros enem3d;	 //Variable con la que tenemos acceso a la estructura de par�metros ene3d
 parametros chang;	 //Variable con la que tenemos acceso a la estructura de par�metros de chango
 
 parametros enemigo8; // parametros robot
@@ -1571,6 +1574,35 @@ void InicializaParametrosdeControl()
 	enem1.escalaZ=0.4f;
 
 	enem1.CamaraObjAltE=0.0f;
+
+       // Enem1
+	enem1a.visible=true;
+	enem1a.VelocidadObj=0.2f;
+	enem1a.DistanciaCam=10.0f;
+
+	enem1a.CamaraPosAlt=5.0f;	//Posici�n en y de la c�mara (altura a la que se situa la c�mara)
+	enem1a.CamaraObjAlt=4.0f;	//Posici�n en y del objetivo de la c�mara (altura a la que ve la c�mara)
+	enem1a.AngDir=90.0f;		//Este �ngulo inicial hace que la direcci�n inicial sea paralela al eje Z y con sentido negativo
+	enem1a.AngObj=0.0f;		//Este valor se elige dependiendo de la orientaci�n con la que aparece el modelo en la escena al dibujarlo
+								//sin aplicarle ninguna transformaci�n (hacia adonde est� volteando). Se elige un �ngulo tal que al aplicarle
+								//una rotaci�n inicial con respecto al eje Y est� viendo hacia la misma direcci�n que la definida por AngDir
+	
+	enem1a.PosicionObj=CVector(150.0f, 9.0f, -70.0f); //Esta es la posici�n inicial del objeto en la escena
+	enem1a.Direccion.x=(float)cos(player1.AngDir*PI/180.0f); //Direcci�n inicial definida por el �ngulo inicial AngDir (x=cos(AngDir), y=0.0, z=sen(AngDir))
+	enem1a.Direccion.y=0.0f;
+	enem1a.Direccion.z=(float)sin(player1.AngDir*PI/180.0f);   
+	enem1a.PosicionCam=CVector(0.0f, player1.CamaraPosAlt, 10.0f); //Posici�n inicial de la c�mara a [DistanciaCam] unidades detr�s del objeto
+	enem1a.ObjetivoCam=player1.PosicionObj;		//La c�mara ve siempre al objeto
+	enem1a.ObjetivoCam.y=player1.CamaraObjAlt;		//Para que no vea a los "pies" del objeto (personaje)
+
+	enem1a.Dir=0;
+	enem1a.DirAnt=0;
+
+	enem1a.escalaX=0.4f;
+	enem1a.escalaY=0.4f;
+	enem1a.escalaZ=0.4f;
+
+	enem1a.CamaraObjAltE=0.0f;
 	
 	// Enem2
 	enem2.visible=true;
@@ -1689,7 +1721,64 @@ void InicializaParametrosdeControl()
 	enem3b.escalaZ=0.3f;
 
 	enem3b.CamaraObjAltE=0.0f;
+      
+        // enem3c
+	enem3c.visible=true;
+	enem3c.VelocidadObj=0.2f;
+	enem3c.DistanciaCam=10.0f;
 
+	enem3c.CamaraPosAlt=5.0f;	//Posici�n en y de la c�mara (altura a la que se situa la c�mara)
+	enem3c.CamaraObjAlt=4.0f;	//Posici�n en y del objetivo de la c�mara (altura a la que ve la c�mara)
+	enem3c.AngDir=90.0f;		//Este �ngulo inicial hace que la direcci�n inicial sea paralela al eje Z y con sentido negativo
+	enem3c.AngObj=0.0f;		//Este valor se elige dependiendo de la orientaci�n con la que aparece el modelo en la escena al dibujarlo
+								//sin aplicarle ninguna transformaci�n (hacia adonde est� volteando). Se elige un �ngulo tal que al aplicarle
+								//una rotaci�n inicial con respecto al eje Y est� viendo hacia la misma direcci�n que la definida por AngDir
+	
+	enem3c.PosicionObj=CVector(-20.0f, 8.0f, -5.0f); //Esta es la posici�n inicial del objeto en la escena
+	enem3c.Direccion.x=(float)cos(player1.AngDir*PI/180.0f); //Direcci�n inicial definida por el �ngulo inicial AngDir (x=cos(AngDir), y=0.0, z=sen(AngDir))
+	enem3c.Direccion.y=0.0f;
+	enem3c.Direccion.z=(float)sin(player1.AngDir*PI/180.0f);   
+	enem3c.PosicionCam=CVector(0.0f, player1.CamaraPosAlt, 10.0f); //Posici�n inicial de la c�mara a [DistanciaCam] unidades detr�s del objeto
+	enem3c.ObjetivoCam=player1.PosicionObj;		//La c�mara ve siempre al objeto
+	enem3c.ObjetivoCam.y=player1.CamaraObjAlt;		//Para que no vea a los "pies" del objeto (personaje)
+
+	enem3c.Dir=0;
+	enem3c.DirAnt=0;
+
+	enem3c.escalaX=0.3f;
+	enem3c.escalaY=0.3f;
+	enem3c.escalaZ=0.3f;
+
+	enem3c.CamaraObjAltE=0.0f;
+
+	// enem3d
+	enem3d.visible=true;
+	enem3d.VelocidadObj=0.2f;
+	enem3d.DistanciaCam=10.0f;
+
+	enem3d.CamaraPosAlt=5.0f;	//Posici�n en y de la c�mara (altura a la que se situa la c�mara)
+	enem3d.CamaraObjAlt=4.0f;	//Posici�n en y del objetivo de la c�mara (altura a la que ve la c�mara)
+	enem3d.AngDir=90.0f;		//Este �ngulo inicial hace que la direcci�n inicial sea paralela al eje Z y con sentido negativo
+	enem3d.AngObj=270.0f;		//Este valor se elige dependiendo de la orientaci�n con la que aparece el modelo en la escena al dibujarlo
+								//sin aplicarle ninguna transformaci�n (hacia adonde est� volteando). Se elige un �ngulo tal que al aplicarle
+								//una rotaci�n inicial con respecto al eje Y est� viendo hacia la misma direcci�n que la definida por AngDir
+	
+	enem3d.PosicionObj=CVector(-25.0f, 8.0f, -10.0f); //Esta es la posici�n inicial del objeto en la escena
+	enem3d.Direccion.x=(float)cos(player1.AngDir*PI/180.0f); //Direcci�n inicial definida por el �ngulo inicial AngDir (x=cos(AngDir), y=0.0, z=sen(AngDir))
+	enem3d.Direccion.y=0.0f;
+	enem3d.Direccion.z=(float)sin(player1.AngDir*PI/180.0f);   
+	enem3d.PosicionCam=CVector(0.0f, player1.CamaraPosAlt, 10.0f); //Posici�n inicial de la c�mara a [DistanciaCam] unidades detr�s del objeto
+	enem3d.ObjetivoCam=player1.PosicionObj;		//La c�mara ve siempre al objeto
+	enem3d.ObjetivoCam.y=player1.CamaraObjAlt;		//Para que no vea a los "pies" del objeto (personaje)
+
+	enem3d.Dir=0;
+	enem3d.DirAnt=0;
+
+	enem3d.escalaX=0.3f;
+	enem3d.escalaY=0.3f;
+	enem3d.escalaZ=0.3f;
+
+	enem3d.CamaraObjAltE=0.0f;
 
 	// chang
 	chang.visible=true;
@@ -1826,128 +1915,90 @@ void InicializaAnim( FRAME *KeyFrame, int maxKF, jerarquiaModelo* modelo )
 void DatosAnimacion()
 {
 	//Secuencia 1
-	KeyFrame1[0].Angt1=-5.0f;
-	KeyFrame1[0].Angt2=0.0f;
-	KeyFrame1[0].Angc1=-25.0f;
-	KeyFrame1[0].Angc2=0.0f;
-	KeyFrame1[0].Angbi1=-5.0f;
-	KeyFrame1[0].Angbi2=0.0f;
-	KeyFrame1[0].Angbib=-15.0f;
-	KeyFrame1[0].Angbd1=5.0f;
-	KeyFrame1[0].Angbd2=0.0f;
-	KeyFrame1[0].Angbdb=-40.0f;
-	KeyFrame1[0].Angpizq=20.0f;
-	KeyFrame1[0].Angpder=-30.0f;
-	KeyFrame1[0].Angpizqb=15.0f;
-	KeyFrame1[0].Angpderb=10.0f;
-	KeyFrame1[0].Angpi=0.0f;
-	KeyFrame1[0].Angpd=0.0f;
-	KeyFrame1[0].Xtor=0.0f;
-	KeyFrame1[0].Ytor=0.0f;
-	KeyFrame1[0].Ztor=0.0f;
-
-	KeyFrame1[1].Angt1=-5.0f;
-	KeyFrame1[1].Angt2=0.0f;
-	KeyFrame1[1].Angc1=-25.0f;
-	KeyFrame1[1].Angc2=0.0f;
-	KeyFrame1[1].Angbi1=10.0f;
-	KeyFrame1[1].Angbi2=0.0f;
-	KeyFrame1[1].Angbib=-40.0f;
-	KeyFrame1[1].Angbd1=-10.0f;
-	KeyFrame1[1].Angbd2=0.0f;
-	KeyFrame1[1].Angbdb=-15.0f;
-	KeyFrame1[1].Angpizq=-30.0f;
-	KeyFrame1[1].Angpder=20.0f;
-	KeyFrame1[1].Angpizqb=20.0f;
-	KeyFrame1[1].Angpderb=15.0f;
-	KeyFrame1[1].Angpi=0.0f;
-	KeyFrame1[1].Angpd=0.0f;
-	KeyFrame1[1].Xtor=0.0f;
-	KeyFrame1[1].Ytor=0.0f;
-	KeyFrame1[1].Ztor=0.0f;
-
-	KeyFrame1[2].Angt1=-5.0f;
-	KeyFrame1[2].Angt2=0.0f;
-	KeyFrame1[2].Angc1=-25.0f;
-	KeyFrame1[2].Angc2=0.0f;
-	KeyFrame1[2].Angbi1=-5.0f;
-	KeyFrame1[2].Angbi2=0.0f;
-	KeyFrame1[2].Angbib=-15.0f;
-	KeyFrame1[2].Angbd1=5.0f;
-	KeyFrame1[2].Angbd2=0.0f;
-	KeyFrame1[2].Angbdb=-40.0f;
-	KeyFrame1[2].Angpizq=20.0f;
-	KeyFrame1[2].Angpder=-20.0f;
-	KeyFrame1[2].Angpizqb=15.0f;
-	KeyFrame1[2].Angpderb=10.0f;
-	KeyFrame1[2].Angpi=0.0f;
-	KeyFrame1[2].Angpd=0.0f;
-	KeyFrame1[2].Xtor=0.0f;
-	KeyFrame1[2].Ytor=0.0f;
-	KeyFrame1[2].Ztor=0.0f;
+	KeyFrame1[0].Angt1=	-5.0f;		KeyFrame1[1].Angt1=-5.0f;		KeyFrame1[2].Angt1=-5.0f;
+	KeyFrame1[0].Angt2=	0.0f;		KeyFrame1[1].Angt2=0.0f;		KeyFrame1[2].Angt2=0.0f;
+	KeyFrame1[0].Angc1=	-25.0f;		KeyFrame1[1].Angc1=-25.0f;		KeyFrame1[2].Angc1=-25.0f;
+	KeyFrame1[0].Angc2=	0.0f;		KeyFrame1[1].Angc2=0.0f;		KeyFrame1[2].Angc2=0.0f;
+	KeyFrame1[0].Angbi1=-5.0f;		KeyFrame1[1].Angbi1=10.0f;		KeyFrame1[2].Angbi1=-5.0f;
+	KeyFrame1[0].Angbi2=0.0f;		KeyFrame1[1].Angbi2=0.0f;		KeyFrame1[2].Angbi2=0.0f;
+	KeyFrame1[0].Angbib=-15.0f;		KeyFrame1[1].Angbib=-40.0f;		KeyFrame1[2].Angbib=-15.0f;
+	KeyFrame1[0].Angbd1=5.0f;		KeyFrame1[1].Angbd1=-10.0f;		KeyFrame1[2].Angbd1=5.0f;
+	KeyFrame1[0].Angbd2=0.0f;		KeyFrame1[1].Angbd2=0.0f;		KeyFrame1[2].Angbd2=0.0f;
+	KeyFrame1[0].Angbdb=-40.0f;		KeyFrame1[1].Angbdb=-15.0f;		KeyFrame1[2].Angbdb=-40.0f;
+	KeyFrame1[0].Angpizq=20.0f;		KeyFrame1[1].Angpizq=-30.0f;	KeyFrame1[2].Angpizq=20.0f;
+	KeyFrame1[0].Angpder=-30.0f;	KeyFrame1[1].Angpder=20.0f;		KeyFrame1[2].Angpder=-20.0f;
+	KeyFrame1[0].Angpizqb=15.0f;	KeyFrame1[1].Angpizqb=20.0f;	KeyFrame1[2].Angpizqb=15.0f;
+	KeyFrame1[0].Angpderb=10.0f;	KeyFrame1[1].Angpderb=15.0f;	KeyFrame1[2].Angpderb=10.0f;
+	KeyFrame1[0].Angpi=	0.0f;		KeyFrame1[1].Angpi=0.0f;		KeyFrame1[2].Angpi=0.0f;
+	KeyFrame1[0].Angpd=	0.0f;		KeyFrame1[1].Angpd=0.0f;		KeyFrame1[2].Angpd=0.0f;
+	KeyFrame1[0].Xtor=	0.0f;		KeyFrame1[1].Xtor=0.0f;			KeyFrame1[2].Xtor=0.0f;
+	KeyFrame1[0].Ytor=	0.0f;		KeyFrame1[1].Ytor=0.0f;			KeyFrame1[2].Ytor=0.0f;
+	KeyFrame1[0].Ztor=	0.0f;		KeyFrame1[1].Ztor=0.0f;			KeyFrame1[2].Ztor=0.0f;
 	
 	// Pongan aqui las animaciones de sus personajes, si requieren mas de 3 keyframes...NI MODO XD
 	// Orden de frames: 0. mikumodelo, 1. enem1modelo, 2. MJ6modelo, 3. enem3amodelo, 4. enem3bmodelo, 5. changmodelo
 	// Miku       
-	KeyFrameOtros[ 0 ][ 0 ].Angt1 = 0.0f;
-	KeyFrameOtros[ 0 ][ 0 ].Angt2=0.0f;
-	KeyFrameOtros[ 0 ][ 0 ].Angc1=-25.0f;
-	KeyFrameOtros[ 0 ][ 0 ].Angc2=0.0f;
-	KeyFrameOtros[ 0 ][ 0 ].Angbi1=-5.0f;
-	KeyFrameOtros[ 0 ][ 0 ].Angbi2=0.0f;
-	KeyFrameOtros[ 0 ][ 0 ].Angbib=-15.0f;
-	KeyFrameOtros[ 0 ][ 0 ].Angbd1=5.0f;
-	KeyFrameOtros[ 0 ][ 0 ].Angbd2=0.0f;
-	KeyFrameOtros[ 0 ][ 0 ].Angbdb=-40.0f;
-	KeyFrameOtros[ 0 ][ 0 ].Angpizq=20.0f;
-	KeyFrameOtros[ 0 ][ 0 ].Angpder=-20.0f;
-	KeyFrameOtros[ 0 ][ 0 ].Angpizqb=15.0f;
-	KeyFrameOtros[ 0 ][ 0 ].Angpderb=10.0f;
-	KeyFrameOtros[ 0 ][ 0 ].Angpi=0.0f;
-	KeyFrameOtros[ 0 ][ 0 ].Angpd=0.0f;
-	KeyFrameOtros[ 0 ][ 0 ].Xtor=0.0f;
-	KeyFrameOtros[ 0 ][ 0 ].Ytor=0.0f;
-	KeyFrameOtros[ 0 ][ 0 ].Ztor=0.0f;
+	KeyFrameOtros[ 0 ][ 0 ].Angt1 = 0.0f;	KeyFrameOtros[ 0 ][ 1 ].Angt1 =	0.0f;	KeyFrameOtros[ 0 ][ 2 ].Angt1 = 0.0f;
+	KeyFrameOtros[ 0 ][ 0 ].Angt2 =	0.0f;	KeyFrameOtros[ 0 ][ 1 ].Angt2 =	0.0f;	KeyFrameOtros[ 0 ][ 2 ].Angt2 =	0.0f;
+	KeyFrameOtros[ 0 ][ 0 ].Angc1 =	-25.0f;	KeyFrameOtros[ 0 ][ 1 ].Angc1 =	-25.0f;	KeyFrameOtros[ 0 ][ 2 ].Angc1 =	-25.0f;
+	KeyFrameOtros[ 0 ][ 0 ].Angc2 =	0.0f;	KeyFrameOtros[ 0 ][ 1 ].Angc2 =	0.0f;	KeyFrameOtros[ 0 ][ 2 ].Angc2 =	0.0f;
+	KeyFrameOtros[ 0 ][ 0 ].Angbi1=	-5.0f;	KeyFrameOtros[ 0 ][ 1 ].Angbi1=	-5.0f;	KeyFrameOtros[ 0 ][ 2 ].Angbi1=	-5.0f;
+	KeyFrameOtros[ 0 ][ 0 ].Angbi2=	0.0f;	KeyFrameOtros[ 0 ][ 1 ].Angbi2=	0.0f;	KeyFrameOtros[ 0 ][ 2 ].Angbi2=	0.0f;
+	KeyFrameOtros[ 0 ][ 0 ].Angbib=	-15.0f;	KeyFrameOtros[ 0 ][ 1 ].Angbib=	-15.0f;	KeyFrameOtros[ 0 ][ 2 ].Angbib=	-15.0f;
+	KeyFrameOtros[ 0 ][ 0 ].Angbd1=	5.0f;	KeyFrameOtros[ 0 ][ 1 ].Angbd1=	5.0f;	KeyFrameOtros[ 0 ][ 2 ].Angbd1=	5.0f;
+	KeyFrameOtros[ 0 ][ 0 ].Angbd2=	0.0f;	KeyFrameOtros[ 0 ][ 1 ].Angbd2=	0.0f;	KeyFrameOtros[ 0 ][ 2 ].Angbd2=	0.0f;
+	KeyFrameOtros[ 0 ][ 0 ].Angbdb=	-40.0f;	KeyFrameOtros[ 0 ][ 1 ].Angbdb=	-40.0f;	KeyFrameOtros[ 0 ][ 2 ].Angbdb=-40.0f;
+	KeyFrameOtros[ 0 ][ 0 ].Angpizq=20.0f;	KeyFrameOtros[ 0 ][ 1 ].Angpizq=20.0f;	KeyFrameOtros[ 0 ][ 2 ].Angpizq=20.0f;
+	KeyFrameOtros[ 0 ][ 0 ].Angpder=-20.0f;	KeyFrameOtros[ 0 ][ 1 ].Angpder=-20.0f;	KeyFrameOtros[ 0 ][ 2 ].Angpder=-20.0f;
+	KeyFrameOtros[ 0 ][ 0 ].Angpizqb=15.0f;	KeyFrameOtros[ 0 ][ 1 ].Angpizqb=15.0f;	KeyFrameOtros[ 0 ][ 2 ].Angpizqb=15.0f;
+	KeyFrameOtros[ 0 ][ 0 ].Angpderb=10.0f;	KeyFrameOtros[ 0 ][ 1 ].Angpderb=10.0f;	KeyFrameOtros[ 0 ][ 2 ].Angpderb=10.0f;
+	KeyFrameOtros[ 0 ][ 0 ].Angpi =	0.0f;	KeyFrameOtros[ 0 ][ 1 ].Angpi =	0.0f;	KeyFrameOtros[ 0 ][ 2 ].Angpi =	0.0f;
+	KeyFrameOtros[ 0 ][ 0 ].Angpd =	0.0f;	KeyFrameOtros[ 0 ][ 1 ].Angpd =	0.0f;	KeyFrameOtros[ 0 ][ 2 ].Angpd =	0.0f;
+	KeyFrameOtros[ 0 ][ 0 ].Xtor  =	0.0f;	KeyFrameOtros[ 0 ][ 1 ].Xtor  =	0.0f;	KeyFrameOtros[ 0 ][ 2 ].Xtor  =	0.0f;
+	KeyFrameOtros[ 0 ][ 0 ].Ytor  =	0.0f;	KeyFrameOtros[ 0 ][ 1 ].Ytor  =	0.0f;	KeyFrameOtros[ 0 ][ 2 ].Ytor  =	0.0f;
+	KeyFrameOtros[ 0 ][ 0 ].Ztor  =	0.0f;	KeyFrameOtros[ 0 ][ 1 ].Ztor  =	0.0f;	KeyFrameOtros[ 0 ][ 2 ].Ztor  =	0.0f;
 
-	KeyFrameOtros[ 0 ][ 1 ].Angt1 = 0.0f;
-	KeyFrameOtros[ 0 ][ 1 ].Angt2=0.0f;
-	KeyFrameOtros[ 0 ][ 1 ].Angc1=-25.0f;
-	KeyFrameOtros[ 0 ][ 1 ].Angc2=0.0f;
-	KeyFrameOtros[ 0 ][ 1 ].Angbi1=-5.0f;
-	KeyFrameOtros[ 0 ][ 1 ].Angbi2=0.0f;
-	KeyFrameOtros[ 0 ][ 1 ].Angbib=-15.0f;
-	KeyFrameOtros[ 0 ][ 1 ].Angbd1=5.0f;
-	KeyFrameOtros[ 0 ][ 1 ].Angbd2=0.0f;
-	KeyFrameOtros[ 0 ][ 1 ].Angbdb=-40.0f;
-	KeyFrameOtros[ 0 ][ 1 ].Angpizq=20.0f;
-	KeyFrameOtros[ 0 ][ 1 ].Angpder=-20.0f;
-	KeyFrameOtros[ 0 ][ 1 ].Angpizqb=15.0f;
-	KeyFrameOtros[ 0 ][ 1 ].Angpderb=10.0f;
-	KeyFrameOtros[ 0 ][ 1 ].Angpi=0.0f;
-	KeyFrameOtros[ 0 ][ 1 ].Angpd=0.0f;
-	KeyFrameOtros[ 0 ][ 1 ].Xtor=0.0f;
-	KeyFrameOtros[ 0 ][ 1 ].Ytor=0.0f;
-	KeyFrameOtros[ 0 ][ 1 ].Ztor=0.0f;
+	// Enem1 (enemigo gordo)
+	KeyFrameOtros[ 1 ][ 0 ].Angt1 =	0.0f;	KeyFrameOtros[ 1 ][ 0 ].Angt1 =	0.0f;	KeyFrameOtros[ 1 ][ 2 ].Angt1 = 0.0f;
+	KeyFrameOtros[ 1 ][ 0 ].Angt2 =	5.0f;	KeyFrameOtros[ 1 ][ 1 ].Angt2 =	0.0f;	KeyFrameOtros[ 1 ][ 2 ].Angt2 =	-5.0f;
+	KeyFrameOtros[ 1 ][ 0 ].Angc1 =	-20.0f;	KeyFrameOtros[ 1 ][ 1 ].Angc1 =	20.0f;	KeyFrameOtros[ 1 ][ 2 ].Angc1 =	-20.0f;
+	KeyFrameOtros[ 1 ][ 0 ].Angc2 =	0.0f;	KeyFrameOtros[ 1 ][ 1 ].Angc2 =	0.0f;	KeyFrameOtros[ 1 ][ 2 ].Angc2 =	0.0f;
+	KeyFrameOtros[ 1 ][ 0 ].Angbi1= -8.0f;	KeyFrameOtros[ 1 ][ 1 ].Angbi1=	8.0f;	KeyFrameOtros[ 1 ][ 2 ].Angbi1=	-8.0f;
+	KeyFrameOtros[ 1 ][ 0 ].Angbi2= 0.0f;	KeyFrameOtros[ 1 ][ 1 ].Angbi2=	0.0f;	KeyFrameOtros[ 1 ][ 2 ].Angbi2=	0.0f;
+//	KeyFrameOtros[ 1 ][ 0 ].Angbib= 0.0f;	KeyFrameOtros[ 1 ][ 1 ].Angbib=	-15.0f;	KeyFrameOtros[ 1 ][ 2 ].Angbib=	-15.0f;
+	KeyFrameOtros[ 1 ][ 0 ].Angbd1= 8.0f;	KeyFrameOtros[ 1 ][ 1 ].Angbd1=	8.0f;	KeyFrameOtros[ 1 ][ 2 ].Angbd1=	8.0f;
+	KeyFrameOtros[ 1 ][ 0 ].Angbd2= 0.0f;	KeyFrameOtros[ 1 ][ 1 ].Angbd2=	0.0f;	KeyFrameOtros[ 1 ][ 2 ].Angbd2=	0.0f;
+//	KeyFrameOtros[ 1 ][ 0 ].Angbdb= 0.0f;	KeyFrameOtros[ 1 ][ 1 ].Angbdb=	-40.0f;	KeyFrameOtros[ 1 ][ 2 ].Angbdb=	-40.0f;
+	KeyFrameOtros[ 1 ][ 0 ].Angpizq=15.0f;	KeyFrameOtros[ 1 ][ 1 ].Angpizq=-10.0f;	KeyFrameOtros[ 1 ][ 2 ].Angpizq=15.0f;
+	KeyFrameOtros[ 1 ][ 0 ].Angpder=-10.0f;	KeyFrameOtros[ 1 ][ 1 ].Angpder=15.0f;	KeyFrameOtros[ 1 ][ 2 ].Angpder=-10.0f;
+	KeyFrameOtros[ 1 ][ 0 ].Angpizqb=-5.0f;	KeyFrameOtros[ 1 ][ 1 ].Angpizqb=10.0f;	KeyFrameOtros[ 1 ][ 2 ].Angpizqb=-5.0f;
+	KeyFrameOtros[ 1 ][ 0 ].Angpderb=10.0f;	KeyFrameOtros[ 1 ][ 1 ].Angpderb=-5.0f;	KeyFrameOtros[ 1 ][ 2 ].Angpderb=10.0f;
+	KeyFrameOtros[ 1 ][ 0 ].Angpi =	0.0f;	KeyFrameOtros[ 1 ][ 1 ].Angpi =	0.0f;	KeyFrameOtros[ 1 ][ 2 ].Angpi =	0.0f;
+	KeyFrameOtros[ 1 ][ 0 ].Angpd =	0.0f;	KeyFrameOtros[ 1 ][ 1 ].Angpd =	0.0f;	KeyFrameOtros[ 1 ][ 2 ].Angpd =	0.0f;
+	KeyFrameOtros[ 1 ][ 0 ].Xtor  =	0.0f;	KeyFrameOtros[ 1 ][ 1 ].Xtor  =	0.0f;	KeyFrameOtros[ 1 ][ 2 ].Xtor  =	0.0f;
+	KeyFrameOtros[ 1 ][ 0 ].Ytor  =	0.0f;	KeyFrameOtros[ 1 ][ 1 ].Ytor  =	0.0f;	KeyFrameOtros[ 1 ][ 2 ].Ytor=0.0f;
+	KeyFrameOtros[ 1 ][ 0 ].Ztor  =	0.0f;	KeyFrameOtros[ 1 ][ 1 ].Ztor  =	0.0f;	KeyFrameOtros[ 1 ][ 2 ].Ztor=0.0f;
 
-	KeyFrameOtros[ 0 ][ 2 ].Angt1 = 0.0f;
-	KeyFrameOtros[ 0 ][ 2 ].Angt2=0.0f;
-	KeyFrameOtros[ 0 ][ 2 ].Angc1=-25.0f;
-	KeyFrameOtros[ 0 ][ 2 ].Angc2=0.0f;
-	KeyFrameOtros[ 0 ][ 2 ].Angbi1=-5.0f;
-	KeyFrameOtros[ 0 ][ 2 ].Angbi2=0.0f;
-	KeyFrameOtros[ 0 ][ 2 ].Angbib=-15.0f;
-	KeyFrameOtros[ 0 ][ 2 ].Angbd1=5.0f;
-	KeyFrameOtros[ 0 ][ 2 ].Angbd2=0.0f;
-	KeyFrameOtros[ 0 ][ 2 ].Angbdb=-40.0f;
-	KeyFrameOtros[ 0 ][ 2 ].Angpizq=20.0f;
-	KeyFrameOtros[ 0 ][ 2 ].Angpder=-20.0f;
-	KeyFrameOtros[ 0 ][ 2 ].Angpizqb=15.0f;
-	KeyFrameOtros[ 0 ][ 2 ].Angpderb=10.0f;
-	KeyFrameOtros[ 0 ][ 2 ].Angpi=0.0f;
-	KeyFrameOtros[ 0 ][ 2 ].Angpd=0.0f;
-	KeyFrameOtros[ 0 ][ 2 ].Xtor=0.0f;
-	KeyFrameOtros[ 0 ][ 2 ].Ytor=0.0f;
-	KeyFrameOtros[ 0 ][ 2 ].Ztor=0.0f;
+	// Enem2 (helicoptero)
+	KeyFrameOtros[ 2 ][ 0 ].Angt1 = 20.0f;	KeyFrameOtros[ 2 ][ 0 ].Angt1 =-20.0f;	KeyFrameOtros[ 3 ][ 2 ].Angt1 =	20.0f;
+	KeyFrameOtros[ 2 ][ 0 ].Angt2 =	5.0f;	KeyFrameOtros[ 2 ][ 1 ].Angt2 =	-5.0f;	KeyFrameOtros[ 3 ][ 2 ].Angt2 = 25.0f;
+//	KeyFrameOtros[ 2 ][ 0 ].Angc1 =	-20.0f;	KeyFrameOtros[ 2 ][ 1 ].Angc1 =	0.0f;	KeyFrameOtros[ 3 ][ 2 ].Angc1 =	20.0f;
+//	KeyFrameOtros[ 2 ][ 0 ].Angc2 =	0.0f;	KeyFrameOtros[ 2 ][ 1 ].Angc2 =	0.0f;	KeyFrameOtros[ 3 ][ 2 ].Angc2 =	0.0f;
+//	KeyFrameOtros[ 2 ][ 0 ].Angbi1= -5.0f;	KeyFrameOtros[ 2 ][ 1 ].Angbi1=	-5.0f;	KeyFrameOtros[ 3 ][ 2 ].Angbi1= -5.0f;
+//	KeyFrameOtros[ 2 ][ 0 ].Angbi2= 0.0f;	KeyFrameOtros[ 2 ][ 1 ].Angbi2=	0.0f;	KeyFrameOtros[ 3 ][ 2 ].Angbi2= 0.0f;
+//	KeyFrameOtros[ 2 ][ 0 ].Angbib= 0.0f;	KeyFrameOtros[ 2 ][ 1 ].Angbib=	-15.0f;	KeyFrameOtros[ 3 ][ 2 ].Angbib= -15.0f;
+//	KeyFrameOtros[ 2 ][ 0 ].Angbd1= 5.0f;	KeyFrameOtros[ 2 ][ 1 ].Angbd1=	5.0f;	KeyFrameOtros[ 3 ][ 2 ].Angbd1= 5.0f;
+//	KeyFrameOtros[ 2 ][ 0 ].Angbd2= 0.0f;	KeyFrameOtros[ 2 ][ 1 ].Angbd2=	0.0f;	KeyFrameOtros[ 3 ][ 2 ].Angbd2= 0.0f;
+//	KeyFrameOtros[ 2 ][ 0 ].Angbdb= 0.0f;	KeyFrameOtros[ 2 ][ 1 ].Angbdb=	-40.0f;	KeyFrameOtros[ 3 ][ 2 ].Angbdb= -40.0f;
+//	KeyFrameOtros[ 2 ][ 0 ].Angpizq=20.0f;	KeyFrameOtros[ 2 ][ 1 ].Angpizq=20.0f;	KeyFrameOtros[ 3 ][ 2 ].Angpizq=20.0f;
+//	KeyFrameOtros[ 2 ][ 0 ].Angpder=-20.0f;	KeyFrameOtros[ 2 ][ 1 ].Angpder=-20.0f;	KeyFrameOtros[ 3 ][ 2 ].Angpder=-20.0f;
+//	KeyFrameOtros[ 2 ][ 0 ].Angpizqb=15.0f;	KeyFrameOtros[ 2 ][ 1 ].Angpizqb=15.0f;	KeyFrameOtros[ 3 ][ 2 ].Angpizqb=15.0f;
+//	KeyFrameOtros[ 2 ][ 0 ].Angpderb=10.0f;	KeyFrameOtros[ 2 ][ 1 ].Angpderb=10.0f;	KeyFrameOtros[ 3 ][ 2 ].Angpderb=10.0f;
+//	KeyFrameOtros[ 2 ][ 0 ].Angpi =	0.0f;	KeyFrameOtros[ 2 ][ 1 ].Angpi =	0.0f;	KeyFrameOtros[ 3 ][ 2 ].Angpi = 0.0f;
+//	KeyFrameOtros[ 2 ][ 0 ].Angpd =	0.0f;	KeyFrameOtros[ 2 ][ 1 ].Angpd =	0.0f;	KeyFrameOtros[ 3 ][ 2 ].Angpd =	0.0f;
+//	KeyFrameOtros[ 2 ][ 0 ].Xtor  =	0.0f;	KeyFrameOtros[ 2 ][ 1 ].Xtor  =	0.0f;	KeyFrameOtros[ 3 ][ 2 ].Xtor  =	0.0f;
+//	KeyFrameOtros[ 2 ][ 0 ].Ytor  =	0.0f;	KeyFrameOtros[ 2 ][ 1 ].Ytor  =	0.0f;	KeyFrameOtros[ 3 ][ 2 ].Ytor  =	0.0f;
+//	KeyFrameOtros[ 2 ][ 0 ].Ztor  =	0.0f;	KeyFrameOtros[ 2 ][ 1 ].Ztor  =	0.0f;	KeyFrameOtros[ 3 ][ 2 ].Ztor =	0.0f;
 
 	// El que sigue...
 
@@ -2473,6 +2524,11 @@ void InicializaObjetosdeColision()
 	esfera[1].radio=2.2f;
 	esfera[1].Pos=CVector(enem1.PosicionObj.x, enem1.PosicionObj.y-2.0f, enem1.PosicionObj.z);
 	esfera[1].colision=false;
+      
+        //Esfera de colision del Enem1a
+	esfera[3].radio=2.2f;
+	esfera[3].Pos=CVector(enem1a.PosicionObj.x, enem1a.PosicionObj.y-2.0f, enem1a.PosicionObj.z);
+	esfera[3].colision=false;
 
 	//Esfera de colision del Enem2
 	esfera[2].radio=5.5f;
@@ -2493,6 +2549,16 @@ void InicializaObjetosdeColision()
 	esfera[8].radio=3.0f;
 	esfera[8].Pos=CVector(enem3b.PosicionObj.x, enem3b.PosicionObj.y+2.0f, enem3b.PosicionObj.z);
 	esfera[8].colision=false;
+
+        //Esfera de colision del Enem3c
+	esfera[10].radio=3.0f;
+	esfera[10].Pos=CVector(enem3c.PosicionObj.x, enem3c.PosicionObj.y+2.0f, enem3c.PosicionObj.z);
+	esfera[10].colision=false;
+
+	//Esfera de colision del Enem3d
+	esfera[11].radio=3.0f;
+	esfera[11].Pos=CVector(enem3d.PosicionObj.x, enem3d.PosicionObj.y+2.0f, enem3d.PosicionObj.z);
+	esfera[11].colision=false;
 
 	//Esfera de colision del chango
 	esfera[9].radio=2.5f;
@@ -2548,11 +2614,13 @@ void ActualizaObjetosDinamicosColision()
 
 	esfera[1].Pos=CVector(enem1.PosicionObj.x, enem1.PosicionObj.y+2.5f, enem1.PosicionObj.z);
 	esfera[2].Pos=CVector(target[0], target[1] + 2.5, target[2]);
+        esfera[2].Pos=CVector(enem1a.PosicionObj.x, enem1a.PosicionObj.y+2.5f, enem1a.PosicionObj.z);
 	esfera[6].Pos=CVector(MJ6.PosicionObj.x, MJ6.PosicionObj.y+2.5f, MJ6.PosicionObj.z);
 	esfera[9].Pos=CVector(chang.PosicionObj.x, chang.PosicionObj.y+2.0f, chang.PosicionObj.z);
 	esfera[8].Pos=CVector(enem3b.PosicionObj.x, enem3b.PosicionObj.y+2.0f, enem3b.PosicionObj.z);
 	esfera[7].Pos=CVector(enem3a.PosicionObj.x, enem3a.PosicionObj.y+2.0f, enem3a.PosicionObj.z);
-
+        esfera[10].Pos=CVector(enem3c.PosicionObj.x, enem3c.PosicionObj.y+2.0f, enem3c.PosicionObj.z);
+	esfera[11].Pos=CVector(enem3d.PosicionObj.x, enem3d.PosicionObj.y+2.0f, enem3d.PosicionObj.z);
 
 }
 
@@ -4395,7 +4463,7 @@ void DibujaTextos()
 		// Texto a mostrar en pantalla
 		Font.glPrint((1.0f/640.0f)*glWidth, glWidth*0.05f,glHeight*0.9f,"Delay: %d", Enemigos[1].getDelay() );
 		//Font.glPrint((1.0f/640.0f)*glWidth, glWidth*0.05f,glHeight*0.85f,"PosCam %f", player1.PosicionCam.x );
-		Font.glPrint((1.0f/640.0f)*glWidth, glWidth*0.05f,glHeight*0.70f,"PosObj %.2f, %.2f, %.2f", player1.PosicionObj.x, player1.PosicionObj.y, player1.PosicionObj.z);
+		//Font.glPrint((1.0f/640.0f)*glWidth, glWidth*0.05f,glHeight*0.70f,"PosObj %.2f, %.2f, %.2f", player1.PosicionObj.x, player1.PosicionObj.y, player1.PosicionObj.z);
 		Font.glPrint( (1.0f/640.0f)*glWidth, glWidth * 0.45f, glHeight * 0.95f, "High 50000" );
 		Font.glPrint( (1.0f/640.0f)*glWidth, glWidth * 0.42f, glHeight * 0.90f, "Round 1 Stage 1" );
 		Font.glPrint( (1.0f/640.0f)*glWidth, glWidth * 0.08f, glHeight * 0.15f, "1P" );
@@ -4802,6 +4870,14 @@ void DibujaEnemigos()
 		DibujaEnemigo1();
 	glPopMatrix();
 
+       //Ene1a
+	glPushMatrix();
+		glTranslatef(enem1a.PosicionObj.x, enem1a.PosicionObj.y, enem1a.PosicionObj.z);
+		glRotatef(enem1a.AngObj, 0.0f, 1.0f, 0.0f);
+		glScalef(enem1a.escalaX,enem1a.escalaY,enem1a.escalaZ);
+		DibujaEnemigo1();
+	glPopMatrix();
+
 	//Ene2
 	glPushMatrix();
 		if(pisoId < 2)
@@ -4824,6 +4900,22 @@ void DibujaEnemigos()
 		glTranslatef(enem3b.PosicionObj.x, enem3b.PosicionObj.y+2.4f, enem3b.PosicionObj.z);
 		glRotatef(enem3b.AngObj, 0.0f, 1.0f, 0.0f);
 		glScalef(enem3b.escalaX,enem3b.escalaY,enem3b.escalaZ);
+		DibujaEnemigo3b();
+	glPopMatrix();
+
+        //Ene3c
+	glPushMatrix();
+		glTranslatef(enem3c.PosicionObj.x, enem3c.PosicionObj.y+2.4f, enem3c.PosicionObj.z);
+		glRotatef(enem3c.AngObj,0.0f, 1.0f, 0.0f);
+		glScalef(enem3c.escalaX,enem3c.escalaY,enem3c.escalaZ);
+		DibujaEnemigo3a();
+	glPopMatrix();
+
+	//Ene3b
+	glPushMatrix();
+		glTranslatef(enem3d.PosicionObj.x, enem3d.PosicionObj.y+2.4f, enem3d.PosicionObj.z);
+		glRotatef(enem3d.AngObj, 0.0f, 1.0f, 0.0f);
+		glScalef(enem3d.escalaX,enem3d.escalaY,enem3d.escalaZ);
 		DibujaEnemigo3b();
 	glPopMatrix();
 
