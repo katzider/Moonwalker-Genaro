@@ -33,6 +33,14 @@ FMOD_CHANNEL     *channel[2] = { 0, 0 };
 boundingplane plano[maxPlanos];
 boundingsphere esfera[maxPersonajes];
 
+//Variables para el tamaño del cubo del ataque de fuego de MJ
+int l=4;	//largo
+int h=4;	//alto
+int w=10;	//ancho
+CVector pf; //punto origen del fuego (posición de las manos de MJ)
+//pf = CVector( 0.0f, 0.0f, 0.0f);
+int MJAtaque=1; //0 no ataca, 1 si ataca
+
 // variables que usaremos para la camara
 float CamPos[4][6] = { 
 	{ 190.0f, 90.0f, 10.0f, 180.0f, 6.5f, -60.0f }, 
@@ -621,12 +629,14 @@ void CargaTexturas()
 {
 	textura[0].LoadTGA("Texturas/t1.tga");
 	textura[1].LoadTGA("Texturas/MJi.tga");
+	textura[2].LoadTGA("Texturas/fireblue.tga");
 }
 
 void DescargaTexturas()
 {
 	textura[0].Elimina();
 	textura[1].Elimina();
+	textura[2].Elimina();
 }
 
 int CargaModelos()
@@ -2936,6 +2946,39 @@ void animacion(FRAME *KeyFrame, int maxKF , int frames, jerarquiaModelo* modelo,
 	}
 }
 
+void DibujaFuegoMJ()
+{
+	pf = CVector(-3.0f, 2.0f, 13.0f);
+	
+	glEnable(GL_TEXTURE_2D);
+
+	glAlphaFunc(GL_GREATER, 0.4f);
+	glEnable(GL_ALPHA_TEST);
+
+	glBindTexture(GL_TEXTURE_2D, textura[2].texID);
+
+	glBegin(GL_QUADS);
+		//Tapa superior
+		glTexCoord2f(0.0f, 0.15f); glVertex3f(pf.x+l, pf.y+h, pf.z+w);
+		glTexCoord2f(1.0f, 0.15f); glVertex3f(pf.x,   pf.y+h, pf.z+w);
+		glTexCoord2f(1.0f, 0.85f); glVertex3f(pf.x,   pf.y+h, pf.z-w);
+		glTexCoord2f(0.0f, 0.85f); glVertex3f(pf.x+l, pf.y+h, pf.z-w);
+		//Tapa lateral izquierda
+		glTexCoord2f(0.0f, 0.15f); glVertex3f(pf.x,   pf.y-h, pf.z+w);
+		glTexCoord2f(1.0f, 0.15f); glVertex3f(pf.x,   pf.y-h, pf.z-w);
+		glTexCoord2f(1.0f, 0.85f); glVertex3f(pf.x,   pf.y+h, pf.z-w);
+		glTexCoord2f(0.0f, 0.85f); glVertex3f(pf.x,   pf.y+h, pf.z+w);
+		//Tapa lateral derecha
+		glTexCoord2f(1.0f, 0.85f); glVertex3f(pf.x+l, pf.y-h, pf.z-w);
+		glTexCoord2f(0.0f, 0.85f); glVertex3f(pf.x+l, pf.y-h, pf.z+w);
+		glTexCoord2f(0.0f, 0.15f); glVertex3f(pf.x+l, pf.y+h, pf.z+w);
+		glTexCoord2f(1.0f, 0.15f); glVertex3f(pf.x+l, pf.y+h, pf.z-w);
+	glEnd();
+
+	glDisable(GL_ALPHA_TEST);
+	glDisable(GL_TEXTURE_2D);
+}
+
 //robot
 void dibujaEnemigo8()
 {
@@ -3562,7 +3605,15 @@ void DibujaPersonajeAru()
 			
 	//Torso
 	glCallList(modelo1aru+0);
-	
+
+	if (MJAtaque == 1)
+	{
+		//Fuego
+		glPushMatrix();
+			DibujaFuegoMJ();
+		glPopMatrix();
+	}
+
 	//Pierna derecha
 	glPushMatrix();
 		glRotatef(player1modelo.Angpder, 1.0f, 0.0f, 0.0f);
@@ -3926,6 +3977,8 @@ void DibujaVolumendeSombra()
 
 	glPopMatrix();
 }
+
+
 void DibujaEjes()
 {
 	glColor3f(1.0f,0.0f,0.0f);
@@ -4018,8 +4071,8 @@ void DibujaTextos()
 
 		// Texto a mostrar en pantalla
 		Font.glPrint((1.0f/640.0f)*glWidth, glWidth*0.05f,glHeight*0.9f,"Delay: %d", Enemigos[1].getDelay() );
-		/*Font.glPrint((1.0f/640.0f)*glWidth, glWidth*0.05f,glHeight*0.85f,"PosCam %f", player1.PosicionCam.x );
-		Font.glPrint((1.0f/640.0f)*glWidth, glWidth*0.05f,glHeight*0.80f,"PosObj %f", player1.PosicionObj.x);*/
+		//Font.glPrint((1.0f/640.0f)*glWidth, glWidth*0.05f,glHeight*0.85f,"PosCam %f", player1.PosicionCam.x );
+		Font.glPrint((1.0f/640.0f)*glWidth, glWidth*0.05f,glHeight*0.70f,"PosObj %.2f, %.2f, %.2f", player1.PosicionObj.x, player1.PosicionObj.y, player1.PosicionObj.z);
 		Font.glPrint( (1.0f/640.0f)*glWidth, glWidth * 0.45f, glHeight * 0.95f, "High 50000" );
 		Font.glPrint( (1.0f/640.0f)*glWidth, glWidth * 0.42f, glHeight * 0.90f, "Round 1 Stage 1" );
 		Font.glPrint( (1.0f/640.0f)*glWidth, glWidth * 0.08f, glHeight * 0.15f, "1P" );
@@ -5452,6 +5505,12 @@ int ManejaTeclado()
 
 	if (keys['N'])
 		LightPos[2] -= 1.0f; //Hacia atrás
+
+	if (keys['P'])
+	{
+		if (MJAtaque == 0)	MJAtaque = 1;
+		else				MJAtaque = 0;
+	}
 
 	if((GetAsyncKeyState(VK_RETURN)&1) ==1)
 	{
