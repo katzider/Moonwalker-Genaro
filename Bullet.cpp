@@ -1,5 +1,10 @@
 #include "Bullet.h"
 
+Bullet::Bullet( CVector origen )
+{
+	bala.Pos = origen;
+}
+
 void Bullet::changePara( float vel, float radius, CVector destino )
 {
 	speed = vel;
