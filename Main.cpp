@@ -306,6 +306,8 @@ jerarquiaModelo changmodelo;
 jerarquiaModelo enem1modelo;
 jerarquiaModelo enem2modelo;
 jerarquiaModelo MJ6modelo;
+// Miku
+jerarquiaModelo mikumodelo;
 
 /* Declaracion de keyframes, aqui puse todos los keyframes que chance usaran
  * ya le puse un comentario a quien le pertenece cada frame, si requieren mas,
@@ -316,49 +318,19 @@ jerarquiaModelo MJ6modelo;
 const int maxKF1=3;				//Num. total de KeyFrames para la secuencia 1 (caminar)
 FRAME KeyFrame1[maxKF1];		//Contenedor para almacenar cada keyframe de la secuencia 1
 
-// Animacion Miku
-const int maxKF2 = 3;
-FRAME KeyFrame2[maxKF2];
-
-// Animacion enem1
-const int maxKF3 = 3;
-FRAME KeyFrame3[maxKF3];
-
-// Animacion enem2
-const int maxKF4 = 3;
-FRAME KeyFrame4[maxKF4];
-
-// Animacion MJ6modelo
-const int maxKF5 = 3;
-FRAME KeyFrame5[maxKF5];
-
-// Animacion enem3A
-const int maxKF6 = 3;
-FRAME KeyFrame6[maxKF6];
-
-// Animacion enem3B
-const int maxKF7 = 3;
-FRAME KeyFrame7[maxKF7];
-
-// Animacion changmodelo
-const int maxKF8 = 3;
-FRAME KeyFrame8[maxKF8];
-
-// Miku
-jerarquiaModelo mikumodelo;
-
-bool play=false;//Bandera para iniciar la animación
+bool play = false;//Bandera para iniciar la animación
 int playIndex = 0;//Auxiliar para leer la información del contenedor de keyframes
 int tipoAnim = 1; //Indicador del tipo de animación
 
 // Banderas para iniciar las demas animaciones
 const int otros = 7;
 
-bool playOtros[ otros ] = { false, false, false, false, false, false, false };
-int playIndexOtros[ otros ] = { 0, 0, 0, 0, 0, 0, 0 };
-int tipoAnimOtros[ otros ] = { 1, 1, 1, 1, 1, 1, 1 };
-jerarquiaModelo* modelosOtros[ otros ] = { &mikumodelo, &enem1modelo, &enem2modelo, &MJ6modelo, &enem3amodelo, &enem3bmodelo, &changmodelo };
-FRAME KeyFrameOtros[ otros ][ 3 ];
+bool playOtros[ otros ] = { false, false, false, false, false, false, false }; // Banderas para iniciar la animacion
+int playIndexOtros[ otros ] = { 0, 0, 0, 0, 0, 0, 0 }; // Auxiliares para leer la informacion del contenedor de keyframes
+int tipoAnimOtros[ otros ] = { 1, 1, 1, 1, 1, 1, 1 }; // Indicador del tipo de animacion
+jerarquiaModelo* modelosOtros[ otros ] = { &mikumodelo, &enem1modelo, &enem2modelo, 
+											&MJ6modelo, &enem3amodelo, &enem3bmodelo, &changmodelo }; // apuntadores a los modelos
+FRAME KeyFrameOtros[ otros ][ 3 ]; // Contenedor para almacenar cada keyframe de las secuencias
 
 CMultitexturas Multitext;
 
@@ -1900,7 +1872,73 @@ void DatosAnimacion()
 	KeyFrame1[2].Xtor=0.0f;
 	KeyFrame1[2].Ytor=0.0f;
 	KeyFrame1[2].Ztor=0.0f;
-			
+	
+	// Pongan aqui las animaciones de sus personajes, si requieren mas de 3 keyframes...NI MODO XD
+	// Orden de frames: 0. mikumodelo, 1. enem1modelo, 2. enem2modelo, 
+	//					3. MJ6modelo, 4. enem3amodelo, 5. enem3bmodelo, 6. changmodelo
+	// Miku       
+	KeyFrameOtros[ 0 ][ 0 ].Angt1 = 0.0f;
+	KeyFrameOtros[ 0 ][ 0 ].Angt2=0.0f;
+	KeyFrameOtros[ 0 ][ 0 ].Angc1=-25.0f;
+	KeyFrameOtros[ 0 ][ 0 ].Angc2=0.0f;
+	KeyFrameOtros[ 0 ][ 0 ].Angbi1=-5.0f;
+	KeyFrameOtros[ 0 ][ 0 ].Angbi2=0.0f;
+	KeyFrameOtros[ 0 ][ 0 ].Angbib=-15.0f;
+	KeyFrameOtros[ 0 ][ 0 ].Angbd1=5.0f;
+	KeyFrameOtros[ 0 ][ 0 ].Angbd2=0.0f;
+	KeyFrameOtros[ 0 ][ 0 ].Angbdb=-40.0f;
+	KeyFrameOtros[ 0 ][ 0 ].Angpizq=20.0f;
+	KeyFrameOtros[ 0 ][ 0 ].Angpder=-20.0f;
+	KeyFrameOtros[ 0 ][ 0 ].Angpizqb=15.0f;
+	KeyFrameOtros[ 0 ][ 0 ].Angpderb=10.0f;
+	KeyFrameOtros[ 0 ][ 0 ].Angpi=0.0f;
+	KeyFrameOtros[ 0 ][ 0 ].Angpd=0.0f;
+	KeyFrameOtros[ 0 ][ 0 ].Xtor=0.0f;
+	KeyFrameOtros[ 0 ][ 0 ].Ytor=0.0f;
+	KeyFrameOtros[ 0 ][ 0 ].Ztor=0.0f;
+
+	KeyFrameOtros[ 0 ][ 1 ].Angt1 = 0.0f;
+	KeyFrameOtros[ 0 ][ 1 ].Angt2=0.0f;
+	KeyFrameOtros[ 0 ][ 1 ].Angc1=-25.0f;
+	KeyFrameOtros[ 0 ][ 1 ].Angc2=0.0f;
+	KeyFrameOtros[ 0 ][ 1 ].Angbi1=-5.0f;
+	KeyFrameOtros[ 0 ][ 1 ].Angbi2=0.0f;
+	KeyFrameOtros[ 0 ][ 1 ].Angbib=-15.0f;
+	KeyFrameOtros[ 0 ][ 1 ].Angbd1=5.0f;
+	KeyFrameOtros[ 0 ][ 1 ].Angbd2=0.0f;
+	KeyFrameOtros[ 0 ][ 1 ].Angbdb=-40.0f;
+	KeyFrameOtros[ 0 ][ 1 ].Angpizq=20.0f;
+	KeyFrameOtros[ 0 ][ 1 ].Angpder=-20.0f;
+	KeyFrameOtros[ 0 ][ 1 ].Angpizqb=15.0f;
+	KeyFrameOtros[ 0 ][ 1 ].Angpderb=10.0f;
+	KeyFrameOtros[ 0 ][ 1 ].Angpi=0.0f;
+	KeyFrameOtros[ 0 ][ 1 ].Angpd=0.0f;
+	KeyFrameOtros[ 0 ][ 1 ].Xtor=0.0f;
+	KeyFrameOtros[ 0 ][ 1 ].Ytor=0.0f;
+	KeyFrameOtros[ 0 ][ 1 ].Ztor=0.0f;
+
+	KeyFrameOtros[ 0 ][ 2 ].Angt1 = 0.0f;
+	KeyFrameOtros[ 0 ][ 2 ].Angt2=0.0f;
+	KeyFrameOtros[ 0 ][ 2 ].Angc1=-25.0f;
+	KeyFrameOtros[ 0 ][ 2 ].Angc2=0.0f;
+	KeyFrameOtros[ 0 ][ 2 ].Angbi1=-5.0f;
+	KeyFrameOtros[ 0 ][ 2 ].Angbi2=0.0f;
+	KeyFrameOtros[ 0 ][ 2 ].Angbib=-15.0f;
+	KeyFrameOtros[ 0 ][ 2 ].Angbd1=5.0f;
+	KeyFrameOtros[ 0 ][ 2 ].Angbd2=0.0f;
+	KeyFrameOtros[ 0 ][ 2 ].Angbdb=-40.0f;
+	KeyFrameOtros[ 0 ][ 2 ].Angpizq=20.0f;
+	KeyFrameOtros[ 0 ][ 2 ].Angpder=-20.0f;
+	KeyFrameOtros[ 0 ][ 2 ].Angpizqb=15.0f;
+	KeyFrameOtros[ 0 ][ 2 ].Angpderb=10.0f;
+	KeyFrameOtros[ 0 ][ 2 ].Angpi=0.0f;
+	KeyFrameOtros[ 0 ][ 2 ].Angpd=0.0f;
+	KeyFrameOtros[ 0 ][ 2 ].Xtor=0.0f;
+	KeyFrameOtros[ 0 ][ 2 ].Ytor=0.0f;
+	KeyFrameOtros[ 0 ][ 2 ].Ztor=0.0f;
+
+	// El que sigue...
+
 }
 
 // Colisiones, todo lo referente a colisiones ira aqui
@@ -2552,14 +2590,10 @@ int InitGL(GLvoid)										// Aqui se configuran los parametros iniciales de Op
 	e=gluNewQuadric();
 
 	InicializaParametrosdeControl();
-	InicializaAnim( KeyFrame1, maxKF1, &player1modelo );
-	InicializaAnim( KeyFrame2, maxKF2, &mikumodelo );
-	InicializaAnim( KeyFrame3, maxKF3, &enem1modelo );
-	InicializaAnim( KeyFrame4, maxKF4, &enem2modelo );
-	InicializaAnim( KeyFrame5, maxKF5, &MJ6modelo );
-	InicializaAnim( KeyFrame6, maxKF6, &enem3amodelo );
-	InicializaAnim( KeyFrame7, maxKF7, &enem3bmodelo );
-	InicializaAnim( KeyFrame8, maxKF8, &changmodelo );
+	for( int i = 0; i < otros; i++ )
+	{
+		InicializaAnim( KeyFrameOtros[ i ], 3, modelosOtros[ i ] );
+	}
 	DatosAnimacion();
 
 	// Animator
@@ -5129,9 +5163,12 @@ int WINAPI WinMain(	HINSTANCE	hInstance,			// Instancia
 						if(tipoAnim == 1)
 							animacion(KeyFrame1, maxKF1 , 18, &player1modelo, playIndex );
 					}
-					if( playOtros[ 1 ] )
+					for( int i = 0; i < otros; i++ )
 					{
-						animacion( KeyFrame2, maxKF2, 18, &mikumodelo, playIndexOtros[ 1 ] );
+						if( playOtros[ i ] )
+						{
+							animacion( KeyFrameOtros[ i ], 3, 18, modelosOtros[ i ], playIndexOtros[ i ] );
+						}
 					}
 					SwapBuffers(hDC);				// Intercambia los Buffers (Double Buffering)
 				}
