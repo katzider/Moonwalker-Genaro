@@ -57,6 +57,7 @@ parametros player1;
 parametros miku;
 
 parametros enem1;	 //Variable con la que tenemos acceso a la estructura de par�metros de ene1
+parametros enem1a;
 parametros MJ6;		 //Variable con la que tenemos acceso a la estructura de par�metros de MJ6
 parametros enem2;	 //Variable con la que tenemos acceso a la estructura de par�metros de ene2
 parametros enem3a;	 //Variable con la que tenemos acceso a la estructura de par�metros de ene3a
@@ -1571,6 +1572,35 @@ void InicializaParametrosdeControl()
 	enem1.escalaZ=0.4f;
 
 	enem1.CamaraObjAltE=0.0f;
+
+       // Enem1
+	enem1a.visible=true;
+	enem1a.VelocidadObj=0.2f;
+	enem1a.DistanciaCam=10.0f;
+
+	enem1a.CamaraPosAlt=5.0f;	//Posici�n en y de la c�mara (altura a la que se situa la c�mara)
+	enem1a.CamaraObjAlt=4.0f;	//Posici�n en y del objetivo de la c�mara (altura a la que ve la c�mara)
+	enem1a.AngDir=90.0f;		//Este �ngulo inicial hace que la direcci�n inicial sea paralela al eje Z y con sentido negativo
+	enem1a.AngObj=0.0f;		//Este valor se elige dependiendo de la orientaci�n con la que aparece el modelo en la escena al dibujarlo
+								//sin aplicarle ninguna transformaci�n (hacia adonde est� volteando). Se elige un �ngulo tal que al aplicarle
+								//una rotaci�n inicial con respecto al eje Y est� viendo hacia la misma direcci�n que la definida por AngDir
+	
+	enem1a.PosicionObj=CVector(150.0f, 9.0f, -70.0f); //Esta es la posici�n inicial del objeto en la escena
+	enem1a.Direccion.x=(float)cos(player1a.AngDir*PI/180.0f); //Direcci�n inicial definida por el �ngulo inicial AngDir (x=cos(AngDir), y=0.0, z=sen(AngDir))
+	enem1a.Direccion.y=0.0f;
+	enem1a.Direccion.z=(float)sin(player1a.AngDir*PI/180.0f);   
+	enem1a.PosicionCam=CVector(0.0f, player1a.CamaraPosAlt, 10.0f); //Posici�n inicial de la c�mara a [DistanciaCam] unidades detr�s del objeto
+	enem1a.ObjetivoCam=player1a.PosicionObj;		//La c�mara ve siempre al objeto
+	enem1a.ObjetivoCam.y=player1a.CamaraObjAlt;		//Para que no vea a los "pies" del objeto (personaje)
+
+	enem1a.Dir=0;
+	enem1a.DirAnt=0;
+
+	enem1a.escalaX=0.4f;
+	enem1a.escalaY=0.4f;
+	enem1a.escalaZ=0.4f;
+
+	enem1a.CamaraObjAltE=0.0f;
 	
 	// Enem2
 	enem2.visible=true;
