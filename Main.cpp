@@ -40,6 +40,7 @@ float CamPos[4][6] = {
 };
 
 int pisoId = 0;
+bool invuln = false;
 
 // Variable de acceso a la estructura de parametros
 parametros player1;
@@ -52,16 +53,16 @@ parametros enem3a;	 //Variable con la que tenemos acceso a la estructura de pará
 parametros enem3b;	 //Variable con la que tenemos acceso a la estructura de parámetros ene3b
 parametros chang;	 //Variable con la que tenemos acceso a la estructura de parámetros de chango
 
-parametros enemigo8; // parametros savage
+parametros enemigo8; // parametros robot
 
 /* Vidas del personaje */
-float health = 100;
+float health = 150;
 
 CMateriales Material;
 
 //Nombre y ubicación de los modelos
 
-// Modelos Savage
+// Modelos robot
 #define FILE_NAME1g  "Modelos/enemigo8_cuerpo.3ds"
 #define FILE_NAME2g  "Modelos/enemigo8_heliceabajo.3ds"
 #define FILE_NAME3g  "Modelos/enemigo8_heliceatras.3ds"
@@ -245,7 +246,7 @@ t3DModel g_3DModel8f;
 t3DModel g_3DModel9f;
 t3DModel g_3DModel10f;
 
-// los modelos savage
+// los modelos robot
 
 t3DModel g_3DModel1g;
 t3DModel g_3DModel2g;
@@ -366,7 +367,7 @@ GLuint chaout;
 GLuint taran;
 GLuint taranout; 
 
-// las listas savage
+// las listas robot
 GLuint enemigo8L;
 GLuint enemigo8Lout;
 
@@ -378,7 +379,7 @@ GLuint modelo1mikuout;
 
 //Constantes de iluminación y materiales
 GLfloat LightPos[] = { 200.0f, 20.0f, 0.0f, 1.0f};		// Posición de la luz
-GLfloat LightAmb[] = { 0.8f,  0.8f, 0.8f, 1.0f};			// Valores de la componente ambiente
+GLfloat LightAmb[] = { 0.9f,  0.9f, 0.9f, 1.0f};			// Valores de la componente ambiente
 GLfloat LightDif[] = { 0.9f,  0.9f, 0.9f, 1.0f};			// Valores de la componente difusa
 GLfloat LightSpc[] = { 0.5f,  0.5f, 0.5f, 1.0f};			// Valores de la componente especular
 
@@ -660,11 +661,11 @@ int CargaModelos()
 	if(!g_Load3ds.Load3DSFile(FILE_NAME10d, &g_3DModel10d, textureModel1d))
 		return 0;
 
-	// Mayra lol
+	// escenario lol
 	if(!g_Load3ds.Load3DSFile(FILE_NAME1e, &g_3DModel1e, textureModel1e))
 		return 0;
 
-	//agregar en CargaModelos() savage meh te la volaste XD
+	//agregar en CargaModelos() robot
 	if(!g_Load3ds.Load3DSFile(FILE_NAME1g, &g_3DModel1g, textureModel1g))
 		return 0;
 	if(!g_Load3ds.Load3DSFile(FILE_NAME2g, &g_3DModel2g, textureModel2g))
@@ -780,7 +781,7 @@ int CargaModelos()
 void DescargaModelos()
 {
 	
-	// descargamodelos savage
+	// descargamodelos robot
 			
 	g_Load3ds.UnLoad3DSFile(&g_3DModel1g, textureModel1g);
 	g_Load3ds.UnLoad3DSFile(&g_3DModel2g, textureModel2g);
@@ -906,7 +907,7 @@ void CreaListas()
 	ene3b=glGenLists(5);
 	//chango
 	cha=glGenLists(5);
-	// en crea listas savage
+	// en crea listas robot
 	enemigo8L=glGenLists(3);
 	//tarantula
 	taran=glGenLists(1);
@@ -923,7 +924,7 @@ void CreaListas()
 	ene3bout=glGenLists(5);
 	//chango contorno
 	chaout=glGenLists(5);
-	// en crea listas savage contorno
+	// en crea listas robot contorno
 	enemigo8Lout=glGenLists(3);
 	//tarantula contorno
 	taranout=glGenLists(1);
@@ -1507,7 +1508,7 @@ void InicializaParametrosdeControl()
 	
 	miku.CamaraObjAltE=0.0f;
 
-	// en inicializa parametro de control savage
+	// en inicializa parametro de control robot
 	enemigo8.visible=true;
 	enemigo8.VelocidadObj=0.4f;
 	enemigo8.DistanciaCam=10.0f;
@@ -1714,16 +1715,22 @@ void InicializaParametrosdeControl()
 /* Animacion/IA de cada uno de los monos en el escenario */
 // Declaracion de variables
 Animator Enem1;
+Bullet bala1;
+
 void InicializaParametrosdeAnimacion()
 {
 	// Enemigo gordito azul
 	Enem1.setChar( &enem1 );
 	Enem1.addPoint( CVector( 200.0f, 9.0f, -40.0f ) );
 	Enem1.addPoint( CVector( 160.0f, 9.0f, -40.0f ) );
+	Enem1.setTarget( CVector( 220, 4.0f, -45.0f ) );
 }
 void AniMagic()
 {
 	Enem1.startAnim();
+
+	// Dibuja rayos
+	Enem1.drawRay();
 }
 void InicializaAnim( FRAME *KeyFrame, int maxKF, jerarquiaModelo* modelo )
 {
@@ -2205,23 +2212,23 @@ void DibujaEsferasColision()
 		glPopMatrix();
 	}
 
-	glPushMatrix();
-		glTranslatef(esfera[1].Pos.x, esfera[1].Pos.y, esfera[1].Pos.z);
-		glRotatef(90.0f,1.0f,0.0f,0.0f);
-		gluSphere(q, esfera[1].radio, 16, 8);
-	glPopMatrix();
+	//glPushMatrix();
+	//	glTranslatef(esfera[1].Pos.x, esfera[1].Pos.y, esfera[1].Pos.z);
+	//	glRotatef(90.0f,1.0f,0.0f,0.0f);
+	//	gluSphere(q, esfera[1].radio, 16, 8);
+	//glPopMatrix();
 
-		glPushMatrix();
-		glTranslatef(esfera[2].Pos.x, esfera[2].Pos.y, esfera[2].Pos.z);
-		glRotatef(90.0f,1.0f,0.0f,0.0f);
-		gluSphere(q, esfera[2].radio, 16, 8);
-	glPopMatrix();
+	//	glPushMatrix();
+	//	glTranslatef(esfera[2].Pos.x, esfera[2].Pos.y, esfera[2].Pos.z);
+	//	glRotatef(90.0f,1.0f,0.0f,0.0f);
+	//	gluSphere(q, esfera[2].radio, 16, 8);
+	//glPopMatrix();
 
-		glPushMatrix();
-		glTranslatef(esfera[6].Pos.x, esfera[6].Pos.y, esfera[6].Pos.z);
-		glRotatef(90.0f,1.0f,0.0f,0.0f);
-		gluSphere(q, esfera[6].radio, 16, 8);
-	glPopMatrix();
+	//	glPushMatrix();
+	//	glTranslatef(esfera[6].Pos.x, esfera[6].Pos.y, esfera[6].Pos.z);
+	//	glRotatef(90.0f,1.0f,0.0f,0.0f);
+	//	gluSphere(q, esfera[6].radio, 16, 8);
+	//glPopMatrix();
 
 	glEnable(GL_LIGHTING);
 
@@ -2409,7 +2416,7 @@ void ColisionesPiso()
 
 }
 
-void ColisionEsferaEsfera( boundingsphere& a, boundingsphere& b, int dir, parametros& player )
+void ColisionEsferaEsfera( boundingsphere& a, boundingsphere& b, parametros& player )
 {
 	// Calcula la distancia cuadrada entre los centros
 	CVector d = a.Pos - b.Pos;
@@ -2418,31 +2425,38 @@ void ColisionEsferaEsfera( boundingsphere& a, boundingsphere& b, int dir, parame
 	float radiusSum = a.radio + b.radio;
 	float colision = dist2 - radiusSum * radiusSum;
 
-	// Robado de arriba yeah XD
-
 	if( colision < 0.0f ) // si hay una colision
 	{
-			CVector PosAux;
-			float deltaV = player.VelocidadObj/10.0f;
-			float vel = 0.0f ;
-			int k = 0;
-
+		CVector PosAux;
 		d = Normaliza( d );
-
-		if(dir == 1)
-		{
-			PosAux = player.PosAntObj - d * ( colision / 20.0f );
-		}
-		else if(dir == 2)
-		{
-			PosAux = player.PosAntObj - d * ( colision / 20.0f );
-		}
-
+		//if(dir == 1)
+		//{
+		PosAux = player.PosAntObj - d * ( colision / 20.0f );
+		//}
+		//else if(dir == 2)
+		//{
+		//	PosAux = player.PosAntObj - d * ( colision / 20.0f );
+		//}
 		player.PosicionObj = PosAux;
-
 	}
 }
 
+int ColisionRayoEsfera( ray& r, boundingsphere& s)
+{
+	CVector m = r.origen - s.Pos;
+	float c = Punto(m, m) - s.radio * s.radio;
+	// Si hay al menos una raiz real, entonces hay interseccion
+	if (c <= 0.0f) return 1;
+	CVector d = Normaliza( r.dir - r.origen );
+	float b = Punto(m, d);
+	// Salida rapida si el origen del rayo esta fuera de la esfera y el rayo no apunta hacia ella
+	if (b > 0.0f) return 0;
+	float disc = b * b - c;
+	// Un discriminante negativo quiere decir que el rayo no toca la esfera
+	if (disc < 0.0f) return 0;
+	// El rayo golpea la esfera irremediablemente
+	return 1;
+}
 int InitGL(GLvoid)										// Aqui se configuran los parametros iniciales de OpenGL
 {
 	Multitext.InitMultitext(hWnd);
@@ -2553,7 +2567,7 @@ void LargeHadronCollider()
 	player1.PosAntObj = player1.PosicionObj;
 	for(int i = 1; i <= 30; i++)
 	{
-		ColisionEsferaEsfera(esfera[0], esfera[i], 1, player1 );
+		ColisionEsferaEsfera(esfera[0], esfera[i], player1 );
 		player1.PosAntObj = player1.PosicionObj;
 	}
 	player1.PosAntObj = player1.PosicionObj;
@@ -2644,15 +2658,15 @@ void ControlPersonaje(int funcion)
 		player1.ObjetivoCam.y = player1.CamaraObjAlt;
 
 		// Colisiones
-		ColisionEsferaPlano(0, 2, player1 );
-		player1.PosAntObj = player1.PosicionObj;
-		for(int i = 1; i <= 30; i++)
-		{
-			ColisionEsferaEsfera(esfera[0], esfera[i], 1, player1 );
-			player1.PosAntObj = player1.PosicionObj;
-		}
+		//ColisionEsferaPlano(0, 2, player1 );
+		//player1.PosAntObj = player1.PosicionObj;
+		//for(int i = 1; i <= 30; i++)
+		//{
+		//	ColisionEsferaEsfera(esfera[0], esfera[i], 1, player1 );
+		//	player1.PosAntObj = player1.PosicionObj;
+		//}
 
-		player1.PosAntObj = player1.PosicionObj;
+		//player1.PosAntObj = player1.PosicionObj;
 	}
 	else if(funcion == 3) //Avanza hacia adelante
 	{
@@ -2828,7 +2842,7 @@ void animacion(FRAME *KeyFrame, int maxKF , int frames, jerarquiaModelo* modelo,
 	}
 }
 
-//savage
+//robot
 void dibujaEnemigo8()
 {
 	static float anglef=0.0f;
@@ -3938,6 +3952,20 @@ void DibujaTextos()
 		glDisable(GL_TEXTURE_2D);
 
 		//Barra de energia / health
+		// Primero dibuja el contorno de la barra
+		glPushMatrix();
+			glTranslatef( glWidth * 0.11f, glHeight * 0.05, 0.0f );
+			glColor3ub( 0, 0, 0 );
+			glLineWidth( 2.0f );
+			glBegin(GL_LINE_STRIP);
+				glVertex2f( 0.0f, 0.0f );
+				glVertex2f( 150.0f, 0.0f );
+				glVertex2f( 150.0f, 14.0f );
+				glVertex2f( 0.0f, 14.0f );
+			glEnd();
+			glLineWidth( 1.0f );
+		glPopMatrix();
+
 		glPushMatrix();
 			glTranslatef( glWidth * 0.11f, glHeight * 0.05, 0.0f );
 			glColor3ub( 250, 197, 0 );
@@ -4289,7 +4317,7 @@ void ActualizaLuz()
 void DibujaEnemigos()
 {
 	cel_Shader.TurnOn();
-	// savage
+	// robot
 	glPushMatrix();
 			glTranslatef(enemigo8.PosicionObj.x, enemigo8.PosicionObj.y+2.4f, enemigo8.PosicionObj.z);
 			glRotatef(enemigo8.AngObj, 0.0f, 1.0f, 0.0f);
@@ -4394,7 +4422,7 @@ void DibujaEnemigos()
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	glLineWidth(2.5f);
 
-	// savage
+	// robot
 	glPushMatrix();
 			glTranslatef(enemigo8.PosicionObj.x, enemigo8.PosicionObj.y+2.4f, enemigo8.PosicionObj.z);
 			glRotatef(enemigo8.AngObj, 0.0f, 1.0f, 0.0f);
@@ -4569,7 +4597,7 @@ int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la
 	// Se renderizan todas las partes oscuras de la escena.
 	glDisable(GL_LIGHT0);
 
-	// Mayralol
+	// escenariolol
 	glPushMatrix();
 		glTranslatef(40.0f, 10.0f,-35.0f);
 		glScalef(1.4f,1.4f,1.4f);
@@ -4606,7 +4634,7 @@ int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la
 	glEnable(GL_LIGHT0);
 	glStencilFunc(GL_EQUAL, 0, ~0);
 
-	// Mayralol
+	// escenariolol
 	glPushMatrix();
 		glTranslatef(40.0f, 10.0f,-35.0f);
 		glScalef(1.4f,1.4f,1.4f);
@@ -4716,8 +4744,8 @@ int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la
 
 	// Colisiones
 	ActualizaObjetosDinamicosColision();
-	DibujaObjetosdeColision();
-	//DibujaEsferasColision();
+	//DibujaObjetosdeColision();
+	DibujaEsferasColision();
 	ColisionesPiso();
 	LargeHadronCollider();
 

@@ -2,6 +2,7 @@
 #define ANIMATOR_H
 
 #include "Main.h"
+#include "Bullet.h"
 
 using namespace std;
 
@@ -19,11 +20,16 @@ public:
 	void changeSpeed( float speed );
 	void startAnim();
 	void moveToPoint( CVector punto );
+	void setTarget( CVector destino );
+	void drawRay();
+	CVector* attack();
 
 private:
 	parametros* modelo;
 	vector< CVector > points;
+	ray rayo;
 	int i;
+	int delay;
 
 };
 
