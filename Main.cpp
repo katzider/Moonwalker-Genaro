@@ -2465,6 +2465,11 @@ void InicializaObjetosdeColision()
 	esfera[1].radio=2.2f;
 	esfera[1].Pos=CVector(enem1.PosicionObj.x, enem1.PosicionObj.y-2.0f, enem1.PosicionObj.z);
 	esfera[1].colision=false;
+      
+        //Esfera de colision del Enem1a
+	esfera[3].radio=2.2f;
+	esfera[3].Pos=CVector(enem1a.PosicionObj.x, enem1a.PosicionObj.y-2.0f, enem1a.PosicionObj.z);
+	esfera[3].colision=false;
 
 	//Esfera de colision del Enem2
 	esfera[2].radio=5.5f;
@@ -2540,6 +2545,7 @@ void ActualizaObjetosDinamicosColision()
 
 	esfera[1].Pos=CVector(enem1.PosicionObj.x, enem1.PosicionObj.y+2.5f, enem1.PosicionObj.z);
 	esfera[2].Pos=CVector(target[0], target[1] + 2.5, target[2]);
+        esfera[2].Pos=CVector(enem1a.PosicionObj.x, enem1a.PosicionObj.y+2.5f, enem1a.PosicionObj.z);
 	esfera[6].Pos=CVector(MJ6.PosicionObj.x, MJ6.PosicionObj.y+2.5f, MJ6.PosicionObj.z);
 	esfera[9].Pos=CVector(chang.PosicionObj.x, chang.PosicionObj.y+2.0f, chang.PosicionObj.z);
 	esfera[8].Pos=CVector(enem3b.PosicionObj.x, enem3b.PosicionObj.y+2.0f, enem3b.PosicionObj.z);
@@ -4796,6 +4802,14 @@ void DibujaEnemigos()
 		glTranslatef(enem1.PosicionObj.x, enem1.PosicionObj.y, enem1.PosicionObj.z);
 		glRotatef(enem1.AngObj, 0.0f, 1.0f, 0.0f);
 		glScalef(enem1.escalaX,enem1.escalaY,enem1.escalaZ);
+		DibujaEnemigo1();
+	glPopMatrix();
+
+       //Ene1a
+	glPushMatrix();
+		glTranslatef(enem1a.PosicionObj.x, enem1a.PosicionObj.y, enem1a.PosicionObj.z);
+		glRotatef(enem1a.AngObj, 0.0f, 1.0f, 0.0f);
+		glScalef(enem1a.escalaX,enem1a.escalaY,enem1a.escalaZ);
 		DibujaEnemigo1();
 	glPopMatrix();
 
