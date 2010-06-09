@@ -13,7 +13,7 @@ public:
 
 	void changePara( float vel, float radius, CVector destino );
 	void drawBullet();
-	void moveToTarget();
+	bool moveToTarget();
 	void destroy();
 
 private:

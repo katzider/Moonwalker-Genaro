@@ -1737,6 +1737,7 @@ void InicializaParametrosdeControl()
 /* Animacion/IA de cada uno de los monos en el escenario */
 // Declaracion de variables
 vector<Animator> Enemigos;
+Bullet* bill = 0;
 
 void InicializaParametrosdeAnimacion()
 {
@@ -1753,6 +1754,19 @@ void AniMagic()
 	
 	// Dibuja rayos
 	Enemigos[1].drawRay();
+
+	if( Enemigos[1].Reload() <= 0 )
+	{
+		CVector disparo;
+		disparo = Enemigos[1].attack();
+		bill = new Bullet( disparo );
+		bill->changePara( 0.2f, 3.0f, player1.PosicionObj );
+	}
+	if( bill != 0 )
+	{
+		bill->drawBullet();
+		bill->moveToTarget();
+	}
 }
 void InicializaAnim( FRAME *KeyFrame, int maxKF, jerarquiaModelo* modelo )
 {
@@ -3961,7 +3975,7 @@ void DibujaTextos()
 		glPopMatrix();
 
 		// Texto a mostrar en pantalla
-		Font.glPrint((1.0f/640.0f)*glWidth, glWidth*0.05f,glHeight*0.9f,"AngDir: %f", player1.AngDir );
+		Font.glPrint((1.0f/640.0f)*glWidth, glWidth*0.05f,glHeight*0.9f,"Delay: %d", Enemigos[1].getDelay() );
 		/*Font.glPrint((1.0f/640.0f)*glWidth, glWidth*0.05f,glHeight*0.85f,"PosCam %f", player1.PosicionCam.x );
 		Font.glPrint((1.0f/640.0f)*glWidth, glWidth*0.05f,glHeight*0.80f,"PosObj %f", player1.PosicionObj.x);*/
 		Font.glPrint( (1.0f/640.0f)*glWidth, glWidth * 0.45f, glHeight * 0.95f, "High 50000" );
@@ -5128,7 +5142,6 @@ int WINAPI WinMain(	HINSTANCE	hInstance,			// Instancia
 						if(tipoAnim == 1)
 							animacion(KeyFrame1, maxKF1 , 18, &player1modelo, playIndex );
 					}
-					//AniMagic();						// Animaciones
 					SwapBuffers(hDC);				// Intercambia los Buffers (Double Buffering)
 				}
 
