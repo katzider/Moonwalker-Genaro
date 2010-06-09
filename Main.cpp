@@ -1,6 +1,8 @@
 #include "Main.h"
 #include "3ds.h"
 
+using namespace std;
+
 /* Quitados los comentarios de prueba, deberiamos hacer un listado en el README.txt de las cosas que cambian y donde hallarlas, 
 aunque tambien sale en el historial de git, a veces me da flojera ver xp */
 
@@ -1734,23 +1736,23 @@ void InicializaParametrosdeControl()
 
 /* Animacion/IA de cada uno de los monos en el escenario */
 // Declaracion de variables
-Animator Enem1;
-Bullet bala1;
+vector<Animator> Enemigos;
 
 void InicializaParametrosdeAnimacion()
 {
+	Enemigos.resize( 30 );
 	// Enemigo gordito azul
-	Enem1.setChar( &enem1 );
-	Enem1.addPoint( CVector( 200.0f, 9.0f, -40.0f ) );
-	Enem1.addPoint( CVector( 160.0f, 9.0f, -40.0f ) );
-	Enem1.setTarget( CVector( 220, 4.0f, -45.0f ) );
+	Enemigos[1].setChar( &enem1 );
+	Enemigos[1].addPoint( CVector( 200.0f, 9.0f, -40.0f ) );
+	Enemigos[1].addPoint( CVector( 160.0f, 9.0f, -40.0f ) );
+	Enemigos[1].setTarget( CVector( 220, 4.0f, -45.0f ) );
 }
 void AniMagic()
 {
-	Enem1.startAnim();
-
+	Enemigos[1].startAnim();
+	
 	// Dibuja rayos
-	Enem1.drawRay();
+	Enemigos[1].drawRay();
 }
 void InicializaAnim( FRAME *KeyFrame, int maxKF, jerarquiaModelo* modelo )
 {

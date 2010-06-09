@@ -7,6 +7,10 @@ class Bullet
 {
 
 public:
+
+	// Constructor
+	Bullet( CVector origen );
+
 	void changePara( float vel, float radius, CVector destino );
 	void drawBullet();
 	void moveToTarget();
