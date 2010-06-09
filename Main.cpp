@@ -336,12 +336,12 @@ int tipoAnim = 1; //Indicador del tipo de animaci�n
 // Banderas para iniciar las demas animaciones
 const int otros = 7; // Este valor se incrementa para todos los enemigos que habra en pantalla
 
-bool playOtros[ otros ] = { true, true, true, true, true, true, true }; // Banderas para iniciar la animacion
-int playIndexOtros[ otros ] = { 0, 0, 0, 0, 0, 0, 0 }; // Auxiliares para leer la informacion del contenedor de keyframes
-int tipoAnimOtros[ otros ] = { 1, 1, 1, 1, 1, 1, 1 }; // Indicador del tipo de animacion
+bool playOtros = true; // Bandera para iniciar la animacion de los demas
+int playIndexOtros = 0; // Auxiliares para leer la informacion del contenedor de keyframes
+int tipoAnimOtros = 1; // Indicador del tipo de animacion
 jerarquiaModelo* modelosOtros[ otros ] = { &mikumodelo, &enem1modelo, &enem2modelo, 
 											&MJ6modelo, &enem3amodelo, &enem3bmodelo, &changmodelo }; // apuntadores a los modelos
-FRAME KeyFrameOtros[ otros ][ 3 ]; // Contenedor para almacenar cada keyframe de las secuencias
+FRAME KeyFrameOtros[ otros ][ maxKF1 ]; // Contenedor para almacenar cada keyframe de las secuencias
 
 CMultitexturas Multitext;
 
@@ -3163,11 +3163,8 @@ void ControlPersonaje(int funcion)
 	}
 }
 
-void recargaAnim( FRAME *KeyFrame, jerarquiaModelo* modelo, bool &p, int& tipoA, int& pIdx )
+void recargaAnim( FRAME *KeyFrame, jerarquiaModelo* modelo, bool &p, int& pIdx )
 {
-	if( p == false )
-	{
-
 		modelo->Angt1    = KeyFrame[0].Angt1;
 		modelo->Angt2    = KeyFrame[0].Angt2;
 		modelo->Angc1    = KeyFrame[0].Angc1;
@@ -3190,16 +3187,14 @@ void recargaAnim( FRAME *KeyFrame, jerarquiaModelo* modelo, bool &p, int& tipoA,
 
 		p = true;
 		pIdx = 0;
-		tipoA = 1;
-			
-	}
+		playOtros = true;
 }
 /* animacion() ahora recibe un apuntador hacia el modelo que quieran usar, ej. &mikumodelo
  * tambien recibe el playIndex de su personaje a animar, ese nada mas lo pasan como argumento
  */
-void animacion( FRAME *KeyFrame, int maxKF , int frames, jerarquiaModelo* modelo, int& pIdx, bool& p)
+void animacion( FRAME *KeyFrame, int maxKF , int frames, jerarquiaModelo* modelo, int& pIdx, bool& p )
 {
-	if( p )
+	if( p == true )
 	{		
 		if(( abs( KeyFrame[ pIdx+1 ].Angt1 - modelo->Angt1 ))<0.1 &&
 		   ( abs( KeyFrame[ pIdx+1 ].Angt2 - modelo->Angt2 ))<0.1 &&
@@ -3222,7 +3217,7 @@ void animacion( FRAME *KeyFrame, int maxKF , int frames, jerarquiaModelo* modelo
 		   ( abs( KeyFrame[ pIdx+1 ].Ztor - modelo->Ztor ))<0.1)
 		{			
 			pIdx++;			
-			if( pIdx > maxKF-2 )
+			if( pIdx > maxKF - 2 )
 			{
 				pIdx = 0;
 				p = false;								
@@ -5478,7 +5473,7 @@ LRESULT CALLBACK WndProc(	HWND	hWnd,	// Manejador para esta ventana
 	return DefWindowProc(hWnd,uMsg,wParam,lParam);
 }
 
-// Este es el punto de entrada al programa; la funci�n principal 
+// Este es el punto de entrada al programa; la funcion principal 
 int WINAPI WinMain(	HINSTANCE	hInstance,			// Instancia
 					HINSTANCE	hPrevInstance,		// Instancia previa
 					LPSTR		lpCmdLine,			// Parametros de la linea de comandos
@@ -5499,7 +5494,7 @@ int WINAPI WinMain(	HINSTANCE	hInstance,			// Instancia
     int          channelsplaying = 0;
 
 	// Crea la ventana OpenGL
-	if (!CreateGLWindow("Computaci�n Gr�fica",640,480,32))
+	if (!CreateGLWindow("Computacion Grafica",640,480,32))
 	{
 		return 0;									// Salir del programa si la ventana no fue creada
 	}
@@ -5521,22 +5516,22 @@ int WINAPI WinMain(	HINSTANCE	hInstance,			// Instancia
     ERRCHECK(result);
 
 	////Carga de los archivos de audio
-      result = FMOD_System_CreateSound(system, "Audio/smoothcriminal.mp3", FMOD_HARDWARE, 0, &sound[0]);
-      ERRCHECK(result);
+     result = FMOD_System_CreateSound(system, "Audio/smoothcriminal.mp3", FMOD_HARDWARE, 0, &sound[0]);
+     ERRCHECK(result);
      result = FMOD_Sound_SetMode(sound[0], FMOD_LOOP_NORMAL); //Se repetira en un loop
      ERRCHECK(result);										
 
  //   result = FMOD_System_CreateSound(system, "Audio/explode.wav", FMOD_SOFTWARE, 0, &sound[1]);
  //   ERRCHECK(result);
 
-	////Asignaci�n a canales y configuraci�n
-	////M�sica de fondo
-	result = FMOD_System_PlaySound(system, FMOD_CHANNEL_FREE, sound[0], 0, &channel[0]);
-       ERRCHECK(result);
-	result = FMOD_Channel_SetPaused(channel[0], FALSE); //Inicialmente activo
-	ERRCHECK(result);
-	result = FMOD_Channel_SetVolume(channel[0], 0.3f);
-	ERRCHECK(result);
+	////Asignacion a canales y configuracion
+	////Musica de fondo
+	//result = FMOD_System_PlaySound(system, FMOD_CHANNEL_FREE, sound[0], 0, &channel[0]);
+ //   ERRCHECK(result);
+	//result = FMOD_Channel_SetPaused(channel[0], FALSE); //Inicialmente activo
+	//ERRCHECK(result);
+	//result = FMOD_Channel_SetVolume(channel[0], 0.3f);
+	//ERRCHECK(result);
 
 	//result = FMOD_System_PlaySound(system, FMOD_CHANNEL_FREE, sound[1], 0, &channel[1]);
  //   ERRCHECK(result);
@@ -5580,28 +5575,33 @@ int WINAPI WinMain(	HINSTANCE	hInstance,			// Instancia
 						if(tipoAnim == 1)
 							animacion(KeyFrame1, maxKF1 , 18, &player1modelo, playIndex, play );
 					}
+					// Anima a los otros personajes
 					for( int i = 0; i < otros; i++ )
 					{
-						if( playOtros[ i ] )
+						if( playOtros )
 						{
-							animacion( KeyFrameOtros[ i ], 3, 18, modelosOtros[ i ], playIndexOtros[ i ], playOtros[ i ] );
+							animacion( KeyFrameOtros[ i ], maxKF1, 20, modelosOtros[ i ], playIndexOtros, playOtros );
 						}
-						recargaAnim( KeyFrameOtros[ i ], modelosOtros[ i ], playOtros[ i ], tipoAnimOtros[ i ], playIndexOtros[ i ] );
+						else
+						{
+							recargaAnim( KeyFrameOtros[ i ], modelosOtros[ i ], playOtros, playIndexOtros );
+						}
 					}
+					
+
 					SwapBuffers(hDC);				// Intercambia los Buffers (Double Buffering)
 				}
 
 				if(!ManejaTeclado()) return 0;
 				/*ManejaTeclado(system, result);*/
 
-				while(TimerGetTime()<start+float(steps[adjust]*2.0f)) {}	// Desperdicia ciclos si es demasiado r�pido
+				while(TimerGetTime()<start+float(steps[adjust]*2.0f)) {}	// Desperdicia ciclos si es demasiado rapido
 			}
 			
 		}
 	}
 
-	// Finalizaci�n del programa
-	//DescargaTexturas();
+	// Finalizacion del programa
 	DescargaModelos();
 	DescargaTexturas();
 	DestruyeListas();
