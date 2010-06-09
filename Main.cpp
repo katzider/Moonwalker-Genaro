@@ -60,7 +60,7 @@ parametros enemigo8; // parametros robot
 /* Vidas del personaje */
 float health = 150;
 int vidas = 3;
-int red = 250;
+//int red = 250;
 int green = 200;
 
 CMateriales Material;
@@ -2652,13 +2652,13 @@ void LargeHadronCollider()
 		if( ( i == 1 || i == 2 || i == 7 || i == 8 ) && col == true )
 		{
 			health -= 1.0f;
-			red -= 1;
+			//red -= 1;
 			green -= 1;
 			if( health <= 0.0f )
 			{
 				health = 150.0f;
 				vidas = vidas - 1;
-				red = 250;
+				//red = 250;
 				green = 200;
 			}
 		}
@@ -4060,7 +4060,7 @@ void DibujaTextos()
 		glPushMatrix();
 			glTranslatef( glWidth * 0.115f, glHeight * 0.052, 0.0f );
 			glScalef( 1.0f, 0.9f, 0.9f );
-			glColor3ub( red, green, 0 );
+			glColor3ub( 250, green, 0 );
 			glBegin(GL_QUADS);
 				glVertex2f( 0.0f, 0.0f );
 				glVertex2f( health, 0.0f );
