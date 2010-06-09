@@ -886,31 +886,31 @@ void DescargaModelos()
 void IniSombraVolumen()
 {
 	//Establece la conectividad entre caras
-	objSh.EstableceConectividad(&g_3DModel1c);
+	objSh.EstableceConectividad(&g_3DModel1aru);
 	objSh.calculaPlano(&g_3DModel1aru);
 
-	objSh.EstableceConectividad(&g_3DModel2c);
+	objSh.EstableceConectividad(&g_3DModel1aru);
 	objSh.calculaPlano(&g_3DModel2aru);
 
-	objSh.EstableceConectividad(&g_3DModel3c);
+	objSh.EstableceConectividad(&g_3DModel1aru);
 	objSh.calculaPlano(&g_3DModel3aru);
 
-	objSh.EstableceConectividad(&g_3DModel4c);
+	objSh.EstableceConectividad(&g_3DModel1aru);
 	objSh.calculaPlano(&g_3DModel4aru);
 
-	objSh.EstableceConectividad(&g_3DModel5c);
+	objSh.EstableceConectividad(&g_3DModel1aru);
 	objSh.calculaPlano(&g_3DModel5aru);
 
-	objSh.EstableceConectividad(&g_3DModel6c);
+	objSh.EstableceConectividad(&g_3DModel1aru);
 	objSh.calculaPlano(&g_3DModel6aru);
 
-	objSh.EstableceConectividad(&g_3DModel7c);
+	objSh.EstableceConectividad(&g_3DModel1aru);
 	objSh.calculaPlano(&g_3DModel7aru);
 
-	objSh.EstableceConectividad(&g_3DModel8c);
+	objSh.EstableceConectividad(&g_3DModel1aru);
 	objSh.calculaPlano(&g_3DModel8aru);
 
-	objSh.EstableceConectividad(&g_3DModel9c);
+	objSh.EstableceConectividad(&g_3DModel1aru);
 	objSh.calculaPlano(&g_3DModel9aru);
 			
 }
