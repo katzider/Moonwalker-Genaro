@@ -449,7 +449,7 @@ int AuxT;
 typedef GLfloat TPoint[3];
 
 //Variables para el movimiento del elevador
-float elev = 0.0f;
+float elev = -10.0f;
 bool abajo = true;
 
 struct			 										// Create A Structure For The Timer Information
@@ -4548,14 +4548,14 @@ void DibujaEnemigos()
 
 void DibujaElevador()
 {
-	if ( ( abajo == true ) && ( elev  == 0.0f ) )
+	if ( ( abajo == true ) && ( elev  == -10.0f ) )
 		abajo = false;
 	else if ( ( abajo == false ) && ( elev == 28.0f ) )
 		abajo = true;
 
 	//Elevador
 	glPushMatrix();
-		glTranslatef( -90.0f, elev, 150.0f);
+		glTranslatef( -115.0f, elev, 150.0f);
 		glRotatef( 180.0f, 0.0f, 1.0f, 0.0f );
 		glScalef( 0.5f, 0.5f, 0.5f );
 		g_Load3ds.Render3DSFile(&g_3DModel1el, textureModel1el, 1);
