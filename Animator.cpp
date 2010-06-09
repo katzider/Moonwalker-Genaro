@@ -90,6 +90,12 @@ void Animator::drawRay()
 	glEnd();
 	glEnable( GL_LIGHTING );
 }
+
+// Reload one bullet
+int Animator::Reload()
+{
+	return --delay;
+}
 // Fire one bullet
 CVector* Animator::attack()
 {
