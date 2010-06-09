@@ -2651,9 +2651,10 @@ void LargeHadronCollider()
 		player1.PosAntObj = player1.PosicionObj;
 		if( ( i == 1 || i == 2 || i == 7 || i == 8 ) && col == true )
 		{
-			health -= 1.0f;
+			health -= 0.5f;
 			//red -= 1;
-			green -= 1;
+			green = 200 - ( 150 - health );
+
 			if( health <= 0.0f )
 			{
 				health = 150.0f;
