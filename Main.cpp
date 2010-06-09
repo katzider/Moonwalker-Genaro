@@ -59,6 +59,7 @@ parametros enemigo8; // parametros robot
 
 /* Vidas del personaje */
 float health = 150;
+int vidas = 3;
 
 CMateriales Material;
 
@@ -447,7 +448,7 @@ int AuxT;
 typedef GLfloat TPoint[3];
 
 //Variables para el movimiento del elevador
-float elev = -10.0f;
+float elev = -9.0f;
 bool abajo = true;
 
 struct			 										// Create A Structure For The Timer Information
@@ -2453,7 +2454,7 @@ void ColisionesPiso()
 
 }
 
-void ColisionEsferaEsfera( boundingsphere& a, boundingsphere& b, parametros& player )
+bool ColisionEsferaEsfera( boundingsphere& a, boundingsphere& b, parametros& player )
 {
 	// Calcula la distancia cuadrada entre los centros
 	CVector d = a.Pos - b.Pos;
@@ -2475,7 +2476,11 @@ void ColisionEsferaEsfera( boundingsphere& a, boundingsphere& b, parametros& pla
 		//	PosAux = player.PosAntObj - d * ( colision / 20.0f );
 		//}
 		player.PosicionObj = PosAux;
+
+		return true;
 	}
+
+	return false;
 }
 
 int ColisionRayoEsfera( ray& r, boundingsphere& s)
@@ -2598,14 +2603,23 @@ void LiberaSonido(FMOD_SYSTEM *system, FMOD_RESULT result)
 // creador de hoyos negros y revision de colisiones
 void LargeHadronCollider()
 {
-
+	bool col;
 	// Colisiones
 	ColisionEsferaPlano(0, 2, player1 );
 	player1.PosAntObj = player1.PosicionObj;
 	for(int i = 1; i <= 30; i++)
 	{
-		ColisionEsferaEsfera(esfera[0], esfera[i], player1 );
+		col = ColisionEsferaEsfera(esfera[0], esfera[i], player1 );
 		player1.PosAntObj = player1.PosicionObj;
+		if( ( i == 1 || i == 2 || i == 6 || i == 7 || i == 8 ) && col == true )
+		{
+			health -= 10.0f;
+			if( health <= 0 )
+			{
+				health = 150;
+				vidas = vidas - 1;
+			}
+		}
 	}
 	player1.PosAntObj = player1.PosicionObj;
 
@@ -3967,7 +3981,7 @@ void DibujaTextos()
 		Font.glPrint( (1.0f/640.0f)*glWidth, glWidth * 0.42f, glHeight * 0.90f, "Round 1 Stage 1" );
 		Font.glPrint( (1.0f/640.0f)*glWidth, glWidth * 0.08f, glHeight * 0.15f, "1P" );
 		Font.glPrint( (1.0f/640.0f)*glWidth, glWidth * 0.20f, glHeight * 0.15f, "0" );
-		Font.glPrint( (1.0f/640.0f)*glWidth, glWidth * 0.1f, glHeight * 0.09f, "x3" );
+		Font.glPrint( (1.0f/640.0f)*glWidth, glWidth * 0.1f, glHeight * 0.09f, "x%d", vidas );
 									
 		glDisable(GL_ALPHA_TEST);
 		glDisable(GL_TEXTURE_2D);
@@ -4546,14 +4560,14 @@ void DibujaEnemigos()
 
 void DibujaElevador()
 {
-	if ( ( abajo == true ) && ( elev  == -10.0f ) )
+	if ( ( abajo == true ) && ( elev  == -9.0f ) )
 		abajo = false;
 	else if ( ( abajo == false ) && ( elev == 28.0f ) )
 		abajo = true;
 
 	//Elevador
 	glPushMatrix();
-		glTranslatef( -115.0f, elev, 150.0f);
+		glTranslatef( -113.0f, elev, 150.0f);
 		glRotatef( 180.0f, 0.0f, 1.0f, 0.0f );
 		glScalef( 0.5f, 0.5f, 0.5f );
 		g_Load3ds.Render3DSFile(&g_3DModel1el, textureModel1el, 1);
