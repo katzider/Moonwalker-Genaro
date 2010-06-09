@@ -2611,12 +2611,12 @@ void LargeHadronCollider()
 	{
 		col = ColisionEsferaEsfera(esfera[0], esfera[i], player1 );
 		player1.PosAntObj = player1.PosicionObj;
-		if( ( i == 1 || i == 2 || i == 6 || i == 7 || i == 8 ) && col == true )
+		if( ( i == 1 || i == 2 || i == 7 || i == 8 ) && col == true )
 		{
-			health -= 10.0f;
-			if( health <= 0 )
+			health -= 0.5f;
+			if( health <= 0.0f )
 			{
-				health = 150;
+				health = 150.0f;
 				vidas = vidas - 1;
 			}
 		}
