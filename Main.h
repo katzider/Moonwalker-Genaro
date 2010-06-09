@@ -62,8 +62,6 @@ struct parametros
 	
 };
 
-#include "Animator.h"
-
 struct jerarquiaModelo
 {
 	float Angt1;
@@ -157,9 +155,13 @@ struct boundingsphere
 
 struct ray
 {
+	CVector origen;
 	CVector dir;
-	CVector punto;
 	bool colision;
 };
+
+#include "Bullet.h"
+#include "Animator.h"
+
 
 #endif 
