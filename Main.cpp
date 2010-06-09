@@ -1754,7 +1754,7 @@ void AniMagic()
 	
 	// Dibuja rayos
 	Enemigos[1].drawRay();
-/*
+
 	if( Enemigos[1].Reload() <= 0 )
 	{
 		CVector disparo;
@@ -1767,7 +1767,7 @@ void AniMagic()
 		bill->drawBullet();
 		bill->moveToTarget();
 	}
-	*/
+
 }
 void InicializaAnim( FRAME *KeyFrame, int maxKF, jerarquiaModelo* modelo )
 {
