@@ -142,6 +142,9 @@ CMateriales Material;
 //nombre y ubicación de modelo tarantula
 #define FILE_NAME1t	 "Modelos/tarantula.3ds"
 
+//nombre y ubicación de modelo elevador
+#define FILE_NAME1el	 "Modelos/Elevador.3ds"
+
 //Contenedor de texturas de enemigo1
 CTga textureModel1d[20];
 //Contenedor de texturas de MJ6 (MJ Robot)
@@ -189,6 +192,9 @@ CTga textureModel3k[20];
 
 //Contenedor de texturas de tarantula
 CTga textureModel1t[20];
+
+//Contenedor de texturas de elevador
+CTga textureModel1el[20];
 
 CLoad3DS g_Load3ds;
 CShader cel_Shader;
@@ -286,6 +292,9 @@ t3DModel g_3DModel3k;
 
 //Acceso a la estructura que almacena a tarantula
 t3DModel g_3DModel1t;
+
+//Acceso a la estructura que almacena a elevador
+t3DModel g_3DModel1el;
 
 //Contenedor de texturas adicionales
 CTga textura[30];
@@ -436,6 +445,10 @@ int aw, ah;
 int AuxT;
 
 typedef GLfloat TPoint[3];
+
+//Variables para el movimiento del elevador
+float elev = 0.0f;
+bool abajo = true;
 
 struct			 										// Create A Structure For The Timer Information
 {
@@ -777,6 +790,10 @@ int CargaModelos()
 	if(!g_Load3ds.Load3DSFile(FILE_NAME1t, &g_3DModel1t, textureModel1t))
 		return 0;
 
+	//elevador
+	if(!g_Load3ds.Load3DSFile(FILE_NAME1el, &g_3DModel1el, textureModel1el))
+		return 0;
+
 	return TRUE;
 }
 
@@ -861,6 +878,9 @@ void DescargaModelos()
 
 	//tarantula
 	g_Load3ds.UnLoad3DSFile(&g_3DModel1t, textureModel1t);
+
+	//elevador
+	g_Load3ds.UnLoad3DSFile(&g_3DModel1el, textureModel1el);
 }
 
 void IniSombraVolumen()
@@ -4525,10 +4545,31 @@ void DibujaEnemigos()
 	glEnable(GL_LIGHTING);
 }
 
+void DibujaElevador()
+{
+	if ( ( abajo == true ) && ( elev  == 0.0f ) )
+		abajo = false;
+	else if ( ( abajo == false ) && ( elev == 28.0f ) )
+		abajo = true;
+
+	//Elevador
+	glPushMatrix();
+		glTranslatef( 228.0f, elev, -64.0f);
+		glRotatef( -90.0f, 0.0f, 1.0f, 0.0f );
+		glScalef( 0.5f, 0.5f, 0.5f );
+		g_Load3ds.Render3DSFile(&g_3DModel1el, textureModel1el, 1);
+	glPopMatrix();
+
+	if( abajo == true )
+		elev -= 0.5f;
+	else if( abajo == false )
+		elev += 0.5f;
+}
 void DibujaEscena()
 {
 	// Escenario
 	g_Load3ds.Render3DSFile(&g_3DModel1e, textureModel1e, 1);
+
 	glDisable(GL_NORMALIZE);
 }
 void Camara()
@@ -4652,6 +4693,8 @@ int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la
 		//glTranslatef(40.0f, 10.0f,-35.0f);
 		DibujaEnemigos();
 	glPopMatrix();
+
+	DibujaElevador();
 		
 	DibujaLuz(lightPosition);
 	DibujaTextos();
