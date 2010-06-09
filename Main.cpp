@@ -60,6 +60,8 @@ parametros enemigo8; // parametros robot
 /* Vidas del personaje */
 float health = 150;
 int vidas = 3;
+int red = 250;
+int green = 200;
 
 CMateriales Material;
 
@@ -2649,11 +2651,15 @@ void LargeHadronCollider()
 		player1.PosAntObj = player1.PosicionObj;
 		if( ( i == 1 || i == 2 || i == 7 || i == 8 ) && col == true )
 		{
-			health -= 0.5f;
+			health -= 1.0f;
+			red -= 1;
+			green -= 1;
 			if( health <= 0.0f )
 			{
 				health = 150.0f;
 				vidas = vidas - 1;
+				red = 250;
+				green = 200;
 			}
 		}
 	}
@@ -4030,8 +4036,8 @@ void DibujaTextos()
 			glLineWidth( 2.0f );
 			glBegin( GL_LINE_STRIP );
 				glVertex2f( -3.0f, -3.0f );
-				glVertex2f( 155.0f, -4.0f );
-				glVertex2f( 155.0f, 17.0f );
+				glVertex2f( 152.5f, -4.0f );
+				glVertex2f( 152.5f, 17.0f );
 				glVertex2f( -3.0f, 17.0f );
 			glEnd();
 		glPopMatrix();
@@ -4052,9 +4058,9 @@ void DibujaTextos()
 
 		// Dibuja el relleno de la barra
 		glPushMatrix();
-			glTranslatef( glWidth * 0.115f, glHeight * 0.05, 0.0f );
+			glTranslatef( glWidth * 0.115f, glHeight * 0.052, 0.0f );
 			glScalef( 1.0f, 0.9f, 0.9f );
-			glColor3ub( 250, 200, 0 );
+			glColor3ub( red, green, 0 );
 			glBegin(GL_QUADS);
 				glVertex2f( 0.0f, 0.0f );
 				glVertex2f( health, 0.0f );
