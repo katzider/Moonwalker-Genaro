@@ -4552,8 +4552,8 @@ void DibujaElevador()
 
 	//Elevador
 	glPushMatrix();
-		glTranslatef( 228.0f, elev, -64.0f);
-		glRotatef( -90.0f, 0.0f, 1.0f, 0.0f );
+		glTranslatef( -90.0f, elev, 150.0f);
+		glRotatef( 180.0f, 0.0f, 1.0f, 0.0f );
 		glScalef( 0.5f, 0.5f, 0.5f );
 		g_Load3ds.Render3DSFile(&g_3DModel1el, textureModel1el, 1);
 	glPopMatrix();
