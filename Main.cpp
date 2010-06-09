@@ -110,7 +110,7 @@ CMateriales Material;
 #define FILE_NAME10d "Modelos/Ene1PieIzq.3ds"
 
 // Para el escenario 
-#define FILE_NAME1e  "Modelos/escenario1.3ds"
+#define FILE_NAME1e  "Modelos/escenario.3ds"
 
 //nombre y ubicación de modelo MJ6 (MJ Robot)
 #define FILE_NAME1f	 "Modelos/MJ6Torzo.3ds"
