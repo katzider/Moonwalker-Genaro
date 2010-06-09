@@ -334,7 +334,7 @@ int playIndex = 0;//Auxiliar para leer la información del contenedor de keyframe
 int tipoAnim = 1; //Indicador del tipo de animación
 
 // Banderas para iniciar las demas animaciones
-const int otros = 7;
+const int otros = 7; // Este valor se incrementa para todos los enemigos que habra en pantalla
 
 bool playOtros[ otros ] = { false, false, false, false, false, false, false }; // Banderas para iniciar la animacion
 int playIndexOtros[ otros ] = { 0, 0, 0, 0, 0, 0, 0 }; // Auxiliares para leer la informacion del contenedor de keyframes
