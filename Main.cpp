@@ -3290,27 +3290,30 @@ void LargeHadronCollider()
 		}
 	}
 
-	// Para las balas
-	bool col2;
-	if( bill[0] != 0 )
+	for( int j = 0; j < Enemigos.size(); j++ )
 	{
-		col2 = ColisionEsferaEsfera(esfera[0], bill[0]->getSphere(), player1 );
-		player1.PosAntObj = player1.PosicionObj;
-		if( col2 == true )
+		// Para las balas
+		bool col2;
+		if( bill[j] != 0 )
 		{
-			health -= 10.0f;
-			//red -= 1;
-			green = 200 - ( 150 - health );
-
-			if( health <= 0.0f )
+			col2 = ColisionEsferaEsfera(esfera[0], bill[j]->getSphere(), player1 );
+			player1.PosAntObj = player1.PosicionObj;
+			if( col2 == true )
 			{
-				health = 150.0f;
-				vidas = vidas - 1;
-				//red = 250;
-				green = 200;
+				health -= 10.0f;
+				//red -= 1;
+				green = 200 - ( 150 - health );
+
+				if( health <= 0.0f )
+				{
+					health = 150.0f;
+					vidas = vidas - 1;
+					//red = 250;
+					green = 200;
+				}
+				// desaparece la bala
+				bill[j] = 0;
 			}
-			// desaparece la bala
-			bill[0] = 0;
 		}
 	}
 
