@@ -355,28 +355,28 @@ int playIndex3 = 0;//Auxiliar para leer la informaci�n del contenedor de keyfr
 
 const int maxKF4=3;				//Num. total de KeyFrames para la secuencia 1 (caminar)
 FRAME KeyFrame4[maxKF1];		//Contenedor para almacenar cada keyframe de la secuencia 1
-bool play4 = false;//Bandera para iniciar la animaci�n
+bool play4 = true;//Bandera para iniciar la animaci�n
 int playIndex4 = 0;//Auxiliar para leer la informaci�n del contenedor de keyframes
 
 const int maxKF5=3;				//Num. total de KeyFrames para la secuencia 1 (caminar)
 FRAME KeyFrame5[maxKF1];		//Contenedor para almacenar cada keyframe de la secuencia 1
-bool play5 = false;//Bandera para iniciar la animaci�n
+bool play5 = true;//Bandera para iniciar la animaci�n
 int playIndex5 = 0;//Auxiliar para leer la informaci�n del contenedor de keyframes
 
 const int maxKF6=3;				//Num. total de KeyFrames para la secuencia 1 (caminar)
 FRAME KeyFrame6[maxKF1];		//Contenedor para almacenar cada keyframe de la secuencia 1
-bool play6 = false;//Bandera para iniciar la animaci�n
+bool play6 = true;//Bandera para iniciar la animaci�n
 int playIndex6 = 0;//Auxiliar para leer la informaci�n del contenedor de keyframes
 
 const int maxKF7=3;				//Num. total de KeyFrames para la secuencia 1 (caminar)
 FRAME KeyFrame7[maxKF1];		//Contenedor para almacenar cada keyframe de la secuencia 1
-bool play7 = false;//Bandera para iniciar la animaci�n
+bool play7 = true;//Bandera para iniciar la animaci�n
 int playIndex7 = 0;//Auxiliar para leer la informaci�n del contenedor de keyframes
 
 // Banderas para iniciar las demas animaciones
 const int otros = 7; // Este valor se incrementa para todos los enemigos que habra en pantalla
 
-bool playOtros = true; // Bandera para iniciar la animacion de los demas
+bool playOtros[ otros ] = { true, true, true, true, true, true, true }; // Bandera para iniciar la animacion de los demas
 int playIndexOtros[ otros ]= { 0, 0, 0, 0, 0, 0, 0 }; // Auxiliares para leer la informacion del contenedor de keyframes
 int tipoAnimOtros = 1; // Indicador del tipo de animacion
 jerarquiaModelo* modelosOtros[ otros ] = { &mikumodelo, &enem1modelo, &enem2modelo, 
@@ -2184,13 +2184,32 @@ void DatosAnimacion()
 	KeyFrame2[ 0 ].Ytor  =	0.0f;	KeyFrame2[ 1 ].Ytor  =	0.0f;	KeyFrame2[ 2 ].Ytor  =	0.0f;
 	KeyFrame2[ 0 ].Ztor  =	0.0f;	KeyFrame2[ 1 ].Ztor  =	0.0f;	KeyFrame2[ 2 ].Ztor  =	0.0f;
 
+	// Enemigo gordo
+	KeyFrame3[ 0 ].Angt1 = 0.0f;	KeyFrame3[ 1 ].Angt1 =	0.0f;	KeyFrame3[ 2 ].Angt1 = 0.0f;
+	KeyFrame3[ 0 ].Angt2 =	0.0f;	KeyFrame3[ 1 ].Angt2 =	0.0f;	KeyFrame3[ 2 ].Angt2 =	0.0f;
+	KeyFrame3[ 0 ].Angc1 =	-25.0f;	KeyFrame3[ 1 ].Angc1 =	-25.0f;	KeyFrame3[ 2 ].Angc1 =	-25.0f;
+	KeyFrame3[ 0 ].Angc2 =	0.0f;	KeyFrame3[ 1 ].Angc2 =	0.0f;	KeyFrame3[ 2 ].Angc2 =	0.0f;
+	KeyFrame3[ 0 ].Angbi1=	-5.0f;	KeyFrame3[ 1 ].Angbi1=	-5.0f;	KeyFrame3[ 2 ].Angbi1=	-5.0f;
+	KeyFrame3[ 0 ].Angbi2=	0.0f;	KeyFrame3[ 1 ].Angbi2=	0.0f;	KeyFrame3[ 2 ].Angbi2=	0.0f;
+	KeyFrame3[ 0 ].Angbib=	-15.0f;	KeyFrame3[ 1 ].Angbib=	-15.0f;	KeyFrame3[ 2 ].Angbib=	-15.0f;
+	KeyFrame3[ 0 ].Angbd1=	5.0f;	KeyFrame3[ 1 ].Angbd1=	5.0f;	KeyFrame3[ 2 ].Angbd1=	5.0f;
+	KeyFrame3[ 0 ].Angbd2=	0.0f;	KeyFrame3[ 1 ].Angbd2=	0.0f;	KeyFrame3[ 2 ].Angbd2=	0.0f;
+	KeyFrame3[ 0 ].Angbdb=	-40.0f;	KeyFrame3[ 1 ].Angbdb=	-40.0f;	KeyFrame3[ 2 ].Angbdb=-40.0f;
+	KeyFrame3[ 0 ].Angpizq=20.0f;	KeyFrame3[ 1 ].Angpizq=20.0f;	KeyFrame3[ 2 ].Angpizq=20.0f;
+	KeyFrame3[ 0 ].Angpder=-20.0f;	KeyFrame3[ 1 ].Angpder=-20.0f;	KeyFrame3[ 2 ].Angpder=-20.0f;
+	KeyFrame3[ 0 ].Angpizqb=15.0f;	KeyFrame3[ 1 ].Angpizqb=15.0f;	KeyFrame3[ 2 ].Angpizqb=15.0f;
+	KeyFrame3[ 0 ].Angpderb=10.0f;	KeyFrame3[ 1 ].Angpderb=10.0f;	KeyFrame3[ 2 ].Angpderb=10.0f;
+	KeyFrame3[ 0 ].Angpi =	0.0f;	KeyFrame3[ 1 ].Angpi =	0.0f;	KeyFrame3[ 2 ].Angpi =	0.0f;
+	KeyFrame3[ 0 ].Angpd =	0.0f;	KeyFrame3[ 1 ].Angpd =	0.0f;	KeyFrame3[ 2 ].Angpd =	0.0f;
+	KeyFrame3[ 0 ].Xtor  =	0.0f;	KeyFrame3[ 1 ].Xtor  =	0.0f;	KeyFrame3[ 2 ].Xtor  =	0.0f;
+	KeyFrame3[ 0 ].Ytor  =	0.0f;	KeyFrame3[ 1 ].Ytor  =	0.0f;	KeyFrame3[ 2 ].Ytor  =	0.0f;
+	KeyFrame3[ 0 ].Ztor  =	0.0f;	KeyFrame3[ 1 ].Ztor  =	0.0f;	KeyFrame3[ 2 ].Ztor  =	0.0f;
+
 	// Enem1 (enemigo gordo)
 	KeyFrameOtros[ 1 ][ 0 ].Angt1 =	-5.0f;	KeyFrameOtros[ 1 ][ 0 ].Angt1 =	-5.0f;	KeyFrameOtros[ 1 ][ 2 ].Angt1 = -5.0f;
 	KeyFrameOtros[ 1 ][ 0 ].Angt2 =	0.0f;	KeyFrameOtros[ 1 ][ 1 ].Angt2 =	0.0f;	KeyFrameOtros[ 1 ][ 2 ].Angt2 =	0.0f;
 	KeyFrameOtros[ 1 ][ 0 ].Angc1 =	-25.0f;	KeyFrameOtros[ 1 ][ 1 ].Angc1 =	-25.0f;	KeyFrameOtros[ 1 ][ 2 ].Angc1 =	-25.0f;
-	KeyFrame3[ 0 ].Angc2 =	0.0f;	KeyFrame3[ 1 ].Angc2 =	0.0f;	KeyFrame3[ 2 ].Angc2 =	0.0f;
 	KeyFrameOtros[ 1 ][ 0 ].Angbi1= -5.0f;	KeyFrameOtros[ 1 ][ 1 ].Angbi1=	10.0f;	KeyFrameOtros[ 1 ][ 2 ].Angbi1=	-5.0f;
-	KeyFrame3[ 0 ].Angbi2= 0.0f;	KeyFrame3[ 1 ].Angbi2=	0.0f;	KeyFrame3[ 2 ].Angbi2=	0.0f;
 	KeyFrameOtros[ 1 ][ 0 ].Angbib= 0.0f;	KeyFrameOtros[ 1 ][ 1 ].Angbib=	-40.0f;	KeyFrameOtros[ 1 ][ 2 ].Angbib=	-15.0f;
 	KeyFrameOtros[ 1 ][ 0 ].Angbd1= 5.0f;	KeyFrameOtros[ 1 ][ 1 ].Angbd1=	-10.0f;	KeyFrameOtros[ 1 ][ 2 ].Angbd1=	5.0f;
 	KeyFrameOtros[ 1 ][ 0 ].Angbd2= 0.0f;	KeyFrameOtros[ 1 ][ 1 ].Angbd2=	-15.0f;	KeyFrameOtros[ 1 ][ 2 ].Angbd2=	0.0f;
@@ -2200,10 +2219,6 @@ void DatosAnimacion()
 	KeyFrameOtros[ 1 ][ 0 ].Angpizqb=-15.0f;	KeyFrameOtros[ 1 ][ 1 ].Angpizqb=15.0f;	KeyFrameOtros[ 1 ][ 2 ].Angpizqb=-20.0f;
 	KeyFrameOtros[ 1 ][ 0 ].Angpderb=10.0f;	KeyFrameOtros[ 1 ][ 1 ].Angpderb=-5.0f;	KeyFrameOtros[ 1 ][ 2 ].Angpderb=15.0f;
 	KeyFrameOtros[ 1 ][ 0 ].Angpi =	0.0f;	KeyFrameOtros[ 1 ][ 1 ].Angpi =	0.0f;	KeyFrameOtros[ 1 ][ 2 ].Angpi =	10.0f;
-	KeyFrame3[ 0 ].Angpd =	0.0f;	KeyFrame3[ 1 ].Angpd =	0.0f;	KeyFrame3[ 2 ].Angpd =	0.0f;
-	KeyFrame3[ 0 ].Xtor  =	0.0f;	KeyFrame3[ 1 ].Xtor  =	0.0f;	KeyFrame3[ 2 ].Xtor  =	0.0f;
-	KeyFrame3[ 0 ].Ytor  =	0.0f;	KeyFrame3[ 1 ].Ytor  =	0.0f;	KeyFrame3[ 2 ].Ytor=0.0f;
-	KeyFrame3[ 0 ].Ztor  =	0.0f;	KeyFrame3[ 1 ].Ztor  =	0.0f;	KeyFrame3[ 2 ].Ztor=0.0f;
 
 	// Enem2 (helicoptero)
 	KeyFrameOtros[ 2 ][ 0 ].Angt1 = 20.0f;	KeyFrameOtros[ 2 ][ 0 ].Angt1 =-20.0f;	KeyFrameOtros[ 3 ][ 2 ].Angt1 =	20.0f;
@@ -2227,127 +2242,7 @@ void DatosAnimacion()
 //	KeyFrameOtros[ 2 ][ 0 ].Ztor  =	0.0f;	KeyFrameOtros[ 2 ][ 1 ].Ztor  =	0.0f;	KeyFrameOtros[ 3 ][ 2 ].Ztor =	0.0f;
 
 	// El que sigue...
-/*
-	KeyFrameOtros[1][0].Angt1=-5.0f;
-	KeyFrameOtros[1][0].Angt2=0.0f;
-	KeyFrameOtros[1][0].Angc1=-25.0f;
-	KeyFrameOtros[1][0].Angc2=0.0f;
-	KeyFrameOtros[1][0].Angbi1=-5.0f;
-	KeyFrameOtros[1][0].Angbi2=0.0f;
-	KeyFrameOtros[1][0].Angbib=-15.0f;
-	KeyFrameOtros[1][0].Angbd1=5.0f;
-	KeyFrameOtros[1][0].Angbd2=0.0f;
-	KeyFrameOtros[1][0].Angbdb=-40.0f;
-	KeyFrameOtros[1][0].Angpizq=20.0f;
-	KeyFrameOtros[1][0].Angpder=-30.0f;
-	KeyFrameOtros[1][0].Angpizqb=15.0f;
-	KeyFrameOtros[1][0].Angpderb=10.0f;
-	KeyFrameOtros[1][0].Angpi=0.0f;
-	KeyFrameOtros[1][0].Angpd=0.0f;
-	KeyFrameOtros[1][0].Xtor=0.0f;
-	KeyFrameOtros[1][0].Ytor=0.0f;
-	KeyFrameOtros[1][0].Ztor=0.0f;
 
-	KeyFrameOtros[1][1].Angt1=-5.0f;
-	KeyFrameOtros[1][1].Angt2=0.0f;
-	KeyFrameOtros[1][1].Angc1=-25.0f;
-	KeyFrameOtros[1][1].Angc2=0.0f;
-	KeyFrameOtros[1][1].Angbi1=10.0f;
-	KeyFrameOtros[1][1].Angbi2=0.0f;
-	KeyFrameOtros[1][1].Angbib=-40.0f;
-	KeyFrameOtros[1][1].Angbd1=-10.0f;
-	KeyFrameOtros[1][1].Angbd2=0.0f;
-	KeyFrameOtros[1][1].Angbdb=-15.0f;
-	KeyFrameOtros[1][1].Angpizq=-30.0f;
-	KeyFrameOtros[1][1].Angpder=20.0f;
-	KeyFrameOtros[1][1].Angpizqb=20.0f;
-	KeyFrameOtros[1][1].Angpderb=15.0f;
-	KeyFrameOtros[1][1].Angpi=0.0f;
-	KeyFrameOtros[1][1].Angpd=0.0f;
-	KeyFrameOtros[1][1].Xtor=0.0f;
-	KeyFrameOtros[1][1].Ytor=0.0f;
-	KeyFrameOtros[1][1].Ztor=0.0f;
-
-	KeyFrameOtros[1][2].Angt1=-5.0f;
-	KeyFrameOtros[1][2].Angt2=0.0f;
-	KeyFrameOtros[1][2].Angc1=-25.0f;
-	KeyFrameOtros[1][2].Angc2=0.0f;
-	KeyFrameOtros[1][2].Angbi1=-5.0f;
-	KeyFrameOtros[1][2].Angbi2=0.0f;
-	KeyFrameOtros[1][2].Angbib=-15.0f;
-	KeyFrameOtros[1][2].Angbd1=5.0f;
-	KeyFrameOtros[1][2].Angbd2=0.0f;
-	KeyFrameOtros[1][2].Angbdb=-40.0f;
-	KeyFrameOtros[1][2].Angpizq=20.0f;
-	KeyFrameOtros[1][2].Angpder=-20.0f;
-	KeyFrameOtros[1][2].Angpizqb=15.0f;
-	KeyFrameOtros[1][2].Angpderb=10.0f;
-	KeyFrameOtros[1][2].Angpi=0.0f;
-	KeyFrameOtros[1][2].Angpd=0.0f;
-	KeyFrameOtros[1][2].Xtor=0.0f;
-	KeyFrameOtros[1][2].Ytor=0.0f;
-	KeyFrameOtros[1][2].Ztor=0.0f;
-
-	KeyFrameOtros[2][0].Angt1=-5.0f;
-	KeyFrameOtros[2][0].Angt2=0.0f;
-	KeyFrameOtros[2][0].Angc1=-25.0f;
-	KeyFrameOtros[2][0].Angc2=0.0f;
-	KeyFrameOtros[2][0].Angbi1=-5.0f;
-	KeyFrameOtros[2][0].Angbi2=0.0f;
-	KeyFrameOtros[2][0].Angbib=-15.0f;
-	KeyFrameOtros[2][0].Angbd1=5.0f;
-	KeyFrameOtros[2][0].Angbd2=0.0f;
-	KeyFrameOtros[2][0].Angbdb=-40.0f;
-	KeyFrameOtros[2][0].Angpizq=20.0f;
-	KeyFrameOtros[2][0].Angpder=-30.0f;
-	KeyFrameOtros[2][0].Angpizqb=15.0f;
-	KeyFrameOtros[2][0].Angpderb=10.0f;
-	KeyFrameOtros[2][0].Angpi=0.0f;
-	KeyFrameOtros[2][0].Angpd=0.0f;
-	KeyFrameOtros[2][0].Xtor=0.0f;
-	KeyFrameOtros[2][0].Ytor=0.0f;
-	KeyFrameOtros[2][0].Ztor=0.0f;
-
-	KeyFrameOtros[2][1].Angt1=-5.0f;
-	KeyFrameOtros[2][1].Angt2=0.0f;
-	KeyFrameOtros[2][1].Angc1=-25.0f;
-	KeyFrameOtros[2][1].Angc2=0.0f;
-	KeyFrameOtros[2][1].Angbi1=10.0f;
-	KeyFrameOtros[2][1].Angbi2=0.0f;
-	KeyFrameOtros[2][1].Angbib=-40.0f;
-	KeyFrameOtros[2][1].Angbd1=-10.0f;
-	KeyFrameOtros[2][1].Angbd2=0.0f;
-	KeyFrameOtros[2][1].Angbdb=-15.0f;
-	KeyFrameOtros[2][1].Angpizq=-30.0f;
-	KeyFrameOtros[2][1].Angpder=20.0f;
-	KeyFrameOtros[2][1].Angpizqb=20.0f;
-	KeyFrameOtros[2][1].Angpderb=15.0f;
-	KeyFrameOtros[2][1].Angpi=0.0f;
-	KeyFrameOtros[2][1].Angpd=0.0f;
-	KeyFrameOtros[2][1].Xtor=0.0f;
-	KeyFrameOtros[2][1].Ytor=0.0f;
-	KeyFrameOtros[2][1].Ztor=0.0f;
-
-	KeyFrameOtros[2][2].Angt1=-5.0f;
-	KeyFrameOtros[2][2].Angt2=0.0f;
-	KeyFrameOtros[2][2].Angc1=-25.0f;
-	KeyFrameOtros[2][2].Angc2=0.0f;
-	KeyFrameOtros[2][2].Angbi1=-5.0f;
-	KeyFrameOtros[2][2].Angbi2=0.0f;
-	KeyFrameOtros[2][2].Angbib=-15.0f;
-	KeyFrameOtros[2][2].Angbd1=5.0f;
-	KeyFrameOtros[2][2].Angbd2=0.0f;
-	KeyFrameOtros[2][2].Angbdb=-40.0f;
-	KeyFrameOtros[2][2].Angpizq=20.0f;
-	KeyFrameOtros[2][2].Angpder=-20.0f;
-	KeyFrameOtros[2][2].Angpizqb=15.0f;
-	KeyFrameOtros[2][2].Angpderb=10.0f;
-	KeyFrameOtros[2][2].Angpi=0.0f;
-	KeyFrameOtros[2][2].Angpd=0.0f;
-	KeyFrameOtros[2][2].Xtor=0.0f;
-	KeyFrameOtros[2][2].Ytor=0.0f;
-	KeyFrameOtros[2][2].Ztor=0.0f;
-*/
 	KeyFrameOtros[3][0].Angt1=-5.0f;
 	KeyFrameOtros[3][0].Angt2=0.0f;
 	KeyFrameOtros[3][0].Angc1=-25.0f;
@@ -3580,82 +3475,84 @@ void ControlPersonaje(int funcion)
 /* animacion() ahora recibe un apuntador hacia el modelo que quieran usar, ej. &mikumodelo
  * tambien recibe el playIndex de su personaje a animar, ese nada mas lo pasan como argumento
  */
-void animacion(FRAME *KeyFrame, int maxKF , int frames)
+void animacion( FRAME* KeyFrame, int maxKF, int frames, jerarquiaModelo* modelo, int& pIndex, bool& corre )
 {
-	if(play)
+	if(corre)
 	{		
-		if((abs(KeyFrame[playIndex+1].Angt1-player1modelo.Angt1))<0.1 &&
-		   (abs(KeyFrame[playIndex+1].Angt2-player1modelo.Angt2))<0.1 &&
-		   (abs(KeyFrame[playIndex+1].Angc1-player1modelo.Angc1))<0.1 &&
-		   (abs(KeyFrame[playIndex+1].Angc2-player1modelo.Angc2))<0.1 &&
-		   (abs(KeyFrame[playIndex+1].Angbi1-player1modelo.Angbi1))<0.1 &&
-		   (abs(KeyFrame[playIndex+1].Angbi2-player1modelo.Angbi2))<0.1 &&
-		   (abs(KeyFrame[playIndex+1].Angbib-player1modelo.Angbib))<0.1 &&
-		   (abs(KeyFrame[playIndex+1].Angbd1-player1modelo.Angbd1))<0.1 &&
-		   (abs(KeyFrame[playIndex+1].Angbd2-player1modelo.Angbd2))<0.1 &&
-		   (abs(KeyFrame[playIndex+1].Angbdb-player1modelo.Angbdb))<0.1 &&
-		   (abs(KeyFrame[playIndex+1].Angpizq-player1modelo.Angpizq))<0.1 &&
-		   (abs(KeyFrame[playIndex+1].Angpizqb-player1modelo.Angpizqb))<0.1 &&
-		   (abs(KeyFrame[playIndex+1].Angpder-player1modelo.Angpder))<0.1 &&
-		   (abs(KeyFrame[playIndex+1].Angpderb-player1modelo.Angpderb))<0.1 &&
-		   (abs(KeyFrame[playIndex+1].Angpi-player1modelo.Angpi))<0.1 &&
-		   (abs(KeyFrame[playIndex+1].Angpd-player1modelo.Angpd))<0.1 &&
-		   (abs(KeyFrame[playIndex+1].Xtor-player1modelo.Xtor))<0.1 &&
-		   (abs(KeyFrame[playIndex+1].Ytor-player1modelo.Ytor))<0.1 &&
-		   (abs(KeyFrame[playIndex+1].Ztor-player1modelo.Ztor))<0.1)
+		if((abs(KeyFrame[ pIndex+1 ].Angt1-modelo->Angt1))<0.1 &&
+		   (abs(KeyFrame[ pIndex+1 ].Angt2-modelo->Angt2))<0.1 &&
+		   (abs(KeyFrame[pIndex+1].Angc1-modelo->Angc1))<0.1 &&
+		   (abs(KeyFrame[pIndex+1].Angc2-modelo->Angc2))<0.1 &&
+		   (abs(KeyFrame[pIndex+1].Angbi1-modelo->Angbi1))<0.1 &&
+		   (abs(KeyFrame[pIndex+1].Angbi2-modelo->Angbi2))<0.1 &&
+		   (abs(KeyFrame[pIndex+1].Angbib-modelo->Angbib))<0.1 &&
+		   (abs(KeyFrame[pIndex+1].Angbd1-modelo->Angbd1))<0.1 &&
+		   (abs(KeyFrame[pIndex+1].Angbd2-modelo->Angbd2))<0.1 &&
+		   (abs(KeyFrame[pIndex+1].Angbdb-modelo->Angbdb))<0.1 &&
+		   (abs(KeyFrame[pIndex+1].Angpizq-modelo->Angpizq))<0.1 &&
+		   (abs(KeyFrame[pIndex+1].Angpizqb-modelo->Angpizqb))<0.1 &&
+		   (abs(KeyFrame[pIndex+1].Angpder-modelo->Angpder))<0.1 &&
+		   (abs(KeyFrame[pIndex+1].Angpderb-modelo->Angpderb))<0.1 &&
+		   (abs(KeyFrame[pIndex+1].Angpi-modelo->Angpi))<0.1 &&
+		   (abs(KeyFrame[pIndex+1].Angpd-modelo->Angpd))<0.1 &&
+		   (abs(KeyFrame[pIndex+1].Xtor-modelo->Xtor))<0.1 &&
+		   (abs(KeyFrame[pIndex+1].Ytor-modelo->Ytor))<0.1 &&
+		   (abs(KeyFrame[pIndex+1].Ztor-modelo->Ztor))<0.1)
 		{			
-			playIndex++;			
-			if(playIndex>maxKF-2)
+			pIndex++;			
+			if(pIndex>maxKF-1)
 			{
-				playIndex=0;
-				play=false;
+				pIndex=0;
+				corre=false;
 								
 			}
 		}
 		else
 		{
-			KeyFrame[playIndex].incAngt1    = (KeyFrame[playIndex+1].Angt1-KeyFrame[playIndex].Angt1)/frames;
-			KeyFrame[playIndex].incAngt2    = (KeyFrame[playIndex+1].Angt2-KeyFrame[playIndex].Angt2)/frames;
-			KeyFrame[playIndex].incAngc1    = (KeyFrame[playIndex+1].Angc1-KeyFrame[playIndex].Angc1)/frames;
-			KeyFrame[playIndex].incAngc2    = (KeyFrame[playIndex+1].Angc2-KeyFrame[playIndex].Angc2)/frames;
-			KeyFrame[playIndex].incAngbi1   = (KeyFrame[playIndex+1].Angbi1-KeyFrame[playIndex].Angbi1)/frames;
-			KeyFrame[playIndex].incAngbi2   = (KeyFrame[playIndex+1].Angbi2-KeyFrame[playIndex].Angbi2)/frames;
-			KeyFrame[playIndex].incAngbib   = (KeyFrame[playIndex+1].Angbib-KeyFrame[playIndex].Angbib)/frames;
-			KeyFrame[playIndex].incAngbd1   = (KeyFrame[playIndex+1].Angbd1-KeyFrame[playIndex].Angbd1)/frames;
-			KeyFrame[playIndex].incAngbd2   = (KeyFrame[playIndex+1].Angbd2-KeyFrame[playIndex].Angbd2)/frames;
-			KeyFrame[playIndex].incAngbdb   = (KeyFrame[playIndex+1].Angbdb-KeyFrame[playIndex].Angbdb)/frames;
-			KeyFrame[playIndex].incAngpizq  = (KeyFrame[playIndex+1].Angpizq-KeyFrame[playIndex].Angpizq)/frames;
-			KeyFrame[playIndex].incAngpizqb = (KeyFrame[playIndex+1].Angpizqb-KeyFrame[playIndex].Angpizqb)/frames;
-			KeyFrame[playIndex].incAngpder  = (KeyFrame[playIndex+1].Angpder-KeyFrame[playIndex].Angpder)/frames;
-			KeyFrame[playIndex].incAngpderb = (KeyFrame[playIndex+1].Angpderb-KeyFrame[playIndex].Angpderb)/frames;
-			KeyFrame[playIndex].incAngpi    = (KeyFrame[playIndex+1].Angpi-KeyFrame[playIndex].Angpi)/frames;
-			KeyFrame[playIndex].incAngpd    = (KeyFrame[playIndex+1].Angpd-KeyFrame[playIndex].Angpd)/frames;
-			KeyFrame[playIndex].incXtor     = (KeyFrame[playIndex+1].Xtor-KeyFrame[playIndex].Xtor)/frames;
-			KeyFrame[playIndex].incYtor     = (KeyFrame[playIndex+1].Ytor-KeyFrame[playIndex].Ytor)/frames;
-			KeyFrame[playIndex].incZtor     = (KeyFrame[playIndex+1].Ztor-KeyFrame[playIndex].Ztor)/frames;
+			KeyFrame[pIndex].incAngt1    = (KeyFrame[pIndex+1].Angt1-KeyFrame[pIndex].Angt1)/frames;
+			KeyFrame[pIndex].incAngt2    = (KeyFrame[pIndex+1].Angt2-KeyFrame[pIndex].Angt2)/frames;
+			KeyFrame[pIndex].incAngc1    = (KeyFrame[pIndex+1].Angc1-KeyFrame[pIndex].Angc1)/frames;
+			KeyFrame[pIndex].incAngc2    = (KeyFrame[pIndex+1].Angc2-KeyFrame[pIndex].Angc2)/frames;
+			KeyFrame[pIndex].incAngbi1   = (KeyFrame[pIndex+1].Angbi1-KeyFrame[pIndex].Angbi1)/frames;
+			KeyFrame[pIndex].incAngbi2   = (KeyFrame[pIndex+1].Angbi2-KeyFrame[pIndex].Angbi2)/frames;
+			KeyFrame[pIndex].incAngbib   = (KeyFrame[pIndex+1].Angbib-KeyFrame[pIndex].Angbib)/frames;
+			KeyFrame[pIndex].incAngbd1   = (KeyFrame[pIndex+1].Angbd1-KeyFrame[pIndex].Angbd1)/frames;
+			KeyFrame[pIndex].incAngbd2   = (KeyFrame[pIndex+1].Angbd2-KeyFrame[pIndex].Angbd2)/frames;
+			KeyFrame[pIndex].incAngbdb   = (KeyFrame[pIndex+1].Angbdb-KeyFrame[pIndex].Angbdb)/frames;
+			KeyFrame[pIndex].incAngpizq  = (KeyFrame[pIndex+1].Angpizq-KeyFrame[pIndex].Angpizq)/frames;
+			KeyFrame[pIndex].incAngpizqb = (KeyFrame[pIndex+1].Angpizqb-KeyFrame[pIndex].Angpizqb)/frames;
+			KeyFrame[pIndex].incAngpder  = (KeyFrame[pIndex+1].Angpder-KeyFrame[pIndex].Angpder)/frames;
+			KeyFrame[pIndex].incAngpderb = (KeyFrame[pIndex+1].Angpderb-KeyFrame[pIndex].Angpderb)/frames;
+			KeyFrame[pIndex].incAngpi    = (KeyFrame[pIndex+1].Angpi-KeyFrame[pIndex].Angpi)/frames;
+			KeyFrame[pIndex].incAngpd    = (KeyFrame[pIndex+1].Angpd-KeyFrame[pIndex].Angpd)/frames;
+			KeyFrame[pIndex].incXtor     = (KeyFrame[pIndex+1].Xtor-KeyFrame[pIndex].Xtor)/frames;
+			KeyFrame[pIndex].incYtor     = (KeyFrame[pIndex+1].Ytor-KeyFrame[pIndex].Ytor)/frames;
+			KeyFrame[pIndex].incZtor     = (KeyFrame[pIndex+1].Ztor-KeyFrame[pIndex].Ztor)/frames;
 			
-			player1modelo.Angt1    += KeyFrame[playIndex].incAngt1;
-			player1modelo.Angt2    += KeyFrame[playIndex].incAngt2;
-			player1modelo.Angc1    += KeyFrame[playIndex].incAngc1;
-			player1modelo.Angc2    += KeyFrame[playIndex].incAngc2;
-			player1modelo.Angbi1   += KeyFrame[playIndex].incAngbi1;
-			player1modelo.Angbi2   += KeyFrame[playIndex].incAngbi2;
-			player1modelo.Angbib   += KeyFrame[playIndex].incAngbib;
-			player1modelo.Angbd1   += KeyFrame[playIndex].incAngbd1;
-			player1modelo.Angbd2   += KeyFrame[playIndex].incAngbd2;
-			player1modelo.Angbdb   += KeyFrame[playIndex].incAngbdb;
-			player1modelo.Angpizq  += KeyFrame[playIndex].incAngpizq;
-			player1modelo.Angpizqb += KeyFrame[playIndex].incAngpizqb;
-			player1modelo.Angpder  += KeyFrame[playIndex].incAngpder;
-			player1modelo.Angpderb += KeyFrame[playIndex].incAngpderb;
-			player1modelo.Angpi    += KeyFrame[playIndex].incAngpi;
-			player1modelo.Angpd    += KeyFrame[playIndex].incAngpd;
-			player1modelo.Xtor     += KeyFrame[playIndex].incXtor;
-			player1modelo.Ytor     += KeyFrame[playIndex].incYtor;
-			player1modelo.Ztor     += KeyFrame[playIndex].incZtor;
+			modelo->Angt1    += KeyFrame[pIndex].incAngt1;
+			modelo->Angt2    += KeyFrame[pIndex].incAngt2;
+			modelo->Angc1    += KeyFrame[pIndex].incAngc1;
+			modelo->Angc2    += KeyFrame[pIndex].incAngc2;
+			modelo->Angbi1   += KeyFrame[pIndex].incAngbi1;
+			modelo->Angbi2   += KeyFrame[pIndex].incAngbi2;
+			modelo->Angbib   += KeyFrame[pIndex].incAngbib;
+			modelo->Angbd1   += KeyFrame[pIndex].incAngbd1;
+			modelo->Angbd2   += KeyFrame[pIndex].incAngbd2;
+			modelo->Angbdb   += KeyFrame[pIndex].incAngbdb;
+			modelo->Angpizq  += KeyFrame[pIndex].incAngpizq;
+			modelo->Angpizqb += KeyFrame[pIndex].incAngpizqb;
+			modelo->Angpder  += KeyFrame[pIndex].incAngpder;
+			modelo->Angpderb += KeyFrame[pIndex].incAngpderb;
+			modelo->Angpi    += KeyFrame[pIndex].incAngpi;
+			modelo->Angpd    += KeyFrame[pIndex].incAngpd;
+			modelo->Xtor     += KeyFrame[pIndex].incXtor;
+			modelo->Ytor     += KeyFrame[pIndex].incYtor;
+			modelo->Ztor     += KeyFrame[pIndex].incZtor;
 			
 		}
 	}
+	else 
+		corre = true;
 }
 void animacionOtros( FRAME* KeyFrame, int maxKF, int frames, jerarquiaModelo* modelo, int& pIndex, bool& corre )
 {
@@ -4859,7 +4756,7 @@ void DibujaTextos()
 
 		// Texto a mostrar en pantalla
 		Font.glPrint((1.0f/640.0f)*glWidth, glWidth*0.05f,glHeight*0.9f,"Delay: %d", Enemigos[0].getDelay() );
-		Font.glPrint((1.0f/640.0f)*glWidth, glWidth*0.05f,glHeight*0.85f,"playIndex %d", playIndex );
+		Font.glPrint((1.0f/640.0f)*glWidth, glWidth*0.05f,glHeight*0.85f,"playIndex %d", playIndex3 );
 		//Font.glPrint((1.0f/640.0f)*glWidth, glWidth*0.05f,glHeight*0.70f,"PosObj %.2f, %.2f, %.2f", player1.PosicionObj.x, player1.PosicionObj.y, player1.PosicionObj.z);
 		Font.glPrint( (1.0f/640.0f)*glWidth, glWidth * 0.45f, glHeight * 0.95f, "High 50000" );
 		Font.glPrint( (1.0f/640.0f)*glWidth, glWidth * 0.42f, glHeight * 0.90f, "Round 1 Stage 1" );
@@ -6184,8 +6081,8 @@ int WINAPI WinMain(	HINSTANCE	hInstance,			// Instancia
 						if(tipoAnim == 1)
 							animacionOtros( KeyFrame1, maxKF1 , 18, &player1modelo, playIndex, play );
 					}
-					animacionOtros( KeyFrame2, maxKF2, 18, &mikumodelo, playIndex2, play2 );
-					animacionOtros( KeyFrame3, maxKF3, 18, &enem1modelo, playIndex3, play3 );
+					animacion( KeyFrame2, maxKF2, 18, &mikumodelo, playIndex2, play2 );
+					animacion( KeyFrame3, maxKF3, 18, &enem1modelo, playIndex3, play3 );
 
 					SwapBuffers(hDC);				// Intercambia los Buffers (Double Buffering)
 				}
