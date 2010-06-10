@@ -1844,35 +1844,34 @@ void InicializaParametrosdeControl()
 /* Animacion/IA de cada uno de los monos en el escenario */
 // Declaracion de variables
 vector<Animator> Enemigos;
-Bullet* bill = 0;
+vector<Bullet*> bill;
 
 void InicializaParametrosdeAnimacion()
 {
 	Enemigos.resize( 3 );
+	bill.resize( 3 );
 	// Enemigo gordito azul
-	Enemigos[1].setChar( &enem1 );
-	Enemigos[1].addPoint( CVector( 200.0f, 9.0f, -40.0f ) );
-	Enemigos[1].addPoint( CVector( 160.0f, 9.0f, -40.0f ) );
-	Enemigos[1].setTarget( CVector( 220, 4.0f, -45.0f ) );
+	Enemigos[0].setChar( &enem1 );
+	Enemigos[0].addPoint( CVector( 200.0f, 9.0f, -40.0f ) );
+	Enemigos[0].addPoint( CVector( 160.0f, 9.0f, -40.0f ) );
+
+	// Balas
+	bill[0] = 0;
+
 }
 void AniMagic()
 {
-	Enemigos[1].startAnim();
-	
-	// Dibuja rayos
-	Enemigos[1].drawRay();
+	Enemigos[0].startAnim();
 
-	if( Enemigos[1].Reload() <= 0 )
+	if( Enemigos[0].Reload() <= 0 )
 	{
 		CVector disparo;
-		disparo = Enemigos[1].attack();
-		bill = new Bullet( disparo );
-		bill->changePara( 0.2f, 3.0f, player1.PosicionObj );
+		disparo = Enemigos[0].attack();
+		bill[0] = new Bullet( disparo, player1.PosicionObj );
 	}
-	if( bill != 0 )
+	if( bill[0] != 0 )
 	{
-		bill->drawBullet();
-		bill->moveToTarget();
+		bill[0]->moveToTarget();
 	}
 
 }
@@ -3011,7 +3010,29 @@ void LargeHadronCollider()
 			}
 		}
 	}
-	player1.PosAntObj = player1.PosicionObj;
+
+	// Para las balas
+	bool col2;
+	if( bill[0] != 0 )
+	{
+		col2 = ColisionEsferaEsfera(esfera[0], bill[0]->getSphere(), player1 );
+		player1.PosAntObj = player1.PosicionObj;
+		if( col2 == true )
+		{
+			health -= 10.0f;
+			//red -= 1;
+			green = 200 - ( 150 - health );
+
+			if( health <= 0.0f )
+			{
+				health = 150.0f;
+				vidas = vidas - 1;
+				//red = 250;
+				green = 200;
+			}
+			bill[0] = 0;
+		}
+	}
 
 }
 
@@ -4482,7 +4503,7 @@ void DibujaTextos()
 		glPopMatrix();
 
 		// Texto a mostrar en pantalla
-		Font.glPrint((1.0f/640.0f)*glWidth, glWidth*0.05f,glHeight*0.9f,"Delay: %d", Enemigos[1].getDelay() );
+		Font.glPrint((1.0f/640.0f)*glWidth, glWidth*0.05f,glHeight*0.9f,"Delay: %d", Enemigos[0].getDelay() );
 		Font.glPrint((1.0f/640.0f)*glWidth, glWidth*0.05f,glHeight*0.85f,"playIndex %d", playIndex );
 		//Font.glPrint((1.0f/640.0f)*glWidth, glWidth*0.05f,glHeight*0.70f,"PosObj %.2f, %.2f, %.2f", player1.PosicionObj.x, player1.PosicionObj.y, player1.PosicionObj.z);
 		Font.glPrint( (1.0f/640.0f)*glWidth, glWidth * 0.45f, glHeight * 0.95f, "High 50000" );

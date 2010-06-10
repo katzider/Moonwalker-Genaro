@@ -1,8 +1,9 @@
 #include "Bullet.h"
 
-Bullet::Bullet( CVector origen )
+Bullet::Bullet( CVector origen, CVector destino )
 {
 	bala.Pos = origen;
+	changePara( 0.3f, 0.75f, destino );
 }
 
 void Bullet::changePara( float vel, float radius, CVector destino )
@@ -19,28 +20,30 @@ void Bullet::drawBullet()
 
 	q = gluNewQuadric();
 
-	gluQuadricDrawStyle(q, GLU_LINE);
+	gluQuadricDrawStyle(q, GLU_FILL );
 
 	glDisable(GL_LIGHTING);
 
 	glColor3f(1.0f, 1.0f, 1.0f);
 
 	glPushMatrix();
+		glColor3f( 1.0f, 1.0f, 0.0f );
 		glTranslatef( bala.Pos.x, bala.Pos.y, bala.Pos.z);
 		glRotatef(90.0f,1.0f,0.0f,0.0f);
 		gluSphere(q, bala.radio, 16, 8);
 	glPopMatrix();
 
+	glEnable( GL_LIGHTING );
+
 }
 
-bool Bullet::moveToTarget()
+void Bullet::moveToTarget()
 {
-	if( ( bala.Pos.x <= sTarget.x + 1.0f && bala.Pos.x >= sTarget.x - 1.0f ) &&
-		( bala.Pos.x <= sTarget.y + 1.0f && bala.Pos.y >= sTarget.y - 1.0f ) &&
-		( bala.Pos.x <= sTarget.z + 1.0f && bala.Pos.z >= sTarget.z - 1.0f ) )
+	if( ( bala.Pos.x <= sTarget.x + bala.radio && bala.Pos.x >= sTarget.x - bala.radio ) &&
+		( bala.Pos.x <= sTarget.y + bala.radio && bala.Pos.y >= sTarget.y - bala.radio ) &&
+		( bala.Pos.x <= sTarget.z + bala.radio && bala.Pos.z >= sTarget.z - bala.radio ) )
 	{
-		bala.radio = 0.0f;
-		return true;
+		//speed = 0.0f;
 	}
 	else
 	{
@@ -50,5 +53,11 @@ bool Bullet::moveToTarget()
 		temp = Normaliza( temp );
 		// Move towards the next point according to our speed
 		bala.Pos = bala.Pos + temp * speed;
+		drawBullet();
 	}
+}
+
+boundingsphere Bullet::getSphere()
+{
+	return bala;
 }
