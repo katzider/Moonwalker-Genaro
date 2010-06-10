@@ -3,7 +3,7 @@
 Bullet::Bullet( CVector origen, CVector destino )
 {
 	bala.Pos = origen;
-	changePara( 0.3f, 0.75f, destino );
+	changePara( 0.3f, 0.8f, destino );
 }
 
 void Bullet::changePara( float vel, float radius, CVector destino )
