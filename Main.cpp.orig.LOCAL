@@ -74,15 +74,11 @@ parametros chang;	 //Variable con la que tenemos acceso a la estructura de parï¿
 
 parametros enemigo8; // parametros robot
 
-parametros* parenem[ 12 ] = { &enem1, &enem1a, &enem1b, &enem1c, &enem3a, &enem3b, &enem3c, &enem3d, &enem3e, &enem3f, &enem3g, &enem3h };
-
 /* Vidas del personaje */
 float health = 150;
 int vidas = 3;
 //int red = 250;
 int green = 200;
-int score = 0;
-int maxs = 3000;
 
 CMateriales Material;
 
@@ -2002,24 +1998,12 @@ vector<Bullet*> bill;
 
 void InicializaParametrosdeAnimacion()
 {
-	// inicializacion de las cosas
-	const int MFckers = 3;
-	Enemigos.resize( MFckers );
-	bill.resize( MFckers );
-
+	Enemigos.resize( 3 );
+	bill.resize( 3 );
 	// Enemigo gordito azul
 	Enemigos[0].setChar( &enem1 );
 	Enemigos[0].addPoint( CVector( 200.0f, 9.0f, -40.0f ) );
 	Enemigos[0].addPoint( CVector( 160.0f, 9.0f, -40.0f ) );
-
-	Enemigos[1].setChar( &enem3c );
-	Enemigos[1].addPoint( CVector( 200.0f, 9.0f, -40.0f ) );
-	Enemigos[1].addPoint( CVector( 160.0f, 9.0f, -40.0f ) );
-
-	Enemigos[2].setChar( &enem3d );
-	Enemigos[2].addPoint( CVector( 200.0f, 9.0f, -40.0f ) );
-	Enemigos[2].addPoint( CVector( 160.0f, 9.0f, -40.0f ) );
-
 
 	// Balas
 	bill[0] = 0;
@@ -2027,20 +2011,17 @@ void InicializaParametrosdeAnimacion()
 }
 void AniMagic()
 {
-	for( int i = 0; i < Enemigos.size(); i++ )
-	{
-		Enemigos[i].startAnim();
+	Enemigos[0].startAnim();
 
-		if( Enemigos[i].Reload() <= 0 )
-		{
-			CVector disparo;
-			disparo = Enemigos[i].attack();
-			bill[i] = new Bullet( disparo, player1.PosicionObj );
-		}
-		if( bill[i] != 0 )
-		{
-			bill[i]->moveToTarget();
-		}
+	if( Enemigos[0].Reload() <= 0 )
+	{
+		CVector disparo;
+		disparo = Enemigos[0].attack();
+		bill[0] = new Bullet( disparo, player1.PosicionObj );
+	}
+	if( bill[0] != 0 )
+	{
+		bill[0]->moveToTarget();
 	}
 
 }
@@ -2200,7 +2181,7 @@ void DatosAnimacion()
 //	KeyFrameOtros[ 2 ][ 0 ].Ztor  =	0.0f;	KeyFrameOtros[ 2 ][ 1 ].Ztor  =	0.0f;	KeyFrameOtros[ 3 ][ 2 ].Ztor =	0.0f;
 
 	// El que sigue...
-/*
+
 	KeyFrameOtros[1][0].Angt1=-5.0f;
 	KeyFrameOtros[1][0].Angt2=0.0f;
 	KeyFrameOtros[1][0].Angc1=-25.0f;
@@ -2260,27 +2241,6 @@ void DatosAnimacion()
 	KeyFrameOtros[1][2].Xtor=0.0f;
 	KeyFrameOtros[1][2].Ytor=0.0f;
 	KeyFrameOtros[1][2].Ztor=0.0f;
-
-	KeyFrameOtros[2][0].Angt1=-5.0f;
-	KeyFrameOtros[2][0].Angt2=0.0f;
-	KeyFrameOtros[2][0].Angc1=-25.0f;
-	KeyFrameOtros[2][0].Angc2=0.0f;
-	KeyFrameOtros[2][0].Angbi1=-5.0f;
-	KeyFrameOtros[2][0].Angbi2=0.0f;
-	KeyFrameOtros[2][0].Angbib=-15.0f;
-	KeyFrameOtros[2][0].Angbd1=5.0f;
-	KeyFrameOtros[2][0].Angbd2=0.0f;
-	KeyFrameOtros[2][0].Angbdb=-40.0f;
-	KeyFrameOtros[2][0].Angpizq=20.0f;
-	KeyFrameOtros[2][0].Angpder=-30.0f;
-	KeyFrameOtros[2][0].Angpizqb=15.0f;
-	KeyFrameOtros[2][0].Angpderb=10.0f;
-	KeyFrameOtros[2][0].Angpi=0.0f;
-	KeyFrameOtros[2][0].Angpd=0.0f;
-	KeyFrameOtros[2][0].Xtor=0.0f;
-	KeyFrameOtros[2][0].Ytor=0.0f;
-	KeyFrameOtros[2][0].Ztor=0.0f;
-
 
 	KeyFrameOtros[2][0].Angt1=-5.0f;
 	KeyFrameOtros[2][0].Angt2=0.0f;
@@ -2816,8 +2776,8 @@ void InicializaObjetosdeColision()
 	esfera[9].colision=false;
 
 	//Esfera de colision del ataque de MJ
-	esfera[18].radio=1.5f;
-	esfera[18].Pos=CVector(player1.PosicionObj.x - 1.0f, player1.PosicionObj.y + 4.4f, player1.PosicionObj.z + 7.0f);
+	esfera[18].radio=0.5f;
+	esfera[18].Pos=CVector(player1.PosicionObj.x - 10.0f , player1.PosicionObj.y + 4.4f, player1.PosicionObj.z + 3.0f);
 	esfera[18].colision=false;
 
 	esfera[20].radio=4.0;
@@ -2882,15 +2842,9 @@ void ActualizaObjetosDinamicosColision()
 	esfera[15].Pos=CVector(enem3h.PosicionObj.x, enem3h.PosicionObj.y+2.0f, enem3h.PosicionObj.z);
 	esfera[16].Pos=CVector(enem1b.PosicionObj.x, enem1b.PosicionObj.y+2.5f, enem1b.PosicionObj.z);
 	esfera[17].Pos=CVector(enem1c.PosicionObj.x, enem1c.PosicionObj.y+2.5f, enem1c.PosicionObj.z);
-	
-	if( player1.AngObj <= 0.0f )
-		esfera[18].Pos=CVector(player1.PosicionObj.x - 1.0f, player1.PosicionObj.y + 4.4f, player1.PosicionObj.z + 7.0f);
-	else if( player1.AngObj <= 90.0f && player1.AngObj > 0.0f  )
-		esfera[18].Pos=CVector(player1.PosicionObj.x + 7.0f, player1.PosicionObj.y + 4.4f, player1.PosicionObj.z + 1.0f);
-	else if( player1.AngObj <= 180.0f && player1.AngObj > 90.0f  )
-		esfera[18].Pos=CVector(player1.PosicionObj.x, player1.PosicionObj.y + 4.4f, player1.PosicionObj.z -7.0f);
-	else if( player1.AngObj <= 270.0f && player1.AngObj > 180.0f  )
-		esfera[18].Pos=CVector(player1.PosicionObj.x - 7.0f, player1.PosicionObj.y + 4.4f, player1.PosicionObj.z );
+	esfera[18].Pos=CVector(player1.PosicionObj.x, player1.PosicionObj.y+4.4f, player1.PosicionObj.z);
+
+
 }
 
 void DibujaObjetosdeColision()
@@ -3286,7 +3240,7 @@ void LiberaSonido(FMOD_SYSTEM *system, FMOD_RESULT result)
 // creador de hoyos negros y revision de colisiones
 void LargeHadronCollider()
 {
-	bool col, col1;
+	bool col;
 	// Colisiones
 	ColisionEsferaPlano(0, 2, player1 );
 	player1.PosAntObj = player1.PosicionObj;
@@ -3329,35 +3283,10 @@ void LargeHadronCollider()
 				//red = 250;
 				green = 200;
 			}
-			// desaparece la bala
 			bill[0] = 0;
 		}
 	}
 
-	int j = 0;
-	parametros aux;
-	//Ataque de MJ
-	if( MJAtaque == 1)
-	{
-		for(int i = 1; i <= 17; i++)
-		{
-			if( i != 18 && i != 3 && i != 4 && i != 5)
-			{
-				col1 = ColisionEsferaEsfera(esfera[i], esfera[18], *parenem[ j ] );
-				if( col1 )
-				{
-					aux = *parenem[ j ];
-					aux.escalaX = 0.0f;
-					aux.escalaY = 0.0f;
-					aux.escalaZ = 0.0f;
-					score += 1000;
-					if( score >= maxs )
-						maxs = score;
-				}
-				j++;
-			}
-		}
-	}
 }
 
 void ControlPersonaje(int funcion)
@@ -4782,13 +4711,18 @@ void DibujaTextos()
 		glPopMatrix();
 
 		// Texto a mostrar en pantalla
-		Font.glPrint((1.0f/640.0f)*glWidth, glWidth*0.05f,glHeight*0.9f,"Angulo = %f", player1.AngObj /*"Delay: %d", Enemigos[0].getDelay()*/ );
+<<<<<<< HEAD
+		Font.glPrint((1.0f/640.0f)*glWidth, glWidth*0.05f,glHeight*0.9f,"Delay: %d",  Enemigos[1].getDelay() );
 		//Font.glPrint((1.0f/640.0f)*glWidth, glWidth*0.05f,glHeight*0.85f,"PosCam %f", player1.PosicionCam.x );
+=======
+		Font.glPrint((1.0f/640.0f)*glWidth, glWidth*0.05f,glHeight*0.9f,"Delay: %d", Enemigos[0].getDelay() );
+		Font.glPrint((1.0f/640.0f)*glWidth, glWidth*0.05f,glHeight*0.85f,"playIndex %d", playIndex );
+>>>>>>> d0d4afb498a53c8f3392d21225b31d4a336db597
 		//Font.glPrint((1.0f/640.0f)*glWidth, glWidth*0.05f,glHeight*0.70f,"PosObj %.2f, %.2f, %.2f", player1.PosicionObj.x, player1.PosicionObj.y, player1.PosicionObj.z);
-		Font.glPrint( (1.0f/640.0f)*glWidth, glWidth * 0.45f, glHeight * 0.95f, "High %d", maxs );
+		Font.glPrint( (1.0f/640.0f)*glWidth, glWidth * 0.45f, glHeight * 0.95f, "High 50000" );
 		Font.glPrint( (1.0f/640.0f)*glWidth, glWidth * 0.42f, glHeight * 0.90f, "Round 1 Stage 1" );
 		Font.glPrint( (1.0f/640.0f)*glWidth, glWidth * 0.08f, glHeight * 0.15f, "1P" );
-		Font.glPrint( (1.0f/640.0f)*glWidth, glWidth * 0.20f, glHeight * 0.15f, "%d", score );
+		Font.glPrint( (1.0f/640.0f)*glWidth, glWidth * 0.20f, glHeight * 0.15f, "0" );
 		Font.glPrint( (1.0f/640.0f)*glWidth, glWidth * 0.1f, glHeight * 0.09f, "x%d", vidas );
 									
 		glDisable(GL_ALPHA_TEST);

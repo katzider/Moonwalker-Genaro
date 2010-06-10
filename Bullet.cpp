@@ -44,6 +44,7 @@ void Bullet::moveToTarget()
 		( bala.Pos.x <= sTarget.z + bala.radio && bala.Pos.z >= sTarget.z - bala.radio ) )
 	{
 		//speed = 0.0f;
+		// shit I dunno why but it never reaches this point lol, so much for that, huh?
 	}
 	else
 	{
