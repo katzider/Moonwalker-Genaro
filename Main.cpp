@@ -5735,7 +5735,7 @@ int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la
 	}
 
 	//spline helic�ptero
-	glDisable(GL_TEXTURE_2D);
+	/*glDisable(GL_TEXTURE_2D);
 	glDisable(GL_LIGHTING);
 	glDisable(GL_COLOR_MATERIAL);
 	glColor3f(1.0f, 1.0f, 1.0f);
@@ -5763,9 +5763,9 @@ int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la
 		glPopMatrix();
 
 		glColor3f(1.0f,1.0f,1.0f);
-	}
+	}*/
 
-	//spline camara
+	/*//spline camara
 	glDisable(GL_TEXTURE_2D);
 	glDisable(GL_LIGHTING);
 	glDisable(GL_COLOR_MATERIAL);
@@ -5794,7 +5794,7 @@ int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la
 		glPopMatrix();
 
 		glColor3f(1.0f,1.0f,1.0f);
-	}
+	}*/
 	
 
 	// IA de los enemigos
