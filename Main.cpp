@@ -3316,7 +3316,7 @@ void LargeHadronCollider()
 	//Ataque de MJ
 	if( MJAtaque == 1)
 	{
-		for(int i = 1; i <= 20; i++)
+		for(int i = 1; i <= 12; i++)
 		{
 			if( i != 18 && i != 2 && i != 4 && i != 5)
 			{
@@ -3324,9 +3324,6 @@ void LargeHadronCollider()
 				if( col1 )
 				{
 					aux = parenem[ j ];
-					//aux->escalaX = 0.0f;
-					//aux->escalaY = 0.0f;
-					//aux->escalaZ = 0.0f;
 					aux->PosicionObj.z = 6666.6f;
 					score += 1000;
 					if( score >= maxs )
