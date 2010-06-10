@@ -1682,7 +1682,7 @@ void InicializaParametrosdeControl()
 								//sin aplicarle ninguna transformaci�n (hacia adonde est� volteando). Se elige un �ngulo tal que al aplicarle
 								//una rotaci�n inicial con respecto al eje Y est� viendo hacia la misma direcci�n que la definida por AngDir
 	
-	enem1c.PosicionObj=CVector(-57.5f, 90.0f, 100.5f); //Esta es la posici�n inicial del objeto en la escena
+	enem1c.PosicionObj=CVector(-57.5f, 9.0f, 100.5f); //Esta es la posici�n inicial del objeto en la escena
 	enem1c.Direccion.x=(float)cos(player1.AngDir*PI/180.0f); //Direcci�n inicial definida por el �ngulo inicial AngDir (x=cos(AngDir), y=0.0, z=sen(AngDir))
 	enem1c.Direccion.y=0.0f;
 	enem1c.Direccion.z=(float)sin(player1.AngDir*PI/180.0f);   
@@ -1946,7 +1946,7 @@ void InicializaParametrosdeControl()
 								//sin aplicarle ninguna transformaci�n (hacia adonde est� volteando). Se elige un �ngulo tal que al aplicarle
 								//una rotaci�n inicial con respecto al eje Y est� viendo hacia la misma direcci�n que la definida por AngDir
 	
-	enem3g.PosicionObj=CVector(-57.5f, 90.0f,  50.4f); //Esta es la posici�n inicial del objeto en la escena
+	enem3g.PosicionObj=CVector(-57.5f, 9.0f,  50.4f); //Esta es la posici�n inicial del objeto en la escena
 	enem3g.Direccion.x=(float)cos(player1.AngDir*PI/180.0f); //Direcci�n inicial definida por el �ngulo inicial AngDir (x=cos(AngDir), y=0.0, z=sen(AngDir))
 	enem3g.Direccion.y=0.0f;
 	enem3g.Direccion.z=(float)sin(player1.AngDir*PI/180.0f);   
@@ -1975,7 +1975,7 @@ void InicializaParametrosdeControl()
 								//sin aplicarle ninguna transformaci�n (hacia adonde est� volteando). Se elige un �ngulo tal que al aplicarle
 								//una rotaci�n inicial con respecto al eje Y est� viendo hacia la misma direcci�n que la definida por AngDir
 	
-	enem3h.PosicionObj=CVector(-57.5f, 90.0f,  150.4f); //Esta es la posici�n inicial del objeto en la escena
+	enem3h.PosicionObj=CVector(-57.5f, 9.0f,  150.4f); //Esta es la posici�n inicial del objeto en la escena
 	enem3h.Direccion.x=(float)cos(player1.AngDir*PI/180.0f); //Direcci�n inicial definida por el �ngulo inicial AngDir (x=cos(AngDir), y=0.0, z=sen(AngDir))
 	enem3h.Direccion.y=0.0f;
 	enem3h.Direccion.z=(float)sin(player1.AngDir*PI/180.0f);   
@@ -2030,23 +2030,62 @@ vector<Bullet*> bill;
 void InicializaParametrosdeAnimacion()
 {
 	// inicializacion de las cosas
-	const int MFckers = 3;
+	const int MFckers = 12;
 	Enemigos.resize( MFckers );
 	bill.resize( MFckers );
 
-	// Enemigo gordito azul
+	// Enemigos Sector 1
 	Enemigos[0].setChar( &enem1 );
 	Enemigos[0].addPoint( CVector( 200.0f, 9.0f, -40.0f ) );
 	Enemigos[0].addPoint( CVector( 160.0f, 9.0f, -40.0f ) );
 
 	Enemigos[1].setChar( &enem3c );
-	Enemigos[1].addPoint( CVector( 200.0f, 9.0f, -40.0f ) );
-	Enemigos[1].addPoint( CVector( 160.0f, 9.0f, -40.0f ) );
+	Enemigos[1].addPoint( CVector( 200.0f, 9.0f, -70.0f ) );
+	Enemigos[1].addPoint( CVector( 170.0f, 9.0f, -50.0f ) );
 
 	Enemigos[2].setChar( &enem3d );
-	Enemigos[2].addPoint( CVector( 200.0f, 9.0f, -40.0f ) );
-	Enemigos[2].addPoint( CVector( 160.0f, 9.0f, -40.0f ) );
+	Enemigos[2].addPoint( CVector( 170.0f, 9.0f, -75.0f ) );
+	Enemigos[2].addPoint( CVector( 200.0f, 9.0f, -45.0f ) );
 
+	// Enemigos Sector 2
+	Enemigos[3].setChar( &enem1a );
+	Enemigos[3].addPoint( CVector( 25.0f, 9.0f, -80.0f ) );
+	Enemigos[3].addPoint( CVector( 30.0f, 9.0f, -40.0f ) );
+
+	Enemigos[4].setChar( &enem3e );
+	Enemigos[4].addPoint( CVector( 55.0f, 9.0f, -40.0f ) );
+	Enemigos[4].addPoint( CVector( 45.0f, 9.0f, -80.0f ) );
+
+	Enemigos[5].setChar( &enem3f );
+	Enemigos[5].addPoint( CVector( 15.0f, 9.0f, -80.0f ) );
+	Enemigos[5].addPoint( CVector(  0.0f, 9.0f, -46.0f ) );
+
+
+	// Enemigos Sector 3
+	Enemigos[6].setChar( &enem1b );
+	Enemigos[6].addPoint( CVector( -20.0f, 9.0f, -50.0f ) );
+	Enemigos[6].addPoint( CVector( -50.0f, 9.0f, -80.0f ) );
+
+	Enemigos[7].setChar( &enem3a );
+	Enemigos[7].addPoint( CVector( -70.0f, 9.0f, 0.0f ) );
+	Enemigos[7].addPoint( CVector( -45.0f, 9.0f, -25.0f ) );
+
+	Enemigos[8].setChar( &enem3b );
+	Enemigos[8].addPoint( CVector( -45.0f, 9.0f, -35.0f ) );
+	Enemigos[8].addPoint( CVector( -20.0f, 9.0f, -10.0f ) );
+
+	// Enemigos Sector 4
+	Enemigos[9].setChar( &enem1c );
+	Enemigos[9].addPoint( CVector( -25.0f, 9.0f, 50.0f ) );
+	Enemigos[9].addPoint( CVector( -60.0f, 9.0f, 40.0f ) );
+
+	Enemigos[10].setChar( &enem3g );
+	Enemigos[10].addPoint( CVector( -75.0f, 9.0f, 75.0f ) );
+	Enemigos[10].addPoint( CVector( -70.0f, 9.0f, 120.0f ) );
+
+	Enemigos[11].setChar( &enem3h );
+	Enemigos[11].addPoint( CVector( -50.0f, 9.0f, 110.0f ) );
+	Enemigos[11].addPoint( CVector( -20.0f, 9.0f, 80.0f ) );
 
 	// Balas
 	bill[0] = 0;
@@ -4858,7 +4897,7 @@ void DibujaTextos()
 		// Texto a mostrar en pantalla
 		Font.glPrint((1.0f/640.0f)*glWidth, glWidth*0.05f,glHeight*0.9f,"Delay: %d", Enemigos[0].getDelay() );
 		Font.glPrint((1.0f/640.0f)*glWidth, glWidth*0.05f,glHeight*0.85f,"playIndex %d", playIndex );
-		//Font.glPrint((1.0f/640.0f)*glWidth, glWidth*0.05f,glHeight*0.70f,"PosObj %.2f, %.2f, %.2f", player1.PosicionObj.x, player1.PosicionObj.y, player1.PosicionObj.z);
+		Font.glPrint((1.0f/640.0f)*glWidth, glWidth*0.05f,glHeight*0.70f,"PosObj %.2f, %.2f, %.2f", player1.PosicionObj.x, player1.PosicionObj.y, player1.PosicionObj.z);
 		Font.glPrint( (1.0f/640.0f)*glWidth, glWidth * 0.45f, glHeight * 0.95f, "High 50000" );
 		Font.glPrint( (1.0f/640.0f)*glWidth, glWidth * 0.42f, glHeight * 0.90f, "Round 1 Stage 1" );
 		Font.glPrint( (1.0f/640.0f)*glWidth, glWidth * 0.08f, glHeight * 0.15f, "1P" );
