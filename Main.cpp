@@ -2842,7 +2842,7 @@ void InicializaObjetosdeColision()
 	esfera[19].colision=false;
 
 	    //Esfera de colision de miku
-	esfera[17].radio=2.2f;
+	esfera[17].radio=3.0f;
 	esfera[17].Pos=CVector(miku.PosicionObj.x, miku.PosicionObj.y-2.0f, miku.PosicionObj.z);
 	esfera[17].colision=false;
 
@@ -3284,7 +3284,7 @@ void LargeHadronCollider( FMOD_SYSTEM *system, FMOD_RESULT result )
 	{
 		col = ColisionEsferaEsfera(esfera[0], esfera[i], player1 );
 		player1.PosAntObj = player1.PosicionObj;
-		if( ( i == 1 || i == 2 || i == 3 || i == 7 || i == 8 || i == 10 || i == 11 || i == 12 || i == 13 || i == 14 || i == 15|| i == 16 || i == 17 ) && col == true )
+		if( ( i == 1 || i == 2 || i == 3 || i == 7 || i == 8 || i == 10 || i == 11 || i == 12 || i == 13 || i == 14 || i == 15|| i == 16 || i == 19 ) && col == true )
 		{
 			health -= 0.5f;
 			//red -= 1;
