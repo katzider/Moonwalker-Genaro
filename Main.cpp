@@ -5680,7 +5680,8 @@ int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la
 	DibujaElevador();
 	DibujaTaraAnim(145.0f,-100.0f,0.11f);
 	DibujaTaraAnim(200.0f,-100.0f,0.21f);
-		
+	DibujaTaraAnim(-20.0f,-100.0f,0.15f);
+
 	DibujaLuz(lightPosition);
 	DibujaTextos();
 	
