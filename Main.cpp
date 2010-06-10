@@ -9,6 +9,8 @@ aunque tambien sale en el historial de git, a veces me da flojera ver xp */
 //Libreria que usamos para el timer
 #pragma comment( lib, "winmm.lib" )	
 
+bool dibujasombra = false;
+
 HDC			hDC=NULL;		// Dispositivo de contexto GDI
 HGLRC		hRC=NULL;		// Contexto de renderizado
 HWND		hWnd=NULL;		// Manejador de ventana
@@ -77,7 +79,7 @@ parametros chang;	 //Variable con la que tenemos acceso a la estructura de parï¿
 parametros enemigo8; // parametros robot
 
 parametros* parenem[ 12 ] = { &enem1, &enem1a, &enem1b, &enem1c, &enem3a, &enem3b, &enem3c, &enem3d, &enem3e, &enem3f, &enem3g, &enem3h };
-
+parametros* paraux[ 30 ] = { &enem1, &enem1a, &enem1b, &enem1c, &enem3a, &enem3b, &enem3c, &enem3d, &enem3e, &enem3f, &enem3g, &enem3h };
 /* Vidas del personaje */
 float health = 150;
 int vidas = 3;
@@ -3316,7 +3318,7 @@ void LargeHadronCollider()
 	//Ataque de MJ
 	if( MJAtaque == 1)
 	{
-		for(int i = 1; i <= 12; i++)
+		for(int i = 1; i <= 20; i++)
 		{
 			if( i != 18 && i != 2 && i != 4 && i != 5)
 			{
@@ -3329,8 +3331,8 @@ void LargeHadronCollider()
 					if( score >= maxs )
 						maxs = score;
 				}
-				j++;
 			}
+			j++;
 		}
 	}
 }
@@ -5152,12 +5154,15 @@ void DibujaEnemigos()
 {
 	cel_Shader.TurnOn();
 	// robot
-	glPushMatrix();
-			glTranslatef(enemigo8.PosicionObj.x, enemigo8.PosicionObj.y+2.4f, enemigo8.PosicionObj.z);
-			glRotatef(enemigo8.AngObj, 0.0f, 1.0f, 0.0f);
-			glScalef(enemigo8.escalaX,enemigo8.escalaY,enemigo8.escalaZ);
-			dibujaEnemigo8();
-	glPopMatrix();
+	if( pisoId != 0 )
+	{
+		glPushMatrix();
+				glTranslatef(enemigo8.PosicionObj.x, enemigo8.PosicionObj.y+2.4f, enemigo8.PosicionObj.z);
+				glRotatef(enemigo8.AngObj, 0.0f, 1.0f, 0.0f);
+				glScalef(enemigo8.escalaX,enemigo8.escalaY,enemigo8.escalaZ);
+				dibujaEnemigo8();
+		glPopMatrix();
+	}
 
 	//Ene1
 	glPushMatrix();
@@ -5242,6 +5247,8 @@ void DibujaEnemigos()
 		DibujaEnemigo3a();
 	glPopMatrix();
 
+	if( pisoId != 0 )
+	{
 	//Ene3f
 	glPushMatrix();
 		glTranslatef(enem3f.PosicionObj.x, enem3f.PosicionObj.y+2.4f, enem3f.PosicionObj.z);
@@ -5273,6 +5280,7 @@ void DibujaEnemigos()
 		glScalef(chang.escalaX,chang.escalaY,chang.escalaZ);
 		DibujaChango();
 	glPopMatrix();
+	}
 
 	//tarantulas tipo pelicula Moonwalker
 	glPushMatrix();   //1 (rocas inicio)
@@ -5331,12 +5339,15 @@ void DibujaEnemigos()
 	glLineWidth(2.5f);
 
 	// robot
+	if( pisoId != 0 )
+	{
 	glPushMatrix();
 			glTranslatef(enemigo8.PosicionObj.x, enemigo8.PosicionObj.y+2.4f, enemigo8.PosicionObj.z);
 			glRotatef(enemigo8.AngObj, 0.0f, 1.0f, 0.0f);
 			glScalef(enemigo8.escalaX,enemigo8.escalaY,enemigo8.escalaZ);
 			dibujaEnemigo8out();
 	glPopMatrix();
+	}
 
 	//Ene1
 	glPushMatrix();
@@ -5640,7 +5651,8 @@ int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la
 	glStencilFunc(GL_ALWAYS, 0, 0);
 
 	//En este punto se aplica el depth pass (z-pass) o depth fail (z-fail)
-	//DibujaSombraMJ();
+	if( dibujasombra == true )
+		DibujaSombraMJ();
 			
 	// Se habilitan de nuevo los buffers de profundidad y color.
 	glDepthFunc(GL_LEQUAL);
@@ -6382,10 +6394,10 @@ int ManejaTeclado()
 
 	if((GetAsyncKeyState(VK_RETURN)&1) ==1)
 	{
-		if(displayVolume == false)
-			displayVolume=true;
+		if(dibujasombra == false)
+			dibujasombra = true;
 		else
-			displayVolume=false;
+			dibujasombra = false;
 	}
 
 	return TRUE;
