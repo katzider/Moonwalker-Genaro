@@ -27,8 +27,8 @@ int auxiliameDios = 0;
 GLUquadricObj	*e;
 
 //Variables para fmod (cambiar el tama�o de los arreglos seg�n el n�mero de archivos de audio a usar)
-FMOD_SOUND       *sound[2] = { 0, 0 };
-FMOD_CHANNEL     *channel[2] = { 0, 0 };
+FMOD_SOUND       *sound[3] = { 0, 0, 0 };
+FMOD_CHANNEL     *channel[3] = { 0, 0, 0 };
 
 // Variables para la detecci�n de colisiones
 #define maxPlanos 30
@@ -3297,6 +3297,9 @@ void LargeHadronCollider( FMOD_SYSTEM *system, FMOD_RESULT result )
 				//red = 250;
 				green = 200;
 			}
+
+			result = FMOD_System_PlaySound(system, FMOD_CHANNEL_FREE, sound[2], 0, &channel[2]);
+			ERRCHECK(result);
 		}
 	}
 
@@ -3323,6 +3326,9 @@ void LargeHadronCollider( FMOD_SYSTEM *system, FMOD_RESULT result )
 				}
 				// desaparece la bala
 				bill[j] = 0;
+
+				result = FMOD_System_PlaySound(system, FMOD_CHANNEL_FREE, sound[2], 0, &channel[2]);
+				ERRCHECK(result);
 			}
 		}
 	}
@@ -5363,7 +5369,7 @@ void DibujaEnemigos()
 			glTranslatef(enemigo8.PosicionObj.x, enemigo8.PosicionObj.y+2.4f, enemigo8.PosicionObj.z);
 			glRotatef(enemigo8.AngObj, 0.0f, 1.0f, 0.0f);
 			glScalef(enemigo8.escalaX,enemigo8.escalaY,enemigo8.escalaZ);
-			dibujaEnemigo8out();
+			//dibujaEnemigo8out();
 	glPopMatrix();
 	}
 
@@ -6060,7 +6066,7 @@ int WINAPI WinMain(	HINSTANCE	hInstance,			// Instancia
     int          channelsplaying = 0;
 
 	// Crea la ventana OpenGL
-	if (!CreateGLWindow("Computaci�n Gr�fica",640,480,32))
+	if (!CreateGLWindow("Computacion Grafica",640,480,32))
 	{
 		return 0;									// Salir del programa si la ventana no fue creada
 	}
@@ -6092,6 +6098,11 @@ int WINAPI WinMain(	HINSTANCE	hInstance,			// Instancia
     result = FMOD_Sound_SetMode(sound[1], FMOD_LOOP_OFF); //Se repetira en un loop
     ERRCHECK(result);
 
+	result = FMOD_System_CreateSound(system, "Audio/MJlol.mp3", FMOD_HARDWARE, 0, &sound[2]);
+    ERRCHECK(result);
+    result = FMOD_Sound_SetMode(sound[2], FMOD_LOOP_OFF); //Se repetira en un loop
+    ERRCHECK(result);
+
 	////Asignaci�n a canales y configuraci�n
 	////M�sica de fondo
 	result = FMOD_System_PlaySound(system, FMOD_CHANNEL_FREE, sound[0], 0, &channel[0]);
@@ -6108,6 +6119,13 @@ int WINAPI WinMain(	HINSTANCE	hInstance,			// Instancia
 	result = FMOD_Channel_SetPaused(channel[1], TRUE); //Inicialmente pausado
 	ERRCHECK(result);
 	result = FMOD_Channel_SetVolume(channel[1], 0.3f);
+	ERRCHECK(result);
+
+	result = FMOD_System_PlaySound(system, FMOD_CHANNEL_FREE, sound[2], 0, &channel[2]);
+	ERRCHECK(result);
+	result = FMOD_Channel_SetPaused(channel[2], TRUE); //Inicialmente pausado
+	ERRCHECK(result);
+	result = FMOD_Channel_SetVolume(channel[2], 0.3f);
 	ERRCHECK(result);
 
 	TimerInit();
