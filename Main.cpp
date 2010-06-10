@@ -5569,7 +5569,7 @@ void DibujaElevador()
 
 	//Elevador
 	glPushMatrix();
-		glTranslatef( -113.0f, elev, 150.0f);
+		glTranslatef( -108.0f, elev, 150.0f);
 		glRotatef( 180.0f, 0.0f, 1.0f, 0.0f );
 		glScalef( 0.5f, 0.5f, 0.5f );
 		g_Load3ds.Render3DSFile(&g_3DModel1el, textureModel1el, 1);
@@ -5579,6 +5579,26 @@ void DibujaElevador()
 		elev -= 0.2f;
 	else if( abajo == false )
 		elev += 0.2f;
+}
+void DibujaTaraAnim()
+{
+	if ( ( abajo == true ) && ( elev  <= -50.0f ) )
+		abajo = false;
+	else if ( ( abajo == false ) && ( elev >= 28.0f ) )
+		abajo = true;
+
+	glPushMatrix();
+		glTranslatef(45.0f, elev, -100.0f);
+		glRotatef(100.0f,0,0,1);
+		glRotatef(90.0f,1,0,0);
+		glScalef(0.1,0.1,0.1);
+		glCallList(taran+0);
+	glPopMatrix();
+
+	if( abajo == true )
+		elev -= 0.15f;
+	else if( abajo == false )
+		elev += 0.15f;
 }
 void DibujaEscena()
 {
@@ -5709,6 +5729,7 @@ int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la
 	glPopMatrix();
 
 	DibujaElevador();
+	DibujaTaraAnim();
 		
 	DibujaLuz(lightPosition);
 	DibujaTextos();
