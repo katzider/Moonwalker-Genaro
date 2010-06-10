@@ -1554,9 +1554,9 @@ void InicializaParametrosdeControl()
 
 	enemigo8.Dir=0;
 	enemigo8.DirAnt=0;
-	enemigo8.escalaX=0.1f;
-	enemigo8.escalaY=0.1f;
-	enemigo8.escalaZ=0.1f;
+	enemigo8.escalaX=0.08f;
+	enemigo8.escalaY=0.08f;
+	enemigo8.escalaZ=0.08f;
 	
 	// Enem1
 	enem1.visible=true;
