@@ -2029,8 +2029,11 @@ vector<Bullet*> bill;
 
 void InicializaParametrosdeAnimacion()
 {
-	Enemigos.resize( 3 );
-	bill.resize( 3 );
+	// inicializacion de las cosas
+	const int MF-ckers = 3;
+	Enemigos.resize( MF-ckers );
+	bill.resize( MF-ckers );
+
 	// Enemigo gordito azul
 	Enemigos[0].setChar( &enem1 );
 	Enemigos[0].addPoint( CVector( 200.0f, 9.0f, -40.0f ) );
@@ -2042,17 +2045,20 @@ void InicializaParametrosdeAnimacion()
 }
 void AniMagic()
 {
-	Enemigos[0].startAnim();
+	for( int i = 0; i < enemigos.size(); i++ )
+	{
+		Enemigos[i].startAnim();
 
-	if( Enemigos[0].Reload() <= 0 )
-	{
-		CVector disparo;
-		disparo = Enemigos[0].attack();
-		bill[0] = new Bullet( disparo, player1.PosicionObj );
-	}
-	if( bill[0] != 0 )
-	{
-		bill[0]->moveToTarget();
+		if( Enemigos[i].Reload() <= 0 )
+		{
+			CVector disparo;
+			disparo = Enemigos[i].attack();
+			bill[i] = new Bullet( disparo, player1.PosicionObj );
+		}
+		if( bill[i] != 0 )
+		{
+			bill[i]->moveToTarget();
+		}
 	}
 
 }
@@ -3367,6 +3373,7 @@ void LargeHadronCollider()
 				//red = 250;
 				green = 200;
 			}
+			// desaparece la bala
 			bill[0] = 0;
 		}
 	}
