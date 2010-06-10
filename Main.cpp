@@ -3324,9 +3324,9 @@ void LargeHadronCollider()
 				if( col1 )
 				{
 					aux = parenem[ j ];
-					aux->escalaX = 0.0f;
-					aux->escalaY = 0.0f;
-					aux->escalaZ = 0.0f;
+					//aux->escalaX = 0.0f;
+					//aux->escalaY = 0.0f;
+					//aux->escalaZ = 0.0f;
 					aux->PosicionObj.z = 6666.6f;
 					score += 1000;
 					if( score >= maxs )
@@ -3857,6 +3857,10 @@ void DibujaEnemigo2()
 	glCallList(ene2+1);
 	//Piloto
 	glCallList(ene2+2);
+
+	enem2.escalaX = 0.5f;
+	enem2.escalaY = 0.5f;
+	enem2.escalaZ = 0.5f;
 }
 
 void DibujaEnemigo2out()
@@ -5191,13 +5195,15 @@ void DibujaEnemigos()
 	glPopMatrix();
 
 	//Ene2
-	glPushMatrix();
-		if(pisoId < 2)
+	if( pisoId < 2 )
+	{
+		glPushMatrix();
 			glTranslatef(target[0], target[1], target[2]);
-		glRotatef(enem2.AngObj, 0.0f, 1.0f, 0.0f);
-		glScalef(enem2.escalaX,enem1.escalaY,enem1.escalaZ);
-		DibujaEnemigo2();
-	glPopMatrix();
+			glRotatef(enem2.AngObj, 0.0f, 1.0f, 0.0f);
+			glScalef(enem2.escalaX,enem1.escalaY,enem1.escalaZ);
+			DibujaEnemigo2();
+		glPopMatrix();
+	}
 
 	//Ene3a
 	glPushMatrix();
@@ -5368,12 +5374,15 @@ void DibujaEnemigos()
 	glPopMatrix();
 
 	//Ene2
-	glPushMatrix();
-		glTranslatef(target[0], target[1], target[2]);
-		glRotatef(enem2.AngObj, 0.0f, 1.0f, 0.0f);
-		glScalef(enem2.escalaX,enem1.escalaY,enem1.escalaZ);
-		DibujaEnemigo2out();
-	glPopMatrix();
+	if( pisoId < 2 )
+	{
+		glPushMatrix();
+			glTranslatef(target[0], target[1], target[2]);
+			glRotatef(enem2.AngObj, 0.0f, 1.0f, 0.0f);
+			glScalef(enem2.escalaX,enem1.escalaY,enem1.escalaZ);
+			DibujaEnemigo2out();
+		glPopMatrix();
+	}
 
 	//Ene3a
 	glPushMatrix();
@@ -6089,7 +6098,7 @@ int WINAPI WinMain(	HINSTANCE	hInstance,			// Instancia
 							animacion( KeyFrameOtros[ i ], 3, 18, modelosOtros[ i ], playIndexOtros[ i ], playOtros[ i ] );
 						}
 						auxiliameDios++;
-						if( auxiliameDios >= 10 )
+						if( auxiliameDios >= 9 )
 						{
 							recargaAnim( KeyFrameOtros[ i ], modelosOtros[ i ], playOtros[ i ], tipoAnimOtros[ i ], playIndexOtros[ i ] );
 							auxiliameDios = 0;
