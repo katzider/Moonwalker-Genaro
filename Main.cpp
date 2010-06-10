@@ -5171,7 +5171,7 @@ void DibujaEnemigos()
 				glTranslatef(enemigo8.PosicionObj.x, enemigo8.PosicionObj.y+2.4f, enemigo8.PosicionObj.z);
 				glRotatef(enemigo8.AngObj, 0.0f, 1.0f, 0.0f);
 				glScalef(enemigo8.escalaX,enemigo8.escalaY,enemigo8.escalaZ);
-				dibujaEnemigo8();
+				//dibujaEnemigo8();
 		glPopMatrix();
 	}
 
