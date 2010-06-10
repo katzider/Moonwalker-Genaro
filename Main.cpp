@@ -3319,7 +3319,7 @@ void LargeHadronCollider()
 	//Ataque de MJ
 	if( MJAtaque == 1)
 	{
-		for(int i = 1; i <= 20; i++)
+		for(int i = 1; i <= 12; i++)
 		{
 			if( i != 18 && i != 2 && i != 4 && i != 5)
 			{
@@ -3327,9 +3327,6 @@ void LargeHadronCollider()
 				if( col1 )
 				{
 					aux = parenem[ j ];
-					//aux->escalaX = 0.0f;
-					//aux->escalaY = 0.0f;
-					//aux->escalaZ = 0.0f;
 					aux->PosicionObj.z = 6666.6f;
 					score += 1000;
 					if( score >= maxs )
@@ -5685,7 +5682,8 @@ int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la
 	DibujaElevador();
 	DibujaTaraAnim(145.0f,-100.0f,0.11f);
 	DibujaTaraAnim(200.0f,-100.0f,0.21f);
-		
+	DibujaTaraAnim(-20.0f,-100.0f,0.15f);
+
 	DibujaLuz(lightPosition);
 	DibujaTextos();
 	
@@ -5711,7 +5709,7 @@ int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la
 	}
 
 	//spline helic�ptero
-	glDisable(GL_TEXTURE_2D);
+	/*glDisable(GL_TEXTURE_2D);
 	glDisable(GL_LIGHTING);
 	glDisable(GL_COLOR_MATERIAL);
 	glColor3f(1.0f, 1.0f, 1.0f);
@@ -5739,9 +5737,9 @@ int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la
 		glPopMatrix();
 
 		glColor3f(1.0f,1.0f,1.0f);
-	}
+	}*/
 
-	//spline camara
+	/*//spline camara
 	glDisable(GL_TEXTURE_2D);
 	glDisable(GL_LIGHTING);
 	glDisable(GL_COLOR_MATERIAL);
@@ -5770,7 +5768,7 @@ int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la
 		glPopMatrix();
 
 		glColor3f(1.0f,1.0f,1.0f);
-	}
+	}*/
 	
 
 	// IA de los enemigos
