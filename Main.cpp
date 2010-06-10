@@ -2030,14 +2030,23 @@ vector<Bullet*> bill;
 void InicializaParametrosdeAnimacion()
 {
 	// inicializacion de las cosas
-	const int MF-ckers = 3;
-	Enemigos.resize( MF-ckers );
-	bill.resize( MF-ckers );
+	const int MFckers = 3;
+	Enemigos.resize( MFckers );
+	bill.resize( MFckers );
 
 	// Enemigo gordito azul
 	Enemigos[0].setChar( &enem1 );
 	Enemigos[0].addPoint( CVector( 200.0f, 9.0f, -40.0f ) );
 	Enemigos[0].addPoint( CVector( 160.0f, 9.0f, -40.0f ) );
+
+	Enemigos[1].setChar( &enem3c );
+	Enemigos[1].addPoint( CVector( 200.0f, 9.0f, -40.0f ) );
+	Enemigos[1].addPoint( CVector( 160.0f, 9.0f, -40.0f ) );
+
+	Enemigos[2].setChar( &enem3d );
+	Enemigos[2].addPoint( CVector( 200.0f, 9.0f, -40.0f ) );
+	Enemigos[2].addPoint( CVector( 160.0f, 9.0f, -40.0f ) );
+
 
 	// Balas
 	bill[0] = 0;
@@ -2045,7 +2054,7 @@ void InicializaParametrosdeAnimacion()
 }
 void AniMagic()
 {
-	for( int i = 0; i < enemigos.size(); i++ )
+	for( int i = 0; i < Enemigos.size(); i++ )
 	{
 		Enemigos[i].startAnim();
 
