@@ -2841,6 +2841,11 @@ void InicializaObjetosdeColision()
 	esfera[19].Pos=CVector(enemigo8.PosicionObj.x - 1.0f, enemigo8.PosicionObj.y + 4.4f, enemigo8.PosicionObj.z + 7.0f);
 	esfera[19].colision=false;
 
+	    //Esfera de colision de miku
+	esfera[17].radio=2.2f;
+	esfera[17].Pos=CVector(miku.PosicionObj.x, miku.PosicionObj.y-2.0f, miku.PosicionObj.z);
+	esfera[17].colision=false;
+
 }
 void ActualizaObjetosDinamicosColision()
 {
@@ -2862,6 +2867,8 @@ void ActualizaObjetosDinamicosColision()
 	esfera[13].Pos=CVector(enem3h.PosicionObj.x, enem3h.PosicionObj.y+2.0f, enem3h.PosicionObj.z);
 	esfera[14].Pos=CVector(enem1b.PosicionObj.x, enem1b.PosicionObj.y+2.5f, enem1b.PosicionObj.z);
 	esfera[15].Pos=CVector(enem1c.PosicionObj.x, enem1c.PosicionObj.y+2.5f, enem1c.PosicionObj.z);
+	esfera[17].Pos=CVector(miku.PosicionObj.x, miku.PosicionObj.y-2.0f, miku.PosicionObj.z);
+	esfera[19].Pos=CVector(enemigo8.PosicionObj.x - 1.0f, enemigo8.PosicionObj.y + 4.4f, enemigo8.PosicionObj.z + 7.0f);
 	
 	if( player1.AngObj <= 0.0f )
 		esfera[18].Pos=CVector(player1.PosicionObj.x - 1.0f, player1.PosicionObj.y + 4.4f, player1.PosicionObj.z + 7.0f);
