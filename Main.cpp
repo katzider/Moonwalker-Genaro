@@ -3373,7 +3373,7 @@ void LargeHadronCollider()
 	//Ataque de MJ
 	if( MJAtaque == 1)
 	{
-		for(int i = 1; i <= 17; i++)
+		for(int i = 1; i <= 20; i++)
 		{
 			if( i != 18 && i != 2 && i != 4 && i != 5)
 			{
