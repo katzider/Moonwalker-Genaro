@@ -2030,23 +2030,14 @@ vector<Bullet*> bill;
 void InicializaParametrosdeAnimacion()
 {
 	// inicializacion de las cosas
-	const int MFckers = 3;
-	Enemigos.resize( MFckers );
-	bill.resize( MFckers );
+	const int MF-ckers = 3;
+	Enemigos.resize( MF-ckers );
+	bill.resize( MF-ckers );
 
 	// Enemigo gordito azul
 	Enemigos[0].setChar( &enem1 );
 	Enemigos[0].addPoint( CVector( 200.0f, 9.0f, -40.0f ) );
 	Enemigos[0].addPoint( CVector( 160.0f, 9.0f, -40.0f ) );
-
-	Enemigos[1].setChar( &enem3c );
-	Enemigos[1].addPoint( CVector( 200.0f, 9.0f, -40.0f ) );
-	Enemigos[1].addPoint( CVector( 160.0f, 9.0f, -40.0f ) );
-
-	Enemigos[2].setChar( &enem3d );
-	Enemigos[2].addPoint( CVector( 200.0f, 9.0f, -40.0f ) );
-	Enemigos[2].addPoint( CVector( 160.0f, 9.0f, -40.0f ) );
-
 
 	// Balas
 	bill[0] = 0;
@@ -2054,7 +2045,7 @@ void InicializaParametrosdeAnimacion()
 }
 void AniMagic()
 {
-	for( int i = 0; i < Enemigos.size(); i++ )
+	for( int i = 0; i < enemigos.size(); i++ )
 	{
 		Enemigos[i].startAnim();
 
@@ -2185,21 +2176,21 @@ void DatosAnimacion()
 	KeyFrame2[ 0 ].Ztor  =	0.0f;	KeyFrame2[ 1 ].Ztor  =	0.0f;	KeyFrame2[ 2 ].Ztor  =	0.0f;
 
 	// Enem1 (enemigo gordo)
-	KeyFrameOtros[ 1 ][ 0 ].Angt1 =	-5.0f;	KeyFrameOtros[ 1 ][ 0 ].Angt1 =	-5.0f;	KeyFrameOtros[ 1 ][ 2 ].Angt1 = -5.0f;
-	KeyFrameOtros[ 1 ][ 0 ].Angt2 =	0.0f;	KeyFrameOtros[ 1 ][ 1 ].Angt2 =	0.0f;	KeyFrameOtros[ 1 ][ 2 ].Angt2 =	0.0f;
-	KeyFrameOtros[ 1 ][ 0 ].Angc1 =	-25.0f;	KeyFrameOtros[ 1 ][ 1 ].Angc1 =	-25.0f;	KeyFrameOtros[ 1 ][ 2 ].Angc1 =	-25.0f;
+	KeyFrame3[ 0 ].Angt1 =	0.0f;	KeyFrame3[ 0 ].Angt1 =	0.0f;	KeyFrame3[ 2 ].Angt1 = 0.0f;
+	KeyFrame3[ 0 ].Angt2 =	5.0f;	KeyFrame3[ 1 ].Angt2 =	0.0f;	KeyFrame3[ 2 ].Angt2 =	-5.0f;
+	KeyFrame3[ 0 ].Angc1 =	-20.0f;	KeyFrame3[ 1 ].Angc1 =	20.0f;	KeyFrame3[ 2 ].Angc1 =	-20.0f;
 	KeyFrame3[ 0 ].Angc2 =	0.0f;	KeyFrame3[ 1 ].Angc2 =	0.0f;	KeyFrame3[ 2 ].Angc2 =	0.0f;
-	KeyFrameOtros[ 1 ][ 0 ].Angbi1= -5.0f;	KeyFrameOtros[ 1 ][ 1 ].Angbi1=	10.0f;	KeyFrameOtros[ 1 ][ 2 ].Angbi1=	-5.0f;
+	KeyFrame3[ 0 ].Angbi1= -8.0f;	KeyFrame3[ 1 ].Angbi1=	8.0f;	KeyFrame3[ 2 ].Angbi1=	-8.0f;
 	KeyFrame3[ 0 ].Angbi2= 0.0f;	KeyFrame3[ 1 ].Angbi2=	0.0f;	KeyFrame3[ 2 ].Angbi2=	0.0f;
-	KeyFrameOtros[ 1 ][ 0 ].Angbib= 0.0f;	KeyFrameOtros[ 1 ][ 1 ].Angbib=	-40.0f;	KeyFrameOtros[ 1 ][ 2 ].Angbib=	-15.0f;
-	KeyFrameOtros[ 1 ][ 0 ].Angbd1= 5.0f;	KeyFrameOtros[ 1 ][ 1 ].Angbd1=	-10.0f;	KeyFrameOtros[ 1 ][ 2 ].Angbd1=	5.0f;
-	KeyFrameOtros[ 1 ][ 0 ].Angbd2= 0.0f;	KeyFrameOtros[ 1 ][ 1 ].Angbd2=	-15.0f;	KeyFrameOtros[ 1 ][ 2 ].Angbd2=	0.0f;
-	KeyFrameOtros[ 1 ][ 0 ].Angbdb= 0.0f;	KeyFrameOtros[ 1 ][ 1 ].Angbdb=	-30.0f;	KeyFrameOtros[ 1 ][ 2 ].Angbdb=	-40.0f;
-	KeyFrameOtros[ 1 ][ 0 ].Angpizq=20.0f;	KeyFrameOtros[ 1 ][ 1 ].Angpizq= 20.0f;	KeyFrameOtros[ 1 ][ 2 ].Angpizq=20.0f;
-	KeyFrameOtros[ 1 ][ 0 ].Angpder=-30.0f;	KeyFrameOtros[ 1 ][ 1 ].Angpder=20.0f;	KeyFrameOtros[ 1 ][ 2 ].Angpder=20.0f;
-	KeyFrameOtros[ 1 ][ 0 ].Angpizqb=-15.0f;	KeyFrameOtros[ 1 ][ 1 ].Angpizqb=15.0f;	KeyFrameOtros[ 1 ][ 2 ].Angpizqb=-20.0f;
-	KeyFrameOtros[ 1 ][ 0 ].Angpderb=10.0f;	KeyFrameOtros[ 1 ][ 1 ].Angpderb=-5.0f;	KeyFrameOtros[ 1 ][ 2 ].Angpderb=15.0f;
-	KeyFrameOtros[ 1 ][ 0 ].Angpi =	0.0f;	KeyFrameOtros[ 1 ][ 1 ].Angpi =	0.0f;	KeyFrameOtros[ 1 ][ 2 ].Angpi =	10.0f;
+//	KeyFrame3[ 0 ].Angbib= 0.0f;	KeyFrame3[ 1 ].Angbib=	-15.0f;	KeyFrame3[ 2 ].Angbib=	-15.0f;
+	KeyFrame3[ 0 ].Angbd1= 8.0f;	KeyFrame3[ 1 ].Angbd1=	8.0f;	KeyFrame3[ 2 ].Angbd1=	8.0f;
+	KeyFrame3[ 0 ].Angbd2= 0.0f;	KeyFrame3[ 1 ].Angbd2=	0.0f;	KeyFrame3[ 2 ].Angbd2=	0.0f;
+//	KeyFrame3[ 0 ].Angbdb= 0.0f;	KeyFrame3[ 1 ].Angbdb=	-40.0f;	KeyFrame3[ 2 ].Angbdb=	-40.0f;
+	KeyFrame3[ 0 ].Angpizq=15.0f;	KeyFrame3[ 1 ].Angpizq=-10.0f;	KeyFrame3[ 2 ].Angpizq=15.0f;
+	KeyFrame3[ 0 ].Angpder=-10.0f;	KeyFrame3[ 1 ].Angpder=15.0f;	KeyFrame3[ 2 ].Angpder=-10.0f;
+	KeyFrame3[ 0 ].Angpizqb=-5.0f;	KeyFrame3[ 1 ].Angpizqb=10.0f;	KeyFrame3[ 2 ].Angpizqb=-5.0f;
+	KeyFrame3[ 0 ].Angpderb=10.0f;	KeyFrame3[ 1 ].Angpderb=-5.0f;	KeyFrame3[ 2 ].Angpderb=10.0f;
+	KeyFrame3[ 0 ].Angpi =	0.0f;	KeyFrame3[ 1 ].Angpi =	0.0f;	KeyFrame3[ 2 ].Angpi =	0.0f;
 	KeyFrame3[ 0 ].Angpd =	0.0f;	KeyFrame3[ 1 ].Angpd =	0.0f;	KeyFrame3[ 2 ].Angpd =	0.0f;
 	KeyFrame3[ 0 ].Xtor  =	0.0f;	KeyFrame3[ 1 ].Xtor  =	0.0f;	KeyFrame3[ 2 ].Xtor  =	0.0f;
 	KeyFrame3[ 0 ].Ytor  =	0.0f;	KeyFrame3[ 1 ].Ytor  =	0.0f;	KeyFrame3[ 2 ].Ytor=0.0f;
@@ -2227,127 +2218,7 @@ void DatosAnimacion()
 //	KeyFrameOtros[ 2 ][ 0 ].Ztor  =	0.0f;	KeyFrameOtros[ 2 ][ 1 ].Ztor  =	0.0f;	KeyFrameOtros[ 3 ][ 2 ].Ztor =	0.0f;
 
 	// El que sigue...
-/*
-	KeyFrameOtros[1][0].Angt1=-5.0f;
-	KeyFrameOtros[1][0].Angt2=0.0f;
-	KeyFrameOtros[1][0].Angc1=-25.0f;
-	KeyFrameOtros[1][0].Angc2=0.0f;
-	KeyFrameOtros[1][0].Angbi1=-5.0f;
-	KeyFrameOtros[1][0].Angbi2=0.0f;
-	KeyFrameOtros[1][0].Angbib=-15.0f;
-	KeyFrameOtros[1][0].Angbd1=5.0f;
-	KeyFrameOtros[1][0].Angbd2=0.0f;
-	KeyFrameOtros[1][0].Angbdb=-40.0f;
-	KeyFrameOtros[1][0].Angpizq=20.0f;
-	KeyFrameOtros[1][0].Angpder=-30.0f;
-	KeyFrameOtros[1][0].Angpizqb=15.0f;
-	KeyFrameOtros[1][0].Angpderb=10.0f;
-	KeyFrameOtros[1][0].Angpi=0.0f;
-	KeyFrameOtros[1][0].Angpd=0.0f;
-	KeyFrameOtros[1][0].Xtor=0.0f;
-	KeyFrameOtros[1][0].Ytor=0.0f;
-	KeyFrameOtros[1][0].Ztor=0.0f;
 
-	KeyFrameOtros[1][1].Angt1=-5.0f;
-	KeyFrameOtros[1][1].Angt2=0.0f;
-	KeyFrameOtros[1][1].Angc1=-25.0f;
-	KeyFrameOtros[1][1].Angc2=0.0f;
-	KeyFrameOtros[1][1].Angbi1=10.0f;
-	KeyFrameOtros[1][1].Angbi2=0.0f;
-	KeyFrameOtros[1][1].Angbib=-40.0f;
-	KeyFrameOtros[1][1].Angbd1=-10.0f;
-	KeyFrameOtros[1][1].Angbd2=0.0f;
-	KeyFrameOtros[1][1].Angbdb=-15.0f;
-	KeyFrameOtros[1][1].Angpizq=-30.0f;
-	KeyFrameOtros[1][1].Angpder=20.0f;
-	KeyFrameOtros[1][1].Angpizqb=20.0f;
-	KeyFrameOtros[1][1].Angpderb=15.0f;
-	KeyFrameOtros[1][1].Angpi=0.0f;
-	KeyFrameOtros[1][1].Angpd=0.0f;
-	KeyFrameOtros[1][1].Xtor=0.0f;
-	KeyFrameOtros[1][1].Ytor=0.0f;
-	KeyFrameOtros[1][1].Ztor=0.0f;
-
-	KeyFrameOtros[1][2].Angt1=-5.0f;
-	KeyFrameOtros[1][2].Angt2=0.0f;
-	KeyFrameOtros[1][2].Angc1=-25.0f;
-	KeyFrameOtros[1][2].Angc2=0.0f;
-	KeyFrameOtros[1][2].Angbi1=-5.0f;
-	KeyFrameOtros[1][2].Angbi2=0.0f;
-	KeyFrameOtros[1][2].Angbib=-15.0f;
-	KeyFrameOtros[1][2].Angbd1=5.0f;
-	KeyFrameOtros[1][2].Angbd2=0.0f;
-	KeyFrameOtros[1][2].Angbdb=-40.0f;
-	KeyFrameOtros[1][2].Angpizq=20.0f;
-	KeyFrameOtros[1][2].Angpder=-20.0f;
-	KeyFrameOtros[1][2].Angpizqb=15.0f;
-	KeyFrameOtros[1][2].Angpderb=10.0f;
-	KeyFrameOtros[1][2].Angpi=0.0f;
-	KeyFrameOtros[1][2].Angpd=0.0f;
-	KeyFrameOtros[1][2].Xtor=0.0f;
-	KeyFrameOtros[1][2].Ytor=0.0f;
-	KeyFrameOtros[1][2].Ztor=0.0f;
-
-	KeyFrameOtros[2][0].Angt1=-5.0f;
-	KeyFrameOtros[2][0].Angt2=0.0f;
-	KeyFrameOtros[2][0].Angc1=-25.0f;
-	KeyFrameOtros[2][0].Angc2=0.0f;
-	KeyFrameOtros[2][0].Angbi1=-5.0f;
-	KeyFrameOtros[2][0].Angbi2=0.0f;
-	KeyFrameOtros[2][0].Angbib=-15.0f;
-	KeyFrameOtros[2][0].Angbd1=5.0f;
-	KeyFrameOtros[2][0].Angbd2=0.0f;
-	KeyFrameOtros[2][0].Angbdb=-40.0f;
-	KeyFrameOtros[2][0].Angpizq=20.0f;
-	KeyFrameOtros[2][0].Angpder=-30.0f;
-	KeyFrameOtros[2][0].Angpizqb=15.0f;
-	KeyFrameOtros[2][0].Angpderb=10.0f;
-	KeyFrameOtros[2][0].Angpi=0.0f;
-	KeyFrameOtros[2][0].Angpd=0.0f;
-	KeyFrameOtros[2][0].Xtor=0.0f;
-	KeyFrameOtros[2][0].Ytor=0.0f;
-	KeyFrameOtros[2][0].Ztor=0.0f;
-
-	KeyFrameOtros[2][1].Angt1=-5.0f;
-	KeyFrameOtros[2][1].Angt2=0.0f;
-	KeyFrameOtros[2][1].Angc1=-25.0f;
-	KeyFrameOtros[2][1].Angc2=0.0f;
-	KeyFrameOtros[2][1].Angbi1=10.0f;
-	KeyFrameOtros[2][1].Angbi2=0.0f;
-	KeyFrameOtros[2][1].Angbib=-40.0f;
-	KeyFrameOtros[2][1].Angbd1=-10.0f;
-	KeyFrameOtros[2][1].Angbd2=0.0f;
-	KeyFrameOtros[2][1].Angbdb=-15.0f;
-	KeyFrameOtros[2][1].Angpizq=-30.0f;
-	KeyFrameOtros[2][1].Angpder=20.0f;
-	KeyFrameOtros[2][1].Angpizqb=20.0f;
-	KeyFrameOtros[2][1].Angpderb=15.0f;
-	KeyFrameOtros[2][1].Angpi=0.0f;
-	KeyFrameOtros[2][1].Angpd=0.0f;
-	KeyFrameOtros[2][1].Xtor=0.0f;
-	KeyFrameOtros[2][1].Ytor=0.0f;
-	KeyFrameOtros[2][1].Ztor=0.0f;
-
-	KeyFrameOtros[2][2].Angt1=-5.0f;
-	KeyFrameOtros[2][2].Angt2=0.0f;
-	KeyFrameOtros[2][2].Angc1=-25.0f;
-	KeyFrameOtros[2][2].Angc2=0.0f;
-	KeyFrameOtros[2][2].Angbi1=-5.0f;
-	KeyFrameOtros[2][2].Angbi2=0.0f;
-	KeyFrameOtros[2][2].Angbib=-15.0f;
-	KeyFrameOtros[2][2].Angbd1=5.0f;
-	KeyFrameOtros[2][2].Angbd2=0.0f;
-	KeyFrameOtros[2][2].Angbdb=-40.0f;
-	KeyFrameOtros[2][2].Angpizq=20.0f;
-	KeyFrameOtros[2][2].Angpder=-20.0f;
-	KeyFrameOtros[2][2].Angpizqb=15.0f;
-	KeyFrameOtros[2][2].Angpderb=10.0f;
-	KeyFrameOtros[2][2].Angpi=0.0f;
-	KeyFrameOtros[2][2].Angpd=0.0f;
-	KeyFrameOtros[2][2].Xtor=0.0f;
-	KeyFrameOtros[2][2].Ytor=0.0f;
-	KeyFrameOtros[2][2].Ztor=0.0f;
-*/
 	KeyFrameOtros[3][0].Angt1=-5.0f;
 	KeyFrameOtros[3][0].Angt2=0.0f;
 	KeyFrameOtros[3][0].Angc1=-25.0f;
@@ -3241,8 +3112,6 @@ int ColisionRayoEsfera( ray& r, boundingsphere& s)
 }
 int InitGL(GLvoid)										// Aqui se configuran los parametros iniciales de OpenGL
 {
-	srand( time( 0 ) );
-
 	Multitext.InitMultitext(hWnd);
 
 	glShadeModel(GL_SMOOTH);							// Activa Smooth Shading

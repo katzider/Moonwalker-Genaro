@@ -2030,7 +2030,11 @@ vector<Bullet*> bill;
 void InicializaParametrosdeAnimacion()
 {
 	// inicializacion de las cosas
+<<<<<<< HEAD
+	int MFckers = 3;
+=======
 	const int MFckers = 3;
+>>>>>>> 08caef067396d169edbae70530e19266ab952200
 	Enemigos.resize( MFckers );
 	bill.resize( MFckers );
 
