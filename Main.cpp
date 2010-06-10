@@ -2319,7 +2319,7 @@ void DatosAnimacion()
 	KeyFrameOtros[2][2].Xtor=0.0f;
 	KeyFrameOtros[2][2].Ytor=0.0f;
 	KeyFrameOtros[2][2].Ztor=0.0f;
-*/
+
 	KeyFrameOtros[3][0].Angt1=-5.0f;
 	KeyFrameOtros[3][0].Angt2=0.0f;
 	KeyFrameOtros[3][0].Angc1=-25.0f;
@@ -3527,6 +3527,9 @@ void ControlPersonaje(int funcion)
 	}
 }
 
+/* animacion() ahora recibe un apuntador hacia el modelo que quieran usar, ej. &mikumodelo
+ * tambien recibe el playIndex de su personaje a animar, ese nada mas lo pasan como argumento
+ */
 void animacion( FRAME* KeyFrame, int maxKF, int frames, jerarquiaModelo* modelo, int& pIndex, bool& corre )
 {
 	if(corre)
@@ -3550,18 +3553,17 @@ void animacion( FRAME* KeyFrame, int maxKF, int frames, jerarquiaModelo* modelo,
 		   (abs(KeyFrame[pIndex+1].Xtor-modelo->Xtor))<0.1 &&
 		   (abs(KeyFrame[pIndex+1].Ytor-modelo->Ytor))<0.1 &&
 		   (abs(KeyFrame[pIndex+1].Ztor-modelo->Ztor))<0.1)
-
 		{			
 			pIndex++;			
 			if(pIndex>maxKF-1)
-	               {
+			{
 				pIndex=0;
 				corre=false;
-                       }
-	        }	
-else
-{
-
+								
+			}
+		}
+		else
+		{
 			KeyFrame[pIndex].incAngt1    = (KeyFrame[pIndex+1].Angt1-KeyFrame[pIndex].Angt1)/frames;
 			KeyFrame[pIndex].incAngt2    = (KeyFrame[pIndex+1].Angt2-KeyFrame[pIndex].Angt2)/frames;
 			KeyFrame[pIndex].incAngc1    = (KeyFrame[pIndex+1].Angc1-KeyFrame[pIndex].Angc1)/frames;
@@ -3581,7 +3583,7 @@ else
 			KeyFrame[pIndex].incXtor     = (KeyFrame[pIndex+1].Xtor-KeyFrame[pIndex].Xtor)/frames;
 			KeyFrame[pIndex].incYtor     = (KeyFrame[pIndex+1].Ytor-KeyFrame[pIndex].Ytor)/frames;
 			KeyFrame[pIndex].incZtor     = (KeyFrame[pIndex+1].Ztor-KeyFrame[pIndex].Ztor)/frames;
-
+			
 			modelo->Angt1    += KeyFrame[pIndex].incAngt1;
 			modelo->Angt2    += KeyFrame[pIndex].incAngt2;
 			modelo->Angc1    += KeyFrame[pIndex].incAngc1;
@@ -3602,83 +3604,84 @@ else
 			modelo->Ytor     += KeyFrame[pIndex].incYtor;
 			modelo->Ztor     += KeyFrame[pIndex].incZtor;
 			
+		}
 	}
-}
 	else 
 		corre = true;
- */
-void animacion( FRAME *KeyFrame, int maxKF , int frames, jerarquiaModelo* modelo, int& pIdx, bool& p)
+}
+void animacionOtros( FRAME* KeyFrame, int maxKF, int frames, jerarquiaModelo* modelo, int& pIndex, bool& corre )
 {
-	if( p )
+	if(corre)
 	{		
-		if(( abs( KeyFrame[ pIdx+1 ].Angt1 - modelo->Angt1 ))<0.1 &&
-		   ( abs( KeyFrame[ pIdx+1 ].Angt2 - modelo->Angt2 ))<0.1 &&
-		   ( abs( KeyFrame[ pIdx+1 ].Angc1 - modelo->Angc1 ))<0.1 &&
-		   ( abs( KeyFrame[ pIdx+1 ].Angc2 - modelo->Angc2 ))<0.1 &&
-		   ( abs( KeyFrame[ pIdx+1 ].Angbi1 - modelo->Angbi1 ))<0.1 &&
-		   ( abs( KeyFrame[ pIdx+1 ].Angbi2 - modelo->Angbi2 ))<0.1 &&
-		   ( abs( KeyFrame[ pIdx+1 ].Angbib - modelo->Angbib ))<0.1 &&
-		   ( abs( KeyFrame[ pIdx+1 ].Angbd1 - modelo->Angbd1 ))<0.1 &&
-		   ( abs( KeyFrame[ pIdx+1 ].Angbd2 - modelo->Angbd2 ))<0.1 &&
-		   ( abs( KeyFrame[ pIdx+1 ].Angbdb - modelo->Angbdb ))<0.1 &&
-		   ( abs( KeyFrame[ pIdx+1 ].Angpizq - modelo->Angpizq ))<0.1 &&
-		   ( abs( KeyFrame[ pIdx+1 ].Angpizqb - modelo->Angpizqb ))<0.1 &&
-		   ( abs( KeyFrame[ pIdx+1 ].Angpder - modelo->Angpder ))<0.1 &&
-		   ( abs( KeyFrame[ pIdx+1 ].Angpderb - modelo->Angpderb ))<0.1 &&
-		   ( abs( KeyFrame[ pIdx+1 ].Angpi - modelo->Angpi ))<0.1 &&
-		   ( abs( KeyFrame[ pIdx+1 ].Angpd - modelo->Angpd ))<0.1 &&
-		   ( abs( KeyFrame[ pIdx+1 ].Xtor - modelo->Xtor ))<0.1 &&
-		   ( abs( KeyFrame[ pIdx+1 ].Ytor - modelo->Ytor ))<0.1 &&
-		   ( abs( KeyFrame[ pIdx+1 ].Ztor - modelo->Ztor ))<0.1)
+		if((abs(KeyFrame[ pIndex+1 ].Angt1-modelo->Angt1))<0.1 &&
+		   (abs(KeyFrame[ pIndex+1 ].Angt2-modelo->Angt2))<0.1 &&
+		   (abs(KeyFrame[pIndex+1].Angc1-modelo->Angc1))<0.1 &&
+		   (abs(KeyFrame[pIndex+1].Angc2-modelo->Angc2))<0.1 &&
+		   (abs(KeyFrame[pIndex+1].Angbi1-modelo->Angbi1))<0.1 &&
+		   (abs(KeyFrame[pIndex+1].Angbi2-modelo->Angbi2))<0.1 &&
+		   (abs(KeyFrame[pIndex+1].Angbib-modelo->Angbib))<0.1 &&
+		   (abs(KeyFrame[pIndex+1].Angbd1-modelo->Angbd1))<0.1 &&
+		   (abs(KeyFrame[pIndex+1].Angbd2-modelo->Angbd2))<0.1 &&
+		   (abs(KeyFrame[pIndex+1].Angbdb-modelo->Angbdb))<0.1 &&
+		   (abs(KeyFrame[pIndex+1].Angpizq-modelo->Angpizq))<0.1 &&
+		   (abs(KeyFrame[pIndex+1].Angpizqb-modelo->Angpizqb))<0.1 &&
+		   (abs(KeyFrame[pIndex+1].Angpder-modelo->Angpder))<0.1 &&
+		   (abs(KeyFrame[pIndex+1].Angpderb-modelo->Angpderb))<0.1 &&
+		   (abs(KeyFrame[pIndex+1].Angpi-modelo->Angpi))<0.1 &&
+		   (abs(KeyFrame[pIndex+1].Angpd-modelo->Angpd))<0.1 &&
+		   (abs(KeyFrame[pIndex+1].Xtor-modelo->Xtor))<0.1 &&
+		   (abs(KeyFrame[pIndex+1].Ytor-modelo->Ytor))<0.1 &&
+		   (abs(KeyFrame[pIndex+1].Ztor-modelo->Ztor))<0.1)
 		{			
-			pIdx++;			
-			if( pIdx > maxKF-2 )
+			pIndex++;			
+			if(pIndex>maxKF-2)
 			{
-				pIdx = 0;
-				p = false;								
+				pIndex=0;
+				corre=false;
+								
 			}
 		}
 		else
 		{
-			KeyFrame[pIdx].incAngt1    = (KeyFrame[pIdx+1].Angt1-KeyFrame[pIdx].Angt1)/frames;
-			KeyFrame[pIdx].incAngt2    = (KeyFrame[pIdx+1].Angt2-KeyFrame[pIdx].Angt2)/frames;
-			KeyFrame[pIdx].incAngc1    = (KeyFrame[pIdx+1].Angc1-KeyFrame[pIdx].Angc1)/frames;
-			KeyFrame[pIdx].incAngc2    = (KeyFrame[pIdx+1].Angc2-KeyFrame[pIdx].Angc2)/frames;
-			KeyFrame[pIdx].incAngbi1   = (KeyFrame[pIdx+1].Angbi1-KeyFrame[pIdx].Angbi1)/frames;
-			KeyFrame[pIdx].incAngbi2   = (KeyFrame[pIdx+1].Angbi2-KeyFrame[pIdx].Angbi2)/frames;
-			KeyFrame[pIdx].incAngbib   = (KeyFrame[pIdx+1].Angbib-KeyFrame[pIdx].Angbib)/frames;
-			KeyFrame[pIdx].incAngbd1   = (KeyFrame[pIdx+1].Angbd1-KeyFrame[pIdx].Angbd1)/frames;
-			KeyFrame[pIdx].incAngbd2   = (KeyFrame[pIdx+1].Angbd2-KeyFrame[pIdx].Angbd2)/frames;
-			KeyFrame[pIdx].incAngbdb   = (KeyFrame[pIdx+1].Angbdb-KeyFrame[pIdx].Angbdb)/frames;
-			KeyFrame[pIdx].incAngpizq  = (KeyFrame[pIdx+1].Angpizq-KeyFrame[pIdx].Angpizq)/frames;
-			KeyFrame[pIdx].incAngpizqb = (KeyFrame[pIdx+1].Angpizqb-KeyFrame[pIdx].Angpizqb)/frames;
-			KeyFrame[pIdx].incAngpder  = (KeyFrame[pIdx+1].Angpder-KeyFrame[pIdx].Angpder)/frames;
-			KeyFrame[pIdx].incAngpderb = (KeyFrame[pIdx+1].Angpderb-KeyFrame[pIdx].Angpderb)/frames;
-			KeyFrame[pIdx].incAngpi    = (KeyFrame[pIdx+1].Angpi-KeyFrame[pIdx].Angpi)/frames;
-			KeyFrame[pIdx].incAngpd    = (KeyFrame[pIdx+1].Angpd-KeyFrame[pIdx].Angpd)/frames;
-			KeyFrame[pIdx].incXtor     = (KeyFrame[pIdx+1].Xtor-KeyFrame[pIdx].Xtor)/frames;
-			KeyFrame[pIdx].incYtor     = (KeyFrame[pIdx+1].Ytor-KeyFrame[pIdx].Ytor)/frames;
-			KeyFrame[pIdx].incZtor     = (KeyFrame[pIdx+1].Ztor-KeyFrame[pIdx].Ztor)/frames;
+			KeyFrame[pIndex].incAngt1    = (KeyFrame[pIndex+1].Angt1-KeyFrame[pIndex].Angt1)/frames;
+			KeyFrame[pIndex].incAngt2    = (KeyFrame[pIndex+1].Angt2-KeyFrame[pIndex].Angt2)/frames;
+			KeyFrame[pIndex].incAngc1    = (KeyFrame[pIndex+1].Angc1-KeyFrame[pIndex].Angc1)/frames;
+			KeyFrame[pIndex].incAngc2    = (KeyFrame[pIndex+1].Angc2-KeyFrame[pIndex].Angc2)/frames;
+			KeyFrame[pIndex].incAngbi1   = (KeyFrame[pIndex+1].Angbi1-KeyFrame[pIndex].Angbi1)/frames;
+			KeyFrame[pIndex].incAngbi2   = (KeyFrame[pIndex+1].Angbi2-KeyFrame[pIndex].Angbi2)/frames;
+			KeyFrame[pIndex].incAngbib   = (KeyFrame[pIndex+1].Angbib-KeyFrame[pIndex].Angbib)/frames;
+			KeyFrame[pIndex].incAngbd1   = (KeyFrame[pIndex+1].Angbd1-KeyFrame[pIndex].Angbd1)/frames;
+			KeyFrame[pIndex].incAngbd2   = (KeyFrame[pIndex+1].Angbd2-KeyFrame[pIndex].Angbd2)/frames;
+			KeyFrame[pIndex].incAngbdb   = (KeyFrame[pIndex+1].Angbdb-KeyFrame[pIndex].Angbdb)/frames;
+			KeyFrame[pIndex].incAngpizq  = (KeyFrame[pIndex+1].Angpizq-KeyFrame[pIndex].Angpizq)/frames;
+			KeyFrame[pIndex].incAngpizqb = (KeyFrame[pIndex+1].Angpizqb-KeyFrame[pIndex].Angpizqb)/frames;
+			KeyFrame[pIndex].incAngpder  = (KeyFrame[pIndex+1].Angpder-KeyFrame[pIndex].Angpder)/frames;
+			KeyFrame[pIndex].incAngpderb = (KeyFrame[pIndex+1].Angpderb-KeyFrame[pIndex].Angpderb)/frames;
+			KeyFrame[pIndex].incAngpi    = (KeyFrame[pIndex+1].Angpi-KeyFrame[pIndex].Angpi)/frames;
+			KeyFrame[pIndex].incAngpd    = (KeyFrame[pIndex+1].Angpd-KeyFrame[pIndex].Angpd)/frames;
+			KeyFrame[pIndex].incXtor     = (KeyFrame[pIndex+1].Xtor-KeyFrame[pIndex].Xtor)/frames;
+			KeyFrame[pIndex].incYtor     = (KeyFrame[pIndex+1].Ytor-KeyFrame[pIndex].Ytor)/frames;
+			KeyFrame[pIndex].incZtor     = (KeyFrame[pIndex+1].Ztor-KeyFrame[pIndex].Ztor)/frames;
 			
-			modelo->Angt1    += KeyFrame[pIdx].incAngt1;
-			modelo->Angt2    += KeyFrame[pIdx].incAngt2;
-			modelo->Angc1    += KeyFrame[pIdx].incAngc1;
-			modelo->Angc2    += KeyFrame[pIdx].incAngc2;
-			modelo->Angbi1   += KeyFrame[pIdx].incAngbi1;
-			modelo->Angbi2   += KeyFrame[pIdx].incAngbi2;
-			modelo->Angbib   += KeyFrame[pIdx].incAngbib;
-			modelo->Angbd1   += KeyFrame[pIdx].incAngbd1;
-			modelo->Angbd2   += KeyFrame[pIdx].incAngbd2;
-			modelo->Angbdb   += KeyFrame[pIdx].incAngbdb;
-			modelo->Angpizq  += KeyFrame[pIdx].incAngpizq;
-			modelo->Angpizqb += KeyFrame[pIdx].incAngpizqb;
-			modelo->Angpder  += KeyFrame[pIdx].incAngpder;
-			modelo->Angpderb += KeyFrame[pIdx].incAngpderb;
-			modelo->Angpi    += KeyFrame[pIdx].incAngpi;
-			modelo->Angpd    += KeyFrame[pIdx].incAngpd;
-			modelo->Xtor     += KeyFrame[pIdx].incXtor;
-			modelo->Ytor     += KeyFrame[pIdx].incYtor;
-			modelo->Ztor     += KeyFrame[pIdx].incZtor;
+			modelo->Angt1    += KeyFrame[pIndex].incAngt1;
+			modelo->Angt2    += KeyFrame[pIndex].incAngt2;
+			modelo->Angc1    += KeyFrame[pIndex].incAngc1;
+			modelo->Angc2    += KeyFrame[pIndex].incAngc2;
+			modelo->Angbi1   += KeyFrame[pIndex].incAngbi1;
+			modelo->Angbi2   += KeyFrame[pIndex].incAngbi2;
+			modelo->Angbib   += KeyFrame[pIndex].incAngbib;
+			modelo->Angbd1   += KeyFrame[pIndex].incAngbd1;
+			modelo->Angbd2   += KeyFrame[pIndex].incAngbd2;
+			modelo->Angbdb   += KeyFrame[pIndex].incAngbdb;
+			modelo->Angpizq  += KeyFrame[pIndex].incAngpizq;
+			modelo->Angpizqb += KeyFrame[pIndex].incAngpizqb;
+			modelo->Angpder  += KeyFrame[pIndex].incAngpder;
+			modelo->Angpderb += KeyFrame[pIndex].incAngpderb;
+			modelo->Angpi    += KeyFrame[pIndex].incAngpi;
+			modelo->Angpd    += KeyFrame[pIndex].incAngpd;
+			modelo->Xtor     += KeyFrame[pIndex].incXtor;
+			modelo->Ytor     += KeyFrame[pIndex].incYtor;
+			modelo->Ztor     += KeyFrame[pIndex].incZtor;
 			
 		}
 	}
@@ -6131,18 +6134,17 @@ int WINAPI WinMain(	HINSTANCE	hInstance,			// Instancia
 					if(play)
 					{
 						if(tipoAnim == 1)
-							animacion(KeyFrame1, maxKF1 , 18, &player1modelo, playIndex, play );
+							animacionOtros(KeyFrame1, maxKF1 , 18, &player1modelo, playIndex, play );
 					}
 					for( int i = 0; i < otros; i++ )
 					{
 						if( playOtros[ i ] )
 						{
-							animacion( KeyFrameOtros[ i ], 3, 18, modelosOtros[ i ], playIndexOtros[ i ], playOtros[ i ] );
+							animacionOtros( KeyFrameOtros[ i ], 3, 18, modelosOtros[ i ], playIndexOtros[ i ], playOtros[ i ] );
 						}
-						recargaAnim( KeyFrameOtros[ i ], modelosOtros[ i ], playOtros[ i ], tipoAnimOtros[ i ], playIndexOtros[ i ] );
 					}
 					animacion( KeyFrame2, maxKF2, 18, &mikumodelo, playIndex2, play2 );
-					animacion( KeyFrame3, maxKF3, 18, &enem1modelo, playIndex3, play3 );
+					//animacion( KeyFrame3, maxKF3, 18, &enem1modelo, playIndex3, play3 );
 
 					SwapBuffers(hDC);				// Intercambia los Buffers (Double Buffering)
 				}
