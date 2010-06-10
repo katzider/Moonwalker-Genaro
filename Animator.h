@@ -25,6 +25,7 @@ public:
 	int Reload();
 	CVector attack();
 	int getDelay();
+	CVector getPos();
 
 private:
 	parametros* modelo;

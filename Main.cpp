@@ -2060,17 +2060,20 @@ void AniMagic()
 {
 	for( int i = 0; i < Enemigos.size(); i++ )
 	{
-		Enemigos[i].startAnim();
+		if( ( Enemigos[i].getPos().z < 6666.0f ) )
+		{
+			Enemigos[i].startAnim();
 
-		if( Enemigos[i].Reload() <= 0 )
-		{
-			CVector disparo;
-			disparo = Enemigos[i].attack();
-			bill[i] = new Bullet( disparo, player1.PosicionObj );
-		}
-		if( bill[i] != 0 )
-		{
-			bill[i]->moveToTarget();
+			if( Enemigos[i].Reload() <= 0 )
+			{
+				CVector disparo;
+				disparo = Enemigos[i].attack();
+				bill[i] = new Bullet( disparo, player1.PosicionObj );
+			}
+			if( bill[i] != 0 )
+			{
+				bill[i]->moveToTarget();
+			}
 		}
 	}
 
@@ -3318,7 +3321,7 @@ void LargeHadronCollider()
 	}
 
 	int j = 0;
-	parametros aux;
+	parametros* aux;
 	//Ataque de MJ
 	if( MJAtaque == 1)
 	{
@@ -3329,10 +3332,11 @@ void LargeHadronCollider()
 				col1 = ColisionEsferaEsfera(esfera[i], esfera[18], *parenem[ j ] );
 				if( col1 )
 				{
-					aux = *parenem[ j ];
-					aux.escalaX = 0.0f;
-					aux.escalaY = 0.0f;
-					aux.escalaZ = 0.0f;
+					aux = parenem[ j ];
+					aux->escalaX = 0.0f;
+					aux->escalaY = 0.0f;
+					aux->escalaZ = 0.0f;
+					aux->PosicionObj.z = 6666.6f;
 					score += 1000;
 					if( score >= maxs )
 						maxs = score;
@@ -3557,7 +3561,7 @@ void animacion( FRAME* KeyFrame, int maxKF, int frames, jerarquiaModelo* modelo,
 		   (abs(KeyFrame[pIndex+1].Ytor-modelo->Ytor))<0.1 &&
 		   (abs(KeyFrame[pIndex+1].Ztor-modelo->Ztor))<0.1)
 		{			
-			pIndex++;			
+			pIndex = 0;			
 			if(pIndex>maxKF-1)
 			{
 				pIndex=0;
