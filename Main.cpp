@@ -2002,24 +2002,12 @@ vector<Bullet*> bill;
 
 void InicializaParametrosdeAnimacion()
 {
-	// inicializacion de las cosas
-	const int MFckers = 3;
-	Enemigos.resize( MFckers );
-	bill.resize( MFckers );
-
+	Enemigos.resize( 3 );
+	bill.resize( 3 );
 	// Enemigo gordito azul
 	Enemigos[0].setChar( &enem1 );
 	Enemigos[0].addPoint( CVector( 200.0f, 9.0f, -40.0f ) );
 	Enemigos[0].addPoint( CVector( 160.0f, 9.0f, -40.0f ) );
-
-	Enemigos[1].setChar( &enem3c );
-	Enemigos[1].addPoint( CVector( 200.0f, 9.0f, -40.0f ) );
-	Enemigos[1].addPoint( CVector( 160.0f, 9.0f, -40.0f ) );
-
-	Enemigos[2].setChar( &enem3d );
-	Enemigos[2].addPoint( CVector( 200.0f, 9.0f, -40.0f ) );
-	Enemigos[2].addPoint( CVector( 160.0f, 9.0f, -40.0f ) );
-
 
 	// Balas
 	bill[0] = 0;
@@ -2027,20 +2015,17 @@ void InicializaParametrosdeAnimacion()
 }
 void AniMagic()
 {
-	for( int i = 0; i < Enemigos.size(); i++ )
-	{
-		Enemigos[i].startAnim();
+	Enemigos[0].startAnim();
 
-		if( Enemigos[i].Reload() <= 0 )
-		{
-			CVector disparo;
-			disparo = Enemigos[i].attack();
-			bill[i] = new Bullet( disparo, player1.PosicionObj );
-		}
-		if( bill[i] != 0 )
-		{
-			bill[i]->moveToTarget();
-		}
+	if( Enemigos[0].Reload() <= 0 )
+	{
+		CVector disparo;
+		disparo = Enemigos[0].attack();
+		bill[0] = new Bullet( disparo, player1.PosicionObj );
+	}
+	if( bill[0] != 0 )
+	{
+		bill[0]->moveToTarget();
 	}
 
 }
@@ -2200,7 +2185,7 @@ void DatosAnimacion()
 //	KeyFrameOtros[ 2 ][ 0 ].Ztor  =	0.0f;	KeyFrameOtros[ 2 ][ 1 ].Ztor  =	0.0f;	KeyFrameOtros[ 3 ][ 2 ].Ztor =	0.0f;
 
 	// El que sigue...
-/*
+
 	KeyFrameOtros[1][0].Angt1=-5.0f;
 	KeyFrameOtros[1][0].Angt2=0.0f;
 	KeyFrameOtros[1][0].Angc1=-25.0f;
@@ -2260,27 +2245,6 @@ void DatosAnimacion()
 	KeyFrameOtros[1][2].Xtor=0.0f;
 	KeyFrameOtros[1][2].Ytor=0.0f;
 	KeyFrameOtros[1][2].Ztor=0.0f;
-
-	KeyFrameOtros[2][0].Angt1=-5.0f;
-	KeyFrameOtros[2][0].Angt2=0.0f;
-	KeyFrameOtros[2][0].Angc1=-25.0f;
-	KeyFrameOtros[2][0].Angc2=0.0f;
-	KeyFrameOtros[2][0].Angbi1=-5.0f;
-	KeyFrameOtros[2][0].Angbi2=0.0f;
-	KeyFrameOtros[2][0].Angbib=-15.0f;
-	KeyFrameOtros[2][0].Angbd1=5.0f;
-	KeyFrameOtros[2][0].Angbd2=0.0f;
-	KeyFrameOtros[2][0].Angbdb=-40.0f;
-	KeyFrameOtros[2][0].Angpizq=20.0f;
-	KeyFrameOtros[2][0].Angpder=-30.0f;
-	KeyFrameOtros[2][0].Angpizqb=15.0f;
-	KeyFrameOtros[2][0].Angpderb=10.0f;
-	KeyFrameOtros[2][0].Angpi=0.0f;
-	KeyFrameOtros[2][0].Angpd=0.0f;
-	KeyFrameOtros[2][0].Xtor=0.0f;
-	KeyFrameOtros[2][0].Ytor=0.0f;
-	KeyFrameOtros[2][0].Ztor=0.0f;
-
 
 	KeyFrameOtros[2][0].Angt1=-5.0f;
 	KeyFrameOtros[2][0].Angt2=0.0f;
@@ -3329,7 +3293,6 @@ void LargeHadronCollider()
 				//red = 250;
 				green = 200;
 			}
-			// desaparece la bala
 			bill[0] = 0;
 		}
 	}
@@ -4782,7 +4745,7 @@ void DibujaTextos()
 		glPopMatrix();
 
 		// Texto a mostrar en pantalla
-		Font.glPrint((1.0f/640.0f)*glWidth, glWidth*0.05f,glHeight*0.9f,"Angulo = %f", player1.AngObj /*"Delay: %d", Enemigos[0].getDelay()*/ );
+		Font.glPrint((1.0f/640.0f)*glWidth, glWidth*0.05f,glHeight*0.9f,"Delay: %d", Enemigos[0].getDelay() );
 		//Font.glPrint((1.0f/640.0f)*glWidth, glWidth*0.05f,glHeight*0.85f,"PosCam %f", player1.PosicionCam.x );
 		//Font.glPrint((1.0f/640.0f)*glWidth, glWidth*0.05f,glHeight*0.70f,"PosObj %.2f, %.2f, %.2f", player1.PosicionObj.x, player1.PosicionObj.y, player1.PosicionObj.z);
 		Font.glPrint( (1.0f/640.0f)*glWidth, glWidth * 0.45f, glHeight * 0.95f, "High %d", maxs );
@@ -6362,11 +6325,15 @@ int ManejaTeclado()
 	if (keys['N'])
 		LightPos[2] -= 1.0f; //Hacia atr�s
 
-	if ((GetAsyncKeyState(VK_CONTROL)&1) ==1)
+	if (GetKeyState(VK_CONTROL) & 0x80)
 	{
-		if (MJAtaque == 0)	MJAtaque = 1;
-		else				MJAtaque = 0;
+		if (MJAtaque == 0)	
+		{
+			MJAtaque = 1;		
+		}
 	}
+	else
+		MJAtaque = 0;
 
 	if((GetAsyncKeyState(VK_RETURN)&1) ==1)
 	{
