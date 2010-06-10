@@ -2030,9 +2030,9 @@ vector<Bullet*> bill;
 void InicializaParametrosdeAnimacion()
 {
 	// inicializacion de las cosas
-	const int MF-ckers = 3;
-	Enemigos.resize( MF-ckers );
-	bill.resize( MF-ckers );
+	int MFckers = 3;
+	Enemigos.resize( MFckers );
+	bill.resize( MFckers );
 
 	// Enemigo gordito azul
 	Enemigos[0].setChar( &enem1 );
@@ -2045,7 +2045,7 @@ void InicializaParametrosdeAnimacion()
 }
 void AniMagic()
 {
-	for( int i = 0; i < enemigos.size(); i++ )
+	for( int i = 0; i < Enemigos.size(); i++ )
 	{
 		Enemigos[i].startAnim();
 
@@ -3112,6 +3112,8 @@ int ColisionRayoEsfera( ray& r, boundingsphere& s)
 }
 int InitGL(GLvoid)										// Aqui se configuran los parametros iniciales de OpenGL
 {
+	srand( time( 0 ) );
+
 	Multitext.InitMultitext(hWnd);
 
 	glShadeModel(GL_SMOOTH);							// Activa Smooth Shading

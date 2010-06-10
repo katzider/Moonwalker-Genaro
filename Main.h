@@ -8,6 +8,7 @@
 #include <string>			// Used for our STL string objects
 #include <fstream>
 #include <vector>
+#include <ctime>
 #include <crtdbg.h>
 #include "gl.h"				// Archivo de cabecera para la libreria OpenGL32
 #include "glu.h"			// Archivo de cabecera para la libreria GLu32
