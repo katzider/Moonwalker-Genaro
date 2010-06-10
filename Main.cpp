@@ -5526,18 +5526,18 @@ void DibujaElevador()
 	else if( abajo == false )
 		elev += 0.2f;
 }
-void DibujaTaraAnim()
+void DibujaTaraAnim(float a, float b, float c)
 {
-	if ( ( abajo == true ) && ( elev  <= -50.0f ) )
+	if ( ( abajo == true ) && ( elev  <= 5.0f ) )
 		abajo = false;
 	else if ( ( abajo == false ) && ( elev >= 28.0f ) )
 		abajo = true;
 
 	glPushMatrix();
-		glTranslatef(45.0f, elev, -100.0f);
+		glTranslatef(a, elev, b);
 		glRotatef(100.0f,0,0,1);
 		glRotatef(90.0f,1,0,0);
-		glScalef(0.1,0.1,0.1);
+		glScalef(c,c,c);
 		glCallList(taran+0);
 	glPopMatrix();
 
@@ -5675,7 +5675,8 @@ int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la
 	glPopMatrix();
 
 	DibujaElevador();
-	DibujaTaraAnim();
+	DibujaTaraAnim(145.0f,-100.0f,0.11f);
+	DibujaTaraAnim(200.0f,-100.0f,0.21f);
 		
 	DibujaLuz(lightPosition);
 	DibujaTextos();
@@ -5702,7 +5703,7 @@ int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la
 	}
 
 	//spline helic�ptero
-	glDisable(GL_TEXTURE_2D);
+	/*glDisable(GL_TEXTURE_2D);
 	glDisable(GL_LIGHTING);
 	glDisable(GL_COLOR_MATERIAL);
 	glColor3f(1.0f, 1.0f, 1.0f);
@@ -5730,9 +5731,9 @@ int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la
 		glPopMatrix();
 
 		glColor3f(1.0f,1.0f,1.0f);
-	}
+	}*/
 
-	//spline camara
+	/*//spline camara
 	glDisable(GL_TEXTURE_2D);
 	glDisable(GL_LIGHTING);
 	glDisable(GL_COLOR_MATERIAL);
@@ -5761,7 +5762,7 @@ int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la
 		glPopMatrix();
 
 		glColor3f(1.0f,1.0f,1.0f);
-	}
+	}*/
 	
 
 	// IA de los enemigos
