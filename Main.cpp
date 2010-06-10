@@ -74,11 +74,15 @@ parametros chang;	 //Variable con la que tenemos acceso a la estructura de parï¿
 
 parametros enemigo8; // parametros robot
 
+parametros* parenem[ 12 ] = { &enem1, &enem1a, &enem1b, &enem1c, &enem3a, &enem3b, &enem3c, &enem3d, &enem3e, &enem3f, &enem3g, &enem3h };
+
 /* Vidas del personaje */
 float health = 150;
 int vidas = 3;
 //int red = 250;
 int green = 200;
+int score = 0;
+int maxs = 3000;
 
 CMateriales Material;
 
@@ -2776,8 +2780,8 @@ void InicializaObjetosdeColision()
 	esfera[9].colision=false;
 
 	//Esfera de colision del ataque de MJ
-	esfera[18].radio=0.5f;
-	esfera[18].Pos=CVector(player1.PosicionObj.x - 10.0f , player1.PosicionObj.y + 4.4f, player1.PosicionObj.z + 3.0f);
+	esfera[18].radio=1.5f;
+	esfera[18].Pos=CVector(player1.PosicionObj.x - 1.0f, player1.PosicionObj.y + 4.4f, player1.PosicionObj.z + 7.0f);
 	esfera[18].colision=false;
 
 	esfera[20].radio=4.0;
@@ -2842,9 +2846,15 @@ void ActualizaObjetosDinamicosColision()
 	esfera[15].Pos=CVector(enem3h.PosicionObj.x, enem3h.PosicionObj.y+2.0f, enem3h.PosicionObj.z);
 	esfera[16].Pos=CVector(enem1b.PosicionObj.x, enem1b.PosicionObj.y+2.5f, enem1b.PosicionObj.z);
 	esfera[17].Pos=CVector(enem1c.PosicionObj.x, enem1c.PosicionObj.y+2.5f, enem1c.PosicionObj.z);
-	esfera[18].Pos=CVector(player1.PosicionObj.x, player1.PosicionObj.y+4.4f, player1.PosicionObj.z);
-
-
+	
+	if( player1.AngObj <= 0.0f )
+		esfera[18].Pos=CVector(player1.PosicionObj.x - 1.0f, player1.PosicionObj.y + 4.4f, player1.PosicionObj.z + 7.0f);
+	else if( player1.AngObj <= 90.0f && player1.AngObj > 0.0f  )
+		esfera[18].Pos=CVector(player1.PosicionObj.x + 7.0f, player1.PosicionObj.y + 4.4f, player1.PosicionObj.z + 1.0f);
+	else if( player1.AngObj <= 180.0f && player1.AngObj > 90.0f  )
+		esfera[18].Pos=CVector(player1.PosicionObj.x, player1.PosicionObj.y + 4.4f, player1.PosicionObj.z -7.0f);
+	else if( player1.AngObj <= 270.0f && player1.AngObj > 180.0f  )
+		esfera[18].Pos=CVector(player1.PosicionObj.x - 7.0f, player1.PosicionObj.y + 4.4f, player1.PosicionObj.z );
 }
 
 void DibujaObjetosdeColision()
@@ -3240,7 +3250,7 @@ void LiberaSonido(FMOD_SYSTEM *system, FMOD_RESULT result)
 // creador de hoyos negros y revision de colisiones
 void LargeHadronCollider()
 {
-	bool col;
+	bool col, col1;
 	// Colisiones
 	ColisionEsferaPlano(0, 2, player1 );
 	player1.PosAntObj = player1.PosicionObj;
@@ -3287,6 +3297,30 @@ void LargeHadronCollider()
 		}
 	}
 
+	int j = 0;
+	parametros aux;
+	//Ataque de MJ
+	if( MJAtaque == 1)
+	{
+		for(int i = 1; i <= 17; i++)
+		{
+			if( i != 18 && i != 3 && i != 4 && i != 5)
+			{
+				col1 = ColisionEsferaEsfera(esfera[i], esfera[18], *parenem[ j ] );
+				if( col1 )
+				{
+					aux = *parenem[ j ];
+					aux.escalaX = 0.0f;
+					aux.escalaY = 0.0f;
+					aux.escalaZ = 0.0f;
+					score += 1000;
+					if( score >= maxs )
+						maxs = score;
+				}
+				j++;
+			}
+		}
+	}
 }
 
 void ControlPersonaje(int funcion)
@@ -4711,13 +4745,13 @@ void DibujaTextos()
 		glPopMatrix();
 
 		// Texto a mostrar en pantalla
-		Font.glPrint((1.0f/640.0f)*glWidth, glWidth*0.05f,glHeight*0.9f,"Delay: %d", Enemigos[0].getDelay() );
+		Font.glPrint((1.0f/640.0f)*glWidth, glWidth*0.05f,glHeight*0.9f,"Angulo = %f", player1.AngObj /*"Delay: %d", Enemigos[0].getDelay()*/ );
 		//Font.glPrint((1.0f/640.0f)*glWidth, glWidth*0.05f,glHeight*0.85f,"PosCam %f", player1.PosicionCam.x );
 		//Font.glPrint((1.0f/640.0f)*glWidth, glWidth*0.05f,glHeight*0.70f,"PosObj %.2f, %.2f, %.2f", player1.PosicionObj.x, player1.PosicionObj.y, player1.PosicionObj.z);
-		Font.glPrint( (1.0f/640.0f)*glWidth, glWidth * 0.45f, glHeight * 0.95f, "High 50000" );
+		Font.glPrint( (1.0f/640.0f)*glWidth, glWidth * 0.45f, glHeight * 0.95f, "High %d", maxs );
 		Font.glPrint( (1.0f/640.0f)*glWidth, glWidth * 0.42f, glHeight * 0.90f, "Round 1 Stage 1" );
 		Font.glPrint( (1.0f/640.0f)*glWidth, glWidth * 0.08f, glHeight * 0.15f, "1P" );
-		Font.glPrint( (1.0f/640.0f)*glWidth, glWidth * 0.20f, glHeight * 0.15f, "0" );
+		Font.glPrint( (1.0f/640.0f)*glWidth, glWidth * 0.20f, glHeight * 0.15f, "%d", score );
 		Font.glPrint( (1.0f/640.0f)*glWidth, glWidth * 0.1f, glHeight * 0.09f, "x%d", vidas );
 									
 		glDisable(GL_ALPHA_TEST);
