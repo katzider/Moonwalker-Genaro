@@ -3260,6 +3260,9 @@ void LiberaSonido(FMOD_SYSTEM *system, FMOD_RESULT result)
 // creador de hoyos negros y revision de colisiones
 void LargeHadronCollider()
 {
+	//FMOD_RESULT       result;
+	//FMOD_SYSTEM      *system;
+
 	bool col, col1;
 	// Colisiones
 	ColisionEsferaPlano(0, 2, player1 );
@@ -3331,6 +3334,8 @@ void LargeHadronCollider()
 					score += 1000;
 					if( score >= maxs )
 						maxs = score;
+					//result = FMOD_System_CreateSound(system, "Audio/humanpunch.mp3", FMOD_SOFTWARE, 0, &sound[1]);
+					//ERRCHECK(result);
 				}
 				j++;
 			}
@@ -6054,13 +6059,10 @@ int WINAPI WinMain(	HINSTANCE	hInstance,			// Instancia
     ERRCHECK(result);
 
 	////Carga de los archivos de audio
-      result = FMOD_System_CreateSound(system, "Audio/smoothcriminal.mp3", FMOD_HARDWARE, 0, &sound[0]);
-      ERRCHECK(result);
-     result = FMOD_Sound_SetMode(sound[0], FMOD_LOOP_NORMAL); //Se repetira en un loop
-     ERRCHECK(result);										
-
- //   result = FMOD_System_CreateSound(system, "Audio/explode.wav", FMOD_SOFTWARE, 0, &sound[1]);
- //   ERRCHECK(result);
+    result = FMOD_System_CreateSound(system, "Audio/smoothcriminal.mp3", FMOD_HARDWARE, 0, &sound[0]);
+    ERRCHECK(result);
+    result = FMOD_Sound_SetMode(sound[0], FMOD_LOOP_NORMAL); //Se repetira en un loop
+    ERRCHECK(result);										
 
 	////Asignaci�n a canales y configuraci�n
 	////M�sica de fondo
