@@ -1870,21 +1870,21 @@ void DatosAnimacion()
 	KeyFrameOtros[ 0 ][ 0 ].Ztor  =	0.0f;	KeyFrameOtros[ 0 ][ 1 ].Ztor  =	0.0f;	KeyFrameOtros[ 0 ][ 2 ].Ztor  =	0.0f;
 
 	// Enem1 (enemigo gordo)
-	KeyFrameOtros[ 1 ][ 0 ].Angt1 =	0.0f;	KeyFrameOtros[ 1 ][ 0 ].Angt1 =	0.0f;	KeyFrameOtros[ 1 ][ 2 ].Angt1 = 0.0f;
-	KeyFrameOtros[ 1 ][ 0 ].Angt2 =	5.0f;	KeyFrameOtros[ 1 ][ 1 ].Angt2 =	0.0f;	KeyFrameOtros[ 1 ][ 2 ].Angt2 =	-5.0f;
-	KeyFrameOtros[ 1 ][ 0 ].Angc1 =	-20.0f;	KeyFrameOtros[ 1 ][ 1 ].Angc1 =	20.0f;	KeyFrameOtros[ 1 ][ 2 ].Angc1 =	-20.0f;
+	KeyFrameOtros[ 1 ][ 0 ].Angt1 =	-5.0f;	KeyFrameOtros[ 1 ][ 0 ].Angt1 =	-5.0f;	KeyFrameOtros[ 1 ][ 2 ].Angt1 = -5.0f;
+	KeyFrameOtros[ 1 ][ 0 ].Angt2 =	0.0f;	KeyFrameOtros[ 1 ][ 1 ].Angt2 =	0.0f;	KeyFrameOtros[ 1 ][ 2 ].Angt2 =	0.0f;
+	KeyFrameOtros[ 1 ][ 0 ].Angc1 =	-25.0f;	KeyFrameOtros[ 1 ][ 1 ].Angc1 =	-25.0f;	KeyFrameOtros[ 1 ][ 2 ].Angc1 =	-25.0f;
 	KeyFrameOtros[ 1 ][ 0 ].Angc2 =	0.0f;	KeyFrameOtros[ 1 ][ 1 ].Angc2 =	0.0f;	KeyFrameOtros[ 1 ][ 2 ].Angc2 =	0.0f;
-	KeyFrameOtros[ 1 ][ 0 ].Angbi1= -8.0f;	KeyFrameOtros[ 1 ][ 1 ].Angbi1=	8.0f;	KeyFrameOtros[ 1 ][ 2 ].Angbi1=	-8.0f;
+	KeyFrameOtros[ 1 ][ 0 ].Angbi1= -5.0f;	KeyFrameOtros[ 1 ][ 1 ].Angbi1=	10.0f;	KeyFrameOtros[ 1 ][ 2 ].Angbi1=	-5.0f;
 	KeyFrameOtros[ 1 ][ 0 ].Angbi2= 0.0f;	KeyFrameOtros[ 1 ][ 1 ].Angbi2=	0.0f;	KeyFrameOtros[ 1 ][ 2 ].Angbi2=	0.0f;
-//	KeyFrameOtros[ 1 ][ 0 ].Angbib= 0.0f;	KeyFrameOtros[ 1 ][ 1 ].Angbib=	-15.0f;	KeyFrameOtros[ 1 ][ 2 ].Angbib=	-15.0f;
-	KeyFrameOtros[ 1 ][ 0 ].Angbd1= 8.0f;	KeyFrameOtros[ 1 ][ 1 ].Angbd1=	8.0f;	KeyFrameOtros[ 1 ][ 2 ].Angbd1=	8.0f;
-	KeyFrameOtros[ 1 ][ 0 ].Angbd2= 0.0f;	KeyFrameOtros[ 1 ][ 1 ].Angbd2=	0.0f;	KeyFrameOtros[ 1 ][ 2 ].Angbd2=	0.0f;
-//	KeyFrameOtros[ 1 ][ 0 ].Angbdb= 0.0f;	KeyFrameOtros[ 1 ][ 1 ].Angbdb=	-40.0f;	KeyFrameOtros[ 1 ][ 2 ].Angbdb=	-40.0f;
-	KeyFrameOtros[ 1 ][ 0 ].Angpizq=15.0f;	KeyFrameOtros[ 1 ][ 1 ].Angpizq=-10.0f;	KeyFrameOtros[ 1 ][ 2 ].Angpizq=15.0f;
-	KeyFrameOtros[ 1 ][ 0 ].Angpder=-10.0f;	KeyFrameOtros[ 1 ][ 1 ].Angpder=15.0f;	KeyFrameOtros[ 1 ][ 2 ].Angpder=-10.0f;
-	KeyFrameOtros[ 1 ][ 0 ].Angpizqb=-5.0f;	KeyFrameOtros[ 1 ][ 1 ].Angpizqb=10.0f;	KeyFrameOtros[ 1 ][ 2 ].Angpizqb=-5.0f;
-	KeyFrameOtros[ 1 ][ 0 ].Angpderb=10.0f;	KeyFrameOtros[ 1 ][ 1 ].Angpderb=-5.0f;	KeyFrameOtros[ 1 ][ 2 ].Angpderb=10.0f;
-	KeyFrameOtros[ 1 ][ 0 ].Angpi =	0.0f;	KeyFrameOtros[ 1 ][ 1 ].Angpi =	0.0f;	KeyFrameOtros[ 1 ][ 2 ].Angpi =	0.0f;
+	KeyFrameOtros[ 1 ][ 0 ].Angbib= 0.0f;	KeyFrameOtros[ 1 ][ 1 ].Angbib=	-40.0f;	KeyFrameOtros[ 1 ][ 2 ].Angbib=	-15.0f;
+	KeyFrameOtros[ 1 ][ 0 ].Angbd1= 5.0f;	KeyFrameOtros[ 1 ][ 1 ].Angbd1=	-10.0f;	KeyFrameOtros[ 1 ][ 2 ].Angbd1=	5.0f;
+	KeyFrameOtros[ 1 ][ 0 ].Angbd2= 0.0f;	KeyFrameOtros[ 1 ][ 1 ].Angbd2=	-15.0f;	KeyFrameOtros[ 1 ][ 2 ].Angbd2=	0.0f;
+	KeyFrameOtros[ 1 ][ 0 ].Angbdb= 0.0f;	KeyFrameOtros[ 1 ][ 1 ].Angbdb=	-30.0f;	KeyFrameOtros[ 1 ][ 2 ].Angbdb=	-40.0f;
+	KeyFrameOtros[ 1 ][ 0 ].Angpizq=20.0f;	KeyFrameOtros[ 1 ][ 1 ].Angpizq= 20.0f;	KeyFrameOtros[ 1 ][ 2 ].Angpizq=20.0f;
+	KeyFrameOtros[ 1 ][ 0 ].Angpder=-30.0f;	KeyFrameOtros[ 1 ][ 1 ].Angpder=20.0f;	KeyFrameOtros[ 1 ][ 2 ].Angpder=20.0f;
+	KeyFrameOtros[ 1 ][ 0 ].Angpizqb=-15.0f;	KeyFrameOtros[ 1 ][ 1 ].Angpizqb=15.0f;	KeyFrameOtros[ 1 ][ 2 ].Angpizqb=-20.0f;
+	KeyFrameOtros[ 1 ][ 0 ].Angpderb=10.0f;	KeyFrameOtros[ 1 ][ 1 ].Angpderb=-5.0f;	KeyFrameOtros[ 1 ][ 2 ].Angpderb=15.0f;
+	KeyFrameOtros[ 1 ][ 0 ].Angpi =	0.0f;	KeyFrameOtros[ 1 ][ 1 ].Angpi =	0.0f;	KeyFrameOtros[ 1 ][ 2 ].Angpi =	10.0f;
 	KeyFrameOtros[ 1 ][ 0 ].Angpd =	0.0f;	KeyFrameOtros[ 1 ][ 1 ].Angpd =	0.0f;	KeyFrameOtros[ 1 ][ 2 ].Angpd =	0.0f;
 	KeyFrameOtros[ 1 ][ 0 ].Xtor  =	0.0f;	KeyFrameOtros[ 1 ][ 1 ].Xtor  =	0.0f;	KeyFrameOtros[ 1 ][ 2 ].Xtor  =	0.0f;
 	KeyFrameOtros[ 1 ][ 0 ].Ytor  =	0.0f;	KeyFrameOtros[ 1 ][ 1 ].Ytor  =	0.0f;	KeyFrameOtros[ 1 ][ 2 ].Ytor=0.0f;
@@ -1912,7 +1912,7 @@ void DatosAnimacion()
 //	KeyFrameOtros[ 2 ][ 0 ].Ztor  =	0.0f;	KeyFrameOtros[ 2 ][ 1 ].Ztor  =	0.0f;	KeyFrameOtros[ 3 ][ 2 ].Ztor =	0.0f;
 
 	// El que sigue...
-
+/*
 	KeyFrameOtros[1][0].Angt1=-5.0f;
 	KeyFrameOtros[1][0].Angt2=0.0f;
 	KeyFrameOtros[1][0].Angc1=-25.0f;
@@ -2032,7 +2032,7 @@ void DatosAnimacion()
 	KeyFrameOtros[2][2].Xtor=0.0f;
 	KeyFrameOtros[2][2].Ytor=0.0f;
 	KeyFrameOtros[2][2].Ztor=0.0f;
-
+*/
 	KeyFrameOtros[3][0].Angt1=-5.0f;
 	KeyFrameOtros[3][0].Angt2=0.0f;
 	KeyFrameOtros[3][0].Angc1=-25.0f;
