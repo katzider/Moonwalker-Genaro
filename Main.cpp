@@ -1544,7 +1544,7 @@ void InicializaParametrosdeControl()
 								//sin aplicarle ninguna transformaci�n (hacia adonde est� volteando). Se elige un �ngulo tal que al aplicarle
 								//una rotaci�n inicial con respecto al eje Y est� viendo hacia la misma direcci�n que la definida por AngDir
 	
-	enemigo8.PosicionObj=CVector(-45.0f, 0.0f, 0.0f); //Esta es la posici�n inicial del objeto en la escena
+	enemigo8.PosicionObj=CVector(-75.0f, 9.0f, 20.0f); //Esta es la posici�n inicial del objeto en la escena
 	enemigo8.Direccion.x=(float)cos(enemigo8.AngDir); //Direcci�n inicial definida por el �ngulo inicial AngDir (x=cos(AngDir), y=0.0, z=sen(AngDir))
 	enemigo8.Direccion.y=0.0f;
 	enemigo8.Direccion.z=(float)sin(enemigo8.AngDir);   
@@ -2833,6 +2833,11 @@ void InicializaObjetosdeColision()
 	esfera[29].radio=8.0;
 	esfera[29].Pos=CVector(-22.0f, 6.0f, 120.0f);
 	esfera[29].colision=false;
+
+	//Esfera de colision del robot
+	esfera[19].radio=3.5f;
+	esfera[19].Pos=CVector(enemigo8.PosicionObj.x - 1.0f, enemigo8.PosicionObj.y + 4.4f, enemigo8.PosicionObj.z + 7.0f);
+	esfera[19].colision=false;
 
 }
 
