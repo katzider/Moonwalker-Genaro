@@ -20,6 +20,8 @@ bool	active=TRUE;		// Bandera de ventana activa
 int glWidth;
 int glHeight;
 
+int auxiliameDios = 0;
+
 GLUquadricObj	*e;
 
 //Variables para fmod (cambiar el tama�o de los arreglos seg�n el n�mero de archivos de audio a usar)
@@ -2216,10 +2218,10 @@ void DatosAnimacion()
 	KeyFrameOtros[ 1 ][ 0 ].Angc2 =	0.0f;	KeyFrameOtros[ 1 ][ 1 ].Angc2 =	0.0f;	KeyFrameOtros[ 1 ][ 2 ].Angc2 =	0.0f;
 	KeyFrameOtros[ 1 ][ 0 ].Angbi1= -8.0f;	KeyFrameOtros[ 1 ][ 1 ].Angbi1=	8.0f;	KeyFrameOtros[ 1 ][ 2 ].Angbi1=	-8.0f;
 	KeyFrameOtros[ 1 ][ 0 ].Angbi2= 0.0f;	KeyFrameOtros[ 1 ][ 1 ].Angbi2=	0.0f;	KeyFrameOtros[ 1 ][ 2 ].Angbi2=	0.0f;
-//	KeyFrameOtros[ 1 ][ 0 ].Angbib= 0.0f;	KeyFrameOtros[ 1 ][ 1 ].Angbib=	-15.0f;	KeyFrameOtros[ 1 ][ 2 ].Angbib=	-15.0f;
+	KeyFrameOtros[ 1 ][ 0 ].Angbib= 0.0f;	KeyFrameOtros[ 1 ][ 1 ].Angbib=	-15.0f;	KeyFrameOtros[ 1 ][ 2 ].Angbib=	-15.0f;
 	KeyFrameOtros[ 1 ][ 0 ].Angbd1= 8.0f;	KeyFrameOtros[ 1 ][ 1 ].Angbd1=	8.0f;	KeyFrameOtros[ 1 ][ 2 ].Angbd1=	8.0f;
 	KeyFrameOtros[ 1 ][ 0 ].Angbd2= 0.0f;	KeyFrameOtros[ 1 ][ 1 ].Angbd2=	0.0f;	KeyFrameOtros[ 1 ][ 2 ].Angbd2=	0.0f;
-//	KeyFrameOtros[ 1 ][ 0 ].Angbdb= 0.0f;	KeyFrameOtros[ 1 ][ 1 ].Angbdb=	-40.0f;	KeyFrameOtros[ 1 ][ 2 ].Angbdb=	-40.0f;
+	KeyFrameOtros[ 1 ][ 0 ].Angbdb= 0.0f;	KeyFrameOtros[ 1 ][ 1 ].Angbdb=	-40.0f;	KeyFrameOtros[ 1 ][ 2 ].Angbdb=	-40.0f;
 	KeyFrameOtros[ 1 ][ 0 ].Angpizq=15.0f;	KeyFrameOtros[ 1 ][ 1 ].Angpizq=-10.0f;	KeyFrameOtros[ 1 ][ 2 ].Angpizq=15.0f;
 	KeyFrameOtros[ 1 ][ 0 ].Angpder=-10.0f;	KeyFrameOtros[ 1 ][ 1 ].Angpder=15.0f;	KeyFrameOtros[ 1 ][ 2 ].Angpder=-10.0f;
 	KeyFrameOtros[ 1 ][ 0 ].Angpizqb=-5.0f;	KeyFrameOtros[ 1 ][ 1 ].Angpizqb=10.0f;	KeyFrameOtros[ 1 ][ 2 ].Angpizqb=-5.0f;
@@ -2233,145 +2235,25 @@ void DatosAnimacion()
 	// Enem2 (helicoptero)
 	KeyFrameOtros[ 2 ][ 0 ].Angt1 = 20.0f;	KeyFrameOtros[ 2 ][ 0 ].Angt1 =-20.0f;	KeyFrameOtros[ 3 ][ 2 ].Angt1 =	20.0f;
 	KeyFrameOtros[ 2 ][ 0 ].Angt2 =	5.0f;	KeyFrameOtros[ 2 ][ 1 ].Angt2 =	-5.0f;	KeyFrameOtros[ 3 ][ 2 ].Angt2 = 25.0f;
-//	KeyFrameOtros[ 2 ][ 0 ].Angc1 =	-20.0f;	KeyFrameOtros[ 2 ][ 1 ].Angc1 =	0.0f;	KeyFrameOtros[ 3 ][ 2 ].Angc1 =	20.0f;
-//	KeyFrameOtros[ 2 ][ 0 ].Angc2 =	0.0f;	KeyFrameOtros[ 2 ][ 1 ].Angc2 =	0.0f;	KeyFrameOtros[ 3 ][ 2 ].Angc2 =	0.0f;
-//	KeyFrameOtros[ 2 ][ 0 ].Angbi1= -5.0f;	KeyFrameOtros[ 2 ][ 1 ].Angbi1=	-5.0f;	KeyFrameOtros[ 3 ][ 2 ].Angbi1= -5.0f;
-//	KeyFrameOtros[ 2 ][ 0 ].Angbi2= 0.0f;	KeyFrameOtros[ 2 ][ 1 ].Angbi2=	0.0f;	KeyFrameOtros[ 3 ][ 2 ].Angbi2= 0.0f;
-//	KeyFrameOtros[ 2 ][ 0 ].Angbib= 0.0f;	KeyFrameOtros[ 2 ][ 1 ].Angbib=	-15.0f;	KeyFrameOtros[ 3 ][ 2 ].Angbib= -15.0f;
-//	KeyFrameOtros[ 2 ][ 0 ].Angbd1= 5.0f;	KeyFrameOtros[ 2 ][ 1 ].Angbd1=	5.0f;	KeyFrameOtros[ 3 ][ 2 ].Angbd1= 5.0f;
-//	KeyFrameOtros[ 2 ][ 0 ].Angbd2= 0.0f;	KeyFrameOtros[ 2 ][ 1 ].Angbd2=	0.0f;	KeyFrameOtros[ 3 ][ 2 ].Angbd2= 0.0f;
-//	KeyFrameOtros[ 2 ][ 0 ].Angbdb= 0.0f;	KeyFrameOtros[ 2 ][ 1 ].Angbdb=	-40.0f;	KeyFrameOtros[ 3 ][ 2 ].Angbdb= -40.0f;
-//	KeyFrameOtros[ 2 ][ 0 ].Angpizq=20.0f;	KeyFrameOtros[ 2 ][ 1 ].Angpizq=20.0f;	KeyFrameOtros[ 3 ][ 2 ].Angpizq=20.0f;
-//	KeyFrameOtros[ 2 ][ 0 ].Angpder=-20.0f;	KeyFrameOtros[ 2 ][ 1 ].Angpder=-20.0f;	KeyFrameOtros[ 3 ][ 2 ].Angpder=-20.0f;
-//	KeyFrameOtros[ 2 ][ 0 ].Angpizqb=15.0f;	KeyFrameOtros[ 2 ][ 1 ].Angpizqb=15.0f;	KeyFrameOtros[ 3 ][ 2 ].Angpizqb=15.0f;
-//	KeyFrameOtros[ 2 ][ 0 ].Angpderb=10.0f;	KeyFrameOtros[ 2 ][ 1 ].Angpderb=10.0f;	KeyFrameOtros[ 3 ][ 2 ].Angpderb=10.0f;
-//	KeyFrameOtros[ 2 ][ 0 ].Angpi =	0.0f;	KeyFrameOtros[ 2 ][ 1 ].Angpi =	0.0f;	KeyFrameOtros[ 3 ][ 2 ].Angpi = 0.0f;
-//	KeyFrameOtros[ 2 ][ 0 ].Angpd =	0.0f;	KeyFrameOtros[ 2 ][ 1 ].Angpd =	0.0f;	KeyFrameOtros[ 3 ][ 2 ].Angpd =	0.0f;
-//	KeyFrameOtros[ 2 ][ 0 ].Xtor  =	0.0f;	KeyFrameOtros[ 2 ][ 1 ].Xtor  =	0.0f;	KeyFrameOtros[ 3 ][ 2 ].Xtor  =	0.0f;
-//	KeyFrameOtros[ 2 ][ 0 ].Ytor  =	0.0f;	KeyFrameOtros[ 2 ][ 1 ].Ytor  =	0.0f;	KeyFrameOtros[ 3 ][ 2 ].Ytor  =	0.0f;
-//	KeyFrameOtros[ 2 ][ 0 ].Ztor  =	0.0f;	KeyFrameOtros[ 2 ][ 1 ].Ztor  =	0.0f;	KeyFrameOtros[ 3 ][ 2 ].Ztor =	0.0f;
+	KeyFrameOtros[ 2 ][ 0 ].Angc1 =	0.0f;	KeyFrameOtros[ 2 ][ 1 ].Angc1 =	0.0f;	KeyFrameOtros[ 3 ][ 2 ].Angc1 =	20.0f;
+	KeyFrameOtros[ 2 ][ 0 ].Angc2 =	0.0f;	KeyFrameOtros[ 2 ][ 1 ].Angc2 =	0.0f;	KeyFrameOtros[ 3 ][ 2 ].Angc2 =	0.0f;
+	KeyFrameOtros[ 2 ][ 0 ].Angbi1= 0.0f;	KeyFrameOtros[ 2 ][ 1 ].Angbi1=	-5.0f;	KeyFrameOtros[ 3 ][ 2 ].Angbi1= -5.0f;
+	KeyFrameOtros[ 2 ][ 0 ].Angbi2= 0.0f;	KeyFrameOtros[ 2 ][ 1 ].Angbi2=	0.0f;	KeyFrameOtros[ 3 ][ 2 ].Angbi2= 0.0f;
+	KeyFrameOtros[ 2 ][ 0 ].Angbib= 0.0f;	KeyFrameOtros[ 2 ][ 1 ].Angbib=	-15.0f;	KeyFrameOtros[ 3 ][ 2 ].Angbib= -15.0f;
+	KeyFrameOtros[ 2 ][ 0 ].Angbd1= 0.0f;	KeyFrameOtros[ 2 ][ 1 ].Angbd1=	5.0f;	KeyFrameOtros[ 3 ][ 2 ].Angbd1= 5.0f;
+	KeyFrameOtros[ 2 ][ 0 ].Angbd2= 0.0f;	KeyFrameOtros[ 2 ][ 1 ].Angbd2=	0.0f;	KeyFrameOtros[ 3 ][ 2 ].Angbd2= 0.0f;
+	KeyFrameOtros[ 2 ][ 0 ].Angbdb= 0.0f;	KeyFrameOtros[ 2 ][ 1 ].Angbdb=	-40.0f;	KeyFrameOtros[ 3 ][ 2 ].Angbdb= -40.0f;
+	KeyFrameOtros[ 2 ][ 0 ].Angpizq=0.0f;	KeyFrameOtros[ 2 ][ 1 ].Angpizq=20.0f;	KeyFrameOtros[ 3 ][ 2 ].Angpizq=20.0f;
+	KeyFrameOtros[ 2 ][ 0 ].Angpder=-0.0f;	KeyFrameOtros[ 2 ][ 1 ].Angpder=-20.0f;	KeyFrameOtros[ 3 ][ 2 ].Angpder=-20.0f;
+	KeyFrameOtros[ 2 ][ 0 ].Angpizqb=0.0f;	KeyFrameOtros[ 2 ][ 1 ].Angpizqb=15.0f;	KeyFrameOtros[ 3 ][ 2 ].Angpizqb=15.0f;
+	KeyFrameOtros[ 2 ][ 0 ].Angpderb=0.0f;	KeyFrameOtros[ 2 ][ 1 ].Angpderb=10.0f;	KeyFrameOtros[ 3 ][ 2 ].Angpderb=10.0f;
+	KeyFrameOtros[ 2 ][ 0 ].Angpi =	0.0f;	KeyFrameOtros[ 2 ][ 1 ].Angpi =	0.0f;	KeyFrameOtros[ 3 ][ 2 ].Angpi = 0.0f;
+	KeyFrameOtros[ 2 ][ 0 ].Angpd =	0.0f;	KeyFrameOtros[ 2 ][ 1 ].Angpd =	0.0f;	KeyFrameOtros[ 3 ][ 2 ].Angpd =	0.0f;
+	KeyFrameOtros[ 2 ][ 0 ].Xtor  =	0.0f;	KeyFrameOtros[ 2 ][ 1 ].Xtor  =	0.0f;	KeyFrameOtros[ 3 ][ 2 ].Xtor  =	0.0f;
+	KeyFrameOtros[ 2 ][ 0 ].Ytor  =	0.0f;	KeyFrameOtros[ 2 ][ 1 ].Ytor  =	0.0f;	KeyFrameOtros[ 3 ][ 2 ].Ytor  =	0.0f;
+	KeyFrameOtros[ 2 ][ 0 ].Ztor  =	0.0f;	KeyFrameOtros[ 2 ][ 1 ].Ztor  =	0.0f;	KeyFrameOtros[ 3 ][ 2 ].Ztor =	0.0f;
 
 	// El que sigue...
-
-	KeyFrameOtros[1][0].Angt1=-5.0f;
-	KeyFrameOtros[1][0].Angt2=0.0f;
-	KeyFrameOtros[1][0].Angc1=-25.0f;
-	KeyFrameOtros[1][0].Angc2=0.0f;
-	KeyFrameOtros[1][0].Angbi1=-5.0f;
-	KeyFrameOtros[1][0].Angbi2=0.0f;
-	KeyFrameOtros[1][0].Angbib=-15.0f;
-	KeyFrameOtros[1][0].Angbd1=5.0f;
-	KeyFrameOtros[1][0].Angbd2=0.0f;
-	KeyFrameOtros[1][0].Angbdb=-40.0f;
-	KeyFrameOtros[1][0].Angpizq=20.0f;
-	KeyFrameOtros[1][0].Angpder=-30.0f;
-	KeyFrameOtros[1][0].Angpizqb=15.0f;
-	KeyFrameOtros[1][0].Angpderb=10.0f;
-	KeyFrameOtros[1][0].Angpi=0.0f;
-	KeyFrameOtros[1][0].Angpd=0.0f;
-	KeyFrameOtros[1][0].Xtor=0.0f;
-	KeyFrameOtros[1][0].Ytor=0.0f;
-	KeyFrameOtros[1][0].Ztor=0.0f;
-
-	KeyFrameOtros[1][1].Angt1=-5.0f;
-	KeyFrameOtros[1][1].Angt2=0.0f;
-	KeyFrameOtros[1][1].Angc1=-25.0f;
-	KeyFrameOtros[1][1].Angc2=0.0f;
-	KeyFrameOtros[1][1].Angbi1=10.0f;
-	KeyFrameOtros[1][1].Angbi2=0.0f;
-	KeyFrameOtros[1][1].Angbib=-40.0f;
-	KeyFrameOtros[1][1].Angbd1=-10.0f;
-	KeyFrameOtros[1][1].Angbd2=0.0f;
-	KeyFrameOtros[1][1].Angbdb=-15.0f;
-	KeyFrameOtros[1][1].Angpizq=-30.0f;
-	KeyFrameOtros[1][1].Angpder=20.0f;
-	KeyFrameOtros[1][1].Angpizqb=20.0f;
-	KeyFrameOtros[1][1].Angpderb=15.0f;
-	KeyFrameOtros[1][1].Angpi=0.0f;
-	KeyFrameOtros[1][1].Angpd=0.0f;
-	KeyFrameOtros[1][1].Xtor=0.0f;
-	KeyFrameOtros[1][1].Ytor=0.0f;
-	KeyFrameOtros[1][1].Ztor=0.0f;
-
-	KeyFrameOtros[1][2].Angt1=-5.0f;
-	KeyFrameOtros[1][2].Angt2=0.0f;
-	KeyFrameOtros[1][2].Angc1=-25.0f;
-	KeyFrameOtros[1][2].Angc2=0.0f;
-	KeyFrameOtros[1][2].Angbi1=-5.0f;
-	KeyFrameOtros[1][2].Angbi2=0.0f;
-	KeyFrameOtros[1][2].Angbib=-15.0f;
-	KeyFrameOtros[1][2].Angbd1=5.0f;
-	KeyFrameOtros[1][2].Angbd2=0.0f;
-	KeyFrameOtros[1][2].Angbdb=-40.0f;
-	KeyFrameOtros[1][2].Angpizq=20.0f;
-	KeyFrameOtros[1][2].Angpder=-20.0f;
-	KeyFrameOtros[1][2].Angpizqb=15.0f;
-	KeyFrameOtros[1][2].Angpderb=10.0f;
-	KeyFrameOtros[1][2].Angpi=0.0f;
-	KeyFrameOtros[1][2].Angpd=0.0f;
-	KeyFrameOtros[1][2].Xtor=0.0f;
-	KeyFrameOtros[1][2].Ytor=0.0f;
-	KeyFrameOtros[1][2].Ztor=0.0f;
-
-	KeyFrameOtros[2][0].Angt1=-5.0f;
-	KeyFrameOtros[2][0].Angt2=0.0f;
-	KeyFrameOtros[2][0].Angc1=-25.0f;
-	KeyFrameOtros[2][0].Angc2=0.0f;
-	KeyFrameOtros[2][0].Angbi1=-5.0f;
-	KeyFrameOtros[2][0].Angbi2=0.0f;
-	KeyFrameOtros[2][0].Angbib=-15.0f;
-	KeyFrameOtros[2][0].Angbd1=5.0f;
-	KeyFrameOtros[2][0].Angbd2=0.0f;
-	KeyFrameOtros[2][0].Angbdb=-40.0f;
-	KeyFrameOtros[2][0].Angpizq=20.0f;
-	KeyFrameOtros[2][0].Angpder=-30.0f;
-	KeyFrameOtros[2][0].Angpizqb=15.0f;
-	KeyFrameOtros[2][0].Angpderb=10.0f;
-	KeyFrameOtros[2][0].Angpi=0.0f;
-	KeyFrameOtros[2][0].Angpd=0.0f;
-	KeyFrameOtros[2][0].Xtor=0.0f;
-	KeyFrameOtros[2][0].Ytor=0.0f;
-	KeyFrameOtros[2][0].Ztor=0.0f;
-
-	KeyFrameOtros[2][1].Angt1=-5.0f;
-	KeyFrameOtros[2][1].Angt2=0.0f;
-	KeyFrameOtros[2][1].Angc1=-25.0f;
-	KeyFrameOtros[2][1].Angc2=0.0f;
-	KeyFrameOtros[2][1].Angbi1=10.0f;
-	KeyFrameOtros[2][1].Angbi2=0.0f;
-	KeyFrameOtros[2][1].Angbib=-40.0f;
-	KeyFrameOtros[2][1].Angbd1=-10.0f;
-	KeyFrameOtros[2][1].Angbd2=0.0f;
-	KeyFrameOtros[2][1].Angbdb=-15.0f;
-	KeyFrameOtros[2][1].Angpizq=-30.0f;
-	KeyFrameOtros[2][1].Angpder=20.0f;
-	KeyFrameOtros[2][1].Angpizqb=20.0f;
-	KeyFrameOtros[2][1].Angpderb=15.0f;
-	KeyFrameOtros[2][1].Angpi=0.0f;
-	KeyFrameOtros[2][1].Angpd=0.0f;
-	KeyFrameOtros[2][1].Xtor=0.0f;
-	KeyFrameOtros[2][1].Ytor=0.0f;
-	KeyFrameOtros[2][1].Ztor=0.0f;
-
-	KeyFrameOtros[2][2].Angt1=-5.0f;
-	KeyFrameOtros[2][2].Angt2=0.0f;
-	KeyFrameOtros[2][2].Angc1=-25.0f;
-	KeyFrameOtros[2][2].Angc2=0.0f;
-	KeyFrameOtros[2][2].Angbi1=-5.0f;
-	KeyFrameOtros[2][2].Angbi2=0.0f;
-	KeyFrameOtros[2][2].Angbib=-15.0f;
-	KeyFrameOtros[2][2].Angbd1=5.0f;
-	KeyFrameOtros[2][2].Angbd2=0.0f;
-	KeyFrameOtros[2][2].Angbdb=-40.0f;
-	KeyFrameOtros[2][2].Angpizq=20.0f;
-	KeyFrameOtros[2][2].Angpder=-20.0f;
-	KeyFrameOtros[2][2].Angpizqb=15.0f;
-	KeyFrameOtros[2][2].Angpderb=10.0f;
-	KeyFrameOtros[2][2].Angpi=0.0f;
-	KeyFrameOtros[2][2].Angpd=0.0f;
-	KeyFrameOtros[2][2].Xtor=0.0f;
-	KeyFrameOtros[2][2].Ytor=0.0f;
-	KeyFrameOtros[2][2].Ztor=0.0f;
 
 	KeyFrameOtros[3][0].Angt1=-5.0f;
 	KeyFrameOtros[3][0].Angt2=0.0f;
@@ -2552,6 +2434,67 @@ void DatosAnimacion()
 	KeyFrameOtros[5][2].Xtor=0.0f;
 	KeyFrameOtros[5][2].Ytor=0.0f;
 	KeyFrameOtros[5][2].Ztor=0.0f;
+
+	KeyFrameOtros[6][0].Angt1=-5.0f;
+	KeyFrameOtros[6][0].Angt2=0.0f;
+	KeyFrameOtros[6][0].Angc1=-25.0f;
+	KeyFrameOtros[6][0].Angc2=0.0f;
+	KeyFrameOtros[6][0].Angbi1=-5.0f;
+	KeyFrameOtros[6][0].Angbi2=0.0f;
+	KeyFrameOtros[6][0].Angbib=-15.0f;
+	KeyFrameOtros[6][0].Angbd1=5.0f;
+	KeyFrameOtros[6][0].Angbd2=0.0f;
+	KeyFrameOtros[6][0].Angbdb=-40.0f;
+	KeyFrameOtros[6][0].Angpizq=20.0f;
+	KeyFrameOtros[6][0].Angpder=-30.0f;
+	KeyFrameOtros[6][0].Angpizqb=15.0f;
+	KeyFrameOtros[6][0].Angpderb=10.0f;
+	KeyFrameOtros[6][0].Angpi=0.0f;
+	KeyFrameOtros[6][0].Angpd=0.0f;
+	KeyFrameOtros[6][0].Xtor=0.0f;
+	KeyFrameOtros[6][0].Ytor=0.0f;
+	KeyFrameOtros[6][0].Ztor=0.0f;
+
+	KeyFrameOtros[6][1].Angt1=-5.0f;
+	KeyFrameOtros[6][1].Angt2=0.0f;
+	KeyFrameOtros[6][1].Angc1=-25.0f;
+	KeyFrameOtros[6][1].Angc2=0.0f;
+	KeyFrameOtros[6][1].Angbi1=10.0f;
+	KeyFrameOtros[6][1].Angbi2=0.0f;
+	KeyFrameOtros[6][1].Angbib=-40.0f;
+	KeyFrameOtros[6][1].Angbd1=-10.0f;
+	KeyFrameOtros[6][1].Angbd2=0.0f;
+	KeyFrameOtros[6][1].Angbdb=-15.0f;
+	KeyFrameOtros[6][1].Angpizq=-30.0f;
+	KeyFrameOtros[6][1].Angpder=20.0f;
+	KeyFrameOtros[6][1].Angpizqb=20.0f;
+	KeyFrameOtros[6][1].Angpderb=15.0f;
+	KeyFrameOtros[6][1].Angpi=0.0f;
+	KeyFrameOtros[6][1].Angpd=0.0f;
+	KeyFrameOtros[6][1].Xtor=0.0f;
+	KeyFrameOtros[6][1].Ytor=0.0f;
+	KeyFrameOtros[6][1].Ztor=0.0f;
+
+	KeyFrameOtros[6][2].Angt1=-5.0f;
+	KeyFrameOtros[6][2].Angt2=0.0f;
+	KeyFrameOtros[6][2].Angc1=-25.0f;
+	KeyFrameOtros[6][2].Angc2=0.0f;
+	KeyFrameOtros[6][2].Angbi1=-5.0f;
+	KeyFrameOtros[6][2].Angbi2=0.0f;
+	KeyFrameOtros[6][2].Angbib=-15.0f;
+	KeyFrameOtros[6][2].Angbd1=5.0f;
+	KeyFrameOtros[6][2].Angbd2=0.0f;
+	KeyFrameOtros[6][2].Angbdb=-40.0f;
+	KeyFrameOtros[6][2].Angpizq=20.0f;
+	KeyFrameOtros[6][2].Angpder=-20.0f;
+	KeyFrameOtros[6][2].Angpizqb=15.0f;
+	KeyFrameOtros[6][2].Angpderb=10.0f;
+	KeyFrameOtros[6][2].Angpi=0.0f;
+	KeyFrameOtros[6][2].Angpd=0.0f;
+	KeyFrameOtros[6][2].Xtor=0.0f;
+	KeyFrameOtros[6][2].Ytor=0.0f;
+	KeyFrameOtros[6][2].Ztor=0.0f;
+
 }
 
 // Colisiones, todo lo referente a colisiones ira aqui
@@ -2793,7 +2736,7 @@ void InicializaObjetosdeColision()
 
 	//Esfera de colision del Enem2
 	esfera[2].radio=5.5f;
-	esfera[2].Pos=CVector(enem2.PosicionObj.x, enem2.PosicionObj.y+2.5f, enem2.PosicionObj.z);
+	esfera[2].Pos=CVector(enem2.PosicionObj.x, enem2.PosicionObj.y+15.5f, enem2.PosicionObj.z);
 	esfera[2].colision=false;
 
 	//Esfera de colision de MJ6
@@ -3381,9 +3324,9 @@ void LargeHadronCollider()
 				if( col1 )
 				{
 					aux = parenem[ j ];
-					aux->escalaX = 0.0f;
-					aux->escalaY = 0.0f;
-					aux->escalaZ = 0.0f;
+					//aux->escalaX = 0.0f;
+					//aux->escalaY = 0.0f;
+					//aux->escalaZ = 0.0f;
 					aux->PosicionObj.z = 6666.6f;
 					score += 1000;
 					if( score >= maxs )
@@ -3584,8 +3527,6 @@ void ControlPersonaje(int funcion)
 
 void recargaAnim( FRAME *KeyFrame, jerarquiaModelo* modelo, bool &p, int& tipoA, int& pIdx )
 {
-	if( p == false )
-	{
 
 		modelo->Angt1    = KeyFrame[0].Angt1;
 		modelo->Angt2    = KeyFrame[0].Angt2;
@@ -3610,8 +3551,7 @@ void recargaAnim( FRAME *KeyFrame, jerarquiaModelo* modelo, bool &p, int& tipoA,
 		p = true;
 		pIdx = 0;
 		tipoA = 1;
-			
-	}
+
 }
 /* animacion() ahora recibe un apuntador hacia el modelo que quieran usar, ej. &mikumodelo
  * tambien recibe el playIndex de su personaje a animar, ese nada mas lo pasan como argumento
@@ -3917,6 +3857,10 @@ void DibujaEnemigo2()
 	glCallList(ene2+1);
 	//Piloto
 	glCallList(ene2+2);
+
+	enem2.escalaX = 0.5f;
+	enem2.escalaY = 0.5f;
+	enem2.escalaZ = 0.5f;
 }
 
 void DibujaEnemigo2out()
@@ -5251,13 +5195,15 @@ void DibujaEnemigos()
 	glPopMatrix();
 
 	//Ene2
-	glPushMatrix();
-		if(pisoId < 2)
+	if( pisoId < 2 )
+	{
+		glPushMatrix();
 			glTranslatef(target[0], target[1], target[2]);
-		glRotatef(enem2.AngObj, 0.0f, 1.0f, 0.0f);
-		glScalef(enem2.escalaX,enem1.escalaY,enem1.escalaZ);
-		DibujaEnemigo2();
-	glPopMatrix();
+			glRotatef(enem2.AngObj, 0.0f, 1.0f, 0.0f);
+			glScalef(enem2.escalaX,enem1.escalaY,enem1.escalaZ);
+			DibujaEnemigo2();
+		glPopMatrix();
+	}
 
 	//Ene3a
 	glPushMatrix();
@@ -5428,12 +5374,15 @@ void DibujaEnemigos()
 	glPopMatrix();
 
 	//Ene2
-	glPushMatrix();
-		glTranslatef(target[0], target[1], target[2]);
-		glRotatef(enem2.AngObj, 0.0f, 1.0f, 0.0f);
-		glScalef(enem2.escalaX,enem1.escalaY,enem1.escalaZ);
-		DibujaEnemigo2out();
-	glPopMatrix();
+	if( pisoId < 2 )
+	{
+		glPushMatrix();
+			glTranslatef(target[0], target[1], target[2]);
+			glRotatef(enem2.AngObj, 0.0f, 1.0f, 0.0f);
+			glScalef(enem2.escalaX,enem1.escalaY,enem1.escalaZ);
+			DibujaEnemigo2out();
+		glPopMatrix();
+	}
 
 	//Ene3a
 	glPushMatrix();
@@ -5569,7 +5518,7 @@ void DibujaElevador()
 
 	//Elevador
 	glPushMatrix();
-		glTranslatef( -113.0f, elev, 150.0f);
+		glTranslatef( -108.0f, elev, 150.0f);
 		glRotatef( 180.0f, 0.0f, 1.0f, 0.0f );
 		glScalef( 0.5f, 0.5f, 0.5f );
 		g_Load3ds.Render3DSFile(&g_3DModel1el, textureModel1el, 1);
@@ -5579,6 +5528,26 @@ void DibujaElevador()
 		elev -= 0.2f;
 	else if( abajo == false )
 		elev += 0.2f;
+}
+void DibujaTaraAnim(float a, float b, float c)
+{
+	if ( ( abajo == true ) && ( elev  <= 5.0f ) )
+		abajo = false;
+	else if ( ( abajo == false ) && ( elev >= 28.0f ) )
+		abajo = true;
+
+	glPushMatrix();
+		glTranslatef(a, elev, b);
+		glRotatef(100.0f,0,0,1);
+		glRotatef(90.0f,1,0,0);
+		glScalef(c,c,c);
+		glCallList(taran+0);
+	glPopMatrix();
+
+	if( abajo == true )
+		elev -= 0.15f;
+	else if( abajo == false )
+		elev += 0.15f;
 }
 void DibujaEscena()
 {
@@ -5709,6 +5678,8 @@ int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la
 	glPopMatrix();
 
 	DibujaElevador();
+	DibujaTaraAnim(145.0f,-100.0f,0.11f);
+	DibujaTaraAnim(200.0f,-100.0f,0.21f);
 		
 	DibujaLuz(lightPosition);
 	DibujaTextos();
@@ -5804,7 +5775,7 @@ int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la
 	// Colisiones
 	ActualizaObjetosDinamicosColision();
 	//DibujaObjetosdeColision();
-	DibujaEsferasColision();
+	//DibujaEsferasColision();
 	ColisionesPiso();
 	LargeHadronCollider();
 
@@ -6148,7 +6119,12 @@ int WINAPI WinMain(	HINSTANCE	hInstance,			// Instancia
 						{
 							animacion( KeyFrameOtros[ i ], 3, 18, modelosOtros[ i ], playIndexOtros[ i ], playOtros[ i ] );
 						}
-						recargaAnim( KeyFrameOtros[ i ], modelosOtros[ i ], playOtros[ i ], tipoAnimOtros[ i ], playIndexOtros[ i ] );
+						auxiliameDios++;
+						if( auxiliameDios >= 9 )
+						{
+							recargaAnim( KeyFrameOtros[ i ], modelosOtros[ i ], playOtros[ i ], tipoAnimOtros[ i ], playIndexOtros[ i ] );
+							auxiliameDios = 0;
+						}
 					}
 					SwapBuffers(hDC);				// Intercambia los Buffers (Double Buffering)
 				}
