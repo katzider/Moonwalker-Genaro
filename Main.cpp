@@ -2002,30 +2002,97 @@ vector<Bullet*> bill;
 
 void InicializaParametrosdeAnimacion()
 {
-	Enemigos.resize( 3 );
-	bill.resize( 3 );
-	// Enemigo gordito azul
+	const int MFckers = 12;
+
+	Enemigos.resize( MFckers );
+	bill.resize( MFckers );
+	
+	// Enemigos Sector 1
 	Enemigos[0].setChar( &enem1 );
 	Enemigos[0].addPoint( CVector( 200.0f, 9.0f, -40.0f ) );
 	Enemigos[0].addPoint( CVector( 160.0f, 9.0f, -40.0f ) );
 
+	Enemigos[1].setChar( &enem3c );
+	Enemigos[1].addPoint( CVector( 200.0f, 9.0f, -70.0f ) );
+	Enemigos[1].addPoint( CVector( 170.0f, 9.0f, -50.0f ) );
+
+	Enemigos[2].setChar( &enem3d );
+	Enemigos[2].addPoint( CVector( 170.0f, 9.0f, -75.0f ) );
+	Enemigos[2].addPoint( CVector( 200.0f, 9.0f, -45.0f ) );
+
+	// Enemigos Sector 2
+	Enemigos[3].setChar( &enem1a );
+	Enemigos[3].addPoint( CVector( 25.0f, 9.0f, -80.0f ) );
+	Enemigos[3].addPoint( CVector( 30.0f, 9.0f, -40.0f ) );
+
+	Enemigos[4].setChar( &enem3e );
+	Enemigos[4].addPoint( CVector( 55.0f, 9.0f, -40.0f ) );
+	Enemigos[4].addPoint( CVector( 45.0f, 9.0f, -80.0f ) );
+
+	Enemigos[5].setChar( &enem3f );
+	Enemigos[5].addPoint( CVector( 15.0f, 9.0f, -80.0f ) );
+	Enemigos[5].addPoint( CVector(  0.0f, 9.0f, -46.0f ) );
+
+
+	// Enemigos Sector 3
+	Enemigos[6].setChar( &enem1b );
+	Enemigos[6].addPoint( CVector( -20.0f, 9.0f, -50.0f ) );
+	Enemigos[6].addPoint( CVector( -50.0f, 9.0f, -80.0f ) );
+
+	Enemigos[7].setChar( &enem3a );
+	Enemigos[7].addPoint( CVector( -70.0f, 9.0f, 0.0f ) );
+	Enemigos[7].addPoint( CVector( -45.0f, 9.0f, -25.0f ) );
+
+	Enemigos[8].setChar( &enem3b );
+	Enemigos[8].addPoint( CVector( -45.0f, 9.0f, -35.0f ) );
+	Enemigos[8].addPoint( CVector( -20.0f, 9.0f, -10.0f ) );
+
+	// Enemigos Sector 4
+	Enemigos[9].setChar( &enem1c );
+	Enemigos[9].addPoint( CVector( -25.0f, 9.0f, 50.0f ) );
+	Enemigos[9].addPoint( CVector( -60.0f, 9.0f, 40.0f ) );
+
+	Enemigos[10].setChar( &enem3g );
+	Enemigos[10].addPoint( CVector( -75.0f, 9.0f, 75.0f ) );
+	Enemigos[10].addPoint( CVector( -70.0f, 9.0f, 120.0f ) );
+
+	Enemigos[11].setChar( &enem3h );
+	Enemigos[11].addPoint( CVector( -50.0f, 9.0f, 110.0f ) );
+	Enemigos[11].addPoint( CVector( -20.0f, 9.0f, 80.0f ) );
 	// Balas
 	bill[0] = 0;
+	bill[1] = 0;
+	bill[2] = 0;
+	bill[3] = 0;
+	bill[4] = 0;
+	bill[5] = 0;
+	bill[6] = 0;
+	bill[7] = 0;
+	bill[8] = 0;
+	bill[9] = 0;
+	bill[10] = 0;
+	bill[11] = 0;
 
 }
 void AniMagic()
 {
-	Enemigos[0].startAnim();
+	for( int i = 0; i < Enemigos.size(); i++ )
+	{
+		if( ( Enemigos[i].getPos().z < 6666.0f ) )
+		{
+			Enemigos[i].startAnim();
 
-	if( Enemigos[0].Reload() <= 0 )
-	{
-		CVector disparo;
-		disparo = Enemigos[0].attack();
-		bill[0] = new Bullet( disparo, player1.PosicionObj );
-	}
-	if( bill[0] != 0 )
-	{
-		bill[0]->moveToTarget();
+			if( Enemigos[i].Reload() <= 0 )
+			{
+				CVector disparo;
+				disparo = Enemigos[i].attack();
+				bill[i] = new Bullet( disparo, player1.PosicionObj );
+			}
+			if( bill[i] != 0 )
+			{
+				bill[i]->moveToTarget();
+			}
+		}
 	}
 
 }
@@ -3274,31 +3341,35 @@ void LargeHadronCollider()
 		}
 	}
 
-	// Para las balas
-	bool col2;
-	if( bill[0] != 0 )
+	for( int j = 0; j < Enemigos.size(); j++ )
 	{
-		col2 = ColisionEsferaEsfera(esfera[0], bill[0]->getSphere(), player1 );
-		player1.PosAntObj = player1.PosicionObj;
-		if( col2 == true )
+		// Para las balas
+		bool col2;
+		if( bill[j] != 0 )
 		{
-			health -= 10.0f;
-			//red -= 1;
-			green = 200 - ( 150 - health );
-
-			if( health <= 0.0f )
+			col2 = ColisionEsferaEsfera(esfera[0], bill[j]->getSphere(), player1 );
+			player1.PosAntObj = player1.PosicionObj;
+			if( col2 == true )
 			{
-				health = 150.0f;
-				vidas = vidas - 1;
-				//red = 250;
-				green = 200;
+				health -= 10.0f;
+				//red -= 1;
+				green = 200 - ( 150 - health );
+
+				if( health <= 0.0f )
+				{
+					health = 150.0f;
+					vidas = vidas - 1;
+					//red = 250;
+					green = 200;
+				}
+				// desaparece la bala
+				bill[j] = 0;
 			}
-			bill[0] = 0;
 		}
 	}
 
 	int j = 0;
-	parametros aux;
+	parametros* aux;
 	//Ataque de MJ
 	if( MJAtaque == 1)
 	{
@@ -3309,10 +3380,11 @@ void LargeHadronCollider()
 				col1 = ColisionEsferaEsfera(esfera[i], esfera[18], *parenem[ j ] );
 				if( col1 )
 				{
-					aux = *parenem[ j ];
-					aux.escalaX = 0.0f;
-					aux.escalaY = 0.0f;
-					aux.escalaZ = 0.0f;
+					aux = parenem[ j ];
+					aux->escalaX = 0.0f;
+					aux->escalaY = 0.0f;
+					aux->escalaZ = 0.0f;
+					aux->PosicionObj.z = 6666.6f;
 					score += 1000;
 					if( score >= maxs )
 						maxs = score;
