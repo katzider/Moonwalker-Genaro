@@ -2034,33 +2034,66 @@ vector<Bullet*> bill;
 void InicializaParametrosdeAnimacion()
 {
 	Enemigos.resize( 3 );
-	bill.resize( 3 );
-	// Enemigo gordito azul
+	const int MFckers = 12;
+	// Enemigos Sector 1
 	Enemigos[0].setChar( &enem1 );
 	Enemigos[0].addPoint( CVector( 200.0f, 9.0f, -40.0f ) );
 	Enemigos[0].addPoint( CVector( 160.0f, 9.0f, -40.0f ) );
 
+	Enemigos[1].setChar( &enem3c );
+	Enemigos[1].addPoint( CVector( 200.0f, 9.0f, -70.0f ) );
+	Enemigos[1].addPoint( CVector( 170.0f, 9.0f, -50.0f ) );
+
+	Enemigos[2].setChar( &enem3d );
+	Enemigos[2].addPoint( CVector( 170.0f, 9.0f, -75.0f ) );
+	Enemigos[2].addPoint( CVector( 200.0f, 9.0f, -45.0f ) );
+
+	// Enemigos Sector 2
+	Enemigos[3].setChar( &enem1a );
+	Enemigos[3].addPoint( CVector( 25.0f, 9.0f, -80.0f ) );
+	Enemigos[3].addPoint( CVector( 30.0f, 9.0f, -40.0f ) );
+
+	Enemigos[4].setChar( &enem3e );
+	Enemigos[4].addPoint( CVector( 55.0f, 9.0f, -40.0f ) );
+	Enemigos[4].addPoint( CVector( 45.0f, 9.0f, -80.0f ) );
+
+	Enemigos[5].setChar( &enem3f );
+	Enemigos[5].addPoint( CVector( 15.0f, 9.0f, -80.0f ) );
+	Enemigos[5].addPoint( CVector(  0.0f, 9.0f, -46.0f ) );
+
+
+	// Enemigos Sector 3
+	Enemigos[6].setChar( &enem1b );
+	Enemigos[6].addPoint( CVector( -20.0f, 9.0f, -50.0f ) );
+	Enemigos[6].addPoint( CVector( -50.0f, 9.0f, -80.0f ) );
+
+	Enemigos[7].setChar( &enem3a );
+	Enemigos[7].addPoint( CVector( -70.0f, 9.0f, 0.0f ) );
+	Enemigos[7].addPoint( CVector( -45.0f, 9.0f, -25.0f ) );
+
+	Enemigos[8].setChar( &enem3b );
+	Enemigos[8].addPoint( CVector( -45.0f, 9.0f, -35.0f ) );
+	Enemigos[8].addPoint( CVector( -20.0f, 9.0f, -10.0f ) );
+
+	// Enemigos Sector 4
+	Enemigos[9].setChar( &enem1c );
+	Enemigos[9].addPoint( CVector( -25.0f, 9.0f, 50.0f ) );
+	Enemigos[9].addPoint( CVector( -60.0f, 9.0f, 40.0f ) );
+
+	Enemigos[10].setChar( &enem3g );
+	Enemigos[10].addPoint( CVector( -75.0f, 9.0f, 75.0f ) );
+	Enemigos[10].addPoint( CVector( -70.0f, 9.0f, 120.0f ) );
+
+	Enemigos[11].setChar( &enem3h );
+	Enemigos[11].addPoint( CVector( -50.0f, 9.0f, 110.0f ) );
+	Enemigos[11].addPoint( CVector( -20.0f, 9.0f, 80.0f ) );
 	// Balas
 	bill[0] = 0;
 
 }
 void AniMagic()
 {
-<<<<<<< HEAD
 	Enemigos[0].startAnim();
-
-	if( Enemigos[0].Reload() <= 0 )
-	{
-		CVector disparo;
-		disparo = Enemigos[0].attack();
-		bill[0] = new Bullet( disparo, player1.PosicionObj );
-	}
-	if( bill[0] != 0 )
-	{
-		bill[0]->moveToTarget();
-=======
-	for( int i = 0; i < Enemigos.size(); i++ )
-	{
 		if( ( Enemigos[i].getPos().z < 6666.0f ) )
 		{
 			Enemigos[i].startAnim();
@@ -2076,7 +2109,6 @@ void AniMagic()
 				bill[i]->moveToTarget();
 			}
 		}
->>>>>>> 217ba710b16abeb6336317a92725ab18ac6574b5
 	}
 
 }
@@ -2263,89 +2295,7 @@ void DatosAnimacion()
 //	KeyFrameOtros[ 2 ][ 0 ].Ztor  =	0.0f;	KeyFrameOtros[ 2 ][ 1 ].Ztor  =	0.0f;	KeyFrameOtros[ 3 ][ 2 ].Ztor =	0.0f;
 
 	// El que sigue...
-<<<<<<< HEAD
 
-	KeyFrameOtros[1][0].Angt1=-5.0f;
-	KeyFrameOtros[1][0].Angt2=0.0f;
-	KeyFrameOtros[1][0].Angc1=-25.0f;
-	KeyFrameOtros[1][0].Angc2=0.0f;
-	KeyFrameOtros[1][0].Angbi1=-5.0f;
-	KeyFrameOtros[1][0].Angbi2=0.0f;
-	KeyFrameOtros[1][0].Angbib=-15.0f;
-	KeyFrameOtros[1][0].Angbd1=5.0f;
-	KeyFrameOtros[1][0].Angbd2=0.0f;
-	KeyFrameOtros[1][0].Angbdb=-40.0f;
-	KeyFrameOtros[1][0].Angpizq=20.0f;
-	KeyFrameOtros[1][0].Angpder=-30.0f;
-	KeyFrameOtros[1][0].Angpizqb=15.0f;
-	KeyFrameOtros[1][0].Angpderb=10.0f;
-	KeyFrameOtros[1][0].Angpi=0.0f;
-	KeyFrameOtros[1][0].Angpd=0.0f;
-	KeyFrameOtros[1][0].Xtor=0.0f;
-	KeyFrameOtros[1][0].Ytor=0.0f;
-	KeyFrameOtros[1][0].Ztor=0.0f;
-
-	KeyFrameOtros[1][1].Angt1=-5.0f;
-	KeyFrameOtros[1][1].Angt2=0.0f;
-	KeyFrameOtros[1][1].Angc1=-25.0f;
-	KeyFrameOtros[1][1].Angc2=0.0f;
-	KeyFrameOtros[1][1].Angbi1=10.0f;
-	KeyFrameOtros[1][1].Angbi2=0.0f;
-	KeyFrameOtros[1][1].Angbib=-40.0f;
-	KeyFrameOtros[1][1].Angbd1=-10.0f;
-	KeyFrameOtros[1][1].Angbd2=0.0f;
-	KeyFrameOtros[1][1].Angbdb=-15.0f;
-	KeyFrameOtros[1][1].Angpizq=-30.0f;
-	KeyFrameOtros[1][1].Angpder=20.0f;
-	KeyFrameOtros[1][1].Angpizqb=20.0f;
-	KeyFrameOtros[1][1].Angpderb=15.0f;
-	KeyFrameOtros[1][1].Angpi=0.0f;
-	KeyFrameOtros[1][1].Angpd=0.0f;
-	KeyFrameOtros[1][1].Xtor=0.0f;
-	KeyFrameOtros[1][1].Ytor=0.0f;
-	KeyFrameOtros[1][1].Ztor=0.0f;
-
-	KeyFrameOtros[1][2].Angt1=-5.0f;
-	KeyFrameOtros[1][2].Angt2=0.0f;
-	KeyFrameOtros[1][2].Angc1=-25.0f;
-	KeyFrameOtros[1][2].Angc2=0.0f;
-	KeyFrameOtros[1][2].Angbi1=-5.0f;
-	KeyFrameOtros[1][2].Angbi2=0.0f;
-	KeyFrameOtros[1][2].Angbib=-15.0f;
-	KeyFrameOtros[1][2].Angbd1=5.0f;
-	KeyFrameOtros[1][2].Angbd2=0.0f;
-	KeyFrameOtros[1][2].Angbdb=-40.0f;
-	KeyFrameOtros[1][2].Angpizq=20.0f;
-	KeyFrameOtros[1][2].Angpder=-20.0f;
-	KeyFrameOtros[1][2].Angpizqb=15.0f;
-	KeyFrameOtros[1][2].Angpderb=10.0f;
-	KeyFrameOtros[1][2].Angpi=0.0f;
-	KeyFrameOtros[1][2].Angpd=0.0f;
-	KeyFrameOtros[1][2].Xtor=0.0f;
-	KeyFrameOtros[1][2].Ytor=0.0f;
-	KeyFrameOtros[1][2].Ztor=0.0f;
-
-	KeyFrameOtros[2][0].Angt1=-5.0f;
-	KeyFrameOtros[2][0].Angt2=0.0f;
-	KeyFrameOtros[2][0].Angc1=-25.0f;
-	KeyFrameOtros[2][0].Angc2=0.0f;
-	KeyFrameOtros[2][0].Angbi1=-5.0f;
-	KeyFrameOtros[2][0].Angbi2=0.0f;
-	KeyFrameOtros[2][0].Angbib=-15.0f;
-	KeyFrameOtros[2][0].Angbd1=5.0f;
-	KeyFrameOtros[2][0].Angbd2=0.0f;
-	KeyFrameOtros[2][0].Angbdb=-40.0f;
-	KeyFrameOtros[2][0].Angpizq=20.0f;
-	KeyFrameOtros[2][0].Angpder=-30.0f;
-	KeyFrameOtros[2][0].Angpizqb=15.0f;
-	KeyFrameOtros[2][0].Angpderb=10.0f;
-	KeyFrameOtros[2][0].Angpi=0.0f;
-	KeyFrameOtros[2][0].Angpd=0.0f;
-	KeyFrameOtros[2][0].Xtor=0.0f;
-	KeyFrameOtros[2][0].Ytor=0.0f;
-	KeyFrameOtros[2][0].Ztor=0.0f;
-=======
->>>>>>> 217ba710b16abeb6336317a92725ab18ac6574b5
 
 	KeyFrameOtros[2][1].Angt1=-5.0f;
 	KeyFrameOtros[2][1].Angt2=0.0f;
@@ -3381,10 +3331,6 @@ void LargeHadronCollider()
 				// desaparece la bala
 				bill[j] = 0;
 			}
-<<<<<<< HEAD
-			bill[0] = 0;
-=======
->>>>>>> 217ba710b16abeb6336317a92725ab18ac6574b5
 		}
 	}
 
@@ -4886,14 +4832,9 @@ void DibujaTextos()
 		glPopMatrix();
 
 		// Texto a mostrar en pantalla
-<<<<<<< HEAD
 		Font.glPrint((1.0f/640.0f)*glWidth, glWidth*0.05f,glHeight*0.9f,"Delay: %d", Enemigos[0].getDelay() );
-		//Font.glPrint((1.0f/640.0f)*glWidth, glWidth*0.05f,glHeight*0.85f,"PosCam %f", player1.PosicionCam.x );
-=======
-		Font.glPrint((1.0f/640.0f)*glWidth, glWidth*0.05f,glHeight*0.9f,"Angulo = %f", player1.AngObj /*"Delay: %d", Enemigos[0].getDelay()*/ );
 		Font.glPrint((1.0f/640.0f)*glWidth, glWidth*0.05f,glHeight*0.85f,"playIndex %d", playIndex3 );
->>>>>>> 217ba710b16abeb6336317a92725ab18ac6574b5
-		//Font.glPrint((1.0f/640.0f)*glWidth, glWidth*0.05f,glHeight*0.70f,"PosObj %.2f, %.2f, %.2f", player1.PosicionObj.x, player1.PosicionObj.y, player1.PosicionObj.z);
+		Font.glPrint((1.0f/640.0f)*glWidth, glWidth*0.05f,glHeight*0.70f,"PosObj %.2f, %.2f, %.2f", player1.PosicionObj.x, player1.PosicionObj.y, player1.PosicionObj.z);
 		Font.glPrint( (1.0f/640.0f)*glWidth, glWidth * 0.45f, glHeight * 0.95f, "High %d", maxs );
 		Font.glPrint( (1.0f/640.0f)*glWidth, glWidth * 0.42f, glHeight * 0.90f, "Round 1 Stage 1" );
 		Font.glPrint( (1.0f/640.0f)*glWidth, glWidth * 0.08f, glHeight * 0.15f, "1P" );
