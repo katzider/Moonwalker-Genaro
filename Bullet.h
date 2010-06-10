@@ -9,16 +9,16 @@ class Bullet
 public:
 
 	// Constructor
-	Bullet( CVector origen );
+	Bullet( CVector origen, CVector destino );
 
 	void changePara( float vel, float radius, CVector destino );
 	void drawBullet();
-	bool moveToTarget();
-	void destroy();
+	void moveToTarget();
+	boundingsphere getSphere();
 
 private:
-	boundingsphere bala;
 	float speed;
+	boundingsphere bala;
 	CVector sTarget;
 
 };

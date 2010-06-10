@@ -6,7 +6,7 @@ Animator::Animator()
 	// Just set the index to zero
 	i = 0;
 	// Set the shooting timer to its default value
-	delay = 500;
+	delay = 115;
 }
 
 void Animator::setChar( parametros* personaje )
@@ -103,7 +103,7 @@ CVector Animator::attack()
 	// create one bullet
 	CVector bull = modelo->PosicionObj;
 	// reset the current delay 
-	delay = 500;
+	delay = 100;
 	return bull;
 }
 int Animator::getDelay()
