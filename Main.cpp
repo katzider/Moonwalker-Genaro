@@ -78,7 +78,7 @@ parametros chang;	 //Variable con la que tenemos acceso a la estructura de parï¿
 
 parametros enemigo8; // parametros robot
 
-parametros* parenem[ 12 ] = { &enem1, &enem1a, &enem1b, &enem1c, &enem3a, &enem3b, &enem3c, &enem3d, &enem3e, &enem3f, &enem3g, &enem3h };
+parametros* parenem[ 18 ] = { &player1, &enem1, &enem2, &enem1a, &MJ6, &chang, &enem3a, &enem3b, &enem3c, &enem3d, &enem3e, &enem3f, &enem3g, &enem3h, &enem1b, &enem1c };
 parametros* paraux[ 30 ] = { &enem1, &enem1a, &enem1b, &enem1c, &enem3a, &enem3b, &enem3c, &enem3d, &enem3e, &enem3f, &enem3g, &enem3h };
 /* Vidas del personaje */
 float health = 150;
@@ -391,7 +391,7 @@ GLuint modelo1miku;
 GLuint modelo1mikuout;
 
 //Constantes de iluminaciï¿½n y materiales
-GLfloat LightPos[] = { 200.0f, 20.0f, 0.0f, 1.0f};		// Posiciï¿½n de la luz
+GLfloat LightPos[] = { 100.0f, 20.0f, 0.0f, 1.0f};		// Posiciï¿½n de la luz
 GLfloat LightAmb[] = { 0.9f,  0.9f, 0.9f, 1.0f};			// Valores de la componente ambiente
 GLfloat LightDif[] = { 0.9f,  0.9f, 0.9f, 1.0f};			// Valores de la componente difusa
 GLfloat LightSpc[] = { 0.5f,  0.5f, 0.5f, 1.0f};			// Valores de la componente especular
@@ -2504,7 +2504,7 @@ void InicializaObjetosdeColision()
 {
 	CVector v1, v2, a, b, c, d, va, vb, vd, Normal;
 	
-	//Inicia planos de colisiï¿½n del piso
+	//Inicia planos de colisi?n del piso
 	plano[0].A=CVector(238.6f, 6.5f,-32.0f);
 	plano[0].B=CVector(238.6f, 6.5f,-96.7f);
 	plano[0].C=CVector(125.0f, 6.5f,-96.7f);
@@ -2565,7 +2565,7 @@ void InicializaObjetosdeColision()
 	plano[3].b4Normal=Cruz(plano[3].b4, plano[3].Normal);
 	plano[3].tipo=1;
 
-	//Inicia planos de colisiï¿½n de los muros
+	//Inicia planos de colisi?n de los muros
 	plano[4].A=CVector(237.0f,  0.0f,-99.0f);
 	plano[4].B=CVector(237.0f,  50.0f, -99.0f);
 	plano[4].C=CVector(-97.0f, 50.0f, -99.0f);
@@ -2596,7 +2596,7 @@ void InicializaObjetosdeColision()
 	plano[5].b4Normal=Cruz(plano[5].b4, plano[5].Normal);
 	plano[5].tipo=2;
 
-	//Continuan los planos de colisiï¿½n de piso
+	//Continuan los planos de colisi?n de piso
 	plano[6].A=CVector(-10.5f, 6.5f,-96.7f);
 	plano[6].B=CVector(-95.0f, 6.5f,-96.7f);
 	plano[6].C=CVector(-95.0f, 6.5f,5.0f);
@@ -2727,69 +2727,69 @@ void InicializaObjetosdeColision()
 	esfera[3].colision=false;
 
 	//Esfera de colision del Enem1b
-	esfera[16].radio=2.2f;
-	esfera[16].Pos=CVector(enem1b.PosicionObj.x, enem1b.PosicionObj.y-2.0f, enem1b.PosicionObj.z);
-	esfera[16].colision=false;
+	esfera[14].radio=2.2f;
+	esfera[14].Pos=CVector(enem1b.PosicionObj.x, enem1b.PosicionObj.y-2.0f, enem1b.PosicionObj.z);
+	esfera[14].colision=false;
       
     //Esfera de colision del Enem1c
-	esfera[17].radio=2.2f;
-	esfera[17].Pos=CVector(enem1c.PosicionObj.x, enem1c.PosicionObj.y-2.0f, enem1c.PosicionObj.z);
-	esfera[17].colision=false;
+	esfera[15].radio=2.2f;
+	esfera[15].Pos=CVector(enem1c.PosicionObj.x, enem1c.PosicionObj.y-2.0f, enem1c.PosicionObj.z);
+	esfera[15].colision=false;
 
 	//Esfera de colision del Enem2
 	esfera[2].radio=5.5f;
-	esfera[2].Pos=CVector(enem2.PosicionObj.x, enem2.PosicionObj.y+15.5f, enem2.PosicionObj.z);
+	esfera[2].Pos=CVector(enem2.PosicionObj.x, enem2.PosicionObj.y+2.5f, enem2.PosicionObj.z);
 	esfera[2].colision=false;
 
 	//Esfera de colision de MJ6
-	esfera[6].radio=2.0f;
-	esfera[6].Pos=CVector(MJ6.PosicionObj.x, MJ6.PosicionObj.y+3.5f, MJ6.PosicionObj.z);
-	esfera[6].colision=false;
+	esfera[4].radio=2.0f;
+	esfera[4].Pos=CVector(MJ6.PosicionObj.x, MJ6.PosicionObj.y+3.5f, MJ6.PosicionObj.z);
+	esfera[4].colision=false;
 
 	//Esfera de colision del Enem3a
-	esfera[7].radio=3.0f;
-	esfera[7].Pos=CVector(enem3a.PosicionObj.x, enem3a.PosicionObj.y+2.0f, enem3a.PosicionObj.z);
-	esfera[7].colision=false;
+	esfera[5].radio=3.0f;
+	esfera[5].Pos=CVector(enem3a.PosicionObj.x, enem3a.PosicionObj.y+2.0f, enem3a.PosicionObj.z);
+	esfera[5].colision=false;
 
 	//Esfera de colision del Enem3b
-	esfera[8].radio=3.0f;
-	esfera[8].Pos=CVector(enem3b.PosicionObj.x, enem3b.PosicionObj.y+2.0f, enem3b.PosicionObj.z);
-	esfera[8].colision=false;
+	esfera[6].radio=3.0f;
+	esfera[6].Pos=CVector(enem3b.PosicionObj.x, enem3b.PosicionObj.y+2.0f, enem3b.PosicionObj.z);
+	esfera[6].colision=false;
 
 		//Esfera de colision del Enem3e
-	esfera[12].radio=3.0f;
-	esfera[12].Pos=CVector(enem3e.PosicionObj.x, enem3e.PosicionObj.y+2.0f, enem3e.PosicionObj.z);
-	esfera[12].colision=false;
-
-		//Esfera de colision del Enem3f
-	esfera[13].radio=3.0f;
-	esfera[13].Pos=CVector(enem3f.PosicionObj.x, enem3f.PosicionObj.y+2.0f, enem3f.PosicionObj.z);
-	esfera[13].colision=false;
-
-        //Esfera de colision del Enem3c
 	esfera[10].radio=3.0f;
-	esfera[10].Pos=CVector(enem3c.PosicionObj.x, enem3c.PosicionObj.y+2.0f, enem3c.PosicionObj.z);
+	esfera[10].Pos=CVector(enem3e.PosicionObj.x, enem3e.PosicionObj.y+2.0f, enem3e.PosicionObj.z);
 	esfera[10].colision=false;
 
-	//Esfera de colision del Enem3d
+		//Esfera de colision del Enem3f
 	esfera[11].radio=3.0f;
-	esfera[11].Pos=CVector(enem3d.PosicionObj.x, enem3d.PosicionObj.y+2.0f, enem3d.PosicionObj.z);
+	esfera[11].Pos=CVector(enem3f.PosicionObj.x, enem3f.PosicionObj.y+2.0f, enem3f.PosicionObj.z);
 	esfera[11].colision=false;
 
+        //Esfera de colision del Enem3c
+	esfera[8].radio=3.0f;
+	esfera[8].Pos=CVector(enem3c.PosicionObj.x, enem3c.PosicionObj.y+2.0f, enem3c.PosicionObj.z);
+	esfera[8].colision=false;
+
+	//Esfera de colision del Enem3d
+	esfera[9].radio=3.0f;
+	esfera[9].Pos=CVector(enem3d.PosicionObj.x, enem3d.PosicionObj.y+2.0f, enem3d.PosicionObj.z);
+	esfera[9].colision=false;
+
 	      //Esfera de colision del Enem3g
-	esfera[14].radio=3.0f;
-	esfera[14].Pos=CVector(enem3g.PosicionObj.x, enem3g.PosicionObj.y+2.0f, enem3g.PosicionObj.z);
-	esfera[14].colision=false;
+	esfera[12].radio=3.0f;
+	esfera[12].Pos=CVector(enem3g.PosicionObj.x, enem3g.PosicionObj.y+2.0f, enem3g.PosicionObj.z);
+	esfera[12].colision=false;
 
 	//Esfera de colision del Enem3h
-	esfera[15].radio=3.0f;
-	esfera[15].Pos=CVector(enem3h.PosicionObj.x, enem3h.PosicionObj.y+2.0f, enem3h.PosicionObj.z);
-	esfera[15].colision=false;
+	esfera[13].radio=3.0f;
+	esfera[13].Pos=CVector(enem3h.PosicionObj.x, enem3h.PosicionObj.y+2.0f, enem3h.PosicionObj.z);
+	esfera[13].colision=false;
 
 	//Esfera de colision del chango
-	esfera[9].radio=2.5f;
-	esfera[9].Pos=CVector(chang.PosicionObj.x, chang.PosicionObj.y+2.0f, chang.PosicionObj.z);
-	esfera[9].colision=false;
+	esfera[7].radio=2.5f;
+	esfera[7].Pos=CVector(chang.PosicionObj.x, chang.PosicionObj.y+2.0f, chang.PosicionObj.z);
+	esfera[7].colision=false;
 
 	//Esfera de colision del ataque de MJ
 	esfera[18].radio=1.5f;
@@ -2837,7 +2837,6 @@ void InicializaObjetosdeColision()
 	esfera[29].colision=false;
 
 }
-
 void ActualizaObjetosDinamicosColision()
 {
 	esfera[0].Pos=CVector(player1.PosicionObj.x, player1.PosicionObj.y+2.5f, player1.PosicionObj.z);
@@ -2846,18 +2845,18 @@ void ActualizaObjetosDinamicosColision()
 	esfera[1].Pos=CVector(enem1.PosicionObj.x, enem1.PosicionObj.y+2.5f, enem1.PosicionObj.z);
 	esfera[2].Pos=CVector(target[0], target[1] + 2.5, target[2]);
     esfera[3].Pos=CVector(enem1a.PosicionObj.x, enem1a.PosicionObj.y+2.5f, enem1a.PosicionObj.z);
-	esfera[6].Pos=CVector(MJ6.PosicionObj.x, MJ6.PosicionObj.y+2.5f, MJ6.PosicionObj.z);
-	esfera[9].Pos=CVector(chang.PosicionObj.x, chang.PosicionObj.y+2.0f, chang.PosicionObj.z);
-	esfera[8].Pos=CVector(enem3b.PosicionObj.x, enem3b.PosicionObj.y+2.0f, enem3b.PosicionObj.z);
-	esfera[7].Pos=CVector(enem3a.PosicionObj.x, enem3a.PosicionObj.y+2.0f, enem3a.PosicionObj.z);
-    esfera[10].Pos=CVector(enem3c.PosicionObj.x, enem3c.PosicionObj.y+2.0f, enem3c.PosicionObj.z);
-	esfera[11].Pos=CVector(enem3d.PosicionObj.x, enem3d.PosicionObj.y+2.0f, enem3d.PosicionObj.z);
-	esfera[12].Pos=CVector(enem3e.PosicionObj.x, enem3e.PosicionObj.y+2.0f, enem3e.PosicionObj.z);
-	esfera[13].Pos=CVector(enem3f.PosicionObj.x, enem3f.PosicionObj.y+2.0f, enem3f.PosicionObj.z);
-	esfera[14].Pos=CVector(enem3g.PosicionObj.x, enem3g.PosicionObj.y+2.0f, enem3g.PosicionObj.z);
-	esfera[15].Pos=CVector(enem3h.PosicionObj.x, enem3h.PosicionObj.y+2.0f, enem3h.PosicionObj.z);
-	esfera[16].Pos=CVector(enem1b.PosicionObj.x, enem1b.PosicionObj.y+2.5f, enem1b.PosicionObj.z);
-	esfera[17].Pos=CVector(enem1c.PosicionObj.x, enem1c.PosicionObj.y+2.5f, enem1c.PosicionObj.z);
+	esfera[4].Pos=CVector(MJ6.PosicionObj.x, MJ6.PosicionObj.y+2.5f, MJ6.PosicionObj.z);
+	esfera[5].Pos=CVector(chang.PosicionObj.x, chang.PosicionObj.y+2.0f, chang.PosicionObj.z);
+	esfera[7].Pos=CVector(enem3b.PosicionObj.x, enem3b.PosicionObj.y+2.0f, enem3b.PosicionObj.z);
+	esfera[6].Pos=CVector(enem3a.PosicionObj.x, enem3a.PosicionObj.y+2.0f, enem3a.PosicionObj.z);
+    esfera[8].Pos=CVector(enem3c.PosicionObj.x, enem3c.PosicionObj.y+2.0f, enem3c.PosicionObj.z);
+	esfera[9].Pos=CVector(enem3d.PosicionObj.x, enem3d.PosicionObj.y+2.0f, enem3d.PosicionObj.z);
+	esfera[10].Pos=CVector(enem3e.PosicionObj.x, enem3e.PosicionObj.y+2.0f, enem3e.PosicionObj.z);
+	esfera[11].Pos=CVector(enem3f.PosicionObj.x, enem3f.PosicionObj.y+2.0f, enem3f.PosicionObj.z);
+	esfera[12].Pos=CVector(enem3g.PosicionObj.x, enem3g.PosicionObj.y+2.0f, enem3g.PosicionObj.z);
+	esfera[13].Pos=CVector(enem3h.PosicionObj.x, enem3h.PosicionObj.y+2.0f, enem3h.PosicionObj.z);
+	esfera[14].Pos=CVector(enem1b.PosicionObj.x, enem1b.PosicionObj.y+2.5f, enem1b.PosicionObj.z);
+	esfera[15].Pos=CVector(enem1c.PosicionObj.x, enem1c.PosicionObj.y+2.5f, enem1c.PosicionObj.z);
 	
 	if( player1.AngObj <= 0.0f )
 		esfera[18].Pos=CVector(player1.PosicionObj.x - 1.0f, player1.PosicionObj.y + 4.4f, player1.PosicionObj.z + 7.0f);
@@ -3260,7 +3259,7 @@ void LiberaSonido(FMOD_SYSTEM *system, FMOD_RESULT result)
 }
 
 // creador de hoyos negros y revision de colisiones
-void LargeHadronCollider()
+void LargeHadronCollider( FMOD_SYSTEM *system, FMOD_RESULT result )
 {
 	//FMOD_RESULT       result;
 	//FMOD_SYSTEM      *system;
@@ -3321,23 +3320,25 @@ void LargeHadronCollider()
 	//Ataque de MJ
 	if( MJAtaque == 1)
 	{
-		for(int i = 1; i <= 20; i++)
+		for(int i = 1; i <= 16; i++)
 		{
-			if( i != 18 && i != 2 && i != 4 && i != 5)
+			if( i != 18 && i != 2 )
 			{
-				col1 = ColisionEsferaEsfera(esfera[i], esfera[18], *parenem[ j ] );
+				col1 = ColisionEsferaEsfera(esfera[i], esfera[18], *parenem[ i ] );
 				if( col1 )
 				{
-					aux = parenem[ j ];
+					aux = parenem[ i ];
+					//aux->escalaX = 0.0f;
+					//aux->escalaY = 0.0f;
+					//aux->escalaZ = 0.0f;
 					aux->PosicionObj.z = 6666.6f;
 					score += 1000;
 					if( score >= maxs )
 						maxs = score;
-					//result = FMOD_System_CreateSound(system, "Audio/humanpunch.mp3", FMOD_SOFTWARE, 0, &sound[1]);
-					//ERRCHECK(result);
+					result = FMOD_System_PlaySound(system, FMOD_CHANNEL_FREE, sound[1], 0, &channel[1]);
+					ERRCHECK(result);
 				}
 			}
-			j++;
 		}
 	}
 }
@@ -4467,13 +4468,13 @@ void DibujaSombraMJ()
 		
 		//Pierna derecha
 		glPushMatrix();
-			glTranslatef(1.0f, 0.0f, 0.0f);
+			//glTranslatef(0.0f, 0.0f, 0.0f);
 			glRotatef(player1modelo.Angpder, 1.0f, 0.0f, 0.0f);
 			objSh.calculaSombraDepthPass(&g_3DModel2aru, objectSpaceLightPosition2);
 
 			//Pierna derecha_b
 			glPushMatrix();
-				glTranslatef(-5.2f, 0.7f , 0.0f);
+				//glTranslatef(0.0f, 0.0f , 0.0f);
 				glRotatef(player1modelo.Angpderb, 1.0f, 0.0f, 0.0f);
 				objSh.calculaSombraDepthPass(&g_3DModel3aru, objectSpaceLightPosition3);
 			glPopMatrix();
@@ -4482,13 +4483,13 @@ void DibujaSombraMJ()
 
 		//Pierna izquierda
 		glPushMatrix();
-			glTranslatef(0.0f, 0.0f ,0.0f);
+			//glTranslatef(0.0f, 0.0f ,0.0f);
 			glRotatef(player1modelo.Angpizq, 1.0f, 0.0f, 0.0f);
 			objSh.calculaSombraDepthPass(&g_3DModel4aru, objectSpaceLightPosition4);
 
 			//Pierna izquierda_b
 			glPushMatrix();
-				glTranslatef(-6.5f, 0.8f , 0.0f);
+				//glTranslatef(-6.5f, 0.8f , 0.0f);
 				glRotatef(player1modelo.Angpizqb, 1.0f, 0.0f, 0.0f);
 				objSh.calculaSombraDepthPass(&g_3DModel5aru, objectSpaceLightPosition5);
 			glPopMatrix();
@@ -4497,14 +4498,14 @@ void DibujaSombraMJ()
 
 		//Brazo derecho_a
 		glPushMatrix();
-			glTranslatef(5.65f, 0.2f, 0.2f);
+			//glTranslatef(5.65f, 0.2f, 0.2f);
 			glRotatef(player1modelo.Angbd2, 0.0f, 1.0f, 0.0f);
 			glRotatef(player1modelo.Angbd1, 1.0f, 0.0f, 0.0f);
 			objSh.calculaSombraDepthPass(&g_3DModel6aru, objectSpaceLightPosition6);
 
 			//Brazo derecho_b
 			glPushMatrix();
-				glTranslatef(-4.6f, 2.0f, 0.0f);
+				//glTranslatef(-4.6f, 2.0f, 0.0f);
 				glRotatef(player1modelo.Angbdb, 1.0f, 0.0f, 0.0f);
 				objSh.calculaSombraDepthPass(&g_3DModel8aru, objectSpaceLightPosition7);
 			glPopMatrix();
@@ -4513,14 +4514,14 @@ void DibujaSombraMJ()
 
 		//Brazo izquierdo
 		glPushMatrix();
-			glTranslatef(-1.0f, 1.5f, 0.0f);
+			//glTranslatef(-1.0f, 1.5f, 0.0f);
 			glRotatef(player1modelo.Angbi2, 0.0f, 1.0f, 0.0f);
 			glRotatef(player1modelo.Angbi1, 1.0f, 0.0f, 0.0f);
 			objSh.calculaSombraDepthPass(&g_3DModel7aru, objectSpaceLightPosition8);
 
 			//Brazo izquierdo_b
 			glPushMatrix();
-				glTranslatef(-0.7f, 0.5f, 0.0f);
+				//glTranslatef(-0.7f, 0.5f, 0.0f);
 				glRotatef(player1modelo.Angbib, 1.0f, 0.0f, 0.0f);
 				objSh.calculaSombraDepthPass(&g_3DModel9aru, objectSpaceLightPosition9);
 			glPopMatrix();
@@ -4765,9 +4766,9 @@ void DibujaTextos()
 		glPopMatrix();
 
 		// Texto a mostrar en pantalla
-		Font.glPrint((1.0f/640.0f)*glWidth, glWidth*0.05f,glHeight*0.9f,"Delay: %d", Enemigos[0].getDelay() );
+		//Font.glPrint((1.0f/640.0f)*glWidth, glWidth*0.05f,glHeight*0.9f,"Delay: %d", Enemigos[0].getDelay() );
 		//Font.glPrint((1.0f/640.0f)*glWidth, glWidth*0.05f,glHeight*0.85f,"PosCam %f", player1.PosicionCam.x );
-		Font.glPrint((1.0f/640.0f)*glWidth, glWidth*0.05f,glHeight*0.70f,"PosObj %.2f, %.2f, %.2f", player1.PosicionObj.x, player1.PosicionObj.y, player1.PosicionObj.z);
+		//Font.glPrint((1.0f/640.0f)*glWidth, glWidth*0.05f,glHeight*0.70f,"PosObj %.2f, %.2f, %.2f", player1.PosicionObj.x, player1.PosicionObj.y, player1.PosicionObj.z);
 		Font.glPrint( (1.0f/640.0f)*glWidth, glWidth * 0.45f, glHeight * 0.95f, "High %d", maxs );
 		Font.glPrint( (1.0f/640.0f)*glWidth, glWidth * 0.42f, glHeight * 0.90f, "Round 1 Stage 1" );
 		Font.glPrint( (1.0f/640.0f)*glWidth, glWidth * 0.08f, glHeight * 0.15f, "1P" );
@@ -5792,7 +5793,7 @@ int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la
 	//DibujaObjetosdeColision();
 	//DibujaEsferasColision();
 	ColisionesPiso();
-	LargeHadronCollider();
+	//LargeHadronCollider( system, result );
 
 	return TRUE;
 }
@@ -6074,19 +6075,28 @@ int WINAPI WinMain(	HINSTANCE	hInstance,			// Instancia
     result = FMOD_Sound_SetMode(sound[0], FMOD_LOOP_NORMAL); //Se repetira en un loop
     ERRCHECK(result);										
 
+	result = FMOD_System_CreateSound(system, "Audio/explotion.mp3", FMOD_HARDWARE, 0, &sound[1]);
+    ERRCHECK(result);
+    result = FMOD_Sound_SetMode(sound[1], FMOD_LOOP_OFF); //Se repetira en un loop
+    ERRCHECK(result);
+
 	////Asignaciï¿½n a canales y configuraciï¿½n
 	////Mï¿½sica de fondo
 	result = FMOD_System_PlaySound(system, FMOD_CHANNEL_FREE, sound[0], 0, &channel[0]);
-       ERRCHECK(result);
+     ERRCHECK(result);
+
 	result = FMOD_Channel_SetPaused(channel[0], FALSE); //Inicialmente activo
 	ERRCHECK(result);
+
 	result = FMOD_Channel_SetVolume(channel[0], 0.3f);
 	ERRCHECK(result);
 
-	//result = FMOD_System_PlaySound(system, FMOD_CHANNEL_FREE, sound[1], 0, &channel[1]);
- //   ERRCHECK(result);
-	//result = FMOD_Channel_SetPaused(channel[1], TRUE); //Inicialmente pausado
-	//ERRCHECK(result);
+	result = FMOD_System_PlaySound(system, FMOD_CHANNEL_FREE, sound[1], 0, &channel[1]);
+	ERRCHECK(result);
+	result = FMOD_Channel_SetPaused(channel[1], TRUE); //Inicialmente pausado
+	ERRCHECK(result);
+	result = FMOD_Channel_SetVolume(channel[1], 0.3f);
+	ERRCHECK(result);
 
 	TimerInit();
 
@@ -6142,6 +6152,7 @@ int WINAPI WinMain(	HINSTANCE	hInstance,			// Instancia
 				}
 
 				if(!ManejaTeclado()) return 0;
+				LargeHadronCollider( system, result );
 				/*ManejaTeclado(system, result);*/
 
 				while(TimerGetTime()<start+float(steps[adjust]*2.0f)) {}	// Desperdicia ciclos si es demasiado rï¿½pido
