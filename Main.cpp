@@ -58,12 +58,18 @@ parametros miku;
 
 parametros enem1;	 //Variable con la que tenemos acceso a la estructura de par�metros de ene1
 parametros enem1a;
+parametros enem1b;
+parametros enem1c;
 parametros MJ6;		 //Variable con la que tenemos acceso a la estructura de par�metros de MJ6
 parametros enem2;	 //Variable con la que tenemos acceso a la estructura de par�metros de ene2
 parametros enem3a;	 //Variable con la que tenemos acceso a la estructura de par�metros de ene3a
 parametros enem3b;	 //Variable con la que tenemos acceso a la estructura de par�metros ene3b
 parametros enem3c;	 //Variable con la que tenemos acceso a la estructura de par�metros de ene3c
 parametros enem3d;	 //Variable con la que tenemos acceso a la estructura de par�metros ene3d
+parametros enem3e;	 //Variable con la que tenemos acceso a la estructura de par�metros de ene3e
+parametros enem3f;	 //Variable con la que tenemos acceso a la estructura de par�metros ene3f
+parametros enem3g;	 //Variable con la que tenemos acceso a la estructura de par�metros de ene3g
+parametros enem3h;	 //Variable con la que tenemos acceso a la estructura de par�metros ene3h
 parametros chang;	 //Variable con la que tenemos acceso a la estructura de par�metros de chango
 
 parametros enemigo8; // parametros robot
@@ -1606,7 +1612,7 @@ void InicializaParametrosdeControl()
 
 	enem1.CamaraObjAltE=0.0f;
 
-       // Enem1
+       // Enem1a
 	enem1a.visible=true;
 	enem1a.VelocidadObj=0.2f;
 	enem1a.DistanciaCam=10.0f;
@@ -1618,7 +1624,7 @@ void InicializaParametrosdeControl()
 								//sin aplicarle ninguna transformaci�n (hacia adonde est� volteando). Se elige un �ngulo tal que al aplicarle
 								//una rotaci�n inicial con respecto al eje Y est� viendo hacia la misma direcci�n que la definida por AngDir
 	
-	enem1a.PosicionObj=CVector(150.0f, 9.0f, -70.0f); //Esta es la posici�n inicial del objeto en la escena
+	enem1a.PosicionObj=CVector(35.0f, 7.7f, -60.0f); //Esta es la posici�n inicial del objeto en la escena
 	enem1a.Direccion.x=(float)cos(player1.AngDir*PI/180.0f); //Direcci�n inicial definida por el �ngulo inicial AngDir (x=cos(AngDir), y=0.0, z=sen(AngDir))
 	enem1a.Direccion.y=0.0f;
 	enem1a.Direccion.z=(float)sin(player1.AngDir*PI/180.0f);   
@@ -1634,6 +1640,64 @@ void InicializaParametrosdeControl()
 	enem1a.escalaZ=0.4f;
 
 	enem1a.CamaraObjAltE=0.0f;
+
+	// Enem1b
+	enem1b.visible=true;
+	enem1b.VelocidadObj=0.2f;
+	enem1b.DistanciaCam=10.0f;
+
+	enem1b.CamaraPosAlt=5.0f;	//Posici�n en y de la c�mara (altura a la que se situa la c�mara)
+	enem1b.CamaraObjAlt=4.0f;	//Posici�n en y del objetivo de la c�mara (altura a la que ve la c�mara)
+	enem1b.AngDir=90.0f;		//Este �ngulo inicial hace que la direcci�n inicial sea paralela al eje Z y con sentido negativo
+	enem1b.AngObj=0.0f;		//Este valor se elige dependiendo de la orientaci�n con la que aparece el modelo en la escena al dibujarlo
+								//sin aplicarle ninguna transformaci�n (hacia adonde est� volteando). Se elige un �ngulo tal que al aplicarle
+								//una rotaci�n inicial con respecto al eje Y est� viendo hacia la misma direcci�n que la definida por AngDir
+	
+	enem1b.PosicionObj=CVector(-15.0f, 8.0f, -60.0f); //Esta es la posici�n inicial del objeto en la escena
+	enem1b.Direccion.x=(float)cos(player1.AngDir*PI/180.0f); //Direcci�n inicial definida por el �ngulo inicial AngDir (x=cos(AngDir), y=0.0, z=sen(AngDir))
+	enem1b.Direccion.y=0.0f;
+	enem1b.Direccion.z=(float)sin(player1.AngDir*PI/180.0f);   
+	enem1b.PosicionCam=CVector(0.0f, player1.CamaraPosAlt, 10.0f); //Posici�n inicial de la c�mara a [DistanciaCam] unidades detr�s del objeto
+	enem1b.ObjetivoCam=player1.PosicionObj;		//La c�mara ve siempre al objeto
+	enem1b.ObjetivoCam.y=player1.CamaraObjAlt;		//Para que no vea a los "pies" del objeto (personaje)
+
+	enem1b.Dir=0;
+	enem1b.DirAnt=0;
+
+	enem1b.escalaX=0.4f;
+	enem1b.escalaY=0.4f;
+	enem1b.escalaZ=0.4f;
+
+	enem1b.CamaraObjAltE=0.0f;
+
+       // Enem1c
+	enem1c.visible=true;
+	enem1c.VelocidadObj=0.2f;
+	enem1c.DistanciaCam=10.0f;
+
+	enem1c.CamaraPosAlt=5.0f;	//Posici�n en y de la c�mara (altura a la que se situa la c�mara)
+	enem1c.CamaraObjAlt=4.0f;	//Posici�n en y del objetivo de la c�mara (altura a la que ve la c�mara)
+	enem1c.AngDir=90.0f;		//Este �ngulo inicial hace que la direcci�n inicial sea paralela al eje Z y con sentido negativo
+	enem1c.AngObj=0.0f;		//Este valor se elige dependiendo de la orientaci�n con la que aparece el modelo en la escena al dibujarlo
+								//sin aplicarle ninguna transformaci�n (hacia adonde est� volteando). Se elige un �ngulo tal que al aplicarle
+								//una rotaci�n inicial con respecto al eje Y est� viendo hacia la misma direcci�n que la definida por AngDir
+	
+	enem1c.PosicionObj=CVector(-57.5f, 90.0f, 100.5f); //Esta es la posici�n inicial del objeto en la escena
+	enem1c.Direccion.x=(float)cos(player1.AngDir*PI/180.0f); //Direcci�n inicial definida por el �ngulo inicial AngDir (x=cos(AngDir), y=0.0, z=sen(AngDir))
+	enem1c.Direccion.y=0.0f;
+	enem1c.Direccion.z=(float)sin(player1.AngDir*PI/180.0f);   
+	enem1c.PosicionCam=CVector(0.0f, player1.CamaraPosAlt, 10.0f); //Posici�n inicial de la c�mara a [DistanciaCam] unidades detr�s del objeto
+	enem1c.ObjetivoCam=player1.PosicionObj;		//La c�mara ve siempre al objeto
+	enem1c.ObjetivoCam.y=player1.CamaraObjAlt;		//Para que no vea a los "pies" del objeto (personaje)
+
+	enem1c.Dir=0;
+	enem1c.DirAnt=0;
+
+	enem1c.escalaX=0.4f;
+	enem1c.escalaY=0.4f;
+	enem1c.escalaZ=0.4f;
+
+	enem1c.CamaraObjAltE=0.0f;
 	
 	// Enem2
 	enem2.visible=true;
@@ -1765,7 +1829,7 @@ void InicializaParametrosdeControl()
 								//sin aplicarle ninguna transformaci�n (hacia adonde est� volteando). Se elige un �ngulo tal que al aplicarle
 								//una rotaci�n inicial con respecto al eje Y est� viendo hacia la misma direcci�n que la definida por AngDir
 	
-	enem3c.PosicionObj=CVector(-20.0f, 8.0f, -5.0f); //Esta es la posici�n inicial del objeto en la escena
+	enem3c.PosicionObj=CVector(160.0f, 8.0f, -80.0f); //Esta es la posici�n inicial del objeto en la escena
 	enem3c.Direccion.x=(float)cos(player1.AngDir*PI/180.0f); //Direcci�n inicial definida por el �ngulo inicial AngDir (x=cos(AngDir), y=0.0, z=sen(AngDir))
 	enem3c.Direccion.y=0.0f;
 	enem3c.Direccion.z=(float)sin(player1.AngDir*PI/180.0f);   
@@ -1794,7 +1858,7 @@ void InicializaParametrosdeControl()
 								//sin aplicarle ninguna transformaci�n (hacia adonde est� volteando). Se elige un �ngulo tal que al aplicarle
 								//una rotaci�n inicial con respecto al eje Y est� viendo hacia la misma direcci�n que la definida por AngDir
 	
-	enem3d.PosicionObj=CVector(-25.0f, 8.0f, -10.0f); //Esta es la posici�n inicial del objeto en la escena
+	enem3d.PosicionObj=CVector(200.0f, 8.0f, -40.0f); //Esta es la posici�n inicial del objeto en la escena
 	enem3d.Direccion.x=(float)cos(player1.AngDir*PI/180.0f); //Direcci�n inicial definida por el �ngulo inicial AngDir (x=cos(AngDir), y=0.0, z=sen(AngDir))
 	enem3d.Direccion.y=0.0f;
 	enem3d.Direccion.z=(float)sin(player1.AngDir*PI/180.0f);   
@@ -1810,6 +1874,123 @@ void InicializaParametrosdeControl()
 	enem3d.escalaZ=0.3f;
 
 	enem3d.CamaraObjAltE=0.0f;
+
+	     // enem3e
+	enem3e.visible=true;
+	enem3e.VelocidadObj=0.2f;
+	enem3e.DistanciaCam=10.0f;
+
+	enem3e.CamaraPosAlt=5.0f;	//Posici�n en y de la c�mara (altura a la que se situa la c�mara)
+	enem3e.CamaraObjAlt=4.0f;	//Posici�n en y del objetivo de la c�mara (altura a la que ve la c�mara)
+	enem3e.AngDir=90.0f;		//Este �ngulo inicial hace que la direcci�n inicial sea paralela al eje Z y con sentido negativo
+	enem3e.AngObj=0.0f;		//Este valor se elige dependiendo de la orientaci�n con la que aparece el modelo en la escena al dibujarlo
+								//sin aplicarle ninguna transformaci�n (hacia adonde est� volteando). Se elige un �ngulo tal que al aplicarle
+								//una rotaci�n inicial con respecto al eje Y est� viendo hacia la misma direcci�n que la definida por AngDir
+	
+	enem3e.PosicionObj=CVector(50.0f, 7.7f, -60.0f); //Esta es la posici�n inicial del objeto en la escena
+	enem3e.Direccion.x=(float)cos(player1.AngDir*PI/180.0f); //Direcci�n inicial definida por el �ngulo inicial AngDir (x=cos(AngDir), y=0.0, z=sen(AngDir))
+	enem3e.Direccion.y=0.0f;
+	enem3e.Direccion.z=(float)sin(player1.AngDir*PI/180.0f);   
+	enem3e.PosicionCam=CVector(0.0f, player1.CamaraPosAlt, 10.0f); //Posici�n inicial de la c�mara a [DistanciaCam] unidades detr�s del objeto
+	enem3e.ObjetivoCam=player1.PosicionObj;		//La c�mara ve siempre al objeto
+	enem3e.ObjetivoCam.y=player1.CamaraObjAlt;		//Para que no vea a los "pies" del objeto (personaje)
+
+	enem3e.Dir=0;
+	enem3e.DirAnt=0;
+
+	enem3e.escalaX=0.3f;
+	enem3e.escalaY=0.3f;
+	enem3e.escalaZ=0.3f;
+
+	enem3e.CamaraObjAltE=0.0f;
+
+	// enem3f
+	enem3f.visible=true;
+	enem3f.VelocidadObj=0.2f;
+	enem3f.DistanciaCam=10.0f;
+
+	enem3f.CamaraPosAlt=5.0f;	//Posici�n en y de la c�mara (altura a la que se situa la c�mara)
+	enem3f.CamaraObjAlt=4.0f;	//Posici�n en y del objetivo de la c�mara (altura a la que ve la c�mara)
+	enem3f.AngDir=90.0f;		//Este �ngulo inicial hace que la direcci�n inicial sea paralela al eje Z y con sentido negativo
+	enem3f.AngObj=270.0f;		//Este valor se elige dependiendo de la orientaci�n con la que aparece el modelo en la escena al dibujarlo
+								//sin aplicarle ninguna transformaci�n (hacia adonde est� volteando). Se elige un �ngulo tal que al aplicarle
+								//una rotaci�n inicial con respecto al eje Y est� viendo hacia la misma direcci�n que la definida por AngDir
+	
+	enem3f.PosicionObj=CVector(10.0f, 7.7f, -60.0f); //Esta es la posici�n inicial del objeto en la escena
+	enem3f.Direccion.x=(float)cos(player1.AngDir*PI/180.0f); //Direcci�n inicial definida por el �ngulo inicial AngDir (x=cos(AngDir), y=0.0, z=sen(AngDir))
+	enem3f.Direccion.y=0.0f;
+	enem3f.Direccion.z=(float)sin(player1.AngDir*PI/180.0f);   
+	enem3f.PosicionCam=CVector(0.0f, player1.CamaraPosAlt, 10.0f); //Posici�n inicial de la c�mara a [DistanciaCam] unidades detr�s del objeto
+	enem3f.ObjetivoCam=player1.PosicionObj;		//La c�mara ve siempre al objeto
+	enem3f.ObjetivoCam.y=player1.CamaraObjAlt;		//Para que no vea a los "pies" del objeto (personaje)
+
+	enem3f.Dir=0;
+	enem3f.DirAnt=0;
+
+	enem3f.escalaX=0.3f;
+	enem3f.escalaY=0.3f;
+	enem3f.escalaZ=0.3f;
+
+	enem3f.CamaraObjAltE=0.0f;
+
+	
+	     // enem3g
+	enem3g.visible=true;
+	enem3g.VelocidadObj=0.2f;
+	enem3g.DistanciaCam=10.0f;
+
+	enem3g.CamaraPosAlt=5.0f;	//Posici�n en y de la c�mara (altura a la que se situa la c�mara)
+	enem3g.CamaraObjAlt=4.0f;	//Posici�n en y del objetivo de la c�mara (altura a la que ve la c�mara)
+	enem3g.AngDir=90.0f;		//Este �ngulo inicial hace que la direcci�n inicial sea paralela al eje Z y con sentido negativo
+	enem3g.AngObj=0.0f;		//Este valor se elige dependiendo de la orientaci�n con la que aparece el modelo en la escena al dibujarlo
+								//sin aplicarle ninguna transformaci�n (hacia adonde est� volteando). Se elige un �ngulo tal que al aplicarle
+								//una rotaci�n inicial con respecto al eje Y est� viendo hacia la misma direcci�n que la definida por AngDir
+	
+	enem3g.PosicionObj=CVector(-57.5f, 90.0f,  50.4f); //Esta es la posici�n inicial del objeto en la escena
+	enem3g.Direccion.x=(float)cos(player1.AngDir*PI/180.0f); //Direcci�n inicial definida por el �ngulo inicial AngDir (x=cos(AngDir), y=0.0, z=sen(AngDir))
+	enem3g.Direccion.y=0.0f;
+	enem3g.Direccion.z=(float)sin(player1.AngDir*PI/180.0f);   
+	enem3g.PosicionCam=CVector(0.0f, player1.CamaraPosAlt, 10.0f); //Posici�n inicial de la c�mara a [DistanciaCam] unidades detr�s del objeto
+	enem3g.ObjetivoCam=player1.PosicionObj;		//La c�mara ve siempre al objeto
+	enem3g.ObjetivoCam.y=player1.CamaraObjAlt;		//Para que no vea a los "pies" del objeto (personaje)
+
+	enem3g.Dir=0;
+	enem3g.DirAnt=0;
+
+	enem3g.escalaX=0.3f;
+	enem3g.escalaY=0.3f;
+	enem3g.escalaZ=0.3f;
+
+	enem3g.CamaraObjAltE=0.0f;
+
+	// enem3h
+	enem3h.visible=true;
+	enem3h.VelocidadObj=0.2f;
+	enem3h.DistanciaCam=10.0f;
+
+	enem3h.CamaraPosAlt=5.0f;	//Posici�n en y de la c�mara (altura a la que se situa la c�mara)
+	enem3h.CamaraObjAlt=4.0f;	//Posici�n en y del objetivo de la c�mara (altura a la que ve la c�mara)
+	enem3h.AngDir=90.0f;		//Este �ngulo inicial hace que la direcci�n inicial sea paralela al eje Z y con sentido negativo
+	enem3h.AngObj=270.0f;		//Este valor se elige dependiendo de la orientaci�n con la que aparece el modelo en la escena al dibujarlo
+								//sin aplicarle ninguna transformaci�n (hacia adonde est� volteando). Se elige un �ngulo tal que al aplicarle
+								//una rotaci�n inicial con respecto al eje Y est� viendo hacia la misma direcci�n que la definida por AngDir
+	
+	enem3h.PosicionObj=CVector(-57.5f, 90.0f,  150.4f); //Esta es la posici�n inicial del objeto en la escena
+	enem3h.Direccion.x=(float)cos(player1.AngDir*PI/180.0f); //Direcci�n inicial definida por el �ngulo inicial AngDir (x=cos(AngDir), y=0.0, z=sen(AngDir))
+	enem3h.Direccion.y=0.0f;
+	enem3h.Direccion.z=(float)sin(player1.AngDir*PI/180.0f);   
+	enem3h.PosicionCam=CVector(0.0f, player1.CamaraPosAlt, 10.0f); //Posici�n inicial de la c�mara a [DistanciaCam] unidades detr�s del objeto
+	enem3h.ObjetivoCam=player1.PosicionObj;		//La c�mara ve siempre al objeto
+	enem3h.ObjetivoCam.y=player1.CamaraObjAlt;		//Para que no vea a los "pies" del objeto (personaje)
+
+	enem3h.Dir=0;
+	enem3h.DirAnt=0;
+
+	enem3h.escalaX=0.3f;
+	enem3h.escalaY=0.3f;
+	enem3h.escalaZ=0.3f;
+
+	enem3h.CamaraObjAltE=0.0f;
 
 	// chang
 	chang.visible=true;
@@ -2495,10 +2676,20 @@ void InicializaObjetosdeColision()
 	esfera[1].Pos=CVector(enem1.PosicionObj.x, enem1.PosicionObj.y-2.0f, enem1.PosicionObj.z);
 	esfera[1].colision=false;
       
-        //Esfera de colision del Enem1a
+    //Esfera de colision del Enem1a
 	esfera[3].radio=2.2f;
 	esfera[3].Pos=CVector(enem1a.PosicionObj.x, enem1a.PosicionObj.y-2.0f, enem1a.PosicionObj.z);
 	esfera[3].colision=false;
+
+	//Esfera de colision del Enem1b
+	esfera[16].radio=2.2f;
+	esfera[16].Pos=CVector(enem1b.PosicionObj.x, enem1b.PosicionObj.y-2.0f, enem1b.PosicionObj.z);
+	esfera[16].colision=false;
+      
+    //Esfera de colision del Enem1c
+	esfera[17].radio=2.2f;
+	esfera[17].Pos=CVector(enem1c.PosicionObj.x, enem1c.PosicionObj.y-2.0f, enem1c.PosicionObj.z);
+	esfera[17].colision=false;
 
 	//Esfera de colision del Enem2
 	esfera[2].radio=5.5f;
@@ -2520,6 +2711,16 @@ void InicializaObjetosdeColision()
 	esfera[8].Pos=CVector(enem3b.PosicionObj.x, enem3b.PosicionObj.y+2.0f, enem3b.PosicionObj.z);
 	esfera[8].colision=false;
 
+		//Esfera de colision del Enem3e
+	esfera[12].radio=3.0f;
+	esfera[12].Pos=CVector(enem3e.PosicionObj.x, enem3e.PosicionObj.y+2.0f, enem3e.PosicionObj.z);
+	esfera[12].colision=false;
+
+		//Esfera de colision del Enem3f
+	esfera[13].radio=3.0f;
+	esfera[13].Pos=CVector(enem3f.PosicionObj.x, enem3f.PosicionObj.y+2.0f, enem3f.PosicionObj.z);
+	esfera[13].colision=false;
+
         //Esfera de colision del Enem3c
 	esfera[10].radio=3.0f;
 	esfera[10].Pos=CVector(enem3c.PosicionObj.x, enem3c.PosicionObj.y+2.0f, enem3c.PosicionObj.z);
@@ -2529,6 +2730,16 @@ void InicializaObjetosdeColision()
 	esfera[11].radio=3.0f;
 	esfera[11].Pos=CVector(enem3d.PosicionObj.x, enem3d.PosicionObj.y+2.0f, enem3d.PosicionObj.z);
 	esfera[11].colision=false;
+
+	      //Esfera de colision del Enem3g
+	esfera[14].radio=3.0f;
+	esfera[14].Pos=CVector(enem3g.PosicionObj.x, enem3g.PosicionObj.y+2.0f, enem3g.PosicionObj.z);
+	esfera[14].colision=false;
+
+	//Esfera de colision del Enem3h
+	esfera[15].radio=3.0f;
+	esfera[15].Pos=CVector(enem3h.PosicionObj.x, enem3h.PosicionObj.y+2.0f, enem3h.PosicionObj.z);
+	esfera[15].colision=false;
 
 	//Esfera de colision del chango
 	esfera[9].radio=2.5f;
@@ -2584,13 +2795,19 @@ void ActualizaObjetosDinamicosColision()
 
 	esfera[1].Pos=CVector(enem1.PosicionObj.x, enem1.PosicionObj.y+2.5f, enem1.PosicionObj.z);
 	esfera[2].Pos=CVector(target[0], target[1] + 2.5, target[2]);
-        esfera[2].Pos=CVector(enem1a.PosicionObj.x, enem1a.PosicionObj.y+2.5f, enem1a.PosicionObj.z);
+    esfera[3].Pos=CVector(enem1a.PosicionObj.x, enem1a.PosicionObj.y+2.5f, enem1a.PosicionObj.z);
 	esfera[6].Pos=CVector(MJ6.PosicionObj.x, MJ6.PosicionObj.y+2.5f, MJ6.PosicionObj.z);
 	esfera[9].Pos=CVector(chang.PosicionObj.x, chang.PosicionObj.y+2.0f, chang.PosicionObj.z);
 	esfera[8].Pos=CVector(enem3b.PosicionObj.x, enem3b.PosicionObj.y+2.0f, enem3b.PosicionObj.z);
 	esfera[7].Pos=CVector(enem3a.PosicionObj.x, enem3a.PosicionObj.y+2.0f, enem3a.PosicionObj.z);
-        esfera[10].Pos=CVector(enem3c.PosicionObj.x, enem3c.PosicionObj.y+2.0f, enem3c.PosicionObj.z);
+    esfera[10].Pos=CVector(enem3c.PosicionObj.x, enem3c.PosicionObj.y+2.0f, enem3c.PosicionObj.z);
 	esfera[11].Pos=CVector(enem3d.PosicionObj.x, enem3d.PosicionObj.y+2.0f, enem3d.PosicionObj.z);
+	esfera[12].Pos=CVector(enem3e.PosicionObj.x, enem3e.PosicionObj.y+2.0f, enem3e.PosicionObj.z);
+	esfera[13].Pos=CVector(enem3f.PosicionObj.x, enem3f.PosicionObj.y+2.0f, enem3f.PosicionObj.z);
+	esfera[14].Pos=CVector(enem3g.PosicionObj.x, enem3g.PosicionObj.y+2.0f, enem3g.PosicionObj.z);
+	esfera[15].Pos=CVector(enem3h.PosicionObj.x, enem3h.PosicionObj.y+2.0f, enem3h.PosicionObj.z);
+	esfera[16].Pos=CVector(enem1b.PosicionObj.x, enem1b.PosicionObj.y+2.5f, enem1b.PosicionObj.z);
+	esfera[17].Pos=CVector(enem1c.PosicionObj.x, enem1c.PosicionObj.y+2.5f, enem1c.PosicionObj.z);
 
 }
 
@@ -2995,7 +3212,7 @@ void LargeHadronCollider()
 	{
 		col = ColisionEsferaEsfera(esfera[0], esfera[i], player1 );
 		player1.PosAntObj = player1.PosicionObj;
-		if( ( i == 1 || i == 2 || i == 7 || i == 8 ) && col == true )
+		if( ( i == 1 || i == 2 || i == 3 || i == 7 || i == 8 || i == 10 || i == 11 || i == 12 || i == 13 || i == 14 || i == 15|| i == 16 || i == 17 ) && col == true )
 		{
 			health -= 0.5f;
 			//red -= 1;
@@ -4912,11 +5129,27 @@ void DibujaEnemigos()
 		DibujaEnemigo1();
 	glPopMatrix();
 
-       //Ene1a
+    //Ene1a
 	glPushMatrix();
 		glTranslatef(enem1a.PosicionObj.x, enem1a.PosicionObj.y, enem1a.PosicionObj.z);
 		glRotatef(enem1a.AngObj, 0.0f, 1.0f, 0.0f);
 		glScalef(enem1a.escalaX,enem1a.escalaY,enem1a.escalaZ);
+		DibujaEnemigo1();
+	glPopMatrix();
+
+	 //Ene1b
+	glPushMatrix();
+		glTranslatef(enem1b.PosicionObj.x, enem1b.PosicionObj.y, enem1b.PosicionObj.z);
+		glRotatef(enem1b.AngObj, 0.0f, 1.0f, 0.0f);
+		glScalef(enem1b.escalaX,enem1b.escalaY,enem1b.escalaZ);
+		DibujaEnemigo1();
+	glPopMatrix();
+
+	//Ene1c
+	glPushMatrix();
+		glTranslatef(enem1c.PosicionObj.x, enem1c.PosicionObj.y, enem1c.PosicionObj.z);
+		glRotatef(enem1c.AngObj, 0.0f, 1.0f, 0.0f);
+		glScalef(enem1c.escalaX,enem1c.escalaY,enem1c.escalaZ);
 		DibujaEnemigo1();
 	glPopMatrix();
 
@@ -4945,7 +5178,7 @@ void DibujaEnemigos()
 		DibujaEnemigo3b();
 	glPopMatrix();
 
-        //Ene3c
+     //Ene3c
 	glPushMatrix();
 		glTranslatef(enem3c.PosicionObj.x, enem3c.PosicionObj.y+2.4f, enem3c.PosicionObj.z);
 		glRotatef(enem3c.AngObj,0.0f, 1.0f, 0.0f);
@@ -4953,11 +5186,43 @@ void DibujaEnemigos()
 		DibujaEnemigo3a();
 	glPopMatrix();
 
-	//Ene3b
+	//Ene3d
 	glPushMatrix();
 		glTranslatef(enem3d.PosicionObj.x, enem3d.PosicionObj.y+2.4f, enem3d.PosicionObj.z);
 		glRotatef(enem3d.AngObj, 0.0f, 1.0f, 0.0f);
 		glScalef(enem3d.escalaX,enem3d.escalaY,enem3d.escalaZ);
+		DibujaEnemigo3b();
+	glPopMatrix();
+
+	//Ene3e
+	glPushMatrix();
+		glTranslatef(enem3e.PosicionObj.x, enem3e.PosicionObj.y+2.4f, enem3e.PosicionObj.z);
+		glRotatef(enem3e.AngObj,0.0f, 1.0f, 0.0f);
+		glScalef(enem3e.escalaX,enem3e.escalaY,enem3e.escalaZ);
+		DibujaEnemigo3a();
+	glPopMatrix();
+
+	//Ene3f
+	glPushMatrix();
+		glTranslatef(enem3f.PosicionObj.x, enem3f.PosicionObj.y+2.4f, enem3f.PosicionObj.z);
+		glRotatef(enem3f.AngObj, 0.0f, 1.0f, 0.0f);
+		glScalef(enem3f.escalaX,enem3b.escalaY,enem3b.escalaZ);
+		DibujaEnemigo3b();
+	glPopMatrix();
+
+     //Ene3g
+	glPushMatrix();
+		glTranslatef(enem3g.PosicionObj.x, enem3g.PosicionObj.y+2.4f, enem3g.PosicionObj.z);
+		glRotatef(enem3g.AngObj,0.0f, 1.0f, 0.0f);
+		glScalef(enem3g.escalaX,enem3g.escalaY,enem3g.escalaZ);
+		DibujaEnemigo3a();
+	glPopMatrix();
+
+	//Ene3h
+	glPushMatrix();
+		glTranslatef(enem3h.PosicionObj.x, enem3h.PosicionObj.y+2.4f, enem3h.PosicionObj.z);
+		glRotatef(enem3h.AngObj, 0.0f, 1.0f, 0.0f);
+		glScalef(enem3h.escalaX,enem3h.escalaY,enem3h.escalaZ);
 		DibujaEnemigo3b();
 	glPopMatrix();
 
@@ -5041,6 +5306,30 @@ void DibujaEnemigos()
 		DibujaEnemigo1out();
 	glPopMatrix();
 
+	  //Ene1a
+	glPushMatrix();
+		glTranslatef(enem1a.PosicionObj.x, enem1a.PosicionObj.y, enem1a.PosicionObj.z);
+		glRotatef(enem1a.AngObj, 0.0f, 1.0f, 0.0f);
+		glScalef(enem1a.escalaX,enem1a.escalaY,enem1a.escalaZ);
+		DibujaEnemigo1out();
+	glPopMatrix();
+
+	 //Ene1b
+	glPushMatrix();
+		glTranslatef(enem1b.PosicionObj.x, enem1b.PosicionObj.y, enem1b.PosicionObj.z);
+		glRotatef(enem1b.AngObj, 0.0f, 1.0f, 0.0f);
+		glScalef(enem1b.escalaX,enem1b.escalaY,enem1b.escalaZ);
+		DibujaEnemigo1out();
+	glPopMatrix();
+
+	//Ene1c
+	glPushMatrix();
+		glTranslatef(enem1c.PosicionObj.x, enem1c.PosicionObj.y, enem1c.PosicionObj.z);
+		glRotatef(enem1c.AngObj, 0.0f, 1.0f, 0.0f);
+		glScalef(enem1c.escalaX,enem1c.escalaY,enem1c.escalaZ);
+		DibujaEnemigo1out();
+	glPopMatrix();
+
 	//Ene2
 	glPushMatrix();
 		glTranslatef(target[0], target[1], target[2]);
@@ -5062,6 +5351,54 @@ void DibujaEnemigos()
 		glTranslatef(enem3b.PosicionObj.x, enem3b.PosicionObj.y+2.4f, enem3b.PosicionObj.z);
 		glRotatef(enem3b.AngObj, 0.0f, 1.0f, 0.0f);
 		glScalef(enem3b.escalaX,enem3b.escalaY,enem3b.escalaZ);
+		DibujaEnemigo3bout();
+	glPopMatrix();
+
+	 //Ene3c
+	glPushMatrix();
+		glTranslatef(enem3c.PosicionObj.x, enem3c.PosicionObj.y+2.4f, enem3c.PosicionObj.z);
+		glRotatef(enem3c.AngObj,0.0f, 1.0f, 0.0f);
+		glScalef(enem3c.escalaX,enem3c.escalaY,enem3c.escalaZ);
+		DibujaEnemigo3aout();
+	glPopMatrix();
+
+	//Ene3d
+	glPushMatrix();
+		glTranslatef(enem3d.PosicionObj.x, enem3d.PosicionObj.y+2.4f, enem3d.PosicionObj.z);
+		glRotatef(enem3d.AngObj, 0.0f, 1.0f, 0.0f);
+		glScalef(enem3d.escalaX,enem3d.escalaY,enem3d.escalaZ);
+		DibujaEnemigo3bout();
+	glPopMatrix();
+
+	//Ene3e
+	glPushMatrix();
+		glTranslatef(enem3e.PosicionObj.x, enem3e.PosicionObj.y+2.4f, enem3e.PosicionObj.z);
+		glRotatef(enem3e.AngObj,0.0f, 1.0f, 0.0f);
+		glScalef(enem3e.escalaX,enem3e.escalaY,enem3e.escalaZ);
+		DibujaEnemigo3aout();
+	glPopMatrix();
+
+	//Ene3f
+	glPushMatrix();
+		glTranslatef(enem3f.PosicionObj.x, enem3f.PosicionObj.y+2.4f, enem3f.PosicionObj.z);
+		glRotatef(enem3f.AngObj, 0.0f, 1.0f, 0.0f);
+		glScalef(enem3f.escalaX,enem3b.escalaY,enem3b.escalaZ);
+		DibujaEnemigo3bout();
+	glPopMatrix();
+
+     //Ene3g
+	glPushMatrix();
+		glTranslatef(enem3g.PosicionObj.x, enem3g.PosicionObj.y+2.4f, enem3g.PosicionObj.z);
+		glRotatef(enem3g.AngObj,0.0f, 1.0f, 0.0f);
+		glScalef(enem3g.escalaX,enem3g.escalaY,enem3g.escalaZ);
+		DibujaEnemigo3aout();
+	glPopMatrix();
+
+	//Ene3h
+	glPushMatrix();
+		glTranslatef(enem3h.PosicionObj.x, enem3h.PosicionObj.y+2.4f, enem3h.PosicionObj.z);
+		glRotatef(enem3h.AngObj, 0.0f, 1.0f, 0.0f);
+		glScalef(enem3h.escalaX,enem3h.escalaY,enem3h.escalaZ);
 		DibujaEnemigo3bout();
 	glPopMatrix();
 
