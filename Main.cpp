@@ -3284,7 +3284,7 @@ void LargeHadronCollider( FMOD_SYSTEM *system, FMOD_RESULT result )
 	{
 		col = ColisionEsferaEsfera(esfera[0], esfera[i], player1 );
 		player1.PosAntObj = player1.PosicionObj;
-		if( ( i == 1 || i == 2 || i == 3 || i == 7 || i == 8 || i == 10 || i == 11 || i == 12 || i == 13 || i == 14 || i == 15|| i == 16 || i == 19 ) && col == true )
+		if( ( i == 1 || i == 3 || i == 5 || i == 6 || i == 7 || i == 8 || i == 9 || i == 10 || i == 11 || i == 12 || i == 13 || i == 14 || i == 15 ) && col == true )
 		{
 			health -= 0.5f;
 			//red -= 1;
@@ -3340,7 +3340,7 @@ void LargeHadronCollider( FMOD_SYSTEM *system, FMOD_RESULT result )
 	{
 		for(int i = 1; i <= 16; i++)
 		{
-			if( i != 18 && i != 2 )
+			if( i != 18 && i != 2 && i != 4 && i != 5   )
 			{
 				col1 = ColisionEsferaEsfera(esfera[i], esfera[18], *parenem[ i ] );
 				if( col1 )
